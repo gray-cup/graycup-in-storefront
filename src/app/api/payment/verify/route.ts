@@ -2,11 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { order } from "@/lib/schema";
 import { eq } from "drizzle-orm";
-
-const CASHFREE_BASE =
-  process.env.CASHFREE_MODE === "sandbox"
-    ? "https://sandbox.cashfree.com/pg"
-    : "https://api.cashfree.com/pg";
+import { CF_BASE, cfHeaders, mapOrderStatus } from "@/lib/cashfree";
 
 export async function GET(request: NextRequest) {
   const cashfreeOrderId = new URL(request.url).searchParams.get("order_id");
@@ -16,41 +12,45 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // ── Fetch order status from Cashfree ───────────────────────────────────
-    const cfRes = await fetch(`${CASHFREE_BASE}/orders/${cashfreeOrderId}`, {
-      headers: {
-        "x-client-id": process.env.CASHFREE_CLIENT_ID!,
-        "x-client-secret": process.env.CASHFREE_CLIENT_SECRET!,
-        "x-api-version": "2023-08-01",
-      },
-      // Always fetch fresh from Cashfree
+    // ── 1. Fetch order status ──────────────────────────────────────────────
+    const orderRes = await fetch(`${CF_BASE}/orders/${cashfreeOrderId}`, {
+      headers: cfHeaders(),
       cache: "no-store",
     });
+    const cfOrder = await orderRes.json();
 
-    const cfOrder = await cfRes.json();
-
-    if (!cfRes.ok) {
+    if (!orderRes.ok) {
       return NextResponse.json(
         { error: cfOrder.message || "Failed to fetch order from Cashfree" },
         { status: 400 },
       );
     }
 
-    // Map Cashfree statuses → our statuses
-    const statusMap: Record<string, string> = {
-      PAID: "paid",
-      ACTIVE: "pending",
-      EXPIRED: "failed",
-      CANCELLED: "failed",
-    };
-    const paymentStatus = statusMap[cfOrder.order_status] ?? "pending";
+    const paymentStatus = mapOrderStatus(cfOrder.order_status);
 
-    // ── Update our order record ────────────────────────────────────────────
+    // ── 2. Fetch individual payments to get cf_payment_id ─────────────────
+    // Only do this when the order is in a terminal paid state to avoid extra calls
+    let cfPaymentId: string | null = null;
+
+    if (paymentStatus === "paid") {
+      const paymentsRes = await fetch(
+        `${CF_BASE}/orders/${cashfreeOrderId}/payments`,
+        { headers: cfHeaders(), cache: "no-store" },
+      );
+      if (paymentsRes.ok) {
+        const payments: Array<{ cf_payment_id?: number | string; payment_status?: string }> =
+          await paymentsRes.json();
+        const successPayment = payments.find((p) => p.payment_status === "SUCCESS");
+        cfPaymentId = successPayment?.cf_payment_id?.toString() ?? null;
+      }
+    }
+
+    // ── 3. Update our order record ────────────────────────────────────────
     const [updated] = await db
       .update(order)
       .set({
         paymentStatus,
-        cashfreePaymentId: cfOrder.cf_order_id?.toString() ?? null,
+        ...(cfPaymentId && { cashfreePaymentId: cfPaymentId }),
         updatedAt: new Date(),
       })
       .where(eq(order.cashfreeOrderId, cashfreeOrderId))

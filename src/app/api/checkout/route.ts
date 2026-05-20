@@ -4,11 +4,7 @@ import { db } from "@/lib/db";
 import { order, address as addressTable } from "@/lib/schema";
 import { eq, count } from "drizzle-orm";
 import type { CartItem } from "@/lib/cart";
-
-const CASHFREE_BASE =
-  process.env.CASHFREE_MODE === "sandbox"
-    ? "https://sandbox.cashfree.com/pg"
-    : "https://api.cashfree.com/pg";
+import { CF_BASE, cfHeaders } from "@/lib/cashfree";
 
 export async function POST(request: NextRequest) {
   try {
@@ -122,14 +118,9 @@ export async function POST(request: NextRequest) {
       },
     };
 
-    const cfRes = await fetch(`${CASHFREE_BASE}/orders`, {
+    const cfRes = await fetch(`${CF_BASE}/orders`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-client-id": process.env.CASHFREE_CLIENT_ID!,
-        "x-client-secret": process.env.CASHFREE_CLIENT_SECRET!,
-        "x-api-version": "2023-08-01",
-      },
+      headers: cfHeaders(),
       body: JSON.stringify(cfPayload),
     });
 

@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-
-const CASHFREE_API_URL = "https://api.cashfree.com/pg/links";
-const CASHFREE_CLIENT_ID = process.env.CASHFREE_CLIENT_ID;
-const CASHFREE_CLIENT_SECRET = process.env.CASHFREE_CLIENT_SECRET;
+import { CF_BASE, cfHeaders } from "@/lib/cashfree";
 
 interface PaymentRequest {
   customerName: string;
@@ -12,7 +9,7 @@ interface PaymentRequest {
 
 export async function POST(request: NextRequest) {
   try {
-    if (!CASHFREE_CLIENT_ID || !CASHFREE_CLIENT_SECRET) {
+    if (!process.env.CASHFREE_CLIENT_ID || !process.env.CASHFREE_CLIENT_SECRET) {
       return NextResponse.json(
         { error: "Payment gateway not configured" },
         { status: 500 },
@@ -70,14 +67,9 @@ export async function POST(request: NextRequest) {
       link_expiry_time: expiryTime.toISOString(),
     };
 
-    const response = await fetch(CASHFREE_API_URL, {
+    const response = await fetch(`${CF_BASE}/links`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-client-id": CASHFREE_CLIENT_ID,
-        "x-client-secret": CASHFREE_CLIENT_SECRET,
-        "x-api-version": "2023-08-01",
-      },
+      headers: cfHeaders(),
       body: JSON.stringify(paymentLinkPayload),
     });
 
