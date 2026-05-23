@@ -8,7 +8,6 @@ import { UserJotWidget } from "@/components/userjot-widget";
 import Script from "next/script";
 import IntercomChat from "@/components/IntercomChat";
 import { WhatsappWidget } from "@/components/whatsapp-widget";
-import { Floating } from "@/components/floating";
 import { OrganizationSchema } from "@/components/seo";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -128,10 +127,8 @@ export default function RootLayout({
         <OrganizationSchema />
         <SpeedInsights />
         <RootProviders>{children}</RootProviders>
-        <Floating />
         {/* <UserJotWidget /> */}
         {/* <WhatsappWidget /> */}
-        <Floating />
         {/* <IntercomChat /> */}
         {/* <Script id="crisp-chat" strategy="afterInteractive">
           {`

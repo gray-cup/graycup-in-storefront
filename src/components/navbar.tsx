@@ -100,6 +100,14 @@ export function Navbar() {
 
           {/* RIGHT */}
           <div className="flex items-center gap-2">
+            <a
+              href="https://fast.graycup.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center rounded-md bg-black px-3 py-1.5 text-sm font-medium text-white hover:bg-neutral-800 transition-colors"
+            >
+              Buy via Fast
+            </a>
             <CartButton />
             {/* Mobile menu button */}
             <button
@@ -143,6 +151,16 @@ export function Navbar() {
           >
             ✕
           </button>
+
+          {/* Buy via Fast — mobile */}
+          <a
+            href="https://fast.graycup.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mb-4 flex items-center justify-center rounded-md bg-black px-3 py-2 text-sm font-medium text-white"
+          >
+            Buy via Fast
+          </a>
 
           {/* All links */}
           <nav className="flex flex-col gap-2 text-sm font-medium">
