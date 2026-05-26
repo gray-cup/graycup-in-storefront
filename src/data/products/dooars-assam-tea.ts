@@ -4,8 +4,8 @@ export const dooarsAssamTeaProducts: Product[] = [
   {
     slug: "dooars-assam-tea",
     name: "Dooars & Assam Tea",
-    image: "/products/ctc-tea.png",
-    images: ["/products/ctc-tea.png", "/products/loose-leaf-tea.png"],
+    image: "/products/dooars.png",
+    images: ["/products/dooars.png", "/products/dooars.png"],
     description:
       "Bold, malty CTC tea sourced directly from the Dooars and Assam tea belt — brews a rich, strong cup every time.",
     longDescription:

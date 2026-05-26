@@ -35,7 +35,7 @@ export const giddapaharDarjeelingProducts: Product[] = [
       { name: "100g", price: 340, weightGrams: 100, deliveryCharge: 30, batchId: "GRAYBD1" },
     ],
     packaging: ["50g pack", "100g pack"],
-    sku: "GC-TEA-GDO-001",
+    sku: "GC-TEA-GD-001",
     brand: "Gray Cup",
     availability: "in_stock",
     googleProductCategory: "422",
