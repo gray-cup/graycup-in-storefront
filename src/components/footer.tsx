@@ -6,6 +6,7 @@ export default function Footer() {
     { href: "/track-order", label: "Track Your Order" },
     { href: "/products", label: "Products" },
     { href: "/contact", label: "Contact" },
+    { href: "/distributor-franchise", label: "Distributor & Franchise" },
   ];
 
   const socialLinks = [
