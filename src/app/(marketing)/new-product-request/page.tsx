@@ -34,8 +34,7 @@ export default function NewProductRequestPage() {
 
     const formData = new FormData(e.currentTarget);
     const data = {
-      firstName: formData.get("firstName") as string,
-      lastName: formData.get("lastName") as string,
+      name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
       category:
@@ -96,26 +95,8 @@ export default function NewProductRequestPage() {
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="firstName">First Name</Label>
-              <Input id="firstName" name="firstName" placeholder="First name" required />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="lastName">Last Name</Label>
-              <Input id="lastName" name="lastName" placeholder="Last name" required />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="you@example.com"
-                required
-              />
+              <Label htmlFor="name">Full Name</Label>
+              <Input id="name" name="name" placeholder="Your name" required />
             </div>
 
             <div className="space-y-2">
@@ -128,6 +109,17 @@ export default function NewProductRequestPage() {
                 required
               />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email">Email Address</Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
           </div>
 
           <div className="space-y-3">
@@ -149,16 +141,15 @@ export default function NewProductRequestPage() {
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="productName">Product Name / Description</Label>
-              <Input
-                id="productName"
-                name="productName"
-                placeholder="e.g., Organic Green Tea, Darjeeling First Flush"
-                required
-              />
-            </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="productName">Product Name / Description</Label>
+            <Input
+              id="productName"
+              name="productName"
+              placeholder="e.g., Organic Green Tea, Darjeeling First Flush"
+              required
+            />
           </div>
 
           <div className="space-y-2">

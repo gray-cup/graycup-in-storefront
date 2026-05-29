@@ -216,6 +216,45 @@ export type Database = {
         };
         Relationships: [];
       };
+      Consumer_Product_Request: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          phone: string;
+          category: string | null;
+          product_name: string;
+          details: string | null;
+          created_at: string;
+          status: string;
+          resolved: boolean;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          email: string;
+          phone: string;
+          category?: string | null;
+          product_name: string;
+          details?: string | null;
+          created_at?: string;
+          status?: string;
+          resolved?: boolean;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          email?: string;
+          phone?: string;
+          category?: string | null;
+          product_name?: string;
+          details?: string | null;
+          created_at?: string;
+          status?: string;
+          resolved?: boolean;
+        };
+        Relationships: [];
+      };
       call_requests: {
         Row: {
           id: string;

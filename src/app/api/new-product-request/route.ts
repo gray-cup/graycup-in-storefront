@@ -17,18 +17,6 @@ setInterval(() => {
   }
 }, RATE_LIMIT_WINDOW);
 
-interface ProductRequestData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  category: string;
-  productName: string;
-  quantity: string;
-  details: string;
-  turnstileToken: string;
-}
-
 function getClientIP(request: NextRequest): string {
   const forwarded = request.headers.get("x-forwarded-for");
   const realIP = request.headers.get("x-real-ip");
@@ -54,15 +42,11 @@ function checkRateLimit(ip: string): { allowed: boolean; resetTime?: number } {
   }
 
   if (clientData.count >= MAX_REQUESTS_PER_WINDOW) {
-    return {
-      allowed: false,
-      resetTime: clientData.resetTime,
-    };
+    return { allowed: false, resetTime: clientData.resetTime };
   }
 
   clientData.count++;
   RATE_LIMIT_STORAGE.set(ip, clientData);
-
   return { allowed: true };
 }
 
@@ -78,9 +62,7 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
       "https://challenges.cloudflare.com/turnstile/v0/siteverify",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
           secret: secretKey,
           response: token,
@@ -88,9 +70,7 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
         }),
       },
     );
-
     const result = await response.json();
-    console.log("Turnstile result:", JSON.stringify(result));
     return result.success === true;
   } catch (error) {
     console.error("Turnstile verification error:", error);
@@ -98,51 +78,26 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
   }
 }
 
-function validateProductRequestData(data: unknown): {
-  isValid: boolean;
-  errors: string[];
-} {
+function validateBody(data: unknown): { isValid: boolean; errors: string[] } {
   const errors: string[] = [];
   const body = data as Record<string, unknown>;
 
-  if (
-    !body.firstName ||
-    typeof body.firstName !== "string" ||
-    body.firstName.trim().length === 0
-  ) {
-    errors.push("First name is required");
-  }
-
-  if (
-    !body.lastName ||
-    typeof body.lastName !== "string" ||
-    body.lastName.trim().length === 0
-  ) {
-    errors.push("Last name is required");
+  if (!body.name || typeof body.name !== "string" || body.name.trim().length === 0) {
+    errors.push("Name is required");
   }
 
   if (!body.email || typeof body.email !== "string") {
     errors.push("Email is required");
   } else {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(body.email)) {
-      errors.push("Invalid email format");
-    }
+    if (!emailRegex.test(body.email)) errors.push("Invalid email format");
   }
 
-  if (
-    !body.phone ||
-    typeof body.phone !== "string" ||
-    body.phone.trim().length === 0
-  ) {
+  if (!body.phone || typeof body.phone !== "string" || body.phone.trim().length === 0) {
     errors.push("Phone number is required");
   }
 
-  if (
-    !body.productName ||
-    typeof body.productName !== "string" ||
-    body.productName.trim().length === 0
-  ) {
+  if (!body.productName || typeof body.productName !== "string" || body.productName.trim().length === 0) {
     errors.push("Product name is required");
   }
 
@@ -150,10 +105,7 @@ function validateProductRequestData(data: unknown): {
     errors.push("Security verification required");
   }
 
-  return {
-    isValid: errors.length === 0,
-    errors,
-  };
+  return { isValid: errors.length === 0, errors };
 }
 
 export async function POST(request: NextRequest) {
@@ -164,18 +116,9 @@ export async function POST(request: NextRequest) {
     if (!rateLimitResult.allowed) {
       const resetTime = rateLimitResult.resetTime || Date.now();
       const retryAfter = Math.ceil((resetTime - Date.now()) / 1000);
-
       return NextResponse.json(
-        {
-          error: "Too many requests. Please try again later.",
-          retryAfter,
-        },
-        {
-          status: 429,
-          headers: {
-            "Retry-After": retryAfter.toString(),
-          },
-        },
+        { error: "Too many requests. Please try again later.", retryAfter },
+        { status: 429, headers: { "Retry-After": retryAfter.toString() } },
       );
     }
 
@@ -183,19 +126,13 @@ export async function POST(request: NextRequest) {
     try {
       body = await request.json();
     } catch {
-      return NextResponse.json(
-        { error: "Invalid JSON in request body" },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "Invalid JSON in request body" }, { status: 400 });
     }
 
-    const validation = validateProductRequestData(body);
+    const validation = validateBody(body);
     if (!validation.isValid) {
       return NextResponse.json(
-        {
-          error: "Validation failed",
-          details: validation.errors,
-        },
+        { error: "Validation failed", details: validation.errors },
         { status: 400 },
       );
     }
@@ -208,27 +145,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const requestData: ProductRequestData = {
-      firstName: body.firstName.trim(),
-      lastName: body.lastName.trim(),
+    const { error: dbError } = await supabase.from("Consumer_Product_Request").insert({
+      name: body.name.trim(),
       email: body.email.trim().toLowerCase(),
       phone: body.phone.trim(),
-      category: body.category || "",
-      productName: body.productName.trim(),
-      quantity: body.quantity?.trim() || "",
-      details: body.details?.trim() || "",
-      turnstileToken: body.turnstileToken,
-    };
-
-    const { error: dbError } = await supabase.from("product_requests").insert({
-      first_name: requestData.firstName,
-      last_name: requestData.lastName,
-      email: requestData.email,
-      phone: requestData.phone,
-      category: requestData.category,
-      product_name: requestData.productName,
-      quantity: requestData.quantity || null,
-      details: requestData.details || null,
+      category: body.category || null,
+      product_name: body.productName.trim(),
+      details: body.details?.trim() || null,
     });
 
     if (dbError) {
@@ -240,19 +163,13 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      {
-        success: true,
-        message: "Product request submitted successfully",
-      },
+      { success: true, message: "Product request submitted successfully" },
       { status: 200 },
     );
   } catch (error) {
     console.error("Product request API error:", error);
-
     return NextResponse.json(
-      {
-        error: "Internal server error. Please try again later.",
-      },
+      { error: "Internal server error. Please try again later." },
       { status: 500 },
     );
   }
