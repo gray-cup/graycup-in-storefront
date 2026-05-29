@@ -132,9 +132,8 @@ function SuccessContent() {
             <div>
               <p className="font-medium text-amber-800">What&apos;s next?</p>
               <p className="text-amber-700 mt-1">
-                Our team will pack and hand over your order to Delhivery
-                within 1–2 business days. You&apos;ll receive a tracking ID
-                once dispatched.
+                Our team will pack and dispatch your order within 1–2 business
+                days. You&apos;ll receive a tracking ID once dispatched.
               </p>
             </div>
           </div>

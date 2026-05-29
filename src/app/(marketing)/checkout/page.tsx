@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Loader2, MapPin, Package, Truck } from "lucide-react";
+import { ArrowLeft, Loader2, MapPin, Package } from "lucide-react";
 import { toast } from "sonner";
 import { authClient, type AuthUser } from "@/lib/auth-client";
 import { useCart } from "@/components/cart-provider";
@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
+
+const FLAT_DELIVERY_CHARGE = 50;
 
 const INDIAN_STATES = [
   "Andaman and Nicobar Islands",
@@ -53,8 +55,6 @@ const INDIAN_STATES = [
   "West Bengal",
 ];
 
-type DeliveryInfo = { charge: number; estimatedDays: number } | null;
-
 export default function CheckoutPage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
@@ -72,8 +72,6 @@ export default function CheckoutPage() {
 
   const [gstNumber, setGstNumber] = useState("");
 
-  const [delivery, setDelivery] = useState<DeliveryInfo>(null);
-  const [calcLoading, setCalcLoading] = useState(false);
   const [payLoading, setPayLoading] = useState(false);
 
   // Redirect to login if not authenticated after session resolves
@@ -95,55 +93,9 @@ export default function CheckoutPage() {
       setAddress((prev) => ({ ...prev, [field]: e.target.value }));
   }
 
-  const calculateDelivery = useCallback(async () => {
-    if (!/^\d{6}$/.test(address.pincode)) {
-      toast.error("Enter a valid 6-digit pincode first");
-      return;
-    }
-
-    setCalcLoading(true);
-    setDelivery(null);
-    try {
-      // Estimate weight: ~500 g per unit quantity
-      const totalGrams = items.reduce((sum, item) => sum + item.quantity * 500, 0);
-
-      const res = await fetch("/api/delivery", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          destinationPincode: address.pincode,
-          weightGrams: totalGrams,
-        }),
-      });
-
-      const data = await res.json();
-      setDelivery({ charge: data.charge, estimatedDays: data.estimatedDays });
-      toast.success(`Delivery: ${formatPrice(data.charge)} (est. ${data.estimatedDays} days)`);
-    } catch {
-      toast.error("Delivery calculation failed. Using flat ₹60.");
-      setDelivery({ charge: 60, estimatedDays: 5 });
-    } finally {
-      setCalcLoading(false);
-    }
-  }, [address.pincode, items]);
-
-  // Re-calculate whenever the pincode reaches 6 digits
-  useEffect(() => {
-    if (/^\d{6}$/.test(address.pincode)) {
-      calculateDelivery();
-    } else {
-      setDelivery(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address.pincode]);
-
   async function handlePay() {
     if (!address.addressLine1 || !address.city || !address.state || !address.pincode) {
       toast.error("Please fill in all required address fields");
-      return;
-    }
-    if (!delivery) {
-      toast.error("Waiting for delivery calculation…");
       return;
     }
 
@@ -160,7 +112,7 @@ export default function CheckoutPage() {
             name: user?.name ?? "",
             phone: user?.phone ?? "",
           },
-          deliveryCharge: delivery.charge,
+          deliveryCharge: FLAT_DELIVERY_CHARGE,
           gstNumber: gstNumber.trim() || undefined,
         }),
       });
@@ -204,7 +156,7 @@ export default function CheckoutPage() {
   }
   if (!session || items.length === 0) return null;
 
-  const grandTotal = total + (delivery?.charge ?? 0);
+  const grandTotal = total + FLAT_DELIVERY_CHARGE;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
@@ -359,28 +311,6 @@ export default function CheckoutPage() {
             </div>
           </section>
 
-          {/* Delivery info */}
-          {delivery && (
-            <div className="flex items-start gap-3 bg-green-50 border border-green-200 rounded-lg p-4 text-sm">
-              <Truck className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-green-800">
-                  Delivery charge: {formatPrice(delivery.charge)}
-                </p>
-                <p className="text-green-700">
-                  Estimated arrival in {delivery.estimatedDays} business days
-                  via Delhivery
-                </p>
-              </div>
-            </div>
-          )}
-
-          {calcLoading && (
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              Calculating delivery…
-            </div>
-          )}
         </div>
 
         {/* ── Right: order summary ───────────────────────────────────────── */}
@@ -434,13 +364,7 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Delivery</span>
-                <span>
-                  {delivery
-                    ? formatPrice(delivery.charge)
-                    : calcLoading
-                      ? "Calculating…"
-                      : "Enter pincode"}
-                </span>
+                <span>{formatPrice(FLAT_DELIVERY_CHARGE)}</span>
               </div>
             </div>
 
@@ -455,7 +379,7 @@ export default function CheckoutPage() {
               className="w-full"
               size="lg"
               onClick={handlePay}
-              disabled={payLoading || calcLoading || !delivery}
+              disabled={payLoading}
             >
               {payLoading ? (
                 <>
@@ -468,7 +392,7 @@ export default function CheckoutPage() {
             </Button>
 
             <p className="text-xs text-center text-gray-400">
-              Secured by Cashfree · Powered by Delhivery
+              Secured by Cashfree
             </p>
           </div>
         </div>
