@@ -3,6 +3,9 @@ import createMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  images: {
+    minimumCacheTTL: 604800,
+  },
   async headers() {
     return [
       {
@@ -17,7 +20,7 @@ const nextConfig: NextConfig = {
       },
       {
         // Images: 1 week
-        source: "/:all*(svg|jpg|jpeg|png|gif|ico|webp)",
+        source: "/:all*(svg|jpg|jpeg|png|gif|ico|webp|avif)",
         headers: [
           {
             key: "Cache-Control",
