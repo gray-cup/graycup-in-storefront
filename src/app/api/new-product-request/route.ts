@@ -90,6 +90,7 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
     );
 
     const result = await response.json();
+    console.log("Turnstile result:", JSON.stringify(result));
     return result.success === true;
   } catch (error) {
     console.error("Turnstile verification error:", error);
