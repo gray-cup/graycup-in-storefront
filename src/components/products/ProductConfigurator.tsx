@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ShoppingCart, Minus, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ShoppingCart, Minus, Plus, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { ShareButton } from "./ShareButton";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ type ProductConfiguratorProps = {
 
 export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const { addToCart, openCart } = useCart();
+  const router = useRouter();
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
   const [quantity, setQuantity] = useState(1);
 
@@ -29,6 +31,11 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
         onClick: () => openCart(),
       },
     });
+  };
+
+  const handleBuyNow = () => {
+    addToCart(product, quantity, selectedVariant);
+    router.push("/checkout");
   };
 
   const incrementQuantity = () => setQuantity((q) => q + 1);
@@ -109,8 +116,16 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
         {/* Action Buttons */}
         <div className="space-y-3 pt-4">
           <Button
+            onClick={handleBuyNow}
+            className="w-full"
+            size="lg"
+          >
+            <Zap className="mr-2 h-4 w-4" />
+            Buy Now
+          </Button>
+          <Button
             onClick={handleAddToCart}
-            variant="blue"
+            variant="outline"
             className="w-full"
             size="lg"
           >
