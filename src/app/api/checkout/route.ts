@@ -41,9 +41,8 @@ export async function POST(request: NextRequest) {
     }
 
     // ── Resolve customer identity ──────────────────────────────────────────
-    const u = session?.user as
-      | (typeof session.user & { firstName?: string; lastName?: string; phone?: string })
-      | undefined;
+    type ExtendedUser = { id: string; email: string; name: string; firstName?: string; lastName?: string; phone?: string };
+    const u = session?.user as ExtendedUser | undefined;
 
     const customerName = u
       ? [u.firstName, u.lastName].filter(Boolean).join(" ").trim() || u.name || "Buyer"
