@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Minus, Plus, Trash2, ArrowLeft, Loader2 } from "lucide-react";
+import { Minus, Plus, Trash2, ArrowLeft } from "lucide-react";
 import { useCart } from "@/components/cart-provider";
-import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
@@ -15,7 +14,6 @@ import { ProductCard } from "@/components/products";
 
 export default function CartPage() {
   const { items, total, removeFromCart, updateQuantity } = useCart();
-  const { isPending } = authClient.useSession();
 
   const cartSlugs = new Set(items.map((i) => i.product.slug));
   const recommendations = products
@@ -135,20 +133,12 @@ export default function CartPage() {
                 <p>{formatPrice(total)}</p>
               </div>
 
-              {isPending ? (
-                <div className="flex justify-center py-2">
-                  <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
-                </div>
-              ) : (
-                <>
-                  <Button className="w-full" size="lg" asChild>
-                    <a href="/checkout">Proceed to Checkout</a>
-                  </Button>
-                  <p className="text-xs text-center text-gray-500">
-                    Secured checkout · Powered by Cashfree
-                  </p>
-                </>
-              )}
+              <Button className="w-full" size="lg" asChild>
+                <a href="/checkout">Proceed to Checkout</a>
+              </Button>
+              <p className="text-xs text-center text-gray-500">
+                Secured checkout · Powered by Cashfree
+              </p>
             </div>
           </div>
         </div>
