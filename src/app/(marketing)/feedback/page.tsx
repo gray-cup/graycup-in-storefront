@@ -178,7 +178,7 @@ export default function FeedbackPage() {
               id="feedback"
               name="feedback"
               placeholder="Please share your experience, suggestions, or concerns in detail..."
-              rows={5}
+              rows={7}
               required
             />
           </div>

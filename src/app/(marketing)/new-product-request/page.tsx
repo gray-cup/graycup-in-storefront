@@ -158,7 +158,7 @@ export default function NewProductRequestPage() {
               id="details"
               name="details"
               placeholder="Tell us more about the product you're looking for, including quantity, specifications, or any specific requirements..."
-              rows={4}
+              rows={7}
             />
           </div>
 

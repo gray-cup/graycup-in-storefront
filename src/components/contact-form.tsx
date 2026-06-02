@@ -294,7 +294,7 @@ export function ContactForm() {
               id="message"
               value={formData.message}
               onChange={(e) => handleInputChange("message", e.target.value)}
-              rows={5}
+              rows={7}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-colors resize-vertical bg-white ${
                 errors.message ? "border-red-300 bg-red-50" : "border-gray-300"
               }`}
