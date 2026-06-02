@@ -91,7 +91,6 @@ export const address = pgTable("address", {
 export const order = pgTable("order", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: text("user_id")
-    .notNull()
     .references(() => user.id, { onDelete: "restrict" }),
   addressSnapshot: jsonb("address_snapshot").notNull(),
   items: jsonb("items").notNull(),

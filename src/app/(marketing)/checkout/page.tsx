@@ -62,6 +62,8 @@ export default function CheckoutPage() {
 
   const user = session?.user as AuthUser | undefined;
 
+  const [guestInfo, setGuestInfo] = useState({ name: "", email: "", phone: "" });
+
   const [address, setAddress] = useState({
     addressLine1: "",
     addressLine2: "",
@@ -71,17 +73,9 @@ export default function CheckoutPage() {
   });
 
   const [gstNumber, setGstNumber] = useState("");
-
   const [payLoading, setPayLoading] = useState(false);
 
-  // Redirect to login if not authenticated after session resolves
-  useEffect(() => {
-    if (!isPending && !session) {
-      router.replace("/auth/login?redirect=/checkout");
-    }
-  }, [session, isPending, router]);
-
-  // Redirect if cart is empty
+  // Redirect if cart is empty (only after session resolves)
   useEffect(() => {
     if (!isPending && items.length === 0) {
       router.replace("/products");
@@ -93,15 +87,33 @@ export default function CheckoutPage() {
       setAddress((prev) => ({ ...prev, [field]: e.target.value }));
   }
 
+  function setGuestField(field: keyof typeof guestInfo) {
+    return (e: React.ChangeEvent<HTMLInputElement>) =>
+      setGuestInfo((prev) => ({ ...prev, [field]: e.target.value }));
+  }
+
   async function handlePay() {
     if (!address.addressLine1 || !address.city || !address.state || !address.pincode) {
       toast.error("Please fill in all required address fields");
       return;
     }
 
+    if (!user) {
+      if (!guestInfo.name.trim() || !guestInfo.email.trim() || !guestInfo.phone.trim()) {
+        toast.error("Please fill in your name, email and phone");
+        return;
+      }
+    }
+
+    const customerName = user
+      ? [user.firstName, user.lastName].filter(Boolean).join(" ") || user.name
+      : guestInfo.name.trim();
+
+    const customerEmail = user ? user.email : guestInfo.email.trim();
+    const customerPhone = user ? user.phone ?? "" : guestInfo.phone.trim();
+
     setPayLoading(true);
     try {
-      // 1. Create order in our DB + Cashfree
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -109,11 +121,14 @@ export default function CheckoutPage() {
           items,
           address: {
             ...address,
-            name: user?.name ?? "",
-            phone: user?.phone ?? "",
+            name: customerName,
+            phone: customerPhone,
           },
           deliveryCharge: FLAT_DELIVERY_CHARGE,
           gstNumber: gstNumber.trim() || undefined,
+          guest: !user
+            ? { name: customerName, email: customerEmail, phone: customerPhone }
+            : undefined,
         }),
       });
 
@@ -124,7 +139,6 @@ export default function CheckoutPage() {
         return;
       }
 
-      // 2. Launch Cashfree checkout (browser-only SDK)
       const { load } = await import("@cashfreepayments/cashfree-js");
       const cashfree = await load({
         mode:
@@ -146,7 +160,6 @@ export default function CheckoutPage() {
     }
   }
 
-  // ── Loading / unauthenticated guard ───────────────────────────────────────
   if (isPending) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -154,13 +167,12 @@ export default function CheckoutPage() {
       </div>
     );
   }
-  if (!session || items.length === 0) return null;
+  if (items.length === 0) return null;
 
   const grandTotal = total + FLAT_DELIVERY_CHARGE;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
-      {/* Back link */}
       <div className="mb-6">
         <Link
           href="/cart"
@@ -174,34 +186,81 @@ export default function CheckoutPage() {
       <h1 className="text-3xl font-bold font-poppins mb-8">Checkout</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
-        {/* ── Left: address ─────────────────────────────────────────────── */}
+        {/* ── Left ──────────────────────────────────────────────────────── */}
         <div className="lg:col-span-3 space-y-8">
-          {/* Buyer info (read-only) */}
+
+          {/* Buyer details */}
           <section>
             <div className="flex items-center gap-2 mb-4">
               <Package className="h-4 w-4 text-gray-500" />
               <h2 className="font-semibold text-lg">Your Details</h2>
             </div>
-            <div className="grid grid-cols-2 gap-3 text-sm bg-gray-50 rounded-lg p-4">
-              <div>
-                <p className="text-gray-500">Name</p>
-                <p className="font-medium">
-                  {[user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
-                    user?.name}
-                </p>
+
+            {user ? (
+              <div className="grid grid-cols-2 gap-3 text-sm bg-gray-50 rounded-lg p-4">
+                <div>
+                  <p className="text-gray-500">Name</p>
+                  <p className="font-medium">
+                    {[user.firstName, user.lastName].filter(Boolean).join(" ") || user.name}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Email</p>
+                  <p className="font-medium">{user.email}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Phone</p>
+                  <p className="font-medium">{user.phone || "—"}</p>
+                </div>
               </div>
-              <div>
-                <p className="text-gray-500">Email</p>
-                <p className="font-medium">{user?.email}</p>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 rounded-lg p-3">
+                  <span>Checking out as guest.</span>
+                  <Link href="/auth/login?redirect=/checkout" className="text-black underline underline-offset-2 font-medium">
+                    Sign in
+                  </Link>
+                  <span>for faster checkout next time.</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="guestName">Full Name <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="guestName"
+                      placeholder="Your name"
+                      value={guestInfo.name}
+                      onChange={setGuestField("name")}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="guestPhone">Phone <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="guestPhone"
+                      type="tel"
+                      placeholder="+91 9876543210"
+                      value={guestInfo.phone}
+                      onChange={setGuestField("phone")}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="guestEmail">Email Address <span className="text-red-500">*</span></Label>
+                  <Input
+                    id="guestEmail"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={guestInfo.email}
+                    onChange={setGuestField("email")}
+                    required
+                  />
+                </div>
               </div>
-              <div>
-                <p className="text-gray-500">Phone</p>
-                <p className="font-medium">{user?.phone || "—"}</p>
-              </div>
-            </div>
+            )}
           </section>
 
-          {/* Address form */}
+          {/* Address */}
           <section>
             <div className="flex items-center gap-2 mb-4">
               <MapPin className="h-4 w-4 text-gray-500" />
@@ -276,20 +335,16 @@ export default function CheckoutPage() {
                   required
                   className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 >
-                  <option value="" disabled>
-                    Select state
-                  </option>
+                  <option value="" disabled>Select state</option>
                   {INDIAN_STATES.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
+                    <option key={s} value={s}>{s}</option>
                   ))}
                 </select>
               </div>
             </div>
           </section>
 
-          {/* GST (optional) */}
+          {/* GST */}
           <section>
             <h2 className="font-semibold text-lg mb-3">GST Details</h2>
             <div className="space-y-1.5">
@@ -310,7 +365,6 @@ export default function CheckoutPage() {
               </p>
             </div>
           </section>
-
         </div>
 
         {/* ── Right: order summary ───────────────────────────────────────── */}
@@ -319,7 +373,6 @@ export default function CheckoutPage() {
             <h2 className="font-semibold text-lg">Order Summary</h2>
             <Separator />
 
-            {/* Cart items */}
             <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
               {items.map((item, idx) => (
                 <div key={idx} className="flex gap-3">
@@ -332,22 +385,15 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">
-                      {item.product.name}
-                    </p>
+                    <p className="text-sm font-medium truncate">{item.product.name}</p>
                     {item.selectedVariant && (
-                      <p className="text-xs text-gray-500">
-                        {item.selectedVariant.name}
-                      </p>
+                      <p className="text-xs text-gray-500">{item.selectedVariant.name}</p>
                     )}
-                    <p className="text-xs text-gray-500">
-                      Qty: {item.quantity}
-                    </p>
+                    <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                   </div>
                   <p className="text-sm font-semibold whitespace-nowrap">
                     {formatPrice(
-                      (item.selectedVariant?.price ?? item.product.priceRange.min) *
-                        item.quantity,
+                      (item.selectedVariant?.price ?? item.product.priceRange.min) * item.quantity,
                     )}
                   </p>
                 </div>
@@ -356,7 +402,6 @@ export default function CheckoutPage() {
 
             <Separator />
 
-            {/* Totals */}
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-600">Subtotal</span>
@@ -391,9 +436,7 @@ export default function CheckoutPage() {
               )}
             </Button>
 
-            <p className="text-xs text-center text-gray-400">
-              Secured by Cashfree
-            </p>
+            <p className="text-xs text-center text-gray-400">Secured by Cashfree</p>
           </div>
         </div>
       </div>
