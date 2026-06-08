@@ -116,6 +116,17 @@ export const order = pgTable("order", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
+// ─── Product Reviews ───────────────────────────────────────────────────────
+
+export const review = pgTable("review", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  productSlug: text("product_slug").notNull(),
+  fullName: text("full_name").notNull(),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export type Review = typeof review.$inferSelect;
 export type User = typeof user.$inferSelect;
 export type Address = typeof address.$inferSelect;
 export type Order = typeof order.$inferSelect;

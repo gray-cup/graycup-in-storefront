@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getProductBySlug, getAllProductSlugs } from "@/data/products";
-import { ProductConfigurator, ProductImageSlideshow } from "@/components/products";
+import { ProductConfigurator, ProductImageSlideshow, ReviewSection } from "@/components/products";
 import { Badge } from "@/components/ui/badge";
 import {
   Accordion,
@@ -202,6 +202,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
               productName={product.name}
             />
           )}
+
+          <ReviewSection productSlug={slug} />
         </div>
       </div>
     </div>

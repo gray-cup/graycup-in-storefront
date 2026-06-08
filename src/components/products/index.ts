@@ -4,3 +4,4 @@ export { ShareButton } from "./ShareButton";
 export { ProductConfigurator } from "./ProductConfigurator";
 export { PriceDisplay } from "./PriceDisplay";
 export { ProductImageSlideshow } from "./ProductImageSlideshow";
+export { ReviewSection } from "./ReviewSection";
