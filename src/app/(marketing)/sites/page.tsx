@@ -171,6 +171,54 @@ export default function SitesPage() {
             Explore PureCha →
           </Link>
         </div>
+
+        {/* OdishaCoffee Card */}
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 className="text-2xl font-semibold text-gray-900">Odisha Coffee</h2>
+          <p className="mt-3 text-gray-600">
+            Dedicated to coffee grown in Odisha — origin stories, farm profiles,
+            and the region's emerging specialty coffee scene.
+          </p>
+
+          <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-gray-600">
+            <li>Origin stories and farm profiles</li>
+            <li>Odisha's specialty coffee varieties</li>
+            <li>Direct sourcing information</li>
+          </ul>
+
+          <Link
+            href="https://odishacoffee.com"
+            className="mt-6 inline-block font-medium text-primary-600 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Explore Odisha Coffee →
+          </Link>
+        </div>
+
+        {/* GrayBulk Card */}
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 className="text-2xl font-semibold text-gray-900">GrayBulk</h2>
+          <p className="mt-3 text-gray-600">
+            A marketplace to buy machines and commodities in bulk directly from
+            manufacturers and wholesalers — for businesses sourcing at scale.
+          </p>
+
+          <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-gray-600">
+            <li>Machinery and equipment from manufacturers</li>
+            <li>Bulk commodity sourcing</li>
+            <li>Direct wholesale pricing</li>
+          </ul>
+
+          <Link
+            href="https://graybulk.com"
+            className="mt-6 inline-block font-medium text-primary-600 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Buy in Bulk at GrayBulk →
+          </Link>
+        </div>
       </section>
 
       {/* Ownership Note */}
