@@ -91,6 +91,9 @@ export const metadata: Metadata = {
       "We sell indian tea, coffee and matcha to people who care about quality.",
     images: ["https://b2b.graycup.in/og.png"],
   },
+  other: {
+    "facebook-domain-verification": "logm65vjqg9own5svlo4llym2l4cg3",
+  },
 };
 
 export default function RootLayout({
