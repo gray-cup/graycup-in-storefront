@@ -5,7 +5,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CartButton } from "@/components/cart-button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, User } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 const dropdowns: Record<string, [string, string][]> = {
   Others: [
@@ -53,6 +54,8 @@ function NavDropdown({ label, items }: { label: string; items: [string, string][
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session } = authClient.useSession();
+  const accountHref = session?.user ? "/account/subscriptions" : "/auth/login";
 
   return (
     <>
@@ -108,6 +111,13 @@ export function Navbar() {
             >
               Buy via Fast
             </a>
+            <Link
+              href={accountHref}
+              className="hidden sm:inline-flex items-center rounded-md p-2 hover:bg-neutral-100"
+              aria-label="My Account"
+            >
+              <User className="h-5 w-5" />
+            </Link>
             <CartButton />
             {/* Mobile menu button */}
             <button
@@ -172,6 +182,7 @@ export function Navbar() {
               ["Feedback", "/feedback"],
               ["About Us", "/about"],
               ["Guides", "/guides"],
+              [session?.user ? "My Subscriptions" : "Login", accountHref],
             ].map(([label, href]) => (
               <Link
                 key={href}

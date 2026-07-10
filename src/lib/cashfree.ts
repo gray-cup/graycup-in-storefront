@@ -18,6 +18,36 @@ export function cfHeaders(extra: Record<string, string> = {}): HeadersInit {
   };
 }
 
+// ── Subscriptions (/plans, /subscriptions) ──────────────────────────────────
+// Subscriptions use a newer api-version than one-off orders/links.
+export const CF_SUBSCRIPTION_VERSION = "2025-01-01";
+
+export function cfSubscriptionHeaders(
+  extra: Record<string, string> = {},
+): HeadersInit {
+  return cfHeaders({ "x-api-version": CF_SUBSCRIPTION_VERSION, ...extra });
+}
+
+// Cashfree subscription_status values:
+// INITIALIZED | ACTIVE | ON_HOLD | COMPLETED | CANCELLED | EXPIRED
+export function mapSubscriptionStatus(
+  cfStatus: string,
+): "pending" | "active" | "paused" | "ended" {
+  switch (cfStatus) {
+    case "ACTIVE":
+      return "active";
+    case "ON_HOLD":
+      return "paused";
+    case "COMPLETED":
+    case "CANCELLED":
+    case "EXPIRED":
+      return "ended";
+    case "INITIALIZED":
+    default:
+      return "pending";
+  }
+}
+
 // ── Order status → internal payment status ─────────────────────────────────
 // Cashfree order_status values: ACTIVE | PAID | EXPIRED | TERMINATED | TERMINATION_REQUESTED
 // Cashfree payment_status values: SUCCESS | FAILED | PENDING | NOT_ATTEMPTED | USER_DROPPED | FLAGGED | CANCELLED | VOID

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ShoppingCart, Minus, Plus, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { ShareButton } from "./ShareButton";
+import { SubscribeButton } from "./SubscribeButton";
 import { Button } from "@/components/ui/button";
 import { CardHeader, Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -132,6 +133,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
             <ShoppingCart className="mr-2 h-4 w-4" />
             Add to Cart
           </Button>
+          <SubscribeButton product={product} variant={selectedVariant} />
           <div className="flex justify-center">
             <ShareButton productName={product.name} />
           </div>

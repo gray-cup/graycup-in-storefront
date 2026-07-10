@@ -116,6 +116,25 @@ export const order = pgTable("order", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
+// ─── Subscriptions ─────────────────────────────────────────────────────────
+//
+// status – pending (INITIALIZED) | active | paused (ON_HOLD) | ended (COMPLETED/CANCELLED/EXPIRED)
+// planDetails – full plan_details payload sent to Cashfree, kept for reference
+
+export const subscription = pgTable("subscription", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id").references(() => user.id, { onDelete: "restrict" }),
+  subscriptionId: text("subscription_id").notNull().unique(),
+  cfSubscriptionId: text("cf_subscription_id"),
+  status: text("status").notNull().default("pending"),
+  planDetails: jsonb("plan_details").notNull(),
+  customerName: text("customer_name").notNull().default(""),
+  customerEmail: text("customer_email").notNull().default(""),
+  customerPhone: text("customer_phone").notNull().default(""),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
 // ─── Product Reviews ───────────────────────────────────────────────────────
 
 export const review = pgTable("review", {

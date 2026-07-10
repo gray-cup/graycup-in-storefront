@@ -8,6 +8,13 @@
       "when": 1780406890210,
       "tag": "0000_dashing_shinko_yamashiro",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1783667784922,
+      "tag": "0001_panoramic_ultimates",
+      "breakpoints": true
     }
   ]
 }
