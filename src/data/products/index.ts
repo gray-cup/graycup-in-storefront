@@ -6,6 +6,7 @@ export { looseLeafTeaProducts } from "./loose-leaf-tea";
 export { instantCoffeeProducts } from "./instant-coffee";
 export { dooarsAssamTeaProducts } from "./dooars-assam-tea";
 export { giddapaharDarjeelingProducts } from "./giddapahar-darjeeling";
+export { koraputCoffeeProducts } from "./koraput-coffee";
 
 import { coffeeProducts } from "./coffee";
 import { ctcTeaProducts } from "./ctc-tea";
@@ -13,6 +14,7 @@ import { looseLeafTeaProducts } from "./loose-leaf-tea";
 import { instantCoffeeProducts } from "./instant-coffee";
 import { dooarsAssamTeaProducts } from "./dooars-assam-tea";
 import { giddapaharDarjeelingProducts } from "./giddapahar-darjeeling";
+import { koraputCoffeeProducts } from "./koraput-coffee";
 import type { Product } from "./types";
 
 // Combined array of all products
@@ -22,6 +24,7 @@ export const products: Product[] = [
   ...ctcTeaProducts,
   ...looseLeafTeaProducts,
   ...coffeeProducts,
+  ...koraputCoffeeProducts,
   ...instantCoffeeProducts,
 ];
 
