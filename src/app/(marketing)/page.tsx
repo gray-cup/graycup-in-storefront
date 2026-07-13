@@ -5,6 +5,7 @@ import {
   instantCoffeeProducts,
   dooarsAssamTeaProducts,
   giddapaharDarjeelingProducts,
+  koraputCoffeeProducts,
 } from "@/data/products";
 import { HeroSection, AnimatedProductRow, BrandNarrative } from "@/components/home";
 
@@ -23,12 +24,13 @@ export default function Home() {
               {/* Featured Products Section */}
               <div id="products" className="py-20 bg-white">
                 <div className="max-w-6xl mx-auto px-4 lg:px-6">
+                  <AnimatedProductRow title="Recently Added" products={koraputCoffeeProducts} delay={0} />
                   <AnimatedProductRow title="Dooars & Assam Tea" products={dooarsAssamTeaProducts} delay={0} />
                   <AnimatedProductRow title="Giddapahar Darjeeling" products={giddapaharDarjeelingProducts} delay={0.05} />
                   <AnimatedProductRow title="CTC Tea" products={ctcTeaProducts} delay={0.1} />
                   <AnimatedProductRow
                     title="Coffee"
-                    products={[...coffeeProducts, ...instantCoffeeProducts]}
+                    products={[...coffeeProducts, ...instantCoffeeProducts, ...koraputCoffeeProducts]}
                     delay={0.1}
                   />
                   <AnimatedProductRow
