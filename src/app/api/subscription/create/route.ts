@@ -4,12 +4,16 @@ import { db } from "@/lib/db";
 import { subscription } from "@/lib/schema";
 import { CF_BASE, cfSubscriptionHeaders } from "@/lib/cashfree";
 
+interface SubscriptionItem {
+  name: string;
+  price: number;
+}
+
 interface SubscriptionRequest {
   customerName: string;
   customerEmail: string;
   customerPhone: string;
-  planName: string;
-  planAmount: number;
+  items: SubscriptionItem[];
   planIntervalType: "DAY" | "WEEK" | "MONTH" | "YEAR";
   planIntervals?: number;
   planMaxCycles?: number;
@@ -31,19 +35,27 @@ export async function POST(request: NextRequest) {
       customerName,
       customerEmail,
       customerPhone,
-      planName,
-      planAmount,
+      items,
       planIntervalType,
       planIntervals = 1,
       planMaxCycles = 12,
     } = body;
 
-    if (!customerName || !customerEmail || !customerPhone || !planName || !planAmount) {
+    if (
+      !customerName ||
+      !customerEmail ||
+      !customerPhone ||
+      !items?.length ||
+      items.some((item) => !item.name || !item.price)
+    ) {
       return NextResponse.json(
         { error: "Missing required subscription fields" },
         { status: 400 },
       );
     }
+
+    const planAmount = items.reduce((sum, item) => sum + item.price, 0);
+    const planName = items.map((item) => item.name).join(" + ").slice(0, 40);
 
     const subscriptionId = `sub_${Date.now()}_${Math.random()
       .toString(36)
@@ -61,6 +73,8 @@ export async function POST(request: NextRequest) {
       plan_interval_type: planIntervalType,
       plan_currency: "INR",
     };
+
+    const dbPlanDetails = { ...planDetails, items };
 
     const payload = {
       subscription_id: subscriptionId,
@@ -102,7 +116,7 @@ export async function POST(request: NextRequest) {
       subscriptionId,
       cfSubscriptionId: data.cf_subscription_id?.toString() ?? null,
       status: "pending",
-      planDetails,
+      planDetails: dbPlanDetails,
       customerName,
       customerEmail,
       customerPhone,

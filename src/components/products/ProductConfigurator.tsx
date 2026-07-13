@@ -133,7 +133,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
             <ShoppingCart className="mr-2 h-4 w-4" />
             Add to Cart
           </Button>
-          <SubscribeButton product={product} variant={selectedVariant} />
+          <SubscribeButton product={product} />
           <div className="flex justify-center">
             <ShareButton productName={product.name} />
           </div>
