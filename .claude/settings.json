@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(wc -l /Users/graycup/Documents/GitHub/graycup-in-storefront/src/data/products/*.ts)",
-      "Bash(node -e \"const p = require\\('/Users/graycup/Documents/GitHub/graycup-in-storefront/node_modules/next/package.json'\\); console.log\\(p.version\\)\")"
+      "Bash(node -e \"const p = require\\('/Users/graycup/Documents/GitHub/graycup-in-storefront/node_modules/next/package.json'\\); console.log\\(p.version\\)\")",
+      "Bash(npx eslint *)"
     ],
     "additionalDirectories": [
       "/Users/graycup/.claude/projects/-Users-graycup-Documents-GitHub-graycup-in-storefront"

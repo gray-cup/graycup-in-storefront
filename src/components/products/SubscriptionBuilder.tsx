@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { Loader2, Repeat } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, CreditCard, Loader2, Repeat } from "lucide-react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ type SubscriptionBuilderProps = {
 const MIN_MONTHS = 1;
 const MAX_MONTHS = 36;
 const DEFAULT_MONTHS = 6;
+const UPFRONT_DISCOUNT_RATE = 0.05;
 
 export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuilderProps) {
   const { data: session } = authClient.useSession();
@@ -28,6 +30,7 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
   const [primaryVariant, setPrimaryVariant] = useState(product.variants[0]);
   const [months, setMonths] = useState(DEFAULT_MONTHS);
   const [selectedAddons, setSelectedAddons] = useState<Record<string, ProductVariant>>({});
+  const [paymentType, setPaymentType] = useState<"recurring" | "upfront">("recurring");
 
   const [name, setName] = useState(session?.user?.name ?? "");
   const [email, setEmail] = useState(session?.user?.email ?? "");
@@ -45,6 +48,9 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
   }, [product.name, primaryVariant, addonProducts, selectedAddons]);
 
   const monthlyTotal = items.reduce((sum, item) => sum + item.price, 0);
+  const fullTotal = monthlyTotal * months;
+  const upfrontTotal = Math.round(fullTotal * (1 - UPFRONT_DISCOUNT_RATE) * 100) / 100;
+  const upfrontSavings = fullTotal - upfrontTotal;
 
   const toggleAddon = (addonProduct: Product, checked: boolean) => {
     setSelectedAddons((prev) => {
@@ -70,19 +76,33 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
 
     setLoading(true);
     try {
-      const res = await fetch("/api/subscription/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customerName: name,
-          customerEmail: email,
-          customerPhone: phone,
-          items,
-          planIntervalType: "MONTH",
-          planIntervals: 1,
-          planMaxCycles: months,
-        }),
-      });
+      const isUpfront = paymentType === "upfront";
+      const res = await fetch(
+        isUpfront ? "/api/subscription/create-upfront" : "/api/subscription/create",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(
+            isUpfront
+              ? {
+                  customerName: name,
+                  customerEmail: email,
+                  customerPhone: phone,
+                  items,
+                  months,
+                }
+              : {
+                  customerName: name,
+                  customerEmail: email,
+                  customerPhone: phone,
+                  items,
+                  planIntervalType: "MONTH",
+                  planIntervals: 1,
+                  planMaxCycles: months,
+                },
+          ),
+        },
+      );
 
       const data = await res.json();
 
@@ -99,7 +119,7 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
       });
 
       await cashfree.checkout({
-        paymentSessionId: data.subscriptionSessionId,
+        paymentSessionId: data.subscriptionSessionId ?? data.paymentSessionId,
         redirectTarget: "_self",
       });
     } catch (error) {
@@ -175,63 +195,142 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
         {addonProducts.length > 0 && (
           <div className="space-y-3">
             <Label>Add more products to your monthly delivery</Label>
-            <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {addonProducts.map((addonProduct) => {
                 const selectedVariant = selectedAddons[addonProduct.slug];
                 const isSelected = Boolean(selectedVariant);
                 return (
-                  <div
+                  <motion.button
                     key={addonProduct.slug}
-                    className="flex items-center gap-3 rounded-lg border p-3"
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => toggleAddon(addonProduct, !isSelected)}
+                    whileTap={{ scale: 0.96 }}
+                    className={`group relative flex aspect-square flex-col overflow-hidden rounded-lg border text-left transition-colors ${
+                      isSelected
+                        ? "border-primary ring-2 ring-primary"
+                        : "border-input hover:border-primary/50"
+                    }`}
                   >
-                    <input
-                      type="checkbox"
-                      id={`addon-${addonProduct.slug}`}
-                      checked={isSelected}
-                      onChange={(e) => toggleAddon(addonProduct, e.target.checked)}
-                      className="h-4 w-4 accent-primary"
-                    />
-                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md border">
+                    <div className="relative flex-1">
                       <Image
                         src={addonProduct.image}
                         alt={addonProduct.name}
                         fill
                         className="object-cover"
                       />
+                      <AnimatePresence>
+                        {isSelected && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.5 }}
+                            transition={{ duration: 0.15 }}
+                            className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground shadow"
+                          >
+                            <Check className="h-4 w-4" />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
-                    <label htmlFor={`addon-${addonProduct.slug}`} className="flex-1 cursor-pointer">
-                      <p className="text-sm font-medium">{addonProduct.name}</p>
-                    </label>
-                    {isSelected && addonProduct.variants.length > 1 ? (
-                      <select
-                        value={selectedVariant!.name}
-                        onChange={(e) => {
-                          const variant = addonProduct.variants.find(
-                            (v) => v.name === e.target.value,
-                          );
-                          if (variant) setAddonVariant(addonProduct, variant);
-                        }}
-                        className="h-8 rounded-md border border-input bg-background px-2 text-xs"
-                      >
-                        {addonProduct.variants.map((variant) => (
-                          <option key={variant.name} value={variant.name}>
-                            {variant.name} - {CURRENCY.symbol}
-                            {variant.price.toLocaleString(CURRENCY.locale)}
-                          </option>
-                        ))}
-                      </select>
-                    ) : (
-                      <span className="text-sm text-muted-foreground">
-                        {CURRENCY.symbol}
-                        {addonProduct.variants[0].price.toLocaleString(CURRENCY.locale)}
-                      </span>
-                    )}
-                  </div>
+                    <div className="space-y-1 bg-background/95 p-2">
+                      <p className="line-clamp-1 text-xs font-medium">{addonProduct.name}</p>
+                      {isSelected && addonProduct.variants.length > 1 ? (
+                        <select
+                          value={selectedVariant!.name}
+                          onClick={(e) => e.stopPropagation()}
+                          onChange={(e) => {
+                            const variant = addonProduct.variants.find(
+                              (v) => v.name === e.target.value,
+                            );
+                            if (variant) setAddonVariant(addonProduct, variant);
+                          }}
+                          className="h-7 w-full rounded-md border border-input bg-background px-1 text-[11px]"
+                        >
+                          {addonProduct.variants.map((variant) => (
+                            <option key={variant.name} value={variant.name}>
+                              {variant.name} - {CURRENCY.symbol}
+                              {variant.price.toLocaleString(CURRENCY.locale)}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <p className="text-xs text-muted-foreground">
+                          {CURRENCY.symbol}
+                          {addonProduct.variants[0].price.toLocaleString(CURRENCY.locale)}
+                        </p>
+                      )}
+                    </div>
+                  </motion.button>
                 );
               })}
             </div>
           </div>
         )}
+
+        {/* Payment type */}
+        <div className="space-y-2">
+          <Label>How would you like to pay?</Label>
+          <div className="relative grid grid-cols-2 rounded-lg border bg-muted p-1">
+            <motion.div
+              layout
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              className="absolute inset-y-1 w-[calc(50%-0.25rem)] rounded-md bg-background shadow"
+              style={{ left: paymentType === "recurring" ? "0.25rem" : "50%" }}
+            />
+            <button
+              type="button"
+              onClick={() => setPaymentType("recurring")}
+              className={`relative z-10 flex items-center justify-center gap-2 rounded-md py-2 text-sm font-medium transition-colors ${
+                paymentType === "recurring" ? "text-foreground" : "text-muted-foreground"
+              }`}
+            >
+              <Repeat className="h-4 w-4" />
+              Auto-renew monthly
+            </button>
+            <button
+              type="button"
+              onClick={() => setPaymentType("upfront")}
+              className={`relative z-10 flex items-center justify-center gap-2 rounded-md py-2 text-sm font-medium transition-colors ${
+                paymentType === "upfront" ? "text-foreground" : "text-muted-foreground"
+              }`}
+            >
+              <CreditCard className="h-4 w-4" />
+              Pay upfront
+              <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
+                5% off
+              </span>
+            </button>
+          </div>
+          <AnimatePresence mode="wait">
+            {paymentType === "upfront" ? (
+              <motion.p
+                key="upfront-hint"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="text-xs text-muted-foreground"
+              >
+                Pay the full {months}-month total in one go via the payment gateway and save 5%.
+                No auto-renewal — start a new subscription when it ends.
+              </motion.p>
+            ) : (
+              <motion.p
+                key="recurring-hint"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="text-xs text-muted-foreground"
+              >
+                We&apos;ll charge {CURRENCY.symbol}
+                {monthlyTotal.toLocaleString(CURRENCY.locale)} automatically every month for{" "}
+                {months} {months > 1 ? "months" : "month"}. Cancel anytime.
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       <div>
@@ -258,11 +357,52 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
                 {monthlyTotal.toLocaleString(CURRENCY.locale)}
               </span>
             </div>
-            <p className="text-xs text-muted-foreground">
-              Runs for {months} {months > 1 ? "months" : "month"} (
-              {CURRENCY.symbol}
-              {(monthlyTotal * months).toLocaleString(CURRENCY.locale)} total). Cancel anytime.
-            </p>
+            <AnimatePresence mode="wait">
+              {paymentType === "upfront" ? (
+                <motion.div
+                  key="upfront-total"
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.15 }}
+                  className="space-y-1"
+                >
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">
+                      {months} {months > 1 ? "months" : "month"} total
+                    </span>
+                    <span className="text-muted-foreground line-through">
+                      {CURRENCY.symbol}
+                      {fullTotal.toLocaleString(CURRENCY.locale)}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between font-semibold text-primary">
+                    <span>You pay today</span>
+                    <span>
+                      {CURRENCY.symbol}
+                      {upfrontTotal.toLocaleString(CURRENCY.locale)}
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    You save {CURRENCY.symbol}
+                    {upfrontSavings.toLocaleString(CURRENCY.locale)} paying upfront.
+                  </p>
+                </motion.div>
+              ) : (
+                <motion.p
+                  key="recurring-total"
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.15 }}
+                  className="text-xs text-muted-foreground"
+                >
+                  Runs for {months} {months > 1 ? "months" : "month"} (
+                  {CURRENCY.symbol}
+                  {fullTotal.toLocaleString(CURRENCY.locale)} total). Cancel anytime.
+                </motion.p>
+              )}
+            </AnimatePresence>
 
             <div className="space-y-3 border-t pt-4">
               <div className="space-y-2">
@@ -296,14 +436,20 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
               </div>
             </div>
 
-            <Button onClick={handleSubscribe} disabled={loading} className="w-full" size="lg">
-              {loading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Repeat className="mr-2 h-4 w-4" />
-              )}
-              Start Subscription
-            </Button>
+            <motion.div whileTap={{ scale: 0.98 }}>
+              <Button onClick={handleSubscribe} disabled={loading} className="w-full" size="lg">
+                {loading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : paymentType === "upfront" ? (
+                  <CreditCard className="mr-2 h-4 w-4" />
+                ) : (
+                  <Repeat className="mr-2 h-4 w-4" />
+                )}
+                {paymentType === "upfront"
+                  ? `Pay ${CURRENCY.symbol}${upfrontTotal.toLocaleString(CURRENCY.locale)} Now`
+                  : "Start Subscription"}
+              </Button>
+            </motion.div>
           </CardContent>
         </Card>
       </div>
