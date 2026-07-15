@@ -9,10 +9,19 @@ interface SubscriptionItem {
   price: number;
 }
 
+interface DeliveryAddress {
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  pincode: string;
+}
+
 interface SubscriptionRequest {
   customerName: string;
   customerEmail: string;
   customerPhone: string;
+  address: DeliveryAddress;
   items: SubscriptionItem[];
   planIntervalType: "DAY" | "WEEK" | "MONTH" | "YEAR";
   planIntervals?: number;
@@ -35,6 +44,7 @@ export async function POST(request: NextRequest) {
       customerName,
       customerEmail,
       customerPhone,
+      address,
       items,
       planIntervalType,
       planIntervals = 1,
@@ -50,6 +60,13 @@ export async function POST(request: NextRequest) {
     ) {
       return NextResponse.json(
         { error: "Missing required subscription fields" },
+        { status: 400 },
+      );
+    }
+
+    if (!address?.addressLine1 || !address?.city || !address?.state || !address?.pincode) {
+      return NextResponse.json(
+        { error: "Complete delivery address required" },
         { status: 400 },
       );
     }
@@ -74,7 +91,7 @@ export async function POST(request: NextRequest) {
       plan_currency: "INR",
     };
 
-    const dbPlanDetails = { ...planDetails, items };
+    const dbPlanDetails = { ...planDetails, items, address };
 
     const payload = {
       subscription_id: subscriptionId,

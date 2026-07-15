@@ -14,7 +14,7 @@ function mapAvailability(availability: string): string {
 }
 
 export function ProductSchema({ product }: ProductSchemaProps) {
-  const baseUrl = "https://b2b.graycup.in";
+  const baseUrl = "https://graycup.in";
   const productUrl = `${baseUrl}/products/${product.slug}`;
   const imageUrl = product.image.startsWith("http")
     ? product.image

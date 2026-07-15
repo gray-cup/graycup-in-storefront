@@ -3,7 +3,7 @@
 Go [Preview](https://.graycup.org)
 
 
-Product Feed for Google at /feeds/products.xml route (https://b2b.graycup.in/feeds/products.xml)
+Product Feed for Google at /feeds/products.xml route (https://graycup.in/feeds/products.xml)
 
 Other Links
 
@@ -32,7 +32,7 @@ Buy coffee or tea:
 
 Bulk coffee or tea:
 
-[https://b2b.graycup.in](https://b2b.graycup.in)
+[https://graycup.in](https://graycup.in)
 
 [https://bulkgreencoffee.com](https://bulkgreencoffee.com)
 

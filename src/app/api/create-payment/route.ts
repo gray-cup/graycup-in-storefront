@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     const expiryTime = new Date();
     expiryTime.setFullYear(expiryTime.getFullYear() + 1);
 
-    const origin = request.headers.get("origin") || "https://b2b.graycup.in";
+    const origin = request.headers.get("origin") || "https://graycup.in";
 
     const paymentLinkPayload = {
       link_id: linkId,

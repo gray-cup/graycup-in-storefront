@@ -139,7 +139,7 @@ export default function DistributorFranchisePage() {
           <p className="text-xs text-muted-foreground mt-6">
             Already a bulk buyer?{" "}
             <a
-              href="https://b2b.graycup.in/"
+              href="https://graycup.in/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline"

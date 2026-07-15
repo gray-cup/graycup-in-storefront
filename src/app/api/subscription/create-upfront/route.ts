@@ -10,10 +10,19 @@ interface SubscriptionItem {
   price: number;
 }
 
+interface DeliveryAddress {
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  pincode: string;
+}
+
 interface UpfrontRequest {
   customerName: string;
   customerEmail: string;
   customerPhone: string;
+  address: DeliveryAddress;
   items: SubscriptionItem[];
   months: number;
 }
@@ -32,7 +41,7 @@ export async function POST(request: NextRequest) {
     const session = await auth.api.getSession({ headers: request.headers });
 
     const body: UpfrontRequest = await request.json();
-    const { customerName, customerEmail, customerPhone, items, months } = body;
+    const { customerName, customerEmail, customerPhone, address, items, months } = body;
 
     if (
       !customerName ||
@@ -49,6 +58,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!address?.addressLine1 || !address?.city || !address?.state || !address?.pincode) {
+      return NextResponse.json(
+        { error: "Complete delivery address required" },
+        { status: 400 },
+      );
+    }
+
     const monthlyTotal = items.reduce((sum, item) => sum + item.price, 0);
     const fullTotal = monthlyTotal * months;
     const totalAmount = Math.round(fullTotal * (1 - UPFRONT_DISCOUNT_RATE) * 100) / 100;
@@ -59,7 +75,7 @@ export async function POST(request: NextRequest) {
       .insert(order)
       .values({
         userId: session?.user?.id ?? null,
-        addressSnapshot: {},
+        addressSnapshot: address,
         items: items as unknown as Record<string, unknown>[],
         subtotal: fullTotal.toFixed(2),
         deliveryCharge: "0",
@@ -69,7 +85,7 @@ export async function POST(request: NextRequest) {
         customerName,
         customerEmail,
         customerPhone: customerPhone.replace(/\D/g, "").slice(-10),
-        notes: `Upfront subscription payment — ${months} month${months > 1 ? "s" : ""}, ${UPFRONT_DISCOUNT_RATE * 100}% discount applied. Delivery address to be collected on activation.`,
+        notes: `Upfront subscription payment — ${months} month${months > 1 ? "s" : ""}, ${UPFRONT_DISCOUNT_RATE * 100}% discount applied.`,
       })
       .returning();
 

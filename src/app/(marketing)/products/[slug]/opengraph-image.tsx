@@ -97,7 +97,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
               src={
                 product.image.startsWith("http")
                   ? product.image
-                  : `https://b2b.graycup.in${product.image}`
+                  : `https://graycup.in${product.image}`
               }
               alt={product.name}
               style={{
@@ -222,7 +222,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
               color: "#737373",
             }}
           >
-            b2b.graycup.in
+            graycup.in
           </span>
           <span
             style={{

@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://b2b.graycup.in
+Host: https://graycup.in
 
 # Sitemaps
-Sitemap: https://b2b.graycup.in/sitemap.xml
+Sitemap: https://graycup.in/sitemap.xml

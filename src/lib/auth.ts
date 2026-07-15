@@ -35,7 +35,7 @@ export const auth = betterAuth({
     },
   },
   trustedOrigins: [
-    "https://b2b.graycup.in",
+    "https://graycup.in",
     "http://localhost:6969",
   ],
 });

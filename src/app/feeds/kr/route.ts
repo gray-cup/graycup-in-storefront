@@ -69,7 +69,7 @@ ${items}
 }
 
 export async function GET() {
-  const baseUrl = "https://b2b.graycup.in";
+  const baseUrl = "https://graycup.in";
   const xml = generateFeed(products, baseUrl);
 
   return new NextResponse(xml, {

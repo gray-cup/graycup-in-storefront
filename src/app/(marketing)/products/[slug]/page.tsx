@@ -34,7 +34,7 @@ export async function generateMetadata({
     return { title: "Product Not Found" };
   }
 
-  const baseUrl = "https://b2b.graycup.in";
+  const baseUrl = "https://graycup.in";
   const productUrl = `${baseUrl}/products/${slug}`;
 
   const seoDescription = `Buy ${product.name} from Gray Cup. ${product.description} Price: ₹${product.priceRange.min}-₹${product.priceRange.max} ${product.priceRange.unit}.`;
@@ -70,9 +70,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   const breadcrumbs = [
-    { name: "Home", url: "https://b2b.graycup.in" },
-    { name: "Products", url: "https://b2b.graycup.in/products" },
-    { name: product.name, url: `https://b2b.graycup.in/products/${slug}` },
+    { name: "Home", url: "https://graycup.in" },
+    { name: "Products", url: "https://graycup.in/products" },
+    { name: product.name, url: `https://graycup.in/products/${slug}` },
   ];
 
   return (
