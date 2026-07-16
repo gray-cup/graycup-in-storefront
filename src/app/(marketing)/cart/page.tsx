@@ -66,6 +66,11 @@ export default function CartPage() {
                           Packaging: {item.selectedPackaging}
                         </p>
                       )}
+                      {item.selectedGrind && (
+                        <p className="text-sm text-gray-500">
+                          Grind: {item.selectedGrind}
+                        </p>
+                      )}
                     </div>
                     <Button
                       variant="ghost"

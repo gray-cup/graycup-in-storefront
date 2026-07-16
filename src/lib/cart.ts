@@ -5,6 +5,7 @@ export type CartItem = {
   quantity: number;
   selectedVariant?: ProductVariant;
   selectedPackaging?: string;
+  selectedGrind?: string;
 };
 
 export type Cart = {
@@ -48,13 +49,15 @@ export function addToCart(
   product: Product,
   quantity: number = 1,
   variant?: ProductVariant,
-  packaging?: string
+  packaging?: string,
+  grind?: string
 ): CartItem[] {
   const existingItemIndex = currentItems.findIndex(
     (item) =>
       item.product.slug === product.slug &&
       item.selectedVariant?.name === variant?.name &&
-      item.selectedPackaging === packaging
+      item.selectedPackaging === packaging &&
+      item.selectedGrind === grind
   );
 
   if (existingItemIndex > -1) {
@@ -73,6 +76,7 @@ export function addToCart(
       quantity,
       selectedVariant: variant,
       selectedPackaging: packaging,
+      selectedGrind: grind,
     },
   ];
 }

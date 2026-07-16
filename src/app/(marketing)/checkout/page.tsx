@@ -389,6 +389,9 @@ export default function CheckoutPage() {
                     {item.selectedVariant && (
                       <p className="text-xs text-gray-500">{item.selectedVariant.name}</p>
                     )}
+                    {item.selectedGrind && (
+                      <p className="text-xs text-gray-500">Grind: {item.selectedGrind}</p>
+                    )}
                     <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                   </div>
                   <p className="text-sm font-semibold whitespace-nowrap">

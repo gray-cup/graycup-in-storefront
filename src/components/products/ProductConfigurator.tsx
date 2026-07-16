@@ -11,20 +11,29 @@ import { CardHeader, Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useCart } from "@/components/cart-provider";
 import { CURRENCY } from "@/lib/currency";
-import type { Product } from "@/data/products";
+import { COFFEE_GRIND_OPTIONS, type Product } from "@/data/products";
 
 type ProductConfiguratorProps = {
   product: Product;
 };
 
+function getDefaultVariant(product: Product) {
+  return (
+    product.variants.find((v) => v.name.replace(/\s/g, "").toLowerCase() === "250g") ??
+    product.variants[0]
+  );
+}
+
 export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const { addToCart, openCart } = useCart();
   const router = useRouter();
-  const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
+  const isCoffee = product.category === "Coffee";
+  const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
+  const [grindSize, setGrindSize] = useState(COFFEE_GRIND_OPTIONS[0]);
 
   const handleAddToCart = () => {
-    addToCart(product, quantity, selectedVariant);
+    addToCart(product, quantity, selectedVariant, undefined, isCoffee ? grindSize : undefined);
     toast.success("Added to cart!", {
       description: `${quantity} ${product.name} (${selectedVariant.name})`,
       action: {
@@ -35,7 +44,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   };
 
   const handleBuyNow = () => {
-    addToCart(product, quantity, selectedVariant);
+    addToCart(product, quantity, selectedVariant, undefined, isCoffee ? grindSize : undefined);
     router.push("/checkout");
   };
 
@@ -70,6 +79,25 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
                 <option key={variant.name} value={variant.name}>
                   {variant.name} - {CURRENCY.symbol}
                   {variant.price.toLocaleString(CURRENCY.locale)}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {/* Grind Size (coffee only) */}
+        {isCoffee && (
+          <div className="space-y-2">
+            <Label htmlFor="grind-size">Grind Size</Label>
+            <select
+              id="grind-size"
+              value={grindSize}
+              onChange={(e) => setGrindSize(e.target.value)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              {COFFEE_GRIND_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}
                 </option>
               ))}
             </select>
