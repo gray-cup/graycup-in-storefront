@@ -1,4 +1,5 @@
 export type { Product, ProductVariant } from "./types";
+export { COFFEE_GRIND_OPTIONS } from "./types";
 
 export { coffeeProducts } from "./coffee";
 export { ctcTeaProducts } from "./ctc-tea";

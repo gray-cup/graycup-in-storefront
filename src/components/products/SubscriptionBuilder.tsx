@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, CreditCard, Loader2, Repeat } from "lucide-react";
+import { Check, CreditCard, Loader2, Minus, Plus, Repeat } from "lucide-react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CURRENCY } from "@/lib/currency";
-import type { Product, ProductVariant } from "@/data/products";
+import { COFFEE_GRIND_OPTIONS, type Product, type ProductVariant } from "@/data/products";
 
 type SubscriptionBuilderProps = {
   product: Product;
@@ -62,11 +62,21 @@ const INDIAN_STATES = [
   "West Bengal",
 ];
 
+function getDefaultVariant(product: Product) {
+  return (
+    product.variants.find((v) => v.name.replace(/\s/g, "").toLowerCase() === "250g") ??
+    product.variants[0]
+  );
+}
+
 export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuilderProps) {
   const { data: session } = authClient.useSession();
   const [loading, setLoading] = useState(false);
+  const isCoffee = product.category === "Coffee";
 
-  const [primaryVariant, setPrimaryVariant] = useState(product.variants[0]);
+  const [primaryVariant, setPrimaryVariant] = useState(() => getDefaultVariant(product));
+  const [quantity, setQuantity] = useState(1);
+  const [grindSize, setGrindSize] = useState(COFFEE_GRIND_OPTIONS[0]);
   const [months, setMonths] = useState(DEFAULT_MONTHS);
   const [selectedAddons, setSelectedAddons] = useState<Record<string, ProductVariant>>({});
   const [paymentType, setPaymentType] = useState<"recurring" | "upfront">("recurring");
@@ -83,7 +93,18 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
   });
 
   const items = useMemo(() => {
-    const list = [{ name: `${product.name} (${primaryVariant.name})`, price: primaryVariant.price }];
+    const primaryLabel = [
+      primaryVariant.name,
+      isCoffee ? grindSize : null,
+    ]
+      .filter(Boolean)
+      .join(", ");
+    const list = [
+      {
+        name: `${product.name} (${primaryLabel})${quantity > 1 ? ` x${quantity}` : ""}`,
+        price: primaryVariant.price * quantity,
+      },
+    ];
     for (const addonProduct of addonProducts) {
       const variant = selectedAddons[addonProduct.slug];
       if (variant) {
@@ -91,7 +112,7 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
       }
     }
     return list;
-  }, [product.name, primaryVariant, addonProducts, selectedAddons]);
+  }, [product.name, primaryVariant, quantity, isCoffee, grindSize, addonProducts, selectedAddons]);
 
   const monthlyTotal = items.reduce((sum, item) => sum + item.price, 0);
   const fullTotal = monthlyTotal * months;
@@ -218,6 +239,54 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
           </select>
         </div>
       )}
+
+      {/* Grind size (coffee only) */}
+      {isCoffee && (
+        <div className="space-y-2">
+          <Label htmlFor="grind-size">Grind Size</Label>
+          <select
+            id="grind-size"
+            value={grindSize}
+            onChange={(e) => setGrindSize(e.target.value)}
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            {COFFEE_GRIND_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {/* Quantity */}
+      <div className="space-y-2">
+        <Label>Quantity</Label>
+        <div className="flex items-center gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+            disabled={quantity <= 1}
+          >
+            <Minus className="h-4 w-4" />
+          </Button>
+          <span className="w-10 text-center text-lg font-semibold">{quantity}</span>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => setQuantity((q) => q + 1)}
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
+          <span className="text-sm text-muted-foreground">
+            {CURRENCY.symbol}
+            {(primaryVariant.price * quantity).toLocaleString(CURRENCY.locale)} per month
+          </span>
+        </div>
+      </div>
 
       {/* Pay upfront switch */}
       <div className="flex items-center justify-between gap-4 rounded-lg border p-4">
