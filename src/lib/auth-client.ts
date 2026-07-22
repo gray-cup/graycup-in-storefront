@@ -7,7 +7,15 @@ export const authClient = createAuthClient({
 });
 
 // Convenience re-exports
-export const { signIn, signUp, signOut, useSession } = authClient;
+export const {
+  signIn,
+  signUp,
+  signOut,
+  useSession,
+  requestPasswordReset,
+  resetPassword,
+  sendVerificationEmail,
+} = authClient;
 
 // Typed user that includes our additional fields
 export type AuthUser = {

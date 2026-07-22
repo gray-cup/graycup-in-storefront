@@ -8,11 +8,13 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
 
 function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") ?? "/";
+  const turnstile = useTurnstile();
 
   const [form, setForm] = useState({
     firstName: "",
@@ -23,6 +25,7 @@ function RegisterForm() {
     confirmPassword: "",
   });
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   function set(field: keyof typeof form) {
     return (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -45,6 +48,10 @@ function RegisterForm() {
       toast.error("Enter a valid 10-digit phone number");
       return;
     }
+    if (!turnstile.isVerified) {
+      toast.error("Please complete the verification check");
+      return;
+    }
 
     setLoading(true);
     try {
@@ -56,21 +63,43 @@ function RegisterForm() {
         firstName: form.firstName,
         lastName: form.lastName || undefined,
         phone: phoneDigits.slice(-10),
+        fetchOptions: { headers: { "x-captcha-response": turnstile.token! } },
       });
 
       if (error) {
         toast.error(error.message ?? "Registration failed");
+        turnstile.reset();
         return;
       }
 
-      toast.success("Account created! Signing you in…");
-      router.push(redirectTo);
-      router.refresh();
+      // requireEmailVerification is on, so no session exists yet — the buyer
+      // must click the verify link we just emailed them before they can sign in.
+      setSubmitted(true);
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
+  }
+
+  if (submitted) {
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-sm text-center">
+          <h1 className="text-2xl font-bold font-poppins mb-2">Check your email</h1>
+          <p className="text-sm text-gray-500">
+            We sent a verification link to <span className="font-medium">{form.email}</span>.
+            Click it to activate your account, then sign in.
+          </p>
+          <Link
+            href={`/auth/login?redirect=${encodeURIComponent(redirectTo)}`}
+            className="inline-block mt-6 text-black font-medium underline underline-offset-4 text-sm"
+          >
+            Back to sign in
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -159,7 +188,13 @@ function RegisterForm() {
             />
           </div>
 
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Turnstile
+            onVerify={turnstile.handleVerify}
+            onError={turnstile.handleError}
+            onExpire={turnstile.handleExpire}
+          />
+
+          <Button type="submit" className="w-full" disabled={loading || !turnstile.isVerified}>
             {loading ? "Creating account…" : "Create Account"}
           </Button>
         </form>
