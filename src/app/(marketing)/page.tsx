@@ -3,7 +3,8 @@ import {
   giddapaharDarjeelingProducts,
   koraputCoffeeProducts,
   estateCoffeeProducts,
-  halflongAssamTeaProducts,
+  halflongAssamCoffeeProducts,
+  filterCoffeeProducts,
 } from "@/data/products";
 import { HeroSection, AnimatedProductRow, BrandNarrative } from "@/components/home";
 
@@ -25,10 +26,10 @@ export default function Home() {
                   <AnimatedProductRow title="Recently Added" products={estateCoffeeProducts} delay={0} />
                   <AnimatedProductRow title="Dooars & Assam Tea" products={dooarsAssamTeaProducts} delay={0} />
                   <AnimatedProductRow title="Giddapahar Darjeeling" products={giddapaharDarjeelingProducts} delay={0.05} />
-                  <AnimatedProductRow title="Halflong Assam Tea" products={halflongAssamTeaProducts} delay={0.1} />
+                  <AnimatedProductRow title="Filter Coffee" products={filterCoffeeProducts} delay={0.1} />
                   <AnimatedProductRow
                     title="Coffee"
-                    products={[...estateCoffeeProducts, ...koraputCoffeeProducts]}
+                    products={[...estateCoffeeProducts, ...koraputCoffeeProducts, ...halflongAssamCoffeeProducts]}
                     delay={0.1}
                   />
                 </div>

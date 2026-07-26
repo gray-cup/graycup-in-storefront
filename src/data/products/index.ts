@@ -5,13 +5,15 @@ export { dooarsAssamTeaProducts } from "./dooars-assam-tea";
 export { giddapaharDarjeelingProducts } from "./giddapahar-darjeeling";
 export { koraputCoffeeProducts } from "./koraput-coffee";
 export { estateCoffeeProducts } from "./estate-coffees";
-export { halflongAssamTeaProducts } from "./halflong-assam-tea";
+export { halflongAssamCoffeeProducts } from "./halflong-assam-coffee";
+export { filterCoffeeProducts } from "./filter-coffee";
 
 import { dooarsAssamTeaProducts } from "./dooars-assam-tea";
 import { giddapaharDarjeelingProducts } from "./giddapahar-darjeeling";
 import { koraputCoffeeProducts } from "./koraput-coffee";
 import { estateCoffeeProducts } from "./estate-coffees";
-import { halflongAssamTeaProducts } from "./halflong-assam-tea";
+import { halflongAssamCoffeeProducts } from "./halflong-assam-coffee";
+import { filterCoffeeProducts } from "./filter-coffee";
 import type { Product } from "./types";
 
 // Combined array of all products
@@ -20,7 +22,8 @@ export const products: Product[] = [
   ...giddapaharDarjeelingProducts,
   ...koraputCoffeeProducts,
   ...estateCoffeeProducts,
-  ...halflongAssamTeaProducts,
+  ...halflongAssamCoffeeProducts,
+  ...filterCoffeeProducts,
 ];
 
 // Helper functions
@@ -43,6 +46,6 @@ export function getFeaturedProducts(): Product[] {
     giddapaharDarjeelingProducts[0],
     koraputCoffeeProducts[0],
     estateCoffeeProducts[0],
-    halflongAssamTeaProducts[0],
+    filterCoffeeProducts[0],
   ];
 }
