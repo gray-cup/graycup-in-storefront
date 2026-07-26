@@ -111,6 +111,11 @@ export const order = pgTable("order", {
   // Set by admin after shipping
   delhiveryTrackingId: text("delhivery_tracking_id"),
   isFulfilled: boolean("is_fulfilled").notNull().default(false),
+  // Set by orders-graycup admin (carrier choice + tracking) — this app never reads these
+  carrier: text("carrier"),
+  shadowfaxRequestId: text("shadowfax_request_id"),
+  delhiveryPickupDate: text("delhivery_pickup_date"),
+  dispatchStatus: text("dispatch_status"),
   notes: text("notes"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
