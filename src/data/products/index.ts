@@ -1,32 +1,26 @@
 export type { Product, ProductVariant } from "./types";
 export { COFFEE_GRIND_OPTIONS } from "./types";
 
-export { coffeeProducts } from "./coffee";
-export { ctcTeaProducts } from "./ctc-tea";
-export { looseLeafTeaProducts } from "./loose-leaf-tea";
-export { instantCoffeeProducts } from "./instant-coffee";
 export { dooarsAssamTeaProducts } from "./dooars-assam-tea";
 export { giddapaharDarjeelingProducts } from "./giddapahar-darjeeling";
 export { koraputCoffeeProducts } from "./koraput-coffee";
+export { estateCoffeeProducts } from "./estate-coffees";
+export { halflongAssamTeaProducts } from "./halflong-assam-tea";
 
-import { coffeeProducts } from "./coffee";
-import { ctcTeaProducts } from "./ctc-tea";
-import { looseLeafTeaProducts } from "./loose-leaf-tea";
-import { instantCoffeeProducts } from "./instant-coffee";
 import { dooarsAssamTeaProducts } from "./dooars-assam-tea";
 import { giddapaharDarjeelingProducts } from "./giddapahar-darjeeling";
 import { koraputCoffeeProducts } from "./koraput-coffee";
+import { estateCoffeeProducts } from "./estate-coffees";
+import { halflongAssamTeaProducts } from "./halflong-assam-tea";
 import type { Product } from "./types";
 
 // Combined array of all products
 export const products: Product[] = [
   ...dooarsAssamTeaProducts,
   ...giddapaharDarjeelingProducts,
-  ...ctcTeaProducts,
-  ...looseLeafTeaProducts,
-  ...coffeeProducts,
   ...koraputCoffeeProducts,
-  ...instantCoffeeProducts,
+  ...estateCoffeeProducts,
+  ...halflongAssamTeaProducts,
 ];
 
 // Helper functions
@@ -45,9 +39,10 @@ export function getProductsByCategory(category: "Tea" | "Coffee"): Product[] {
 // Featured products for homepage (one from each category)
 export function getFeaturedProducts(): Product[] {
   return [
-    ctcTeaProducts[0],
-    looseLeafTeaProducts[0],
-    coffeeProducts[0],
-    instantCoffeeProducts[0],
+    dooarsAssamTeaProducts[0],
+    giddapaharDarjeelingProducts[0],
+    koraputCoffeeProducts[0],
+    estateCoffeeProducts[0],
+    halflongAssamTeaProducts[0],
   ];
 }
