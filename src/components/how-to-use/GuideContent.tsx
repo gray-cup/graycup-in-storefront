@@ -22,9 +22,9 @@ export function GuideContent({ guide }: { guide: HowToUseGuide }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-      <div className="aspect-square relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-200">
+      <div className=" relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-200">
         {mediaFailed ? (
-          <div className="w-full h-full flex items-center justify-center text-center px-6 text-sm text-muted-foreground">
+          <div className="flex items-center justify-center text-center px-6 text-sm text-muted-foreground">
             Demo video coming soon for {guide.grind}
           </div>
         ) : isVideo ? (

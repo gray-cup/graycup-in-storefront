@@ -81,7 +81,7 @@ export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
     grind: "Moka Pot",
     tagline: "Stovetop brewing that produces a strong, espresso-like coffee.",
     time: "5 min",
-    gif: "/how-to-use/moka-pot.webm",
+    gif: "/how-to-use/mokapot.webm",
     steps: [
       "Fill the bottom chamber with hot water up to just below the pressure valve.",
       "Insert the filter basket and fill with medium-fine ground coffee, levelled but not tamped.",

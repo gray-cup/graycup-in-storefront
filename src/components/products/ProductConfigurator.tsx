@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { ShoppingCart, Minus, Plus, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { ShareButton } from "./ShareButton";
@@ -28,10 +28,56 @@ function getDefaultVariant(product: Product) {
 export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const { addToCart, openCart } = useCart();
   const router = useRouter();
+  const pathname = usePathname();
   const isCoffee = product.category === "Coffee";
   const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
   const { grindSize, setGrindSize } = useGrindSize();
+  const [hydratedFromUrl, setHydratedFromUrl] = useState(false);
+
+  // Pick up ?variant= and ?grind= from the URL on load, so shared/pasted links
+  // land on the same selection.
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    const variantParam = searchParams.get("variant");
+    if (variantParam) {
+      const variant = product.variants.find((v) => v.name === variantParam);
+      if (variant) setSelectedVariant(variant);
+    }
+
+    const grindParam = searchParams.get("grind");
+    if (isCoffee && grindParam && COFFEE_GRIND_OPTIONS.includes(grindParam)) {
+      setGrindSize(grindParam);
+    }
+
+    setHydratedFromUrl(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Keep the URL in sync whenever the selected variant or grind size changes.
+  useEffect(() => {
+    if (!hydratedFromUrl) return;
+
+    const searchParams = new URLSearchParams(window.location.search);
+    if (product.variants.length > 1) {
+      searchParams.set("variant", selectedVariant.name);
+    }
+    if (isCoffee) {
+      searchParams.set("grind", grindSize);
+    }
+
+    const query = searchParams.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  }, [
+    hydratedFromUrl,
+    selectedVariant,
+    grindSize,
+    isCoffee,
+    pathname,
+    product.variants.length,
+    router,
+  ]);
 
   const handleAddToCart = () => {
     addToCart(product, quantity, selectedVariant, undefined, isCoffee ? grindSize : undefined);

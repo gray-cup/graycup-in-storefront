@@ -309,3 +309,16 @@ textarea {
 .guide-prose hr {
   @apply border-neutral-200 my-10;
 }
+
+@keyframes marquee-ltr {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee-ltr {
+  animation: marquee-ltr 22s linear infinite;
+}

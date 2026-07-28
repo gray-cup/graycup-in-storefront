@@ -7,5 +7,5 @@ export { GrindSizeProvider } from "./grind-size-context";
 export { SubscribeButton } from "./SubscribeButton";
 export { SubscriptionBuilder } from "./SubscriptionBuilder";
 export { PriceDisplay } from "./PriceDisplay";
-export { ProductImageSlideshow } from "./ProductImageSlideshow";
+export { ProductImageGallery } from "./ProductImageGallery";
 export { ReviewSection } from "./ReviewSection";

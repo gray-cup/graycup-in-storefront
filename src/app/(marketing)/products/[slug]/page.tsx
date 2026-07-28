@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getProductBySlug, getAllProductSlugs } from "@/data/products";
 import {
   ProductConfigurator,
-  ProductImageSlideshow,
+  ProductImageGallery,
   ProductHowToUseSection,
   ReviewSection,
   GrindSizeProvider,
@@ -112,19 +111,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           <GrindSizeProvider>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* Left Column - Image */}
-              <div>
-                <div className="aspect-square relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-200 sticky top-24">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    draggable={false}
-                    className="object-contain"
-                    priority
-                  />
-                </div>
-              </div>
+              {/* Left Column - Image Gallery */}
+              <ProductImageGallery
+                images={product.images && product.images.length > 0 ? product.images : [product.image]}
+                productName={product.name}
+                priority
+              />
 
               {/* Right Column - Product Details */}
               <div className="space-y-6">
@@ -204,14 +196,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             {product.category === "Coffee" && <ProductHowToUseSection />}
           </GrindSizeProvider>
-
-          {/* Image Slideshow */}
-          {product.images && product.images.length > 0 && (
-            <ProductImageSlideshow
-              images={product.images}
-              productName={product.name}
-            />
-          )}
 
           <ReviewSection productSlug={slug} />
         </div>

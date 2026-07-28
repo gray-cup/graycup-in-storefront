@@ -5,7 +5,7 @@ export const estateCoffeeProducts: Product[] = [
     slug: "karadykan-estate-coffee",
     name: "Karadykan Estate Coffee",
     image: "/products/koraput.webp",
-    images: ["/products/koraput.webp"],
+    images: ["/products/koraput.webp", "/products/roasted-coffee-beans.png", "/products/green-coffee-beans.png"],
     description:
       "Single-estate Arabica coffee from Karadykan Estate, grown under native shade cover with a clean, aromatic cup.",
     longDescription:
@@ -44,7 +44,7 @@ export const estateCoffeeProducts: Product[] = [
     slug: "biccode-estate-coffee",
     name: "Biccode Estate Coffee",
     image: "/products/koraput.webp",
-    images: ["/products/koraput.webp"],
+    images: ["/products/koraput.webp", "/products/ground-coffee.png", "/products/roasted-coffee-beans.png"],
     description:
       "Single-estate Arabica coffee from Biccode Estate, offering a full-bodied cup with rich, syrupy sweetness.",
     longDescription:
@@ -83,7 +83,7 @@ export const estateCoffeeProducts: Product[] = [
     slug: "attikan-estate-honey-sundried-coffee",
     name: "Attikan Estate Coffee — Honey/Sundried",
     image: "/products/koraput.webp",
-    images: ["/products/koraput.webp"],
+    images: ["/products/koraput.webp", "/products/green-coffee-beans.png", "/products/koraput-washed.webp"],
     description:
       "Single-estate honey/sundried-process Arabica from Attikan Estate. Full-bodied with rich, syrupy sweetness and dried-fruit notes.",
     longDescription:
@@ -122,7 +122,7 @@ export const estateCoffeeProducts: Product[] = [
     slug: "attikan-estate-washed-coffee",
     name: "Attikan Estate Coffee — Washed",
     image: "/products/koraput.webp",
-    images: ["/products/koraput.webp"],
+    images: ["/products/koraput.webp", "/products/koraput-washed.png", "/products/roasted-coffee-beans.png"],
     description:
       "Single-estate washed-process Arabica from Attikan Estate. Clean, balanced cup with delicate floral and citrus notes.",
     longDescription:
