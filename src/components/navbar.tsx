@@ -13,6 +13,7 @@ const dropdowns: Record<string, [string, string][]> = {
     ["Feedback", "/feedback"],
   ],
   Learn: [
+    ["How to Use", "/how-to-use"],
     ["Guides", "/guides"],
   ],
 };
@@ -181,6 +182,7 @@ export function Navbar() {
               ["New Product Request", "/new-product-request"],
               ["Feedback", "/feedback"],
               ["About Us", "/about"],
+              ["How to Use", "/how-to-use"],
               ["Guides", "/guides"],
               [session?.user ? "My Subscriptions" : "Login", accountHref],
             ].map(([label, href]) => (
