@@ -5,7 +5,7 @@ export const filterCoffeeProducts: Product[] = [
     slug: "filter-coffee-robusta-arabica-chicory",
     name: "Filter Coffee (Robusta, Arabica & Chicory)",
     image: "/products/ground-coffee.png",
-    images: ["/products/ground-coffee.png"],
+    images: ["/products/ground-coffee.png", "/products/roasted-coffee-beans.png", "/products/green-coffee-beans.png"],
     description:
       "Classic South Indian filter coffee blend of Robusta, Arabica, and chicory — strong, full-bodied, and smooth.",
     longDescription:
@@ -44,7 +44,7 @@ export const filterCoffeeProducts: Product[] = [
     slug: "filter-coffee-pure-arabica",
     name: "Filter Coffee (Pure Arabica)",
     image: "/products/ground-coffee.png",
-    images: ["/products/ground-coffee.png"],
+    images: ["/products/ground-coffee.png", "/products/green-coffee-beans.png", "/products/koraput.webp"],
     description:
       "100% pure Arabica filter coffee, ground fine for traditional South Indian filter brewing — no chicory, no blends.",
     longDescription:

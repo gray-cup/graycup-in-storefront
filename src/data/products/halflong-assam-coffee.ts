@@ -5,7 +5,7 @@ export const halflongAssamCoffeeProducts: Product[] = [
     slug: "halflong-assam-coffee",
     name: "Halflong Assam Coffee",
     image: "/products/koraput.webp",
-    images: ["/products/koraput.webp"],
+    images: ["/products/koraput.webp", "/products/roasted-coffee-beans.png", "/products/ground-coffee.png"],
     description:
       "Single-origin Arabica coffee grown in the hills of Halflong, North Cachar Hills, Assam. Mild acidity with a soft, earthy sweetness.",
     longDescription:
