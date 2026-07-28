@@ -1,4 +1,4 @@
-export type { Product, ProductVariant } from "./types";
+export type { Product, ProductVariant, CoffeeProcess } from "./types";
 export { COFFEE_GRIND_OPTIONS } from "./types";
 
 export { dooarsAssamTeaProducts } from "./dooars-assam-tea";

@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
 
-const FLAT_DELIVERY_CHARGE = 50;
+const FLAT_DELIVERY_CHARGE = 40;
 
 const INDIAN_STATES = [
   "Andaman and Nicobar Islands",
