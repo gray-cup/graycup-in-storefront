@@ -7,7 +7,7 @@ Drop one GIF per brew method here, matching the filenames referenced in
 
 Expected filenames:
 
-- french-press.gif
+- french-press.webm
 - whole-beans.gif
 - espresso.gif
 - moka-pot.webm

@@ -14,7 +14,7 @@ export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
     grind: "French Press / Cold Brew",
     tagline: "Full-bodied and rich, brewed by steeping coarse grounds directly in water.",
     time: "4 min (hot) / 12 hrs (cold)",
-    gif: "/how-to-use/french-press.gif",
+    gif: "/how-to-use/french-press.webm",
     steps: [
       "Add 1 heaped tbsp of coarse-ground coffee per 200 ml of water to the French press.",
       "Pour hot water (just off the boil, ~95°C) over the grounds and stir gently.",
