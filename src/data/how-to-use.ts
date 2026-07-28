@@ -11,9 +11,9 @@ export type HowToUseGuide = {
 
 export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
   {
-    grind: "French Press / Cold Brew",
-    tagline: "Full-bodied and rich, brewed by steeping coarse grounds directly in water.",
-    time: "4 min (hot) / 12 hrs (cold)",
+    grind: "French Press",
+    tagline: "Full-bodied and rich, brewed by steeping coarse grounds directly in hot water.",
+    time: "4 min",
     gif: "/how-to-use/french-press.webm",
     steps: [
       "Add 1 heaped tbsp of coarse-ground coffee per 200 ml of water to the French press.",
@@ -23,8 +23,25 @@ export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
       "Pour and serve immediately — coffee left on the grounds keeps brewing and turns bitter.",
     ],
     tips: [
-      "For cold brew, use the same ratio with room-temperature water and steep in the fridge for 12 hours before plunging.",
       "Grounds that are too fine will clog the mesh filter — stick to a coarse, sea-salt-like grind.",
+      "Rinse the plunger and mesh filter right after brewing so oils don't build up and turn rancid.",
+    ],
+  },
+  {
+    grind: "Cold Brew",
+    tagline: "A smooth, low-acid concentrate made by steeping coarse grounds in cold water for hours.",
+    time: "12–18 hrs",
+    gif: "/how-to-use/cold-brew.gif",
+    steps: [
+      "Add 1 heaped tbsp of coarse-ground coffee per 200 ml of room-temperature or cold water to a jar or French press.",
+      "Stir to make sure all the grounds are saturated.",
+      "Cover and refrigerate for 12–18 hours.",
+      "Strain through a mesh filter or plunge (if using a French press) to separate the grounds.",
+      "Dilute the concentrate with water or milk to taste, and serve over ice.",
+    ],
+    tips: [
+      "Longer steeping (up to 24 hrs) gives a stronger concentrate — dilute more to compensate.",
+      "The strained concentrate keeps well in the fridge for up to a week.",
     ],
   },
   {

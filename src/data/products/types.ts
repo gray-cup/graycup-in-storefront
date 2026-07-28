@@ -1,7 +1,8 @@
 export type ProductAvailability = "in_stock" | "out_of_stock" | "preorder";
 
 export const COFFEE_GRIND_OPTIONS: string[] = [
-  "French Press / Cold Brew",
+  "French Press",
+  "Cold Brew",
   "Whole Beans",
   "Espresso",
   "Moka Pot",
