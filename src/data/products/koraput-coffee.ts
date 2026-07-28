@@ -5,7 +5,7 @@ export const koraputCoffeeProducts: Product[] = [
     slug: "koraput-odisha-hsd-coffee",
     name: "Koraput, Odisha HSD Coffee",
     image: "/products/koraput-washed.webp",
-    images: ["/products/koraput-washed.webp"],
+    images: ["/products/koraput-washed.webp", "/products/koraput-washed.png", "/products/green-coffee-beans.png"],
     description:
       "Single-origin HSD-process coffee beans from Koraput, Odisha. Balanced sweetness with a smooth, rounded body.",
     longDescription:
