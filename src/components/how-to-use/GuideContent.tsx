@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Clock } from "lucide-react";
 import type { HowToUseGuide } from "@/data/how-to-use";
 
@@ -8,7 +8,17 @@ const VIDEO_EXTENSIONS = [".webm", ".mp4"];
 
 export function GuideContent({ guide }: { guide: HowToUseGuide }) {
   const [mediaFailed, setMediaFailed] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const isVideo = VIDEO_EXTENSIONS.some((ext) => guide.gif.endsWith(ext));
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    // React's `muted` JSX prop isn't always applied before the browser
+    // evaluates the autoplay policy, so set it imperatively as well.
+    video.muted = true;
+    video.play().catch(() => {});
+  }, [guide.gif]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
@@ -20,11 +30,13 @@ export function GuideContent({ guide }: { guide: HowToUseGuide }) {
         ) : isVideo ? (
           <video
             key={guide.gif}
+            ref={videoRef}
             src={guide.gif}
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
             onError={() => setMediaFailed(true)}
             className="w-full h-full object-contain"
           />
