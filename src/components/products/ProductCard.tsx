@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import type { Product } from "@/data/products";
 import { CURRENCY } from "@/lib/currency";
 import { ProcessBadge } from "./ProcessBadge";
+import { FlavourNoteChip } from "./FlavourNoteChip";
 
 type ProductCardProps = {
   product: Product;
@@ -41,19 +42,22 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
           </span>
         )}
 
-        {product.process && (
-          <ProcessBadge
-            process={product.process}
-            className="absolute bottom-2 left-2 bg-white/90 rounded-full px-2.5 py-1"
-          />
-        )}
-
         {product.process && product.flavourNotes && product.flavourNotes.length > 0 && (
-          <div className="absolute inset-0 flex flex-col justify-end bg-black/75 p-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-            <ProcessBadge process={product.process} className="text-white mb-1.5" />
-            <p className="text-xs text-white/90 leading-relaxed">
-              {product.flavourNotes.join(" · ")}
-            </p>
+          <div className="absolute inset-x-0 top-0 -translate-y-full transform bg-white p-3 shadow-md transition-transform duration-500 ease-out group-hover:translate-y-0">
+            <div className="absolute inset-x-0 top-0 h-1.5 bg-blue-600" />
+            <div className="flex items-center justify-between mb-2">
+              <ProcessBadge process={product.process} pill tooltipSide="bottom" />
+              {product.varietal && (
+                <span className="text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
+                  {product.varietal}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+              {product.flavourNotes.map((note) => (
+                <FlavourNoteChip key={note} label={note} />
+              ))}
+            </div>
           </div>
         )}
       </div>

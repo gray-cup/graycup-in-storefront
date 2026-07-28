@@ -6,6 +6,7 @@ import {
   ProductConfigurator,
   ProductImageGallery,
   ProductHowToUseSection,
+  FlavourProfile,
   ReviewSection,
   GrindSizeProvider,
 } from "@/components/products";
@@ -127,6 +128,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </h1>
                   <p className="text-gray-600">{product.description}</p>
                 </div>
+
+                <FlavourProfile
+                  process={product.process}
+                  varietal={product.varietal}
+                  flavourNotes={product.flavourNotes}
+                />
 
                 {/* Add to Cart */}
                 <ProductConfigurator product={product} />

@@ -19,7 +19,8 @@ export type ProductVariant = {
   batchId?: string;
 };
 
-export type CoffeeProcess = "Washed" | "Natural" | "HSD";
+export type CoffeeProcess = "Washed" | "Natural" | "HSD" | "Pending";
+export type CoffeeRoast = "Light" | "Medium" | "Medium-Dark" | "Dark" | "Pending";
 
 export type Product = {
   slug: string;
@@ -45,6 +46,8 @@ export type Product = {
   packaging: string[];
   comingSoon?: boolean;
   process?: CoffeeProcess;
+  varietal?: string;
+  roast?: CoffeeRoast;
   flavourNotes?: string[];
   // Google Merchant Center fields
   sku: string;
