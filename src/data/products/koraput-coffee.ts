@@ -42,7 +42,7 @@ export const koraputCoffeeProducts: Product[] = [
     slug: "koraput-odisha-natural-coffee",
     name: "Koraput, Odisha Natural Coffee",
     image: "/products/koraput-washed.webp",
-    images: ["/products/koraput-washed.webp"],
+    images: ["/products/koraput-washed.webp", "/products/roasted-coffee-beans.png", "/products/koraput.webp"],
     description:
       "Single-origin natural-process (sun-dried cherry) coffee beans from Koraput, Odisha. Full-bodied with fruity, wine-like notes.",
     longDescription:
@@ -79,7 +79,7 @@ export const koraputCoffeeProducts: Product[] = [
     slug: "koraput-odisha-washed-coffee",
     name: "Koraput, Odisha Washed Coffee",
     image: "/products/koraput-washed.webp",
-    images: ["/products/koraput-washed.webp"],
+    images: ["/products/koraput-washed.webp", "/products/green-coffee-beans.png", "/products/ground-coffee.png"],
     description:
       "Single-origin washed-process coffee beans from Koraput, Odisha. Clean, bright cup with well-defined acidity.",
     longDescription:
