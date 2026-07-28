@@ -3,7 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getProductBySlug, getAllProductSlugs } from "@/data/products";
-import { ProductConfigurator, ProductImageSlideshow, ReviewSection } from "@/components/products";
+import {
+  ProductConfigurator,
+  ProductImageSlideshow,
+  ProductHowToUseSection,
+  ReviewSection,
+  GrindSizeProvider,
+} from "@/components/products";
 import { Badge } from "@/components/ui/badge";
 import {
   Accordion,
@@ -104,96 +110,100 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </ol>
           </nav>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Left Column - Image */}
-            <div>
-              <div className="aspect-square relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-200 sticky top-24">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  draggable={false}
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </div>
-
-            {/* Right Column - Product Details */}
-            <div className="space-y-6">
-              {/* Product Header */}
+          <GrindSizeProvider>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Left Column - Image */}
               <div>
-                <h1 className="text-3xl md:text-4xl font-semibold text-black mb-2">
-                  {product.name}
-                </h1>
-                <p className="text-gray-600">{product.description}</p>
+                <div className="aspect-square relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-200 sticky top-24">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    draggable={false}
+                    className="object-contain"
+                    priority
+                  />
+                </div>
               </div>
 
-              {/* Add to Cart */}
-              <ProductConfigurator product={product} />
+              {/* Right Column - Product Details */}
+              <div className="space-y-6">
+                {/* Product Header */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-semibold text-black mb-2">
+                    {product.name}
+                  </h1>
+                  <p className="text-gray-600">{product.description}</p>
+                </div>
 
-              {/* Accordions for Product Details */}
-              <Accordion type="multiple" defaultValue={["description"]}>
-                <AccordionItem value="description">
-                  <AccordionTrigger>Product Description</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-gray-700 leading-relaxed">
-                      {product.longDescription}
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
+                {/* Add to Cart */}
+                <ProductConfigurator product={product} />
 
-                <AccordionItem value="variants">
-                  <AccordionTrigger>Available Options</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-wrap gap-2">
-                      {product.variants.map((variant) => (
-                        <Badge
-                          key={variant.name}
-                          variant="outline"
-                          className="bg-white"
-                        >
-                          {variant.name}
-                        </Badge>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+                {/* Accordions for Product Details */}
+                <Accordion type="multiple" defaultValue={["description"]}>
+                  <AccordionItem value="description">
+                    <AccordionTrigger>Product Description</AccordionTrigger>
+                    <AccordionContent>
+                      <p className="text-gray-700 leading-relaxed">
+                        {product.longDescription}
+                      </p>
+                    </AccordionContent>
+                  </AccordionItem>
 
-                <AccordionItem value="locations">
-                  <AccordionTrigger>Source Locations</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-wrap gap-2">
-                      {product.locations.map((location) => (
-                        <span
-                          key={location}
-                          className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm"
-                        >
-                          {location}
-                        </span>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+                  <AccordionItem value="variants">
+                    <AccordionTrigger>Available Options</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-wrap gap-2">
+                        {product.variants.map((variant) => (
+                          <Badge
+                            key={variant.name}
+                            variant="outline"
+                            className="bg-white"
+                          >
+                            {variant.name}
+                          </Badge>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
 
-                <AccordionItem value="packaging">
-                  <AccordionTrigger>Packaging Options</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-wrap gap-2">
-                      {product.packaging.map((pack) => (
-                        <span
-                          key={pack}
-                          className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
-                        >
-                          {pack}
-                        </span>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+                  <AccordionItem value="locations">
+                    <AccordionTrigger>Source Locations</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-wrap gap-2">
+                        {product.locations.map((location) => (
+                          <span
+                            key={location}
+                            className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm"
+                          >
+                            {location}
+                          </span>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="packaging">
+                    <AccordionTrigger>Packaging Options</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-wrap gap-2">
+                        {product.packaging.map((pack) => (
+                          <span
+                            key={pack}
+                            className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                          >
+                            {pack}
+                          </span>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
             </div>
-          </div>
+
+            {product.category === "Coffee" && <ProductHowToUseSection />}
+          </GrindSizeProvider>
 
           {/* Image Slideshow */}
           {product.images && product.images.length > 0 && (

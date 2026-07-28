@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useCart } from "@/components/cart-provider";
 import { CURRENCY } from "@/lib/currency";
 import { COFFEE_GRIND_OPTIONS, type Product } from "@/data/products";
+import { useGrindSize } from "./grind-size-context";
 
 type ProductConfiguratorProps = {
   product: Product;
@@ -30,7 +31,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const isCoffee = product.category === "Coffee";
   const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
-  const [grindSize, setGrindSize] = useState(COFFEE_GRIND_OPTIONS[0]);
+  const { grindSize, setGrindSize } = useGrindSize();
 
   const handleAddToCart = () => {
     addToCart(product, quantity, selectedVariant, undefined, isCoffee ? grindSize : undefined);

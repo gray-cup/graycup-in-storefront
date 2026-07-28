@@ -2,6 +2,8 @@ export { ProductCard } from "./ProductCard";
 export { LazyProductRow } from "./LazyProductRow";
 export { ShareButton } from "./ShareButton";
 export { ProductConfigurator } from "./ProductConfigurator";
+export { ProductHowToUseSection } from "./ProductHowToUseSection";
+export { GrindSizeProvider } from "./grind-size-context";
 export { SubscribeButton } from "./SubscribeButton";
 export { SubscriptionBuilder } from "./SubscriptionBuilder";
 export { PriceDisplay } from "./PriceDisplay";
