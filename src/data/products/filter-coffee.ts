@@ -25,8 +25,8 @@ export const filterCoffeeProducts: Product[] = [
     category: "Coffee",
     categoryTwo: "Blend",
     priceRange: {
-      min: 550,
-      max: 1799,
+      min: 450,
+      max: 1550,
       unit: "",
     },
     minimumOrder: {
@@ -34,9 +34,9 @@ export const filterCoffeeProducts: Product[] = [
       unit: "pack",
     },
     variants: [
-      { name: "250g", price: 550, weightGrams: 250 },
-      { name: "500g", price: 999, weightGrams: 500 },
-      { name: "1kg", price: 1799, weightGrams: 1000 },
+      { name: "250g", price: 450, weightGrams: 250 },
+      { name: "500g", price: 800, weightGrams: 500 },
+      { name: "1kg", price: 1550, weightGrams: 1000 },
     ],
     packaging: ["250g pack", "500g pack", "1kg pack"],
     sku: "GC-COF-FLTRAC-001",
