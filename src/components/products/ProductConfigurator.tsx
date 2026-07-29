@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ShoppingCart, Minus, Plus, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { ShareButton } from "./ShareButton";
@@ -28,7 +28,6 @@ function getDefaultVariant(product: Product) {
 export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const { addToCart, openCart } = useCart();
   const router = useRouter();
-  const pathname = usePathname();
   const isCoffee = product.category === "Coffee";
   const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
@@ -56,6 +55,8 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   }, []);
 
   // Keep the URL in sync whenever the selected variant or grind size changes.
+  // Uses the native History API (not router.replace) so this never triggers
+  // an App Router navigation/transition — just updates the address bar.
   useEffect(() => {
     if (!hydratedFromUrl) return;
 
@@ -68,16 +69,9 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
     }
 
     const query = searchParams.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
-  }, [
-    hydratedFromUrl,
-    selectedVariant,
-    grindSize,
-    isCoffee,
-    pathname,
-    product.variants.length,
-    router,
-  ]);
+    const url = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+    window.history.replaceState(null, "", url);
+  }, [hydratedFromUrl, selectedVariant, grindSize, isCoffee, product.variants.length]);
 
   const handleAddToCart = () => {
     addToCart(product, quantity, selectedVariant, undefined, isCoffee ? grindSize : undefined);
