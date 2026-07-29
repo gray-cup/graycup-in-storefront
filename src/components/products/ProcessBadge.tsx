@@ -3,14 +3,14 @@ import type { CoffeeProcess } from "@/data/products";
 const PROCESS_COLORS: Record<CoffeeProcess, string> = {
   Washed: "bg-sky-500",
   Natural: "bg-orange-500",
-  HSD: "bg-amber-500",
+  "Honey Sundried (HSD)": "bg-amber-500",
   Pending: "bg-neutral-400",
 };
 
 const PROCESS_PILL_STYLES: Record<CoffeeProcess, string> = {
   Washed: "bg-sky-50 text-sky-700 border-sky-200",
   Natural: "bg-orange-50 text-orange-700 border-orange-200",
-  HSD: "bg-amber-50 text-amber-700 border-amber-200",
+  "Honey Sundried (HSD)": "bg-amber-50 text-amber-700 border-amber-200",
   Pending: "bg-neutral-100 text-neutral-500 border-neutral-200",
 };
 
@@ -19,7 +19,8 @@ const PROCESS_DESCRIPTIONS: Record<CoffeeProcess, string> = {
     "Coffee where the outer fruit skin and sticky pulp are completely removed from the coffee bean using water then the bean is dried.",
   Natural:
     "Whole cherries are dried in the sun before hulling — fruity, full-bodied, wine-like cup.",
-  HSD: "Honey/semi-dry process — some mucilage is left on during drying, balancing brightness and sweetness.",
+  "Honey Sundried (HSD)":
+    "Honey/semi-dry process — some mucilage is left on during drying, balancing brightness and sweetness.",
   Pending: "Process details coming soon.",
 };
 

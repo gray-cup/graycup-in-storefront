@@ -19,7 +19,7 @@ export type ProductVariant = {
   batchId?: string;
 };
 
-export type CoffeeProcess = "Washed" | "Natural" | "HSD" | "Pending";
+export type CoffeeProcess = "Washed" | "Natural" | "Honey Sundried (HSD)" | "Pending";
 export type CoffeeRoast = "Light" | "Medium" | "Medium-Dark" | "Dark" | "Pending";
 
 export type Product = {
