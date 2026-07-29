@@ -16,7 +16,7 @@ const PROCESS_PILL_STYLES: Record<CoffeeProcess, string> = {
 
 const PROCESS_DESCRIPTIONS: Record<CoffeeProcess, string> = {
   Washed:
-    "Cherry skin and mucilage are removed before drying — clean, bright cup with well-defined acidity.",
+    "Coffee where the outer fruit skin and sticky pulp are completely removed from the coffee bean using water then the bean is dried.",
   Natural:
     "Whole cherries are dried in the sun before hulling — fruity, full-bodied, wine-like cup.",
   HSD: "Honey/semi-dry process — some mucilage is left on during drying, balancing brightness and sweetness.",
