@@ -3,7 +3,7 @@ import type { Product } from "./types";
 export const samplePackProducts: Product[] = [
   {
     slug: "3-coffee-sampler-pack",
-    name: "3-Coffee Sampler Pack",
+    name: "x3 Coffee 75gm Packs",
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
@@ -40,7 +40,7 @@ export const samplePackProducts: Product[] = [
   },
   {
     slug: "5-coffee-sampler-pack",
-    name: "5-Coffee Sampler Pack",
+    name: "x5 Coffee 75gm Packs",
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
@@ -77,7 +77,7 @@ export const samplePackProducts: Product[] = [
   },
   {
     slug: "7-coffee-sampler-pack",
-    name: "7-Coffee Sampler Pack",
+    name: "x7 Coffee 75gm Packs",
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
