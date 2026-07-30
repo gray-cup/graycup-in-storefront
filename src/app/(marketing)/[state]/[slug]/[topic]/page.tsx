@@ -97,7 +97,7 @@ export default async function CityTopicPage({ params }: Props) {
     <LocationListing
       eyebrow={`Gray Cup for ${cityData.city}, ${stateData.state}`}
       title={`${topicData.label} in ${cityData.city}`}
-      intro={`Shop ${topicData.copyLabel} for delivery to ${cityData.city}. Freshly roasted to order, packed for freshness, and shipped with a GST invoice on every order.`}
+      intro={`Shop ${topicData.copyLabel} for delivery to ${cityData.city}. Freshly roasted to order, packed for freshness, and shipped with a GST invoice on every bulk order.`}
       breadcrumbs={[
         { label: "Home", href: "/" },
         { label: "Products", href: "/products" },
