@@ -6,6 +6,7 @@ export type CartItem = {
   selectedVariant?: ProductVariant;
   selectedPackaging?: string;
   selectedGrind?: string;
+  selectedSamples?: string[];
 };
 
 export type Cart = {
@@ -50,14 +51,18 @@ export function addToCart(
   quantity: number = 1,
   variant?: ProductVariant,
   packaging?: string,
-  grind?: string
+  grind?: string,
+  samples?: string[]
 ): CartItem[] {
+  const samplesKey = samples?.join(",");
+
   const existingItemIndex = currentItems.findIndex(
     (item) =>
       item.product.slug === product.slug &&
       item.selectedVariant?.name === variant?.name &&
       item.selectedPackaging === packaging &&
-      item.selectedGrind === grind
+      item.selectedGrind === grind &&
+      item.selectedSamples?.join(",") === samplesKey
   );
 
   if (existingItemIndex > -1) {
@@ -77,6 +82,7 @@ export function addToCart(
       selectedVariant: variant,
       selectedPackaging: packaging,
       selectedGrind: grind,
+      selectedSamples: samples,
     },
   ];
 }

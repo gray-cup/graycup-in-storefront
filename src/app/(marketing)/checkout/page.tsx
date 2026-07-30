@@ -392,6 +392,11 @@ export default function CheckoutPage() {
                     {item.selectedGrind && (
                       <p className="text-xs text-gray-500">Grind: {item.selectedGrind}</p>
                     )}
+                    {item.selectedSamples && item.selectedSamples.length > 0 && (
+                      <p className="text-xs text-gray-500">
+                        Samples ({item.selectedSamples.length}): {item.selectedSamples.join(", ")}
+                      </p>
+                    )}
                     <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                   </div>
                   <p className="text-sm font-semibold whitespace-nowrap">

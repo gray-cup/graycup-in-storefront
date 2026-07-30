@@ -7,6 +7,7 @@ export { koraputCoffeeProducts } from "./koraput-coffee";
 export { estateCoffeeProducts } from "./estate-coffees";
 export { halflongAssamCoffeeProducts } from "./halflong-assam-coffee";
 export { filterCoffeeProducts } from "./filter-coffee";
+export { samplePackProducts } from "./sample-packs";
 
 import { dooarsAssamTeaProducts } from "./dooars-assam-tea";
 import { giddapaharDarjeelingProducts } from "./giddapahar-darjeeling";
@@ -14,6 +15,7 @@ import { koraputCoffeeProducts } from "./koraput-coffee";
 import { estateCoffeeProducts } from "./estate-coffees";
 import { halflongAssamCoffeeProducts } from "./halflong-assam-coffee";
 import { filterCoffeeProducts } from "./filter-coffee";
+import { samplePackProducts } from "./sample-packs";
 import type { Product } from "./types";
 
 // Combined array of all products
@@ -24,6 +26,7 @@ export const products: Product[] = [
   ...estateCoffeeProducts,
   ...halflongAssamCoffeeProducts,
   ...filterCoffeeProducts,
+  ...samplePackProducts,
 ];
 
 // Helper functions

@@ -28,7 +28,7 @@ function getDefaultVariant(product: Product) {
 export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const { addToCart, openCart } = useCart();
   const router = useRouter();
-  const isCoffee = product.category === "Coffee";
+  const isCoffee = product.category === "Coffee" && !product.isSamplePack;
   const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
   const { grindSize, setGrindSize } = useGrindSize();

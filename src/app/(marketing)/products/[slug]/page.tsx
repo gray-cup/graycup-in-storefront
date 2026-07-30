@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getProductBySlug, getAllProductSlugs } from "@/data/products";
 import {
   ProductConfigurator,
+  SampleBuilder,
   ProductImageGallery,
   ProductHowToUseSection,
   FlavourProfile,
@@ -136,7 +137,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 />
 
                 {/* Add to Cart */}
-                <ProductConfigurator product={product} />
+                {product.slug === "pick-your-poison-sampler" ? (
+                  <SampleBuilder product={product} />
+                ) : (
+                  <ProductConfigurator product={product} />
+                )}
 
                 {/* Accordions for Product Details */}
                 <Accordion type="multiple" defaultValue={["description"]}>
@@ -201,7 +206,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
             </div>
 
-            {product.category === "Coffee" && <ProductHowToUseSection />}
+            {product.category === "Coffee" && !product.isSamplePack && <ProductHowToUseSection />}
           </GrindSizeProvider>
 
           <ReviewSection productSlug={slug} />

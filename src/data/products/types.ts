@@ -52,6 +52,7 @@ export type Product = {
   variants: ProductVariant[];
   packaging: string[];
   comingSoon?: boolean;
+  isSamplePack?: boolean;
   process?: CoffeeProcess;
   varietal?: string;
   roast?: CoffeeRoast;

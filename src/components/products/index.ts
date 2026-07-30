@@ -2,6 +2,7 @@ export { ProductCard } from "./ProductCard";
 export { LazyProductRow } from "./LazyProductRow";
 export { ShareButton } from "./ShareButton";
 export { ProductConfigurator } from "./ProductConfigurator";
+export { SampleBuilder } from "./SampleBuilder";
 export { ProductHowToUseSection } from "./ProductHowToUseSection";
 export { FlavourProfile } from "./FlavourProfile";
 export { GrindSizeProvider } from "./grind-size-context";
