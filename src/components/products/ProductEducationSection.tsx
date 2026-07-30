@@ -1,5 +1,4 @@
 import type { CoffeeProcess } from "@/data/products";
-import { Marquee } from "@/components/Marquee";
 import {
   Accordion,
   AccordionItem,
@@ -27,7 +26,9 @@ export function ProductEducationSection({
 
   return (
     <div className="mt-16 pt-16 border-t border-gray-200">
-      <Marquee text="Good to Know" />
+      <h2 className="text-4xl md:text-5xl font-semibold italic text-blue-600">
+        Good to know
+      </h2>
       <div className="mt-10 max-w-2xl">
         <Accordion
           type="multiple"

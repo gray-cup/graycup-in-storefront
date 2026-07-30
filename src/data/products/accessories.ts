@@ -4,12 +4,12 @@ export const accessoryProducts: Product[] = [
   {
     slug: "cotton-bags",
     name: "Cotton Bags",
-    image: "/accessories/cotton-bag.webp",
+    image: "/accessories/cotton-bag/cotton-bag.webp",
     images: [
-      "/accessories/cotton-bag.webp",
-      "/accessories/cotton-bags.webp",
-      "/accessories/cotton-bag-in-water.webp",
-      "/accessories/cotton-bag-in-water-2.webp",
+      "/accessories/cotton-bag/cotton-bag.webp",
+      "/accessories/cotton-bag/cotton-bags.webp",
+      "/accessories/cotton-bag/cotton-bag-in-water.webp",
+      "/accessories/cotton-bag/cotton-bag-in-water-2.webp",
     ],
     description:
       "Eco-friendly, organic cotton bags - reusable and sustainable, made for brewing coffee. 150 GSM, holds up to 40g of ground coffee, sized for cold brew and filter coffee. Made to last up to 400 brews with proper care.",
