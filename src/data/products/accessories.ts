@@ -26,6 +26,7 @@ export const accessoryProducts: Product[] = [
     specs: [
       { label: "Capacity", value: "40g of ground coffee" },
       { label: "Thickness", value: "150 GSM" },
+      { label: "Size", value: "5 in x 4 in (L x B)" },
       { label: "Color", value: "Floral White" },
     ],
     locations: ["India"],
