@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { CoffeeProcess } from "@/data/products";
 import {
   Accordion,
@@ -26,9 +27,18 @@ export function ProductEducationSection({
 
   return (
     <div className="mt-16 pt-16 border-t border-gray-200">
-      <h2 className="text-4xl md:text-5xl font-semibold italic text-blue-600">
-        Good to know
-      </h2>
+      <div className="relative inline-block">
+        <h2 className="text-4xl md:text-5xl font-semibold italic text-blue-600">
+          Good to know
+        </h2>
+        <Image
+          src="/coffee-tree.svg"
+          alt=""
+          width={56}
+          height={56}
+          className="absolute -top-6 -right-10 rotate-12 select-none pointer-events-none"
+        />
+      </div>
       <div className="mt-10 max-w-2xl">
         <Accordion
           type="multiple"
