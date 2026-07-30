@@ -58,7 +58,7 @@ const INDIAN_STATES = [
 export default function CheckoutPage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
-  const { items, total, clearCart } = useCart();
+  const { items, total, clearCart, isLoading: cartLoading } = useCart();
 
   const user = session?.user as AuthUser | undefined;
 
@@ -79,12 +79,12 @@ export default function CheckoutPage() {
   const [couponApplying, setCouponApplying] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discountAmount: number } | null>(null);
 
-  // Redirect if cart is empty (only after session resolves)
+  // Redirect if cart is empty (only after session AND cart have both loaded)
   useEffect(() => {
-    if (!isPending && items.length === 0) {
+    if (!isPending && !cartLoading && items.length === 0) {
       router.replace("/products");
     }
-  }, [items, isPending, router]);
+  }, [items, isPending, cartLoading, router]);
 
   function setField(field: keyof typeof address) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
