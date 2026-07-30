@@ -113,6 +113,7 @@ export const estateCoffeeProducts: Product[] = [
     varietal: "Pending",
     roast: "Pending",
     flavourNotes: ["Pending"],
+    bitterness: 5,
     locations: ["Attikan Estate"],
     category: "Coffee",
     categoryTwo: "Single Origin",
