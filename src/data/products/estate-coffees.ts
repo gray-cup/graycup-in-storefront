@@ -50,7 +50,7 @@ export const estateCoffeeProducts: Product[] = [
     image: "/products/koraput.webp",
     images: ["/products/koraput.webp", "/products/ground-coffee.png", "/products/roasted-coffee-beans.png"],
     description:
-      "Single-estate, washed-process Arabica SLN 795 from Biccode Estate — medium-intensity cup with lemon zest, cacao nibs, caramel and toasted notes.",
+      "Single-estate, washed-process Arabica SLN 795 from Biccode Estate - medium-intensity cup with lemon zest, cacao nibs, caramel and toasted notes.",
     longDescription:
       "Biccode Estate coffee is a washed-process Arabica of the SLN 795 varietal. After hand-picking and selecting only ripe cherries, the coffee is pulped and rinsed with spring water, then dried on raised beds for 21 days with continuous movement for even airflow. The result is a medium-intensity cup with notes of lemon zest, cacao nibs, caramel, and toasted flavours.",
     details: [
@@ -91,13 +91,13 @@ export const estateCoffeeProducts: Product[] = [
   },
   {
     slug: "attikan-estate-honey-sundried-coffee",
-    name: "Attikan Estate Coffee — Honey/Sundried",
+    name: "Attikan Estate Coffee - Honey/Sundried",
     image: "/products/koraput.webp",
     images: ["/products/koraput.webp", "/products/green-coffee-beans.png", "/products/koraput-washed.webp"],
     description:
       "Single-estate honey/sundried-process Arabica from Attikan Estate. Full-bodied with rich, syrupy sweetness and dried-fruit notes.",
     longDescription:
-      "Grown on the terraced, shade-covered slopes of Attikan Estate, this Arabica is processed using the honey (sundried) method — the cherry's mucilage is left on the parchment during sun-drying. The result is a full-bodied cup with rich, syrupy sweetness and notes of dried fruit.",
+      "Grown on the terraced, shade-covered slopes of Attikan Estate, this Arabica is processed using the honey (sundried) method - the cherry's mucilage is left on the parchment during sun-drying. The result is a full-bodied cup with rich, syrupy sweetness and notes of dried fruit.",
     details: [
       "Single-estate Arabica, Attikan Estate",
       "Honey (sundried) process",
@@ -134,13 +134,13 @@ export const estateCoffeeProducts: Product[] = [
   },
   {
     slug: "attikan-estate-washed-coffee",
-    name: "Attikan Estate Coffee — Washed",
+    name: "Attikan Estate Coffee - Washed",
     image: "/products/koraput.webp",
     images: ["/products/koraput.webp", "/products/koraput-washed.png", "/products/roasted-coffee-beans.png"],
     description:
       "Single-estate washed-process Arabica from Attikan Estate. Clean, balanced cup with delicate floral and citrus notes.",
     longDescription:
-      "Grown on the terraced, shade-covered slopes of Attikan Estate, this Arabica is fully washed — the cherry skin and mucilage are removed before drying. The result is a clean, balanced cup with delicate floral and citrus notes.",
+      "Grown on the terraced, shade-covered slopes of Attikan Estate, this Arabica is fully washed - the cherry skin and mucilage are removed before drying. The result is a clean, balanced cup with delicate floral and citrus notes.",
     details: [
       "Single-estate Arabica, Attikan Estate",
       "Fully washed process",

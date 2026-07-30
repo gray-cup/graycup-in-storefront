@@ -46,7 +46,7 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
   const meetsMinimum = count >= MIN_SAMPLES;
 
   const buildCartVariant = () => ({
-    name: `${count} x ${selectedSize.weightGrams}g samples`,
+    name: `${count} x ${selectedSize.weightGrams}g samples: ${selected.join(", ")}`,
     price: totalPrice,
     weightGrams: (selectedSize.weightGrams ?? 0) * count,
   });
@@ -101,7 +101,7 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
           >
             {product.variants.map((variant) => (
               <option key={variant.name} value={variant.name}>
-                {variant.name} — {CURRENCY.symbol}
+                {variant.name} - {CURRENCY.symbol}
                 {variant.price.toLocaleString(CURRENCY.locale)} per sample
               </option>
             ))}

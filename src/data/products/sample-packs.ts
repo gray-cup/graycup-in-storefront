@@ -7,7 +7,7 @@ export const samplePackProducts: Product[] = [
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
-      "A curated trio of three of our coffees — a great way to explore different origins and roasts before committing to a full bag.",
+      "A curated trio of three of our coffees - a great way to explore different origins and roasts before committing to a full bag.",
     longDescription:
       "Can't decide which coffee to try first? The 3-Coffee Sampler Pack brings together three of our coffees, hand-picked by us to showcase a range of origins, processes, and roast styles. Perfect for gifting or simply exploring what Gray Cup has to offer.",
     details: [
@@ -44,7 +44,7 @@ export const samplePackProducts: Product[] = [
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
-      "A curated selection of five of our coffees — more variety for a deeper tasting flight.",
+      "A curated selection of five of our coffees - more variety for a deeper tasting flight.",
     longDescription:
       "The 5-Coffee Sampler Pack brings together five of our coffees, hand-picked to showcase a wider range of origins, processes, and roast styles than our 3-pack. A great way to explore before committing to a full bag, or to put together a tasting flight at home.",
     details: [
@@ -81,9 +81,9 @@ export const samplePackProducts: Product[] = [
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
-      "A curated selection of seven of our coffees — our biggest fixed sampler, built for serious tasting.",
+      "A curated selection of seven of our coffees - our biggest fixed sampler, built for serious tasting.",
     longDescription:
-      "The 7-Coffee Sampler Pack is our biggest curated sampler, bringing together seven of our coffees hand-picked to showcase the full range of what Gray Cup grows and sources — different origins, processes, and roast styles in one box.",
+      "The 7-Coffee Sampler Pack is our biggest curated sampler, bringing together seven of our coffees hand-picked to showcase the full range of what Gray Cup grows and sources - different origins, processes, and roast styles in one box.",
     details: [
       "7 curated coffee samples",
       "Hand-picked assortment, changes with availability",
@@ -118,9 +118,9 @@ export const samplePackProducts: Product[] = [
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
-      "Build your own sampler — pick up to 12 coffees yourself and choose your sample size.",
+      "Build your own sampler - pick up to 12 coffees yourself and choose your sample size.",
     longDescription:
-      "Skip the curation and build your own box. Pick any combination of our coffees — up to 12 — and choose 75g or 150g per sample. Perfect if you already know what you like, or want full control over your tasting flight.",
+      "Skip the curation and build your own box. Pick any combination of our coffees - up to 12 - and choose 75g or 150g per sample. Perfect if you already know what you like, or want full control over your tasting flight.",
     details: [
       "Pick up to 12 coffees yourself",
       "Choose 75g or 150g per sample",
@@ -139,7 +139,7 @@ export const samplePackProducts: Product[] = [
       quantity: 1,
       unit: "pack",
     },
-    // Base per-sample rate at each size — the actual pack price is
+    // Base per-sample rate at each size - the actual pack price is
     // per-sample price x number of coffees picked (see SampleBuilder).
     variants: [
       { name: "75g per sample", price: 150, weightGrams: 75 },

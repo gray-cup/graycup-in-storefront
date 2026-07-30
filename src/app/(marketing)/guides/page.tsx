@@ -12,7 +12,7 @@ const guides = [
     slug: "brewing-the-perfect-cup",
     title: "How to Brew the Perfect Cup of Tea",
     description:
-      "Master the art of tea brewing — the right water temperature, steeping times, and techniques for every type of tea.",
+      "Master the art of tea brewing - the right water temperature, steeping times, and techniques for every type of tea.",
     readingTime: "6 min read",
     tags: ["Tea", "Brewing", "Beginner"],
     date: "2026-01-15",
@@ -21,7 +21,7 @@ const guides = [
     slug: "ctc-vs-loose-leaf-tea",
     title: "CTC vs Loose Leaf Tea: What's the Difference?",
     description:
-      "Explore the differences between CTC and loose leaf tea — how they're made, how they taste, and which to choose.",
+      "Explore the differences between CTC and loose leaf tea - how they're made, how they taste, and which to choose.",
     readingTime: "5 min read",
     tags: ["Tea", "Education", "CTC"],
     date: "2026-01-22",
@@ -30,7 +30,7 @@ const guides = [
     slug: "instant-vs-brewed-coffee",
     title: "Instant Coffee vs Brewed Coffee: Which Is Right for You?",
     description:
-      "A practical comparison of instant and brewed coffee — flavor, convenience, quality, and when each one shines.",
+      "A practical comparison of instant and brewed coffee - flavor, convenience, quality, and when each one shines.",
     readingTime: "4 min read",
     tags: ["Coffee", "Instant Coffee", "Brewing"],
     date: "2026-02-01",

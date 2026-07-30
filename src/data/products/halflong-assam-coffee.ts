@@ -9,7 +9,7 @@ export const halflongAssamCoffeeProducts: Product[] = [
     description:
       "Single-origin Arabica coffee grown in the hills of Halflong, North Cachar Hills, Assam. Mild acidity with a soft, earthy sweetness.",
     longDescription:
-      "Grown in the hill terrain around Halflong in Assam's North Cachar Hills, this single-origin Arabica offers a distinctive cup shaped by its unusual growing region — mild acidity, a soft body, and gentle earthy sweetness that sets it apart from the classic South Indian estates.",
+      "Grown in the hill terrain around Halflong in Assam's North Cachar Hills, this single-origin Arabica offers a distinctive cup shaped by its unusual growing region - mild acidity, a soft body, and gentle earthy sweetness that sets it apart from the classic South Indian estates.",
     details: [
       "Single-origin Arabica, Halflong, Assam",
       "Grown in the North Cachar Hills",

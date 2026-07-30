@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     const timestamp = request.headers.get("x-webhook-timestamp");
     const receivedSig = request.headers.get("x-webhook-signature");
 
-    // Raw body must be used for signature — parsed body invalidates HMAC
+    // Raw body must be used for signature - parsed body invalidates HMAC
     const rawBody = await request.text();
 
     // ── Verify signature ───────────────────────────────────────────────────
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
         .digest("base64");
 
       if (expectedSig !== receivedSig) {
-        console.warn("Webhook signature mismatch — rejecting");
+        console.warn("Webhook signature mismatch - rejecting");
         return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
       }
     }
@@ -53,14 +53,14 @@ export async function POST(request: NextRequest) {
         .set({ paymentStatus: "failed", updatedAt: new Date() })
         .where(eq(order.cashfreeOrderId, cfOrderId));
     } else if (DROPPED_EVENTS.has(eventType)) {
-      // User abandoned — keep pending so they can retry without a new order
+      // User abandoned - keep pending so they can retry without a new order
       await db
         .update(order)
         .set({ paymentStatus: "pending", updatedAt: new Date() })
         .where(eq(order.cashfreeOrderId, cfOrderId));
     }
 
-    // Always return 200 — prevents Cashfree from retrying indefinitely
+    // Always return 200 - prevents Cashfree from retrying indefinitely
     return NextResponse.json({ received: true });
   } catch (error) {
     console.error("Webhook error:", error);

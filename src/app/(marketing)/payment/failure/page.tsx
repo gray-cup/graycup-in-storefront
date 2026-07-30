@@ -11,7 +11,7 @@ export default function PaymentFailurePage() {
       <h1 className="text-2xl font-bold font-poppins mb-2">Payment Failed</h1>
       <p className="text-gray-600 mb-8">
         Something went wrong during your payment. No money has been charged.
-        Your cart is still saved — please try again.
+        Your cart is still saved - please try again.
       </p>
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
         <Button asChild>

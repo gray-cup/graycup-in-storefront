@@ -163,7 +163,7 @@ export function Navbar() {
             ✕
           </button>
 
-          {/* Buy via Fast — mobile */}
+          {/* Buy via Fast - mobile */}
           <a
             href="https://fast.graycup.in"
             target="_blank"

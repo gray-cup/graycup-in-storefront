@@ -15,7 +15,7 @@ export default function SitesPage() {
         <h1 className="text-4xl font-bold text-gray-900">Our Sites</h1>
         <p className="mt-4 max-w-3xl text-lg text-gray-600">
           GrayCup operates a group of informational websites focused on
-          different aspects of tea and coffee — from bulk chai usage to CTC
+          different aspects of tea and coffee - from bulk chai usage to CTC
           grading, loose-leaf tea education, and green coffee sourcing. All
           sites listed below are owned and operated by GrayCup.
         </p>
@@ -27,7 +27,7 @@ export default function SitesPage() {
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-semibold text-gray-900">GrayCup</h2>
           <p className="mt-3 text-gray-600">
-            The main GrayCup website — products, sourcing, exports, and
+            The main GrayCup website - products, sourcing, exports, and
             everything we do with tea, coffee, and spices.
           </p>
 
@@ -127,7 +127,7 @@ export default function SitesPage() {
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-semibold text-gray-900">BulkCTC</h2>
           <p className="mt-3 text-gray-600">
-            BulkCTC is dedicated to explaining CTC (Crush, Tear, Curl) tea —
+            BulkCTC is dedicated to explaining CTC (Crush, Tear, Curl) tea -
             including grades, particle size, colour output, and consistency in
             bulk chai preparation.
           </p>
@@ -176,7 +176,7 @@ export default function SitesPage() {
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-semibold text-gray-900">Odisha Coffee</h2>
           <p className="mt-3 text-gray-600">
-            Dedicated to coffee grown in Odisha — origin stories, farm profiles,
+            Dedicated to coffee grown in Odisha - origin stories, farm profiles,
             and the region's emerging specialty coffee scene.
           </p>
 
@@ -201,7 +201,7 @@ export default function SitesPage() {
           <h2 className="text-2xl font-semibold text-gray-900">GrayBulk</h2>
           <p className="mt-3 text-gray-600">
             A marketplace to buy machines and commodities in bulk directly from
-            manufacturers and wholesalers — for businesses sourcing at scale.
+            manufacturers and wholesalers - for businesses sourcing at scale.
           </p>
 
           <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-gray-600">

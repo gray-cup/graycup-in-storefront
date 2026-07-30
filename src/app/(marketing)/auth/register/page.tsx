@@ -72,7 +72,7 @@ function RegisterForm() {
         return;
       }
 
-      // requireEmailVerification is on, so no session exists yet — the buyer
+      // requireEmailVerification is on, so no session exists yet - the buyer
       // must click the verify link we just emailed them before they can sign in.
       setSubmitted(true);
     } catch {

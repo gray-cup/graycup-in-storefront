@@ -56,7 +56,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
 
   // Keep the URL in sync whenever the selected variant or grind size changes.
   // Uses the native History API (not router.replace) so this never triggers
-  // an App Router navigation/transition — just updates the address bar.
+  // an App Router navigation/transition - just updates the address bar.
   useEffect(() => {
     if (!hydratedFromUrl) return;
 

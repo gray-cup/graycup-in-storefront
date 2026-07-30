@@ -7,7 +7,7 @@ export const filterCoffeeProducts: Product[] = [
     image: "/products/ground-coffee.png",
     images: ["/products/ground-coffee.png", "/products/roasted-coffee-beans.png", "/products/green-coffee-beans.png"],
     description:
-      "Classic South Indian filter coffee blend of Robusta, Arabica, and chicory — strong, full-bodied, and smooth.",
+      "Classic South Indian filter coffee blend of Robusta, Arabica, and chicory - strong, full-bodied, and smooth.",
     longDescription:
       "Our signature filter coffee blend combines Robusta for strength and crema, Arabica for aroma and sweetness, and roasted chicory for a smooth, mellow finish with reduced bitterness. Ground fine for traditional South Indian filter brewing, it delivers the classic strong, decoction-style cup.",
     details: [
@@ -50,7 +50,7 @@ export const filterCoffeeProducts: Product[] = [
     image: "/products/ground-coffee.png",
     images: ["/products/ground-coffee.png", "/products/green-coffee-beans.png", "/products/koraput.webp"],
     description:
-      "100% pure Arabica filter coffee, ground fine for traditional South Indian filter brewing — no chicory, no blends.",
+      "100% pure Arabica filter coffee, ground fine for traditional South Indian filter brewing - no chicory, no blends.",
     longDescription:
       "Our pure Arabica filter coffee is made entirely from Arabica beans, with no chicory or Robusta added. Ground fine for the traditional filter/decoction method, it produces a naturally sweet, aromatic cup with balanced acidity and none of the bitterness of chicory blends.",
     details: [
@@ -93,14 +93,14 @@ export const filterCoffeeProducts: Product[] = [
     image: "/products/ground-coffee.png",
     images: ["/products/ground-coffee.png", "/products/roasted-coffee-beans.png", "/products/green-coffee-beans.png"],
     description:
-      "An everyday, no-frills black coffee blend — smooth and balanced, easy to brew any way you like.",
+      "An everyday, no-frills black coffee blend - smooth and balanced, easy to brew any way you like.",
     longDescription:
-      "Basic Black Coffee is our everyday blend, made for a straightforward, reliable cup without the fuss of single-origin sourcing. Balanced and smooth, it works well brewed as filter coffee, French press, or a simple black cup — no milk needed to enjoy it.",
+      "Basic Black Coffee is our everyday blend, made for a straightforward, reliable cup without the fuss of single-origin sourcing. Balanced and smooth, it works well brewed as filter coffee, French press, or a simple black cup - no milk needed to enjoy it.",
     details: [
       "Everyday coffee blend",
       "Smooth, balanced cup",
       "Great as black coffee or with milk",
-      "Versatile — suits multiple brew methods",
+      "Versatile - suits multiple brew methods",
       "Ground fine for filter brewing",
     ],
     process: "Washed",
@@ -136,14 +136,14 @@ export const filterCoffeeProducts: Product[] = [
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
-      "A medium-dark Vienna roast — a shade past classic medium, with caramelized sweetness and a smooth, rounded body.",
+      "A medium-dark Vienna roast - a shade past classic medium, with caramelized sweetness and a smooth, rounded body.",
     longDescription:
-      "Vienna roast sits just past the classic medium roast, taken slightly further to develop a light sheen of oil on the bean and a touch of caramelized sweetness, while still holding on to some of the origin's character. The result is a smooth, rounded cup — bolder than a medium roast but without the smokiness of a full dark roast.",
+      "Vienna roast sits just past the classic medium roast, taken slightly further to develop a light sheen of oil on the bean and a touch of caramelized sweetness, while still holding on to some of the origin's character. The result is a smooth, rounded cup - bolder than a medium roast but without the smokiness of a full dark roast.",
     details: [
       "Vienna (medium-dark) roast",
       "Smooth, rounded body",
       "Caramelized sweetness",
-      "Balanced — bolder than medium, softer than dark",
+      "Balanced - bolder than medium, softer than dark",
       "Ground fine for filter brewing",
     ],
     process: "Pending",
@@ -179,9 +179,9 @@ export const filterCoffeeProducts: Product[] = [
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
-      "A bold French roast — dark, smoky, and full-bodied with minimal acidity.",
+      "A bold French roast - dark, smoky, and full-bodied with minimal acidity.",
     longDescription:
-      "French roast is taken deep into the dark roast range, developing a glossy, oily surface and a bold, smoky flavour that overshadows the bean's original origin character. Expect a heavy body, low acidity, and a bittersweet, almost charred finish — a favourite for those who like their coffee strong.",
+      "French roast is taken deep into the dark roast range, developing a glossy, oily surface and a bold, smoky flavour that overshadows the bean's original origin character. Expect a heavy body, low acidity, and a bittersweet, almost charred finish - a favourite for those who like their coffee strong.",
     details: [
       "French (dark) roast",
       "Bold, smoky, full-bodied",

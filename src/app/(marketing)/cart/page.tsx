@@ -58,7 +58,7 @@ export default function CartPage() {
                       <h3 className="font-medium">{item.product.name}</h3>
                       {item.selectedVariant && (
                         <p className="text-sm text-gray-500">
-                          {item.selectedVariant.name} &mdash; {formatPrice(item.selectedVariant.price)}
+                          {item.selectedVariant.name} - {formatPrice(item.selectedVariant.price)}
                         </p>
                       )}
                       {item.selectedPackaging && (

@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
         customerName,
         customerEmail,
         customerPhone: customerPhone.replace(/\D/g, "").slice(-10),
-        notes: `Upfront subscription payment — ${months} month${months > 1 ? "s" : ""}, ${UPFRONT_DISCOUNT_RATE * 100}% discount applied.`,
+        notes: `Upfront subscription payment - ${months} month${months > 1 ? "s" : ""}, ${UPFRONT_DISCOUNT_RATE * 100}% discount applied.`,
       })
       .returning();
 

@@ -48,7 +48,7 @@ export default function ForgotPasswordPage() {
           <h1 className="text-2xl font-bold font-poppins mb-2">Check your email</h1>
           <p className="text-sm text-gray-500">
             If an account exists for <span className="font-medium">{email}</span>, we sent a
-            password reset link — it expires in 1 hour.
+            password reset link - it expires in 1 hour.
           </p>
           <Link href="/auth/login" className="inline-block mt-6 text-black font-medium underline underline-offset-4 text-sm">
             Back to sign in

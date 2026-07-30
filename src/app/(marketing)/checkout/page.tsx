@@ -210,7 +210,7 @@ export default function CheckoutPage() {
                 </div>
                 <div>
                   <p className="text-gray-500">Phone</p>
-                  <p className="font-medium">{user.phone || "—"}</p>
+                  <p className="font-medium">{user.phone || "-"}</p>
                 </div>
               </div>
             ) : (
@@ -361,7 +361,7 @@ export default function CheckoutPage() {
                 className="font-mono uppercase"
               />
               <p className="text-xs text-gray-400">
-                For GST invoice — leave blank if not applicable
+                For GST invoice - leave blank if not applicable
               </p>
             </div>
           </section>

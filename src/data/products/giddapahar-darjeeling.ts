@@ -9,7 +9,7 @@ export const giddapaharDarjeelingProducts: Product[] = [
     description:
       "Single-estate Orthodox tea from Giddapahar, Darjeeling. Whole-leaf, hand-crafted, with a naturally sweet muscatel character.",
     longDescription:
-      "Grown on the slopes of the Giddapahar estate in Darjeeling, this Orthodox tea is plucked and processed by hand to preserve the integrity of every leaf. The result is a cup with a delicate golden liquor, a floral muscatel aroma, and a clean, naturally sweet finish — true to the finest Darjeeling tradition.",
+      "Grown on the slopes of the Giddapahar estate in Darjeeling, this Orthodox tea is plucked and processed by hand to preserve the integrity of every leaf. The result is a cup with a delicate golden liquor, a floral muscatel aroma, and a clean, naturally sweet finish - true to the finest Darjeeling tradition.",
     details: [
       "Single-estate, Giddapahar, Darjeeling",
       "Whole-leaf orthodox processing",

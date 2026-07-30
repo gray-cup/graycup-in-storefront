@@ -4,7 +4,7 @@ import { GrindGuideSection } from "@/components/how-to-use/GrindGuideSection";
 export const metadata: Metadata = {
   title: "How to Use | Gray Cup",
   description:
-    "Pick your grind size and learn how to brew it — step-by-step instructions with a quick visual guide for every method.",
+    "Pick your grind size and learn how to brew it - step-by-step instructions with a quick visual guide for every method.",
 };
 
 export default function HowToUsePage() {

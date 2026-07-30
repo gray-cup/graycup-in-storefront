@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const timestamp = request.headers.get("x-webhook-timestamp");
     const receivedSig = request.headers.get("x-webhook-signature");
 
-    // Raw body must be used for signature — parsed body invalidates HMAC
+    // Raw body must be used for signature - parsed body invalidates HMAC
     const rawBody = await request.text();
 
     // ── Verify signature ───────────────────────────────────────────────────
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
         .digest("base64");
 
       if (expectedSig !== receivedSig) {
-        console.warn("Subscription webhook signature mismatch — rejecting");
+        console.warn("Subscription webhook signature mismatch - rejecting");
         return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
       }
     }
@@ -47,12 +47,12 @@ export async function POST(request: NextRequest) {
         .set({ status: "active", updatedAt: new Date() })
         .where(eq(subscription.subscriptionId, subscriptionId));
     } else if (eventType === "SUBSCRIPTION_PAYMENT_FAILED") {
-      // Individual recurring charge failed — subscription itself may still be active,
+      // Individual recurring charge failed - subscription itself may still be active,
       // status transitions (e.g. to ON_HOLD) arrive separately via SUBSCRIPTION_STATUS_CHANGED
       console.warn("Subscription payment failed:", subscriptionId);
     }
 
-    // Always return 200 — prevents Cashfree from retrying indefinitely
+    // Always return 200 - prevents Cashfree from retrying indefinitely
     return NextResponse.json({ received: true });
   } catch (error) {
     console.error("Subscription webhook error:", error);

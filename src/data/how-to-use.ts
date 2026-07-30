@@ -20,10 +20,10 @@ export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
       "Pour hot water (just off the boil, ~95°C) over the grounds and stir gently.",
       "Place the lid on with the plunger pulled up, and let it steep for 4 minutes.",
       "Press the plunger down slowly and evenly.",
-      "Pour and serve immediately — coffee left on the grounds keeps brewing and turns bitter.",
+      "Pour and serve immediately - coffee left on the grounds keeps brewing and turns bitter.",
     ],
     tips: [
-      "Grounds that are too fine will clog the mesh filter — stick to a coarse, sea-salt-like grind.",
+      "Grounds that are too fine will clog the mesh filter - stick to a coarse, sea-salt-like grind.",
       "Rinse the plunger and mesh filter right after brewing so oils don't build up and turn rancid.",
     ],
   },
@@ -40,7 +40,7 @@ export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
       "Dilute the concentrate with water or milk to taste, and serve over ice.",
     ],
     tips: [
-      "Longer steeping (up to 24 hrs) gives a stronger concentrate — dilute more to compensate.",
+      "Longer steeping (up to 24 hrs) gives a stronger concentrate - dilute more to compensate.",
       "The strained concentrate keeps well in the fridge for up to a week.",
     ],
   },
@@ -51,13 +51,13 @@ export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
     gif: "/how-to-use/whole-beans.gif",
     steps: [
       "Weigh out your beans (roughly 10g per 180 ml of water is a good starting ratio).",
-      "Choose a grind size that matches your brew method — coarse for French press, medium for filter/pour over, fine for espresso.",
+      "Choose a grind size that matches your brew method - coarse for French press, medium for filter/pour over, fine for espresso.",
       "Grind just before brewing; ground coffee loses aroma within minutes of grinding.",
       "Store the remaining beans in an airtight container away from light, heat, and moisture.",
     ],
     tips: [
       "A burr grinder gives a far more even grind than a blade grinder, which improves extraction and taste.",
-      "Buy only what you'll use in 2–3 weeks — beans are best within a month of the roast date.",
+      "Buy only what you'll use in 2–3 weeks - beans are best within a month of the roast date.",
     ],
   },
   {
@@ -66,10 +66,10 @@ export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
     time: "25–30 sec",
     gif: "/how-to-use/espresso.gif",
     steps: [
-      "Use a fine, sugar-like grind — too coarse and the shot will run fast and taste weak.",
+      "Use a fine, sugar-like grind - too coarse and the shot will run fast and taste weak.",
       "Dose about 18g of coffee into the portafilter and level it evenly.",
       "Tamp firmly and evenly with consistent pressure.",
-      "Lock the portafilter in and start the shot — aim for 36g of espresso in 25–30 seconds.",
+      "Lock the portafilter in and start the shot - aim for 36g of espresso in 25–30 seconds.",
       "Adjust grind finer if the shot runs too fast, or coarser if it runs too slow.",
     ],
     tips: [
@@ -91,7 +91,7 @@ export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
     ],
     tips: [
       "Starting with hot (not cold) water in the base reduces the time the grounds spend over heat, avoiding a bitter, over-extracted brew.",
-      "Never tamp the grounds in a moka pot — it restricts the water flow and can cause pressure build-up.",
+      "Never tamp the grounds in a moka pot - it restricts the water flow and can cause pressure build-up.",
     ],
   },
   {
@@ -106,7 +106,7 @@ export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
       "Mix the resulting concentrated decoction with hot milk and sugar to taste, or serve as-is over ice for a cold coffee.",
     ],
     tips: [
-      "Don't rush the drip by pressing the disc down hard — slow extraction is what gives filter coffee its distinct flavour.",
+      "Don't rush the drip by pressing the disc down hard - slow extraction is what gives filter coffee its distinct flavour.",
       "The decoction keeps well in the fridge for a couple of days, so you can filter a batch in advance.",
     ],
   },
@@ -137,7 +137,7 @@ export const HOW_TO_USE_GUIDES: HowToUseGuide[] = [
       "Add medium-fine ground coffee (about 15–17g) to the chamber.",
       "Pour hot water to the top, stir for 10 seconds, and let it steep for 1 minute.",
       "Insert the plunger and press down slowly and steadily for about 20–30 seconds.",
-      "Dilute with hot water if you prefer a lighter cup — the base brew is concentrated.",
+      "Dilute with hot water if you prefer a lighter cup - the base brew is concentrated.",
     ],
     tips: [
       "For a fruitier, brighter cup, try the inverted method (brewing upside down before flipping onto your cup).",

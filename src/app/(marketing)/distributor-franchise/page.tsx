@@ -37,7 +37,7 @@ export default function DistributorFranchisePage() {
     {
       title: "FSSAI Compliant",
       description:
-        "All products are fully compliant with FSSAI regulations — no compliance headaches.",
+        "All products are fully compliant with FSSAI regulations - no compliance headaches.",
     },
   ];
 
@@ -65,10 +65,10 @@ export default function DistributorFranchisePage() {
               stores, restaurants, and HoReCa channels.
             </p>
             <ul className="text-sm text-muted-foreground space-y-1 mb-6">
-              <li>— Minimum order quantities apply</li>
-              <li>— Pan-India distribution available</li>
-              <li>— Bulk pricing and credit terms</li>
-              <li>— Dedicated account manager</li>
+              <li>- Minimum order quantities apply</li>
+              <li>- Pan-India distribution available</li>
+              <li>- Bulk pricing and credit terms</li>
+              <li>- Dedicated account manager</li>
             </ul>
             <a href="mailto:office@graycup.org">
               <Button variant="lightgraybg" size="minor">
@@ -87,10 +87,10 @@ export default function DistributorFranchisePage() {
               beverage business.
             </p>
             <ul className="text-sm text-muted-foreground space-y-1 mb-6">
-              <li>— Kiosk and full café formats available</li>
-              <li>— Complete setup and training support</li>
-              <li>— Royalty-based model</li>
-              <li>— Ongoing product & operational support</li>
+              <li>- Kiosk and full café formats available</li>
+              <li>- Complete setup and training support</li>
+              <li>- Royalty-based model</li>
+              <li>- Ongoing product & operational support</li>
             </ul>
             <a href="mailto:office@graycup.org">
               <Button variant="lightgraybg" size="minor">

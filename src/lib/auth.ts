@@ -31,7 +31,7 @@ export const auth = betterAuth({
     expiresIn: 3600,
   },
   // Cloudflare Turnstile on sign-up/email, sign-in/email, and request-password-reset
-  // (the plugin's default protected endpoints) — reuses the site/secret keys already
+  // (the plugin's default protected endpoints) - reuses the site/secret keys already
   // used for the lead-gen forms elsewhere on the site.
   plugins: [
     captcha({

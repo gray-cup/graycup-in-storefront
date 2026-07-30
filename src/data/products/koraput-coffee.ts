@@ -9,7 +9,7 @@ export const koraputCoffeeProducts: Product[] = [
     description:
       "Single-origin HSD-process coffee beans from Koraput, Odisha. Balanced sweetness with a smooth, rounded body.",
     longDescription:
-      "Grown in the hills of Koraput, Odisha, this single-origin coffee is processed using the HSD (honey/semi-dry) method, striking a balance between the brightness of washed coffee and the fruitiness of natural process. The result is a cup with balanced sweetness and a smooth, rounded body — great for cold brew.",
+      "Grown in the hills of Koraput, Odisha, this single-origin coffee is processed using the HSD (honey/semi-dry) method, striking a balance between the brightness of washed coffee and the fruitiness of natural process. The result is a cup with balanced sweetness and a smooth, rounded body - great for cold brew.",
     details: [
       "Single-origin, Koraput, Odisha",
       "HSD (honey/semi-dry) process",
@@ -50,7 +50,7 @@ export const koraputCoffeeProducts: Product[] = [
     description:
       "Single-origin natural-process (sun-dried cherry) coffee beans from Koraput, Odisha. Full-bodied with fruity, wine-like notes.",
     longDescription:
-      "Grown in the hills of Koraput, Odisha, this single-origin coffee is naturally processed by sun-drying the whole cherry before hulling. The result is a full-bodied cup with fruity, wine-like notes and a rich, syrupy finish — great for cold brew.",
+      "Grown in the hills of Koraput, Odisha, this single-origin coffee is naturally processed by sun-drying the whole cherry before hulling. The result is a full-bodied cup with fruity, wine-like notes and a rich, syrupy finish - great for cold brew.",
     details: [
       "Single-origin, Koraput, Odisha",
       "Natural (sun-dried cherry) process",
@@ -91,7 +91,7 @@ export const koraputCoffeeProducts: Product[] = [
     description:
       "Single-origin washed-process coffee beans from Koraput, Odisha. Clean, bright cup with well-defined acidity.",
     longDescription:
-      "Grown in the hills of Koraput, Odisha, this single-origin coffee is fully washed — the cherry skin and mucilage are removed before drying. The result is a clean, bright cup with well-defined acidity — great for cold brew.",
+      "Grown in the hills of Koraput, Odisha, this single-origin coffee is fully washed - the cherry skin and mucilage are removed before drying. The result is a clean, bright cup with well-defined acidity - great for cold brew.",
     details: [
       "Single-origin, Koraput, Odisha",
       "Fully washed process",
