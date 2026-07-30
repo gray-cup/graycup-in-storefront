@@ -113,5 +113,5 @@ export function clearCart(): CartItem[] {
 }
 
 export function getCartItemCount(items: CartItem[]): number {
-  return items.reduce((count, item) => count + item.quantity, 0);
+  return items.length;
 }
