@@ -24,8 +24,11 @@ export default function Home() {
               <div id="products" className="py-20 bg-white">
                 <div className="max-w-6xl mx-auto px-4 lg:px-6">
                   <AnimatedProductRow title="Recently Added" products={estateCoffeeProducts} delay={0} />
-                  <AnimatedProductRow title="Dooars & Assam Tea" products={dooarsAssamTeaProducts} delay={0} />
-                  <AnimatedProductRow title="Giddapahar Darjeeling" products={giddapaharDarjeelingProducts} delay={0.05} />
+                  <AnimatedProductRow
+                    title="Tea"
+                    products={[...dooarsAssamTeaProducts, ...giddapaharDarjeelingProducts]}
+                    delay={0.05}
+                  />
                   <AnimatedProductRow title="Filter Coffee" products={filterCoffeeProducts} delay={0.1} />
                   <AnimatedProductRow
                     title="Coffee"

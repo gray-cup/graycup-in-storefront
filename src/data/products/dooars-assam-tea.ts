@@ -7,12 +7,12 @@ export const dooarsAssamTeaProducts: Product[] = [
     image: "/products/dooars.png",
     images: ["/products/dooars.png", "/products/loose-leaf-tea.png", "/products/ctc-tea.png"],
     description:
-      "Bold, malty CTC tea sourced directly from the Dooars and Assam tea belt - brews a rich, strong cup every time.",
+      "Bold, malty CTC milk tea sourced directly from the Dooars and Assam tea belt - brews a rich, strong cup every time.",
     longDescription:
-      "Grown in the lush foothills of the Dooars region and the Brahmaputra valley of Assam, this CTC tea delivers the classic strong, brisk character that defines Indian chai. Each 500g pack is freshly sealed to preserve aroma and freshness. Order multiple packs and save - 3 packs or more qualify for free delivery.",
+      "Grown in the lush foothills of the Dooars region and the Brahmaputra valley of Assam, this CTC tea delivers the classic strong, brisk character that defines Indian milk tea (chai). Each 500g pack is freshly sealed to preserve aroma and freshness. Order multiple packs and save - 3 packs or more qualify for free delivery.",
     details: [
       "Sourced from Dooars & Assam tea estates",
-      "Strong, malty flavour - ideal for chai",
+      "Strong, malty flavour - ideal for milk tea (chai)",
       "Freshly packed in sealed pouches",
       "Free delivery on 3 packs or more",
       "No additives or artificial flavours",
