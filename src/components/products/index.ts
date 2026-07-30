@@ -14,3 +14,5 @@ export { SubscriptionBuilder } from "./SubscriptionBuilder";
 export { PriceDisplay } from "./PriceDisplay";
 export { ProductImageGallery } from "./ProductImageGallery";
 export { ReviewSection } from "./ReviewSection";
+export { LocationListing } from "./LocationListing";
+export { SortableProductGrid } from "./SortableProductGrid";
