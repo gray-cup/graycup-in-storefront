@@ -80,7 +80,7 @@ export default function NewProductRequestPage() {
   };
 
   return (
-    <div className="min-h-screen py-10">
+    <div className="min-h-dvh py-10">
       <div className="max-w-lg mx-auto px-4">
         <div className="mb-10">
           <h1 className="text-3xl font-semibold text-black mb-2">

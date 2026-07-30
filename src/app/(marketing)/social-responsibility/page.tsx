@@ -6,7 +6,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 /* ---------- Page ---------- */
 export default function CareersPage() {
   return (
-    <div className="min-h-screen py-20 px-4 lg:px-6">
+    <div className="min-h-dvh py-20 px-4 lg:px-6">
       <div className="max-w-5xl mx-auto px-4 lg:px-6">
         <div className="text-start mb-16">
           <h1 className="text-4xl md:text-5xl font-semibold text-black mb-4">

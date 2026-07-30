@@ -85,6 +85,9 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply bg-neutral-50;
+  }
   body {
     @apply bg-neutral-50 text-foreground;
   }

@@ -98,7 +98,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#fafafa",
 };
 
 export default function RootLayout({
@@ -123,7 +126,7 @@ export default function RootLayout({
       </Script>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-dvh bg-background font-sans antialiased",
           fontSans.variable,
           fontPoppins.variable,
           fontMono.variable,

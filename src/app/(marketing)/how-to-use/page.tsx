@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function HowToUsePage() {
   return (
-    <div className="min-h-screen py-20 px-4 lg:px-6">
+    <div className="min-h-dvh py-20 px-4 lg:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="mb-14">
           <h1 className="text-3xl md:text-4xl font-semibold text-black mb-3">

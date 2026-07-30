@@ -39,7 +39,7 @@ const guides = [
 
 export default function GuidesPage() {
   return (
-    <div className="min-h-screen py-20 px-4 lg:px-6">
+    <div className="min-h-dvh py-20 px-4 lg:px-6">
       <div className="mb-14">
         <h1 className="text-3xl md:text-4xl font-semibold text-black mb-3">
           Guides

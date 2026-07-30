@@ -25,12 +25,12 @@ export function SamplePacksSection({ products, delay = 0 }: SamplePacksSectionPr
       <h2 className="text-2xl font-semibold text-neutral-900 mb-6 font-instrument-sans">
         Sample Packs
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {fixedPacks.map((product) => (
           <ProductCard key={product.slug} product={product} />
         ))}
+        {pickYourPoison && <PickYourPoisonCard product={pickYourPoison} />}
       </div>
-      {pickYourPoison && <PickYourPoisonCard product={pickYourPoison} />}
     </motion.div>
   );
 }

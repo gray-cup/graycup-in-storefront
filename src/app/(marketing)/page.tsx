@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div>
       <div className="mx-auto px-4 lg:px-6 h-auto my-10">
-        <div className="md:min-h-screen pt-10 pb-20 max-w-6xl mx-auto md:pb-0 flex flex-col justify-center">
+        <div className="md:min-h-dvh pt-10 pb-20 max-w-6xl mx-auto md:pb-0 flex flex-col justify-center">
           <div>
             {/* Hero Section */}
             <div>

@@ -88,7 +88,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <ProductSchema product={product} />
       <BreadcrumbSchema items={breadcrumbs} />
       <div className="px-4 lg:px-6">
-      <div className="min-h-screen py-12">
+      <div className="min-h-dvh py-12">
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
           {/* Breadcrumb */}
           <nav className="mb-8">

@@ -14,15 +14,15 @@ export function PickYourPoisonCard({ product }: PickYourPoisonCardProps) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group relative block w-full overflow-hidden rounded-2xl bg-neutral-900 aspect-[21/9] md:aspect-[3/1]"
+      className="group relative col-span-2 block w-full overflow-hidden rounded-lg border border-gray-200 bg-white aspect-[2/1]"
     >
       {/* Animated gradient blob in the corner */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full bg-gradient-to-br from-amber-400 via-orange-500 to-pink-500 opacity-50 blur-3xl"
+        className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full bg-gradient-to-br from-amber-300 via-orange-400 to-pink-400 opacity-40 blur-2xl"
         animate={{
-          x: [0, 20, -10, 0],
-          y: [0, -15, 10, 0],
+          x: [0, 15, -8, 0],
+          y: [0, -10, 8, 0],
           scale: [1, 1.15, 0.95, 1],
         }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
@@ -31,27 +31,24 @@ export function PickYourPoisonCard({ product }: PickYourPoisonCardProps) {
       {/* Glare sweep */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent"
+        className="pointer-events-none absolute inset-y-0 w-1/4 -skew-x-12 bg-gradient-to-r from-transparent via-black/5 to-transparent"
         animate={{ x: ["-120%", "220%"] }}
         transition={{ duration: 2.2, repeat: Infinity, repeatDelay: 2.8, ease: "easeInOut" }}
       />
 
-      <div className="relative flex h-full flex-col justify-center gap-2 px-6 py-6 md:px-10">
-        <span className="w-fit rounded-full bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-white/80">
+      <div className="relative flex h-full flex-col justify-center gap-1 px-4 py-3">
+        <span className="w-fit rounded-full bg-neutral-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-neutral-500">
           Build Your Own
         </span>
-        <h3 className="text-2xl font-semibold text-white md:text-3xl">
+        <h3 className="text-sm font-semibold text-black md:text-base">
           {product.name}
         </h3>
-        <p className="max-w-md text-sm text-white/70 md:text-base">
-          {product.description}
-        </p>
-        <div className="mt-2 flex items-center gap-2 text-sm font-medium text-white">
+        <div className="mt-1 flex items-center gap-1.5 text-xs font-medium text-neutral-700">
           <span>
             From {CURRENCY.symbol}
             {product.priceRange.min.toLocaleString(CURRENCY.locale)}
           </span>
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
         </div>
       </div>
     </Link>

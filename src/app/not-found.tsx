@@ -8,7 +8,7 @@ import Footer from "@/components/footer";
 
 export default function NotFound() {
   return (
-    <div className="relative flex min-h-screen flex-col">
+    <div className="relative flex min-h-dvh flex-col">
       <Navbar />
       <div className="w-full py-20 max-w-7xl mx-auto px-4 lg:px-6 h-auto overflow-y-auto md:overflow-hidden flex flex-col items-center justify-center">
         <div className="text-center my-16">
