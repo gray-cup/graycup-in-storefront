@@ -150,6 +150,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   process={product.process}
                   varietal={product.varietal}
                   flavourNotes={product.flavourNotes}
+                  bitterness={product.bitterness}
                 />
 
                 {/* Add to Cart */}

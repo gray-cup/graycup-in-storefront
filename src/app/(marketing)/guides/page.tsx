@@ -35,6 +35,15 @@ const guides = [
     tags: ["Coffee", "Instant Coffee", "Brewing"],
     date: "2026-02-01",
   },
+  {
+    slug: "black-coffee-liver-health",
+    title: "Top 5 Black Coffees for Liver Health",
+    description:
+      "Research links black coffee to better liver enzyme levels and lower risk of liver disease. Here are 5 black coffees worth keeping in your rotation.",
+    readingTime: "6 min read",
+    tags: ["Coffee", "Health", "Black Coffee"],
+    date: "2026-07-30",
+  },
 ];
 
 export default function GuidesPage() {

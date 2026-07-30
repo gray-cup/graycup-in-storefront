@@ -4,7 +4,13 @@ import {
   samplePackProducts,
   products,
 } from "@/data/products";
-import { HeroSection, AnimatedProductRow, SamplePacksSection, BrandNarrative } from "@/components/home";
+import {
+  HeroSection,
+  AnimatedProductRow,
+  SamplePacksSection,
+  BrandNarrative,
+  CoffeeQuizCard,
+} from "@/components/home";
 
 export const revalidate = 3600;
 
@@ -42,7 +48,9 @@ export default function Home() {
           </div>
 
           <div className="my-10 py-10 bg-neutral-100">
-            <h2 className="text-5xl font-medium text-neutral-900 mb-6 flex justify-center flex-row items-center gap-4 font-instrument-sans"></h2>
+            <div className="max-w-3xl mx-auto px-4 lg:px-6">
+              <CoffeeQuizCard />
+            </div>
           </div>
 
           <BrandNarrative />

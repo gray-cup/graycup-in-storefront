@@ -60,6 +60,8 @@ export type Product = {
   varietal?: string;
   roast?: CoffeeRoast;
   flavourNotes?: string[];
+  /** Bitterness on a 0-10 scale (0 = none, 10 = very bitter) */
+  bitterness?: number;
   specs?: { label: string; value: string }[];
   specsNote?: string;
   quality?: ProductQuality;
