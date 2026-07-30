@@ -58,6 +58,7 @@ export type Product = {
   roast?: CoffeeRoast;
   flavourNotes?: string[];
   specs?: { label: string; value: string }[];
+  specsNote?: string;
   // Google Merchant Center fields
   sku: string;
   brand: string;

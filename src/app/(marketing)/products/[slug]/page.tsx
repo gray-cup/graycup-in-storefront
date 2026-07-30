@@ -131,7 +131,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <p className="text-gray-600">{product.description}</p>
                 </div>
 
-                <ProductSpecsTable specs={product.specs} />
+                <div>
+                  <ProductSpecsTable specs={product.specs} />
+                  {product.specsNote && (
+                    <p className="text-sm text-gray-500 mt-2">{product.specsNote}</p>
+                  )}
+                </div>
 
                 <FlavourProfile
                   process={product.process}
@@ -157,54 +162,58 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     </AccordionContent>
                   </AccordionItem>
 
-                  <AccordionItem value="variants">
-                    <AccordionTrigger>Available Options</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-wrap gap-2">
-                        {product.variants.map((variant) => (
-                          <Badge
-                            key={variant.name}
-                            variant="outline"
-                            className="bg-white"
-                          >
-                            {variant.name}
-                          </Badge>
-                        ))}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
+                  {product.category !== "Accessories" && (
+                    <>
+                      <AccordionItem value="variants">
+                        <AccordionTrigger>Available Options</AccordionTrigger>
+                        <AccordionContent>
+                          <div className="flex flex-wrap gap-2">
+                            {product.variants.map((variant) => (
+                              <Badge
+                                key={variant.name}
+                                variant="outline"
+                                className="bg-white"
+                              >
+                                {variant.name}
+                              </Badge>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
 
-                  <AccordionItem value="locations">
-                    <AccordionTrigger>Source Locations</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-wrap gap-2">
-                        {product.locations.map((location) => (
-                          <span
-                            key={location}
-                            className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm"
-                          >
-                            {location}
-                          </span>
-                        ))}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
+                      <AccordionItem value="locations">
+                        <AccordionTrigger>Source Locations</AccordionTrigger>
+                        <AccordionContent>
+                          <div className="flex flex-wrap gap-2">
+                            {product.locations.map((location) => (
+                              <span
+                                key={location}
+                                className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm"
+                              >
+                                {location}
+                              </span>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
 
-                  <AccordionItem value="packaging">
-                    <AccordionTrigger>Packaging Options</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-wrap gap-2">
-                        {product.packaging.map((pack) => (
-                          <span
-                            key={pack}
-                            className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
-                          >
-                            {pack}
-                          </span>
-                        ))}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
+                      <AccordionItem value="packaging">
+                        <AccordionTrigger>Packaging Options</AccordionTrigger>
+                        <AccordionContent>
+                          <div className="flex flex-wrap gap-2">
+                            {product.packaging.map((pack) => (
+                              <span
+                                key={pack}
+                                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                              >
+                                {pack}
+                              </span>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </>
+                  )}
                 </Accordion>
               </div>
             </div>
