@@ -44,24 +44,31 @@ export async function generateMetadata({
 
   const baseUrl = "https://graycup.in";
   const productUrl = `${baseUrl}/products/${slug}`;
+  const ogImageUrl = `${baseUrl}/og/products/${slug}.png`;
 
-  const seoDescription = `Buy ${product.name} from Gray Cup. ${product.description} Price: ₹${product.priceRange.min}-₹${product.priceRange.max} ${product.priceRange.unit}.`;
+  const priceLabel = product.priceRange.unit
+    ? `₹${product.priceRange.min}-₹${product.priceRange.max} ${product.priceRange.unit}`
+    : `₹${product.priceRange.min}-₹${product.priceRange.max}`;
+  const seoDescription = `Buy ${product.name} from Gray Cup. ${product.description} Price: ${priceLabel}.`;
+  const title = `${product.name} | Premium ${product.category} - Gray Cup`;
 
   return {
-    title: `${product.name} | Premium ${product.category} - Gray Cup`,
+    title,
     description: seoDescription,
     openGraph: {
-      title: `${product.name} | Premium ${product.category} - Gray Cup`,
+      title,
       description: seoDescription,
       url: productUrl,
       siteName: "Gray Cup",
       type: "website",
       locale: "en_IN",
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: product.name }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} | Premium ${product.category} - Gray Cup`,
+      title,
       description: seoDescription,
+      images: [ogImageUrl],
     },
     alternates: {
       canonical: productUrl,

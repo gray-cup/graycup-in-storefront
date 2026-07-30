@@ -1,0 +1,2 @@
+npm run generate:og
+git add public/og
