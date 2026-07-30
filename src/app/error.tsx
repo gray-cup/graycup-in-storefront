@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Terminal, RefreshCw } from "lucide-react";
+import { Terminal, RefreshCw, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,6 +18,8 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const [showErrors, setShowErrors] = useState(false);
+
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -58,8 +60,39 @@ export default function Error({
               </div>
             </div>
           </div>
+
+          {showErrors && (
+            <div className="mt-4 space-y-2 border-t border-dashed pt-4 text-xs text-muted-foreground">
+              {error?.digest && (
+                <p>
+                  <span className="text-foreground">digest:</span> {error.digest}
+                </p>
+              )}
+              <p className="whitespace-pre-wrap break-words">
+                <span className="text-foreground">message:</span>{" "}
+                {error?.message || "No message available"}
+              </p>
+              {error?.stack && (
+                <pre className="max-h-64 overflow-auto whitespace-pre-wrap break-words rounded border border-dashed p-2">
+                  {error.stack}
+                </pre>
+              )}
+            </div>
+          )}
         </CardContent>
         <CardFooter className="pt-6 border-t border-dashed mt-6 flex flex-col sm:flex-row flex-wrap gap-2">
+          <Button
+            variant="outline"
+            className="w-full rounded-none border-dashed font-mono"
+            onClick={() => setShowErrors((prev) => !prev)}
+          >
+            {showErrors ? (
+              <ChevronUp className="mr-2 h-4 w-4" />
+            ) : (
+              <ChevronDown className="mr-2 h-4 w-4" />
+            )}
+            $ show_errors
+          </Button>
           <Button
             variant="outline"
             className="w-full rounded-none border-dashed"

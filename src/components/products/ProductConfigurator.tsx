@@ -103,28 +103,52 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
             </p>
       </CardHeader>
       <CardContent className="space-y-6 py-4">
-        {/* Variant Selector */}
-        {product.variants.length > 1 && (
+        {/* Variant Selector + Quantity */}
+        <div className="flex gap-4">
+          {product.variants.length > 1 && (
+            <div className="flex-1 space-y-2">
+              <Label htmlFor="variant">Select Option</Label>
+              <select
+                id="variant"
+                value={selectedVariant.name}
+                onChange={(e) => {
+                  const variant = product.variants.find((v) => v.name === e.target.value);
+                  if (variant) setSelectedVariant(variant);
+                }}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                {product.variants.map((variant) => (
+                  <option key={variant.name} value={variant.name}>
+                    {variant.name} - {CURRENCY.symbol}
+                    {variant.price.toLocaleString(CURRENCY.locale)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
           <div className="space-y-2">
-            <Label htmlFor="variant">Select Option</Label>
-            <select
-              id="variant"
-              value={selectedVariant.name}
-              onChange={(e) => {
-                const variant = product.variants.find((v) => v.name === e.target.value);
-                if (variant) setSelectedVariant(variant);
-              }}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              {product.variants.map((variant) => (
-                <option key={variant.name} value={variant.name}>
-                  {variant.name} - {CURRENCY.symbol}
-                  {variant.price.toLocaleString(CURRENCY.locale)}
-                </option>
-              ))}
-            </select>
+            <Label>Quantity</Label>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={decrementQuantity}
+                disabled={quantity <= 1}
+              >
+                <Minus className="h-4 w-4" />
+              </Button>
+              <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={incrementQuantity}
+              >
+                <Plus className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
-        )}
+        </div>
 
         {/* Grind Size (coffee only) */}
         {isCoffee && (
@@ -145,35 +169,8 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
           </div>
         )}
 
-        {/* Quantity Selector */}
-        <div className="space-y-2">
-          <Label>Quantity</Label>
-          <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={decrementQuantity}
-              disabled={quantity <= 1}
-            >
-              <Minus className="h-4 w-4" />
-            </Button>
-            <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={incrementQuantity}
-            >
-              <Plus className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-
         {/* Price Display */}
         <div className="space-y-2 pt-4">
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">Item Price:</span>
-
-          </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-muted-foreground">Total:</span>
             <span className="text-2xl font-bold text-primary">
