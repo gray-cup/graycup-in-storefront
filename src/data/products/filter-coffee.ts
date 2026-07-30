@@ -2,19 +2,64 @@ import type { Product } from "./types";
 
 export const filterCoffeeProducts: Product[] = [
   {
-    slug: "filter-coffee-robusta-arabica-chicory",
-    name: "Filter Coffee (Robusta, Arabica & Chicory)",
+    slug: "filter-coffee-arabica-robusta",
+    name: "Filter Coffee (70% Arabica, 30% Robusta)",
     image: "/products/ground-coffee.png",
     images: ["/products/ground-coffee.png", "/products/roasted-coffee-beans.png", "/products/green-coffee-beans.png"],
     description:
-      "Classic South Indian filter coffee blend of Robusta, Arabica, and chicory - strong, full-bodied, and smooth.",
+      "South Indian filter coffee blend of 70% Arabica and 30% Robusta - aromatic and smooth, with a strong finish and good crema.",
     longDescription:
-      "Our signature filter coffee blend combines Robusta for strength and crema, Arabica for aroma and sweetness, and roasted chicory for a smooth, mellow finish with reduced bitterness. Ground fine for traditional South Indian filter brewing, it delivers the classic strong, decoction-style cup.",
+      "Our 70/30 filter coffee blend leads with Arabica for aroma and sweetness, balanced with 30% Robusta for strength and a rich crema. Ground fine for traditional South Indian filter brewing, it delivers a smooth, well-rounded, decoction-style cup without being overpoweringly strong.",
     details: [
-      "Blend of Robusta, Arabica & chicory",
-      "Strong, full-bodied, smooth",
+      "70% Arabica, 30% Robusta blend",
+      "Aromatic, smooth, good crema",
       "Traditional South Indian filter grind",
-      "Rich aroma, reduced bitterness",
+      "Balanced strength",
+      "Ideal for filter/decoction brewing",
+    ],
+    process: "Pending",
+    varietal: "Pending",
+    roast: "Pending",
+    flavourNotes: ["Pending"],
+    locations: ["Chikmagalur", "Coorg"],
+    category: "Coffee",
+    categoryTwo: "Blend",
+    quality: "Commercial",
+    brewStyle: "Milk",
+    priceRange: {
+      min: 450,
+      max: 1550,
+      unit: "",
+    },
+    minimumOrder: {
+      quantity: 1,
+      unit: "pack",
+    },
+    variants: [
+      { name: "250g", price: 450, weightGrams: 250 },
+      { name: "500g", price: 800, weightGrams: 500 },
+      { name: "1kg", price: 1550, weightGrams: 1000 },
+    ],
+    packaging: ["250g pack", "500g pack", "1kg pack"],
+    sku: "GC-COF-FLTRAR-001",
+    brand: "Gray Cup",
+    availability: "in_stock",
+    googleProductCategory: "1868",
+  },
+  {
+    slug: "filter-coffee-arabica-chicory",
+    name: "Filter Coffee (70% Arabica, 30% Chicory)",
+    image: "/products/ground-coffee.png",
+    images: ["/products/ground-coffee.png", "/products/roasted-coffee-beans.png", "/products/green-coffee-beans.png"],
+    description:
+      "South Indian filter coffee blend of 70% Arabica and 30% chicory - smooth and mellow, with reduced bitterness and a classic finish.",
+    longDescription:
+      "Our 70/30 filter coffee blend combines Arabica for aroma and sweetness with 30% roasted chicory for a smooth, mellow finish and reduced bitterness. Ground fine for traditional South Indian filter brewing, it delivers a classic, comforting decoction-style cup.",
+    details: [
+      "70% Arabica, 30% chicory blend",
+      "Smooth, mellow, reduced bitterness",
+      "Traditional South Indian filter grind",
+      "Classic decoction-style cup",
       "Ideal for filter/decoction brewing",
     ],
     process: "Pending",
