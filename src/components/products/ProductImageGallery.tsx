@@ -16,7 +16,7 @@ export function ProductImageGallery({ images, productName, priority }: ProductIm
 
   return (
     <div className="sticky top-24">
-      <div className="aspect-[5/4] relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-200">
+      <div className="aspect-[5/4] relative rounded-2xl overflow-hidden">
         <Image
           src={images[current]}
           alt={productName}
