@@ -1,4 +1,4 @@
-export type { Product, ProductVariant, CoffeeProcess } from "./types";
+export type { Product, ProductVariant, CoffeeProcess, ProductQuality, BrewStyle } from "./types";
 export { COFFEE_GRIND_OPTIONS } from "./types";
 
 export { dooarsAssamTeaProducts } from "./dooars-assam-tea";
@@ -43,6 +43,10 @@ export function getAllProductSlugs(): string[] {
 
 export function getProductsByCategory(category: "Tea" | "Coffee"): Product[] {
   return products.filter((product) => product.category === category);
+}
+
+export function getProductsByQuality(quality: "Speciality" | "Commercial"): Product[] {
+  return products.filter((product) => product.quality === quality);
 }
 
 // Featured products for homepage (one from each category)

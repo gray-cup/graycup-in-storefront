@@ -21,6 +21,8 @@ export const dooarsAssamTeaProducts: Product[] = [
     locations: ["Dooars", "Assam"],
     category: "Tea",
     categoryTwo: "Blend",
+    quality: "Commercial",
+    brewStyle: "Milk",
     priceRange: {
       min: 395,
       max: 1450,

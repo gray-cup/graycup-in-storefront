@@ -1,24 +1,18 @@
 import {
   dooarsAssamTeaProducts,
   giddapaharDarjeelingProducts,
-  koraputCoffeeProducts,
-  estateCoffeeProducts,
-  halflongAssamCoffeeProducts,
-  filterCoffeeProducts,
+  products,
 } from "@/data/products";
 import { HeroSection, AnimatedProductRow, BrandNarrative } from "@/components/home";
 
 export const revalidate = 3600;
 
-const attikanProducts = estateCoffeeProducts.filter((p) => p.slug.startsWith("attikan"));
-const otherEstateProducts = estateCoffeeProducts.filter((p) => !p.slug.startsWith("attikan"));
-
-const specialtyCoffeeProducts = [
-  ...halflongAssamCoffeeProducts,
-  ...attikanProducts,
-  ...koraputCoffeeProducts,
-];
-const basicCoffeeProducts = [...filterCoffeeProducts, ...otherEstateProducts];
+const specialtyCoffeeProducts = products.filter(
+  (p) => p.category === "Coffee" && p.quality === "Speciality",
+);
+const basicCoffeeProducts = products.filter(
+  (p) => p.category === "Coffee" && p.quality === "Commercial",
+);
 
 export default function Home() {
   return (

@@ -24,6 +24,8 @@ export const estateCoffeeProducts: Product[] = [
     locations: ["Karadykan Estate"],
     category: "Coffee",
     categoryTwo: "Single Origin",
+    quality: "Commercial",
+    brewStyle: "Black",
     priceRange: {
       min: 440,
       max: 1550,
@@ -69,6 +71,8 @@ export const estateCoffeeProducts: Product[] = [
     locations: ["Biccode Estate"],
     category: "Coffee",
     categoryTwo: "Single Origin",
+    quality: "Commercial",
+    brewStyle: "Black",
     priceRange: {
       min: 395,
       max: 1799,
@@ -112,6 +116,8 @@ export const estateCoffeeProducts: Product[] = [
     locations: ["Attikan Estate"],
     category: "Coffee",
     categoryTwo: "Single Origin",
+    quality: "Speciality",
+    brewStyle: "Black",
     priceRange: {
       min: 550,
       max: 1799,
@@ -155,6 +161,8 @@ export const estateCoffeeProducts: Product[] = [
     locations: ["Attikan Estate"],
     category: "Coffee",
     categoryTwo: "Single Origin",
+    quality: "Speciality",
+    brewStyle: "Black",
     priceRange: {
       min: 550,
       max: 1799,

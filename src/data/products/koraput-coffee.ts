@@ -24,6 +24,8 @@ export const koraputCoffeeProducts: Product[] = [
     locations: ["Koraput, Odisha"],
     category: "Coffee",
     categoryTwo: "Single Origin",
+    quality: "Speciality",
+    brewStyle: "Black",
     priceRange: {
       min: 650,
       max: 650,
@@ -65,6 +67,8 @@ export const koraputCoffeeProducts: Product[] = [
     locations: ["Koraput, Odisha"],
     category: "Coffee",
     categoryTwo: "Single Origin",
+    quality: "Speciality",
+    brewStyle: "Black",
     priceRange: {
       min: 750,
       max: 750,
@@ -106,6 +110,8 @@ export const koraputCoffeeProducts: Product[] = [
     locations: ["Koraput, Odisha"],
     category: "Coffee",
     categoryTwo: "Single Origin",
+    quality: "Speciality",
+    brewStyle: "Black",
     priceRange: {
       min: 510,
       max: 510,

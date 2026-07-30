@@ -29,6 +29,9 @@ export type CoffeeRoast =
   | "French"
   | "Pending";
 
+export type ProductQuality = "Speciality" | "Commercial";
+export type BrewStyle = "Milk" | "Black" | "Both";
+
 export type Product = {
   slug: string;
   name: string;
@@ -59,6 +62,8 @@ export type Product = {
   flavourNotes?: string[];
   specs?: { label: string; value: string }[];
   specsNote?: string;
+  quality?: ProductQuality;
+  brewStyle?: BrewStyle;
   // Google Merchant Center fields
   sku: string;
   brand: string;

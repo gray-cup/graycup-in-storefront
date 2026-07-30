@@ -24,6 +24,8 @@ export const filterCoffeeProducts: Product[] = [
     locations: ["Chikmagalur", "Coorg"],
     category: "Coffee",
     categoryTwo: "Blend",
+    quality: "Commercial",
+    brewStyle: "Milk",
     priceRange: {
       min: 450,
       max: 1550,
@@ -67,6 +69,8 @@ export const filterCoffeeProducts: Product[] = [
     locations: ["Chikmagalur", "Coorg"],
     category: "Coffee",
     categoryTwo: "Single Origin",
+    quality: "Commercial",
+    brewStyle: "Milk",
     priceRange: {
       min: 450,
       max: 1550,
@@ -110,6 +114,8 @@ export const filterCoffeeProducts: Product[] = [
     locations: ["Chikmagalur", "Coorg"],
     category: "Coffee",
     categoryTwo: "Single Origin",
+    quality: "Commercial",
+    brewStyle: "Both",
     priceRange: {
       min: 350,
       max: 1250,
@@ -153,6 +159,8 @@ export const filterCoffeeProducts: Product[] = [
     locations: ["Chikmagalur", "Coorg"],
     category: "Coffee",
     categoryTwo: "Blend",
+    quality: "Commercial",
+    brewStyle: "Black",
     priceRange: {
       min: 450,
       max: 1550,
@@ -196,6 +204,8 @@ export const filterCoffeeProducts: Product[] = [
     locations: ["Chikmagalur", "Coorg"],
     category: "Coffee",
     categoryTwo: "Blend",
+    quality: "Commercial",
+    brewStyle: "Black",
     priceRange: {
       min: 450,
       max: 1550,

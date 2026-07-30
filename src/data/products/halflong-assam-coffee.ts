@@ -25,6 +25,8 @@ export const halflongAssamCoffeeProducts: Product[] = [
     locations: ["Halflong, Assam"],
     category: "Coffee",
     categoryTwo: "Single Origin",
+    quality: "Speciality",
+    brewStyle: "Black",
     priceRange: {
       min: 550,
       max: 1799,

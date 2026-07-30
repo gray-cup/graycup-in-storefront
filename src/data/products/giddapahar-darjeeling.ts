@@ -21,6 +21,8 @@ export const giddapaharDarjeelingProducts: Product[] = [
     locations: ["Darjeeling"],
     category: "Tea",
     categoryTwo: "Single Origin",
+    quality: "Speciality",
+    brewStyle: "Black",
     priceRange: {
       min: 200,
       max: 340,
