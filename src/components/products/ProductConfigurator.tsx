@@ -129,7 +129,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
 
           <div className="space-y-2">
             <Label>Quantity</Label>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <Button
                 variant="outline"
                 size="icon"
@@ -138,7 +138,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
               >
                 <Minus className="h-4 w-4" />
               </Button>
-              <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
+              <span className="text-xl font-semibold w-8 text-center">{quantity}</span>
               <Button
                 variant="outline"
                 size="icon"
