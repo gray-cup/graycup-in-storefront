@@ -62,7 +62,7 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
         )}
       </div>
       <div className="px-3 pb-6">
-        <h3 className="text-md hover:underline font-semibold text-black">
+        <h3 className="text-md hover:underline font-semibold text-black line-clamp-2 min-h-[2.5em]">
           {product.name}
         </h3>
         {showPrice && !product.comingSoon && (

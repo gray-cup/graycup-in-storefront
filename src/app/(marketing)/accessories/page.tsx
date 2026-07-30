@@ -1,5 +1,36 @@
+import type { Metadata } from "next";
 import { accessoryProducts } from "@/data/products";
 import { ProductCard } from "@/components/products";
+
+const baseUrl = "https://graycup.in";
+
+export const metadata: Metadata = {
+  title: "Accessories | Gray Cup",
+  description:
+    "Shop coffee and tea brewing accessories from Gray Cup - reusable cotton bags and more, made for everyday brewing.",
+  openGraph: {
+    title: "Accessories | Gray Cup",
+    description:
+      "Shop coffee and tea brewing accessories from Gray Cup - reusable cotton bags and more, made for everyday brewing.",
+    url: `${baseUrl}/accessories`,
+    siteName: "Gray Cup",
+    type: "website",
+    locale: "en_IN",
+    images: [
+      { url: `${baseUrl}/og/categories/accessories.png`, width: 1200, height: 630, alt: "Accessories by Gray Cup" },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Accessories | Gray Cup",
+    description:
+      "Shop coffee and tea brewing accessories from Gray Cup - reusable cotton bags and more, made for everyday brewing.",
+    images: [`${baseUrl}/og/categories/accessories.png`],
+  },
+  alternates: {
+    canonical: `${baseUrl}/accessories`,
+  },
+};
 
 export default function AccessoriesPage() {
   return (
