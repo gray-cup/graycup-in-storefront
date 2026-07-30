@@ -1,5 +1,5 @@
 import React from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins, Inter, Instrument_Sans, Public_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import { cn } from "@/lib/utils";
@@ -95,6 +95,10 @@ export const metadata: Metadata = {
   other: {
     "facebook-domain-verification": "logm65vjqg9own5svlo4llym2l4cg3",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({

@@ -15,7 +15,7 @@ export function ProductImageGallery({ images, productName, priority }: ProductIm
   if (images.length === 0) return null;
 
   return (
-    <div className="sticky top-24">
+    <div className="lg:sticky lg:top-24">
       <div className="aspect-[5/4] relative rounded-2xl overflow-hidden">
         <Image
           src={images[current]}
