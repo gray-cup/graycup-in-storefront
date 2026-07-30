@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
 
 const FLAT_DELIVERY_CHARGE = 40;
+const COUPON_STORAGE_KEY = "graycup_coupon_code";
 
 const INDIAN_STATES = [
   "Andaman and Nicobar Islands",
@@ -96,8 +97,8 @@ export default function CheckoutPage() {
       setGuestInfo((prev) => ({ ...prev, [field]: e.target.value }));
   }
 
-  async function applyCoupon() {
-    const code = couponInput.trim();
+  async function applyCoupon(codeOverride?: string, silent = false) {
+    const code = (codeOverride ?? couponInput).trim();
     if (!code) return;
 
     setCouponApplying(true);
@@ -110,14 +111,16 @@ export default function CheckoutPage() {
       const data = await res.json();
 
       if (!res.ok || !data.valid) {
-        toast.error(data.error ?? "Invalid coupon code");
+        if (!silent) toast.error(data.error ?? "Invalid coupon code");
+        localStorage.removeItem(COUPON_STORAGE_KEY);
         return;
       }
 
       setAppliedCoupon({ code: data.code, discountAmount: data.discountAmount });
-      toast.success(`Coupon ${data.code} applied`);
+      localStorage.setItem(COUPON_STORAGE_KEY, data.code);
+      if (!silent) toast.success(`Coupon ${data.code} applied`);
     } catch {
-      toast.error("Failed to apply coupon. Please try again.");
+      if (!silent) toast.error("Failed to apply coupon. Please try again.");
     } finally {
       setCouponApplying(false);
     }
@@ -126,7 +129,19 @@ export default function CheckoutPage() {
   function removeCoupon() {
     setAppliedCoupon(null);
     setCouponInput("");
+    localStorage.removeItem(COUPON_STORAGE_KEY);
   }
+
+  // Re-apply a previously saved coupon once the cart has finished loading,
+  // so a page reload doesn't silently drop it.
+  useEffect(() => {
+    if (cartLoading || items.length === 0 || appliedCoupon) return;
+    const savedCode = localStorage.getItem(COUPON_STORAGE_KEY);
+    if (savedCode) {
+      applyCoupon(savedCode, true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartLoading, items]);
 
   async function handlePay() {
     if (!address.addressLine1 || !address.city || !address.state || !address.pincode) {
@@ -459,7 +474,7 @@ export default function CheckoutPage() {
                   <button
                     type="button"
                     onClick={removeCoupon}
-                    className="text-green-700 hover:text-green-900"
+                    className="cursor-pointer text-green-700 hover:text-green-900"
                     aria-label="Remove coupon"
                   >
                     <X className="h-3.5 w-3.5" />
@@ -482,7 +497,7 @@ export default function CheckoutPage() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={applyCoupon}
+                    onClick={() => applyCoupon()}
                     disabled={couponApplying || !couponInput.trim()}
                   >
                     {couponApplying ? <Loader2 className="h-4 w-4 animate-spin" /> : "Apply"}
