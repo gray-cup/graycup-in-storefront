@@ -12,13 +12,15 @@ export const accessoryProducts: Product[] = [
       "/accessories/cotton-bag-in-water-2.webp",
     ],
     description:
-      "Reusable, eco-friendly 150 GSM cotton bags - great for gifting, repackaging, or carrying your coffee and tea. Holds up to 40g of ground coffee.",
+      "Eco-friendly, organic cotton bags - reusable and sustainable for coffee usage. 150 GSM, holds up to 40g of ground coffee. Made to last up to 400 brews with proper care.",
     longDescription:
-      "Our cotton bags are made from sturdy 150 GSM cotton fabric with a capacity of about 40g of ground coffee - perfect for repackaging your tea or coffee, gifting, or everyday carrying. Available in packs of 5, 10, or 100, with better value per bag the more you buy.",
+      "Our cotton bags are made from sturdy, organic 150 GSM cotton fabric with a capacity of about 40g of ground coffee - reusable and sustainable for everyday coffee usage, and equally great for repackaging tea, gifting, or general carrying. Made to last up to 400 brews with proper care. Available in packs of 5, 10, or 100, with better value per bag the more you buy.",
     details: [
-      "100% cotton, reusable",
+      "100% organic cotton, reusable",
+      "Eco-friendly and sustainable for coffee usage",
       "150 GSM fabric weight",
       "Holds up to 40g of ground coffee",
+      "Made to last up to 400 brews with proper care",
       "Drawstring closure",
       "Great for gifting or repackaging",
       "Bulk pricing available",
