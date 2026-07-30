@@ -5,6 +5,7 @@ export { ProductConfigurator } from "./ProductConfigurator";
 export { SampleBuilder } from "./SampleBuilder";
 export { ProductHowToUseSection } from "./ProductHowToUseSection";
 export { FlavourProfile } from "./FlavourProfile";
+export { ProductSpecsTable } from "./ProductSpecsTable";
 export { GrindSizeProvider } from "./grind-size-context";
 export { SubscribeButton } from "./SubscribeButton";
 export { SubscriptionBuilder } from "./SubscriptionBuilder";

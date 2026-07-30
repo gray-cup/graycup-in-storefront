@@ -8,6 +8,7 @@ import {
   ProductImageGallery,
   ProductHowToUseSection,
   FlavourProfile,
+  ProductSpecsTable,
   ReviewSection,
   GrindSizeProvider,
 } from "@/components/products";
@@ -129,6 +130,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </h1>
                   <p className="text-gray-600">{product.description}</p>
                 </div>
+
+                <ProductSpecsTable specs={product.specs} />
 
                 <FlavourProfile
                   process={product.process}

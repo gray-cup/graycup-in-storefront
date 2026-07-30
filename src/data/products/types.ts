@@ -57,6 +57,7 @@ export type Product = {
   varietal?: string;
   roast?: CoffeeRoast;
   flavourNotes?: string[];
+  specs?: { label: string; value: string }[];
   // Google Merchant Center fields
   sku: string;
   brand: string;

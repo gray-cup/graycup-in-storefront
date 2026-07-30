@@ -23,6 +23,11 @@ export const accessoryProducts: Product[] = [
       "Great for gifting or repackaging",
       "Bulk pricing available",
     ],
+    specs: [
+      { label: "Capacity", value: "40g of ground coffee" },
+      { label: "Thickness", value: "150 GSM" },
+      { label: "Color", value: "Floral White" },
+    ],
     locations: ["India"],
     category: "Accessories",
     priceRange: {
