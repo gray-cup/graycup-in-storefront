@@ -5,7 +5,12 @@ export const accessoryProducts: Product[] = [
     slug: "cotton-bags",
     name: "Cotton Bags",
     image: "/accessories/cotton-bag.webp",
-    images: ["/accessories/cotton-bag.webp"],
+    images: [
+      "/accessories/cotton-bag.webp",
+      "/accessories/cotton-bags.webp",
+      "/accessories/cotton-bag-in-water.webp",
+      "/accessories/cotton-bag-in-water-2.webp",
+    ],
     description:
       "Reusable, eco-friendly 150 GSM cotton bags - great for gifting, repackaging, or carrying your coffee and tea. Holds up to 40g of ground coffee.",
     longDescription:
