@@ -3,7 +3,7 @@ import type { Product } from "./types";
 export const koraputCoffeeProducts: Product[] = [
   {
     slug: "koraput-odisha-hsd-coffee",
-    name: "Koraput, Odisha HSD Coffee",
+    name: "Koraput, Odisha Honey Sundried Coffee",
     image: "/products/koraput-washed.webp",
     images: ["/products/koraput-washed.webp", "/products/koraput-washed.png", "/products/green-coffee-beans.png"],
     description:
@@ -46,7 +46,7 @@ export const koraputCoffeeProducts: Product[] = [
   },
   {
     slug: "koraput-odisha-natural-coffee",
-    name: "Koraput, Odisha Natural Coffee",
+    name: "Koraput, Odisha Naturals Coffee",
     image: "/products/koraput-washed.webp",
     images: ["/products/koraput-washed.webp", "/products/roasted-coffee-beans.png", "/products/koraput.webp"],
     description:

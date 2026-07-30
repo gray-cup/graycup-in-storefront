@@ -95,7 +95,7 @@ export const estateCoffeeProducts: Product[] = [
   },
   {
     slug: "attikan-estate-honey-sundried-coffee",
-    name: "Attikan Estate Coffee - Honey/Sundried",
+    name: "Attikan Honey Sundried Coffee",
     image: "/products/koraput.webp",
     images: ["/products/koraput.webp", "/products/green-coffee-beans.png", "/products/koraput-washed.webp"],
     description:
@@ -140,7 +140,7 @@ export const estateCoffeeProducts: Product[] = [
   },
   {
     slug: "attikan-estate-washed-coffee",
-    name: "Attikan Estate Coffee - Washed",
+    name: "Attikan Washed Coffee",
     image: "/products/koraput.webp",
     images: ["/products/koraput.webp", "/products/koraput-washed.png", "/products/roasted-coffee-beans.png"],
     description:
