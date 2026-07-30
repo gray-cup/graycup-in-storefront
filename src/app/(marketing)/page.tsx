@@ -10,6 +10,16 @@ import { HeroSection, AnimatedProductRow, BrandNarrative } from "@/components/ho
 
 export const revalidate = 3600;
 
+const attikanProducts = estateCoffeeProducts.filter((p) => p.slug.startsWith("attikan"));
+const otherEstateProducts = estateCoffeeProducts.filter((p) => !p.slug.startsWith("attikan"));
+
+const specialtyCoffeeProducts = [
+  ...halflongAssamCoffeeProducts,
+  ...attikanProducts,
+  ...koraputCoffeeProducts,
+];
+const basicCoffeeProducts = [...filterCoffeeProducts, ...otherEstateProducts];
+
 export default function Home() {
   return (
     <div>
@@ -23,18 +33,13 @@ export default function Home() {
               {/* Featured Products Section */}
               <div id="products" className="py-20 bg-white">
                 <div className="max-w-6xl mx-auto px-4 lg:px-6">
-                  <AnimatedProductRow title="Recently Added" products={estateCoffeeProducts} delay={0} />
                   <AnimatedProductRow
                     title="Tea"
                     products={[...dooarsAssamTeaProducts, ...giddapaharDarjeelingProducts]}
-                    delay={0.05}
+                    delay={0}
                   />
-                  <AnimatedProductRow title="Filter Coffee" products={filterCoffeeProducts} delay={0.1} />
-                  <AnimatedProductRow
-                    title="Coffee"
-                    products={[...estateCoffeeProducts, ...koraputCoffeeProducts, ...halflongAssamCoffeeProducts]}
-                    delay={0.1}
-                  />
+                  <AnimatedProductRow title="Basic Coffee" products={basicCoffeeProducts} delay={0.05} />
+                  <AnimatedProductRow title="Specialty Coffee" products={specialtyCoffeeProducts} delay={0.1} />
                 </div>
               </div>
             </div>
