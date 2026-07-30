@@ -4,6 +4,7 @@ export { ShareButton } from "./ShareButton";
 export { ProductConfigurator } from "./ProductConfigurator";
 export { SampleBuilder } from "./SampleBuilder";
 export { ProductHowToUseSection } from "./ProductHowToUseSection";
+export { ProductEducationSection } from "./ProductEducationSection";
 export { FlavourProfile } from "./FlavourProfile";
 export { ProductSpecsTable } from "./ProductSpecsTable";
 export { GrindSizeProvider } from "./grind-size-context";

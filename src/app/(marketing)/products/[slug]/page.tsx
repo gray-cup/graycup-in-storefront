@@ -7,6 +7,7 @@ import {
   SampleBuilder,
   ProductImageGallery,
   ProductHowToUseSection,
+  ProductEducationSection,
   FlavourProfile,
   ProductSpecsTable,
   ReviewSection,
@@ -224,6 +225,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </Accordion>
               </div>
             </div>
+
+            <ProductEducationSection
+              process={product.process}
+              flavourNotes={product.flavourNotes}
+            />
 
             {product.category === "Coffee" && !product.isSamplePack && <ProductHowToUseSection />}
           </GrindSizeProvider>

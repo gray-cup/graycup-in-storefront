@@ -15,6 +15,7 @@ const dropdowns: Record<string, [string, string][]> = {
   Learn: [
     ["How to Use", "/how-to-use"],
     ["Guides", "/guides"],
+    ["Glossary", "/glossary"],
   ],
 };
 
@@ -184,6 +185,7 @@ export function Navbar() {
               ["About Us", "/about"],
               ["How to Use", "/how-to-use"],
               ["Guides", "/guides"],
+              ["Glossary", "/glossary"],
               [session?.user ? "My Subscriptions" : "Login", accountHref],
             ].map(([label, href]) => (
               <Link

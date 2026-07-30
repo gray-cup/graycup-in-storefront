@@ -14,7 +14,7 @@ const PROCESS_PILL_STYLES: Record<CoffeeProcess, string> = {
   Pending: "bg-neutral-100 text-neutral-500 border-neutral-200",
 };
 
-const PROCESS_DESCRIPTIONS: Record<CoffeeProcess, string> = {
+export const PROCESS_DESCRIPTIONS: Record<CoffeeProcess, string> = {
   Washed:
     "Coffee where the outer fruit skin and sticky pulp are completely removed from the coffee bean using water then the bean is dried.",
   Natural:
