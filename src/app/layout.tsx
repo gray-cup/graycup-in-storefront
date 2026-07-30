@@ -10,6 +10,7 @@ import IntercomChat from "@/components/IntercomChat";
 import { WhatsappWidget } from "@/components/whatsapp-widget";
 import { OrganizationSchema } from "@/components/seo";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ChunkErrorReload } from "@/components/chunk-error-reload";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -129,6 +130,7 @@ export default function RootLayout({
 
         <OrganizationSchema />
         <SpeedInsights />
+        <ChunkErrorReload />
         <RootProviders>{children}</RootProviders>
         {/* <UserJotWidget /> */}
         {/* <WhatsappWidget /> */}
