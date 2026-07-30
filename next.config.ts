@@ -5,6 +5,12 @@ const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   images: {
     minimumCacheTTL: 604800,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "graycup.in",
+      },
+    ],
   },
   async headers() {
     return [
