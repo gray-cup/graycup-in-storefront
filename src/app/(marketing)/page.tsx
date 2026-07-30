@@ -1,9 +1,10 @@
 import {
   dooarsAssamTeaProducts,
   giddapaharDarjeelingProducts,
+  samplePackProducts,
   products,
 } from "@/data/products";
-import { HeroSection, AnimatedProductRow, BrandNarrative } from "@/components/home";
+import { HeroSection, AnimatedProductRow, SamplePacksSection, BrandNarrative } from "@/components/home";
 
 export const revalidate = 3600;
 
@@ -32,8 +33,9 @@ export default function Home() {
                     products={[...dooarsAssamTeaProducts, ...giddapaharDarjeelingProducts]}
                     delay={0}
                   />
-                  <AnimatedProductRow title="Basic Coffee" products={basicCoffeeProducts} delay={0.05} />
-                  <AnimatedProductRow title="Specialty Coffee" products={specialtyCoffeeProducts} delay={0.1} />
+                  <SamplePacksSection products={samplePackProducts} delay={0.05} />
+                  <AnimatedProductRow title="Basic Coffee" products={basicCoffeeProducts} delay={0.1} />
+                  <AnimatedProductRow title="Specialty Coffee" products={specialtyCoffeeProducts} delay={0.15} />
                 </div>
               </div>
             </div>
