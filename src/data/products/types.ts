@@ -20,7 +20,14 @@ export type ProductVariant = {
 };
 
 export type CoffeeProcess = "Washed" | "Natural" | "Honey Sundried (HSD)" | "Pending";
-export type CoffeeRoast = "Light" | "Medium" | "Medium-Dark" | "Dark" | "Pending";
+export type CoffeeRoast =
+  | "Light"
+  | "Medium"
+  | "Medium-Dark"
+  | "Dark"
+  | "Vienna"
+  | "French"
+  | "Pending";
 
 export type Product = {
   slug: string;
