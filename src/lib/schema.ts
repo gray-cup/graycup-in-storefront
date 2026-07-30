@@ -6,6 +6,9 @@ import {
   uuid,
   numeric,
   jsonb,
+  serial,
+  integer,
+  real,
 } from "drizzle-orm/pg-core";
 
 // ─── Better Auth Tables ────────────────────────────────────────────────────
@@ -117,9 +120,38 @@ export const order = pgTable("order", {
   delhiveryPickupDate: text("delhivery_pickup_date"),
   dispatchStatus: text("dispatch_status"),
   notes: text("notes"),
+  // Applied coupon (if any) - couponUsageCounted guards against double-incrementing
+  // coupons.used_count when both the webhook and the /payment/verify poll fire.
+  couponCode: text("coupon_code"),
+  discountAmount: numeric("discount_amount", { precision: 10, scale: 2 })
+    .notNull()
+    .default("0"),
+  couponUsageCounted: boolean("coupon_usage_counted").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+// ─── Coupons ───────────────────────────────────────────────────────────────
+// Managed by orders-graycup admin (Coupons page); redeemed here at checkout.
+// Table shape MUST mirror orders-graycup's lib/db/schema.ts copy exactly -
+// both point at the same physical "coupons" table in this retail DB.
+
+export const coupons = pgTable("coupons", {
+  id: serial("id").primaryKey(),
+  code: text("code").notNull().unique(),
+  discountType: text("discount_type").notNull().default("PERCENTAGE"),
+  discountAmount: integer("discount_amount"),
+  discountPercent: real("discount_percent"),
+  maxDiscountAmount: integer("max_discount_amount"),
+  minOrderAmount: integer("min_order_amount"),
+  usageLimit: integer("usage_limit"),
+  usedCount: integer("used_count").notNull().default(0),
+  active: boolean("active").notNull().default(true),
+  expiresAt: timestamp("expires_at"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export type Coupon = typeof coupons.$inferSelect;
 
 // ─── Subscriptions ─────────────────────────────────────────────────────────
 //

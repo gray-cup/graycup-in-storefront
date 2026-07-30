@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { order } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import crypto from "crypto";
+import { finalizeCouponUsage } from "@/lib/coupons";
 
 // Cashfree webhook event types
 const PAID_EVENTS = new Set(["PAYMENT_SUCCESS_WEBHOOK"]);
@@ -47,6 +48,7 @@ export async function POST(request: NextRequest) {
           updatedAt: new Date(),
         })
         .where(eq(order.cashfreeOrderId, cfOrderId));
+      await finalizeCouponUsage(cfOrderId);
     } else if (FAILED_EVENTS.has(eventType)) {
       await db
         .update(order)

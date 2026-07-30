@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Loader2, MapPin, Package } from "lucide-react";
+import { ArrowLeft, Loader2, MapPin, Package, Tag, X } from "lucide-react";
 import { toast } from "sonner";
 import { authClient, type AuthUser } from "@/lib/auth-client";
 import { useCart } from "@/components/cart-provider";
@@ -75,6 +75,10 @@ export default function CheckoutPage() {
   const [gstNumber, setGstNumber] = useState("");
   const [payLoading, setPayLoading] = useState(false);
 
+  const [couponInput, setCouponInput] = useState("");
+  const [couponApplying, setCouponApplying] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discountAmount: number } | null>(null);
+
   // Redirect if cart is empty (only after session resolves)
   useEffect(() => {
     if (!isPending && items.length === 0) {
@@ -90,6 +94,38 @@ export default function CheckoutPage() {
   function setGuestField(field: keyof typeof guestInfo) {
     return (e: React.ChangeEvent<HTMLInputElement>) =>
       setGuestInfo((prev) => ({ ...prev, [field]: e.target.value }));
+  }
+
+  async function applyCoupon() {
+    const code = couponInput.trim();
+    if (!code) return;
+
+    setCouponApplying(true);
+    try {
+      const res = await fetch("/api/validate-coupon", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, items }),
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.valid) {
+        toast.error(data.error ?? "Invalid coupon code");
+        return;
+      }
+
+      setAppliedCoupon({ code: data.code, discountAmount: data.discountAmount });
+      toast.success(`Coupon ${data.code} applied`);
+    } catch {
+      toast.error("Failed to apply coupon. Please try again.");
+    } finally {
+      setCouponApplying(false);
+    }
+  }
+
+  function removeCoupon() {
+    setAppliedCoupon(null);
+    setCouponInput("");
   }
 
   async function handlePay() {
@@ -126,6 +162,7 @@ export default function CheckoutPage() {
           },
           deliveryCharge: FLAT_DELIVERY_CHARGE,
           gstNumber: gstNumber.trim() || undefined,
+          couponCode: appliedCoupon?.code,
           guest: !user
             ? { name: customerName, email: customerEmail, phone: customerPhone }
             : undefined,
@@ -169,7 +206,8 @@ export default function CheckoutPage() {
   }
   if (items.length === 0) return null;
 
-  const grandTotal = total + FLAT_DELIVERY_CHARGE;
+  const discount = appliedCoupon?.discountAmount ?? 0;
+  const grandTotal = total + FLAT_DELIVERY_CHARGE - discount;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
@@ -410,6 +448,51 @@ export default function CheckoutPage() {
 
             <Separator />
 
+            {/* Coupon */}
+            <div className="space-y-2">
+              {appliedCoupon ? (
+                <div className="flex items-center justify-between rounded-md bg-green-50 border border-green-200 px-3 py-2 text-sm">
+                  <div className="flex items-center gap-1.5 text-green-700 font-medium">
+                    <Tag className="h-3.5 w-3.5" />
+                    {appliedCoupon.code} applied
+                  </div>
+                  <button
+                    type="button"
+                    onClick={removeCoupon}
+                    className="text-green-700 hover:text-green-900"
+                    aria-label="Remove coupon"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Coupon code"
+                    value={couponInput}
+                    onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        applyCoupon();
+                      }
+                    }}
+                    className="font-mono"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={applyCoupon}
+                    disabled={couponApplying || !couponInput.trim()}
+                  >
+                    {couponApplying ? <Loader2 className="h-4 w-4 animate-spin" /> : "Apply"}
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            <Separator />
+
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-600">Subtotal</span>
@@ -419,6 +502,12 @@ export default function CheckoutPage() {
                 <span className="text-gray-600">Delivery</span>
                 <span>{formatPrice(FLAT_DELIVERY_CHARGE)}</span>
               </div>
+              {appliedCoupon && (
+                <div className="flex justify-between text-green-700">
+                  <span>Discount ({appliedCoupon.code})</span>
+                  <span>-{formatPrice(discount)}</span>
+                </div>
+              )}
             </div>
 
             <Separator />

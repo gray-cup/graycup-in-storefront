@@ -5,6 +5,7 @@ import { order, address as addressTable } from "@/lib/schema";
 import { eq, count } from "drizzle-orm";
 import type { CartItem } from "@/lib/cart";
 import { CF_BASE, cfHeaders } from "@/lib/cashfree";
+import { validateCoupon } from "@/lib/coupons";
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,12 +18,14 @@ export async function POST(request: NextRequest) {
       deliveryCharge,
       gstNumber,
       guest,
+      couponCode,
     }: {
       items: CartItem[];
       address: Record<string, string>;
       deliveryCharge: number;
       gstNumber?: string;
       guest?: { name: string; email: string; phone: string };
+      couponCode?: string;
     } = body;
 
     if (!items?.length) {
@@ -60,7 +63,21 @@ export async function POST(request: NextRequest) {
       return sum + price * item.quantity;
     }, 0);
     const delivery = deliveryCharge ?? 0;
-    const totalAmount = subtotal + delivery;
+
+    // Re-validate the coupon server-side against the subtotal we just computed -
+    // never trust a discount amount supplied by the client.
+    let appliedCouponCode: string | null = null;
+    let discountAmount = 0;
+    if (couponCode) {
+      const validation = await validateCoupon(couponCode, subtotal);
+      if (!validation.valid) {
+        return NextResponse.json({ error: validation.error || "Invalid coupon code" }, { status: 400 });
+      }
+      appliedCouponCode = validation.coupon!.code;
+      discountAmount = validation.discountAmount;
+    }
+
+    const totalAmount = subtotal + delivery - discountAmount;
 
     // ── Persist order (pending) ────────────────────────────────────────────
     const cfOrderId = `gc_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
@@ -80,6 +97,8 @@ export async function POST(request: NextRequest) {
         customerEmail,
         customerPhone,
         gstNumber: gstNumber || null,
+        couponCode: appliedCouponCode,
+        discountAmount: discountAmount.toFixed(2),
       })
       .returning();
 

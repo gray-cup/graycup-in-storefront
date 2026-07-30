@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { order } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import { CF_BASE, cfHeaders, mapOrderStatus } from "@/lib/cashfree";
+import { finalizeCouponUsage } from "@/lib/coupons";
 
 export async function GET(request: NextRequest) {
   const cashfreeOrderId = new URL(request.url).searchParams.get("order_id");
@@ -55,6 +56,10 @@ export async function GET(request: NextRequest) {
       })
       .where(eq(order.cashfreeOrderId, cashfreeOrderId))
       .returning();
+
+    if (paymentStatus === "paid") {
+      await finalizeCouponUsage(cashfreeOrderId);
+    }
 
     return NextResponse.json({
       status: paymentStatus,
