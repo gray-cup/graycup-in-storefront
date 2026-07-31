@@ -16,7 +16,14 @@ export default function WholesalePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {wholesaleCoffeeProducts.map((product) => (
-            <ProductCard key={product.slug} product={product} />
+            <div key={product.slug}>
+              <ProductCard product={product} showPrice={false} />
+              <p className="text-sm text-muted-foreground mt-2 px-1">
+                {product.priceRange.min === product.priceRange.max
+                  ? `₹${product.priceRange.min.toLocaleString("en-IN")} / kg`
+                  : `₹${product.priceRange.min.toLocaleString("en-IN")}–₹${product.priceRange.max.toLocaleString("en-IN")} / kg`}
+              </p>
+            </div>
           ))}
         </div>
       </div>
