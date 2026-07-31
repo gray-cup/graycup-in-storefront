@@ -8,7 +8,7 @@ import { UserJotWidget } from "@/components/userjot-widget";
 import Script from "next/script";
 import IntercomChat from "@/components/IntercomChat";
 import { WhatsappWidget } from "@/components/whatsapp-widget";
-import { OrganizationSchema } from "@/components/seo";
+import { OrganizationSchema, WebSiteSchema } from "@/components/seo";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ChunkErrorReload } from "@/components/chunk-error-reload";
 
@@ -45,9 +45,9 @@ const fontPublicSans = Public_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://graycup.in"),
-  title: "Gray Cup",
+  title: "Gray Cup | Premium Indian Tea, Coffee & Matcha",
   description:
-    "We sell indian tea, coffee and matcha to people who care about quality.",
+    "Gray Cup sources premium Indian tea, specialty coffee, and matcha. Shop online at graycup.in or buy wholesale for cafes and businesses.",
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -72,9 +72,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Gray Cup",
+    title: "Gray Cup | Premium Indian Tea, Coffee & Matcha",
     description:
-      "We sell indian tea, coffee and matcha to people who care about quality.",
+      "Gray Cup sources premium Indian tea, specialty coffee, and matcha. Shop online at graycup.in or buy wholesale for cafes and businesses.",
     images: [
       {
         url: "https://graycup.in/og.png",
@@ -87,9 +87,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gray Cup",
+    title: "Gray Cup | Premium Indian Tea, Coffee & Matcha",
     description:
-      "We sell indian tea, coffee and matcha to people who care about quality.",
+      "Gray Cup sources premium Indian tea, specialty coffee, and matcha. Shop online at graycup.in or buy wholesale for cafes and businesses.",
     images: ["https://graycup.in/og.png"],
   },
   other: {
@@ -136,6 +136,7 @@ export default function RootLayout({
       >
 
         <OrganizationSchema />
+        <WebSiteSchema />
         <SpeedInsights />
         <ChunkErrorReload />
         <RootProviders>{children}</RootProviders>

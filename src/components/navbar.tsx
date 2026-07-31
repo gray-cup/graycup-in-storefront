@@ -87,6 +87,7 @@ export function Navbar() {
                 ["Wholesale", "/wholesale"],
                 ["New Product Request", "/new-product-request"],
                 ["About Us", "/about"],
+                ["Contact", "/contact"],
               ].map(([label, href]) => (
                 <Link
                   key={href}
@@ -183,6 +184,7 @@ export function Navbar() {
               ["New Product Request", "/new-product-request"],
               ["Feedback", "/feedback"],
               ["About Us", "/about"],
+              ["Contact", "/contact"],
               ["How to Use", "/how-to-use"],
               ["Guides", "/guides"],
               ["Glossary", "/glossary"],
