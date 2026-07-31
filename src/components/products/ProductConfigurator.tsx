@@ -11,12 +11,17 @@ import { CardHeader, Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useCart } from "@/components/cart-provider";
 import { CURRENCY } from "@/lib/currency";
-import { COFFEE_GRIND_OPTIONS, type Product } from "@/data/products";
+import { COFFEE_GRIND_OPTIONS, type Product, type ProductVariant } from "@/data/products";
 import { useGrindSize } from "./grind-size-context";
 
 type ProductConfiguratorProps = {
   product: Product;
 };
+
+function perKgPrice(variant: ProductVariant): number | null {
+  if (!variant.weightGrams) return null;
+  return variant.price / (variant.weightGrams / 1000);
+}
 
 function getDefaultVariant(product: Product) {
   return (
@@ -93,6 +98,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const decrementQuantity = () => setQuantity((q) => Math.max(1, q - 1));
 
   const totalPrice = selectedVariant.price * quantity;
+  const selectedPerKg = perKgPrice(selectedVariant);
 
   return (
     <Card className="">
@@ -101,6 +107,12 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
               {CURRENCY.symbol}
               {selectedVariant.price.toLocaleString(CURRENCY.locale)}
             </p>
+            {selectedPerKg !== null && (
+              <p className="text-sm text-muted-foreground">
+                {CURRENCY.symbol}
+                {selectedPerKg.toLocaleString(CURRENCY.locale)} / kg
+              </p>
+            )}
       </CardHeader>
       <CardContent className="space-y-6 py-4">
         {/* Variant Selector + Quantity */}
@@ -117,12 +129,18 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
                 }}
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                {product.variants.map((variant) => (
-                  <option key={variant.name} value={variant.name}>
-                    {variant.name} - {CURRENCY.symbol}
-                    {variant.price.toLocaleString(CURRENCY.locale)}
-                  </option>
-                ))}
+                {product.variants.map((variant) => {
+                  const perKg = perKgPrice(variant);
+                  return (
+                    <option key={variant.name} value={variant.name}>
+                      {variant.name} - {CURRENCY.symbol}
+                      {variant.price.toLocaleString(CURRENCY.locale)}
+                      {perKg !== null &&
+                        variant.weightGrams !== 1000 &&
+                        ` (${CURRENCY.symbol}${perKg.toLocaleString(CURRENCY.locale)}/kg)`}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           )}
@@ -178,6 +196,14 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
               {totalPrice.toLocaleString(CURRENCY.locale)}
             </span>
           </div>
+          {selectedPerKg !== null && (
+            <div className="flex justify-end">
+              <span className="text-xs text-muted-foreground">
+                {CURRENCY.symbol}
+                {selectedPerKg.toLocaleString(CURRENCY.locale)} / kg
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Action Buttons */}
