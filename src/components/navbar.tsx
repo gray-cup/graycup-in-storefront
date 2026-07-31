@@ -5,6 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CartButton } from "@/components/cart-button";
+import { ProductSearch } from "@/components/product-search";
 import { ChevronDown, User } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
@@ -107,6 +108,7 @@ export function Navbar() {
 
           {/* RIGHT */}
           <div className="flex items-center gap-2">
+            <ProductSearch />
             <a
               href="https://fast.graycup.in"
               target="_blank"

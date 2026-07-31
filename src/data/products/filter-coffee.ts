@@ -7,12 +7,12 @@ export const filterCoffeeProducts: Product[] = [
     image: "/products/ground-coffee.png",
     images: ["/products/ground-coffee.png", "/products/roasted-coffee-beans.png", "/products/green-coffee-beans.png"],
     description:
-      "South Indian filter coffee blend of 70% washed Arabica and 30% natural Robusta from Tirap, Arunachal Pradesh - aromatic and smooth, with a strong finish and good crema.",
+      "South Indian filter coffee blend of 70% washed Arabica from Karadykan, Karnataka and 30% natural Robusta from Tirap, Arunachal Pradesh - aromatic and smooth, with a strong finish and good crema.",
     longDescription:
-      "Our 70/30 filter coffee blend leads with washed-process Arabica for aroma and sweetness, balanced with 30% natural-process Robusta from Tirap, Arunachal Pradesh, for strength and a rich crema. Ground fine for traditional South Indian filter brewing, it delivers a smooth, well-rounded, decoction-style cup without being overpoweringly strong.",
+      "Our 70/30 filter coffee blend leads with washed-process Arabica from Karadykan, Karnataka for aroma and sweetness, balanced with 30% natural-process Robusta from Tirap, Arunachal Pradesh, for strength and a rich crema. Ground fine for traditional South Indian filter brewing, it delivers a smooth, well-rounded, decoction-style cup without being overpoweringly strong.",
     details: [
       "70% Arabica, 30% Robusta blend",
-      "Arabica: washed process",
+      "Arabica: washed process, sourced from Karadykan, Karnataka",
       "Robusta: natural process, sourced from Tirap, Arunachal Pradesh",
       "Aromatic, smooth, good crema",
       "Traditional South Indian filter grind",
@@ -24,10 +24,11 @@ export const filterCoffeeProducts: Product[] = [
     flavourNotes: ["Pending"],
     specs: [
       { label: "Arabica Process", value: "Washed" },
+      { label: "Arabica Origin", value: "Karadykan, Karnataka" },
       { label: "Robusta Process", value: "Natural" },
       { label: "Robusta Origin", value: "Tirap, Arunachal Pradesh" },
     ],
-    locations: ["Chikmagalur", "Coorg", "Tirap, Arunachal Pradesh"],
+    locations: ["Karadykan, Karnataka", "Tirap, Arunachal Pradesh"],
     category: "Coffee",
     categoryTwo: "Blend",
     quality: "Commercial",
