@@ -12,6 +12,7 @@ export function GuideContent({ guide }: { guide: HowToUseGuide }) {
   const isVideo = VIDEO_EXTENSIONS.some((ext) => guide.gif.endsWith(ext));
 
   useEffect(() => {
+    setMediaFailed(false);
     const video = videoRef.current;
     if (!video) return;
     // React's `muted` JSX prop isn't always applied before the browser
