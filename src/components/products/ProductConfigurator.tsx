@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ShoppingCart, Minus, Plus, Zap } from "lucide-react";
 import { toast } from "sonner";
@@ -130,6 +130,10 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
 
   const incrementQuantity = () => setQuantity((q) => q + 1);
   const decrementQuantity = () => setQuantity((q) => Math.max(1, q - 1));
+  const handleQuantityInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const parsed = parseInt(e.target.value, 10);
+    setQuantity(Number.isNaN(parsed) ? 1 : Math.max(1, parsed));
+  };
 
   const totalPrice = selectedVariant.price * quantity;
   const selectedPerKg = perKgPrice(selectedVariant);
@@ -190,7 +194,13 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
               >
                 <Minus className="h-4 w-4" />
               </Button>
-              <span className="text-xl font-semibold w-8 text-center">{quantity}</span>
+              <input
+                type="number"
+                min={1}
+                value={quantity}
+                onChange={handleQuantityInput}
+                className="w-14 h-9 text-center text-xl font-semibold rounded-md border border-input bg-background [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
               <Button
                 variant="outline"
                 size="icon"

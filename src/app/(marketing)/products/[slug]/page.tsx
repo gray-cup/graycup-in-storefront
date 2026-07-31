@@ -165,9 +165,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <AccordionItem value="description">
                     <AccordionTrigger>Product Description</AccordionTrigger>
                     <AccordionContent>
-                      <p className="text-gray-700 leading-relaxed">
-                        {product.longDescription}
-                      </p>
+                      <div className="space-y-3">
+                        {product.longDescription
+                          ?.split(/(?<=[.!?])\s+(?=[A-Z])/)
+                          .filter(Boolean)
+                          .map((sentence, i) => (
+                            <p key={i} className="text-gray-700 leading-relaxed">
+                              {sentence}
+                            </p>
+                          ))}
+                      </div>
                     </AccordionContent>
                   </AccordionItem>
 

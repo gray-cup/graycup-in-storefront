@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getProductBySlug, FUNDRAISER_PRODUCT_SLUG } from "@/data/products";
 import { getFundraiserStats } from "@/lib/fundraiser";
 import { ProductConfigurator, GrindSizeProvider } from "@/components/products";
@@ -12,7 +13,12 @@ export const metadata: Metadata = {
     "Gray Cup is raising funds for an Aillio Bullet R2 roaster. Every ₹350 you contribute gets you a 250g pack of coffee.",
 };
 
-export default async function FundraiserPage() {
+const ROASTER_IMAGES = [
+  "/fundraiser/aillio-r2/BULLET-R2-Roaster.webp",
+  "/fundraiser/aillio-r2/BULLET-R2-Roaster-2.webp",
+];
+
+export default async function FundraisersPage() {
   const product = getProductBySlug(FUNDRAISER_PRODUCT_SLUG);
   if (!product) return null;
 
@@ -40,6 +46,41 @@ export default async function FundraiserPage() {
             {350} you contribute funds the roaster and gets you a 250g pack of our
             coffee - your choice of Medium or Dark roast.
           </p>
+        </div>
+
+        {/* Fundraiser Card */}
+        <div className="mb-12 rounded-2xl border border-neutral-200 overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="grid grid-cols-2 gap-1 bg-neutral-50">
+              {ROASTER_IMAGES.map((src) => (
+                <div key={src} className="relative aspect-square">
+                  <Image
+                    src={src}
+                    alt="Aillio Bullet R2 coffee roaster"
+                    fill
+                    className="object-contain p-4"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="p-6 flex flex-col justify-center">
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-1">
+                What we&apos;re raising for
+              </p>
+              <h2 className="text-2xl font-semibold text-black mb-2">
+                Aillio Bullet R2
+              </h2>
+              <p className="text-3xl font-bold text-black mb-3">
+                {CURRENCY.symbol}
+                {stats.goalInr.toLocaleString(CURRENCY.locale)}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                An electric coffee roaster that will let us roast in-house with
+                far tighter control over batch quality and consistency than our
+                current setup.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Progress */}

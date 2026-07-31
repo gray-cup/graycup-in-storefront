@@ -46,7 +46,7 @@ export const products: Product[] = [
 ];
 
 // Regular retail catalog - excludes wholesale bulk SKUs and fundraiser reward
-// packs, which only belong on /wholesale and /fundraiser respectively.
+// packs, which only belong on /wholesale and /fundraisers respectively.
 export const retailProducts: Product[] = products.filter(
   (product) => !product.isWholesale && !product.isFundraiser,
 );

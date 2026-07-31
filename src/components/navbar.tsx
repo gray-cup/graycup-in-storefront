@@ -13,7 +13,7 @@ const dropdowns: Record<string, [string, string][]> = {
     ["Feedback", "/feedback"],
     ["New Product Request", "/new-product-request"],
     ["About Us", "/about"],
-    ["Fundraiser", "/fundraiser"],
+    ["Fundraisers", "/fundraisers"],
   ],
   Learn: [
     ["How to Use", "/how-to-use"],
@@ -186,7 +186,7 @@ export function Navbar() {
               ["Feedback", "/feedback"],
               ["New Product Request", "/new-product-request"],
               ["About Us", "/about"],
-              ["Fundraiser", "/fundraiser"],
+              ["Fundraisers", "/fundraisers"],
               ["How to Use", "/how-to-use"],
               ["Guides", "/guides"],
               ["Glossary", "/glossary"],
