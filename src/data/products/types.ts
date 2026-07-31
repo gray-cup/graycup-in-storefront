@@ -70,6 +70,8 @@ export type Product = {
   roastOptions?: CoffeeRoast[];
   /** Fundraiser reward pack - excluded from the regular product grid, feeds, and sitemap. */
   isFundraiser?: boolean;
+  /** Bulk wholesale SKU - only shown on /wholesale, excluded from the retail catalog, homepage, and feeds. */
+  isWholesale?: boolean;
   // Google Merchant Center fields
   sku: string;
   brand: string;
