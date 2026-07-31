@@ -29,6 +29,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     quality: "Commercial",
     brewStyle: "Milk",
     roastOptions: ["Medium", "Dark"],
+    isWholesale: true,
     priceRange: {
       min: 1250,
       max: 1300,
@@ -77,6 +78,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     quality: "Speciality",
     brewStyle: "Milk",
     roastOptions: ["Medium", "Dark"],
+    isWholesale: true,
     priceRange: {
       min: 1950,
       max: 1950,
@@ -125,6 +127,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     quality: "Speciality",
     brewStyle: "Black",
     roastOptions: ["Medium", "Dark"],
+    isWholesale: true,
     priceRange: {
       min: 2050,
       max: 2050,

@@ -45,6 +45,12 @@ export const products: Product[] = [
   ...fundraiserProducts,
 ];
 
+// Regular retail catalog - excludes wholesale bulk SKUs and fundraiser reward
+// packs, which only belong on /wholesale and /fundraiser respectively.
+export const retailProducts: Product[] = products.filter(
+  (product) => !product.isWholesale && !product.isFundraiser,
+);
+
 // Helper functions
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((product) => product.slug === slug);
@@ -55,11 +61,11 @@ export function getAllProductSlugs(): string[] {
 }
 
 export function getProductsByCategory(category: "Tea" | "Coffee"): Product[] {
-  return products.filter((product) => product.category === category);
+  return retailProducts.filter((product) => product.category === category);
 }
 
 export function getProductsByQuality(quality: "Speciality" | "Commercial"): Product[] {
-  return products.filter((product) => product.quality === quality);
+  return retailProducts.filter((product) => product.quality === quality);
 }
 
 // Featured products for homepage (one from each category)

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { products } from "@/data/products";
+import { retailProducts } from "@/data/products";
 import { ProductCard } from "@/components/products";
 
 type CategoryFilter = "All" | "Tea" | "Coffee";
@@ -10,9 +10,8 @@ export default function ProductsPage() {
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("All");
 
   const filteredProducts = useMemo(() => {
-    const catalog = products.filter((product) => !product.isFundraiser);
-    if (categoryFilter === "All") return catalog;
-    return catalog.filter((product) => product.category === categoryFilter);
+    if (categoryFilter === "All") return retailProducts;
+    return retailProducts.filter((product) => product.category === categoryFilter);
   }, [categoryFilter]);
 
   const categories: { value: CategoryFilter; label: string }[] = [

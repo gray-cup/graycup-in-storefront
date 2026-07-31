@@ -2,7 +2,7 @@ import {
   dooarsAssamTeaProducts,
   giddapaharDarjeelingProducts,
   samplePackProducts,
-  products,
+  retailProducts,
 } from "@/data/products";
 import {
   HeroSection,
@@ -14,11 +14,12 @@ import {
 
 export const revalidate = 3600;
 
-const specialtyCoffeeProducts = products.filter(
-  (p) => p.category === "Coffee" && p.quality === "Speciality",
+const retailCoffeeProducts = retailProducts.filter((p) => p.category === "Coffee");
+const specialtyCoffeeProducts = retailCoffeeProducts.filter(
+  (p) => p.quality === "Speciality",
 );
-const basicCoffeeProducts = products.filter(
-  (p) => p.category === "Coffee" && p.quality === "Commercial",
+const basicCoffeeProducts = retailCoffeeProducts.filter(
+  (p) => p.quality === "Commercial",
 );
 
 export default function Home() {

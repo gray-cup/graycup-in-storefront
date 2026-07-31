@@ -48,7 +48,7 @@ export async function GET() {
     baseUrl: BASE_URL,
     currency: "INR",
     generatedAt: new Date().toISOString(),
-    products: products.filter((p) => !p.isFundraiser).map(mapProduct),
+    products: products.filter((p) => !p.isFundraiser && !p.isWholesale).map(mapProduct),
   };
 
   return NextResponse.json(body, {
