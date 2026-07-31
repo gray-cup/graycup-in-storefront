@@ -1,3 +1,6 @@
+import { wholesaleCoffeeProducts } from "@/data/products";
+import { ProductCard } from "@/components/products/ProductCard";
+
 export default function WholesalePage() {
   return (
     <div className="min-h-dvh py-20 px-4 lg:px-6">
@@ -10,7 +13,13 @@ export default function WholesalePage() {
             Buy Indian Roasted Coffee Whole Beans and Ground Coffee in Bulk Quantities
           </p>
         </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {wholesaleCoffeeProducts.map((product) => (
+            <ProductCard key={product.slug} product={product} />
+          ))}
         </div>
+      </div>
     </div>
   );
 }
