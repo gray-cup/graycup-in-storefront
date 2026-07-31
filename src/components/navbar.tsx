@@ -13,7 +13,6 @@ const dropdowns: Record<string, [string, string][]> = {
     ["Feedback", "/feedback"],
     ["New Product Request", "/new-product-request"],
     ["About Us", "/about"],
-    ["Fundraisers", "/fundraisers"],
   ],
   Learn: [
     ["How to Use", "/how-to-use"],
@@ -88,6 +87,7 @@ export function Navbar() {
                 ["Products", "/products"],
                 ["Accessories", "/accessories"],
                 ["Wholesale", "/wholesale"],
+                ["Fundraisers", "/fundraisers"],
                 ["Contact", "/contact"],
               ].map(([label, href]) => (
                 <Link
@@ -182,11 +182,11 @@ export function Navbar() {
               ["Products", "/products"],
               ["Accessories", "/accessories"],
               ["Wholesale", "/wholesale"],
+              ["Fundraisers", "/fundraisers"],
               ["Contact", "/contact"],
               ["Feedback", "/feedback"],
               ["New Product Request", "/new-product-request"],
               ["About Us", "/about"],
-              ["Fundraisers", "/fundraisers"],
               ["How to Use", "/how-to-use"],
               ["Guides", "/guides"],
               ["Glossary", "/glossary"],
