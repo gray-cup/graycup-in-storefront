@@ -9,11 +9,14 @@ export const wholesaleCoffeeProducts: Product[] = [
     description:
       "Commercial grade coffee for milk-based brewing, sold in bulk with tiered per-kg pricing - the more you buy, the less you pay.",
     longDescription:
-      "Our Wholesale Commercial Grade Coffee is built for cafes, hotels, and businesses that serve milk coffee at volume. Balanced and consistent cup after cup, it's priced on a tiered scale so larger orders bring the per-kg cost down.",
+      "Grown across the Chikmagalur and Coorg hills of Karnataka, this Commercial Grade coffee is built for cafes, hotels, and businesses that serve milk coffee at volume. Balanced and consistent cup after cup, it's priced on a tiered scale so larger orders bring the per-kg cost down. Great for cappuccinos, milk-based filter coffee, and cold coffee. With a 12-month shelf life from roast date, it's a reliable staple for stocking office pantries or powering coffee machines at any food retail outlet. Choose your roast level - Medium or Dark - to match your house blend.",
     details: [
       "Commercial grade, milk coffee",
+      "Sourced from Chikmagalur and Coorg, Karnataka",
       "Tiered wholesale pricing: 5kg, 10kg, 15kg",
+      "Choice of Medium or Dark roast",
       "Consistent, balanced cup for high-volume service",
+      "12-month shelf life from roast date",
       "Suited for cafes, hotels, and businesses",
     ],
     process: "Pending",
@@ -25,6 +28,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     categoryTwo: "Blend",
     quality: "Commercial",
     brewStyle: "Milk",
+    roastOptions: ["Medium", "Dark"],
     priceRange: {
       min: 1250,
       max: 1300,
@@ -53,11 +57,14 @@ export const wholesaleCoffeeProducts: Product[] = [
     description:
       "Specialty grade coffee for milk-based brewing, sold in bulk at a flat ₹1,950/kg with no quantity discounts.",
     longDescription:
-      "Our Wholesale Specialty Grade Coffee (Milk) is sourced for cup quality and consistency, priced flat per kg regardless of order size. A strong choice for businesses that want specialty-grade character in their milk coffee at scale.",
+      "Sourced from high-altitude, shade-grown estates in the Chikmagalur and Coorg hills, this Specialty Grade coffee is picked and processed for cup quality, then priced flat per kg regardless of order size. A strong choice for businesses that want specialty-grade character in their milk coffee at scale - great for cappuccinos, espresso latte, and cold coffee. With a 12-month shelf life from roast date, it suits office pantries and food retail outlets alike. Choose your roast level - Medium or Dark - to match your house blend.",
     details: [
       "Specialty grade, milk coffee",
+      "High-altitude, shade-grown, Chikmagalur and Coorg",
       "Flat wholesale pricing, no quantity discounts",
+      "Choice of Medium or Dark roast",
       "Sourced for cup quality and consistency",
+      "12-month shelf life from roast date",
       "Suited for cafes, hotels, and businesses",
     ],
     process: "Pending",
@@ -69,6 +76,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     categoryTwo: "Premium",
     quality: "Speciality",
     brewStyle: "Milk",
+    roastOptions: ["Medium", "Dark"],
     priceRange: {
       min: 1950,
       max: 1950,
@@ -97,11 +105,14 @@ export const wholesaleCoffeeProducts: Product[] = [
     description:
       "Specialty grade coffee for black coffee brewing, sold in bulk at a flat ₹2,050/kg with no quantity discounts.",
     longDescription:
-      "Our Wholesale Specialty Grade Coffee (Black) is selected for clean, expressive character that holds up without milk. Priced flat per kg regardless of order size, it's built for cafes and businesses that pour black coffee at volume.",
+      "Sourced from high-altitude, shade-grown estates in the Chikmagalur and Coorg hills, this Specialty Grade coffee is selected for clean, expressive character that holds up without milk. Priced flat per kg regardless of order size, it's built for cafes and businesses that pour black coffee, filter coffee, and pour-over at volume. With a 12-month shelf life from roast date, it's a dependable stock item for pantries and coffee machines. Choose your roast level - Medium or Dark - to match your house blend.",
     details: [
       "Specialty grade, black coffee",
+      "High-altitude, shade-grown, Chikmagalur and Coorg",
       "Flat wholesale pricing, no quantity discounts",
+      "Choice of Medium or Dark roast",
       "Clean, expressive cup, no milk needed",
+      "12-month shelf life from roast date",
       "Suited for cafes, hotels, and businesses",
     ],
     process: "Pending",
@@ -113,6 +124,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     categoryTwo: "Premium",
     quality: "Speciality",
     brewStyle: "Black",
+    roastOptions: ["Medium", "Dark"],
     priceRange: {
       min: 2050,
       max: 2050,

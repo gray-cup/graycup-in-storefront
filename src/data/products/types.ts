@@ -66,6 +66,10 @@ export type Product = {
   specsNote?: string;
   quality?: ProductQuality;
   brewStyle?: BrewStyle;
+  /** When set, buyers can pick their roast level from this list on the product page. */
+  roastOptions?: CoffeeRoast[];
+  /** Fundraiser reward pack - excluded from the regular product grid, feeds, and sitemap. */
+  isFundraiser?: boolean;
   // Google Merchant Center fields
   sku: string;
   brand: string;

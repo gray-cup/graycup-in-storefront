@@ -1,0 +1,98 @@
+import type { Metadata } from "next";
+import { getProductBySlug, FUNDRAISER_PRODUCT_SLUG } from "@/data/products";
+import { getFundraiserStats } from "@/lib/fundraiser";
+import { ProductConfigurator, GrindSizeProvider } from "@/components/products";
+import { CURRENCY } from "@/lib/currency";
+
+export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Help us buy an Aillio Bullet R2 | Gray Cup Fundraiser",
+  description:
+    "Gray Cup is raising funds for an Aillio Bullet R2 roaster. Every ₹350 you contribute gets you a 250g pack of coffee.",
+};
+
+export default async function FundraiserPage() {
+  const product = getProductBySlug(FUNDRAISER_PRODUCT_SLUG);
+  if (!product) return null;
+
+  let stats;
+  try {
+    stats = await getFundraiserStats();
+  } catch {
+    stats = { packsSold: 0, raisedInr: 0, goalInr: 613000, packsNeeded: 1752, percent: 0 };
+  }
+
+  const packsRemaining = Math.max(0, stats.packsNeeded - stats.packsSold);
+
+  return (
+    <div className="min-h-dvh py-20 px-4 lg:px-6">
+      <div className="max-w-5xl mx-auto px-4 lg:px-6">
+        <div className="text-start mb-12">
+          <h1 className="text-3xl md:text-4xl font-semibold text-black mb-3">
+            Help Us Buy an Aillio Bullet R2
+          </h1>
+          <p className="text-md md:text-lg text-muted-foreground max-w-2xl">
+            We&apos;re raising {CURRENCY.symbol}
+            {stats.goalInr.toLocaleString(CURRENCY.locale)} for an Aillio Bullet R2
+            roaster, so we can roast in-house with tighter, more consistent quality
+            control. Every {CURRENCY.symbol}
+            {350} you contribute funds the roaster and gets you a 250g pack of our
+            coffee - your choice of Medium or Dark roast.
+          </p>
+        </div>
+
+        {/* Progress */}
+        <div className="mb-16 rounded-lg border border-neutral-200 p-6">
+          <div className="flex items-baseline justify-between mb-2">
+            <span className="text-2xl font-semibold">
+              {CURRENCY.symbol}
+              {stats.raisedInr.toLocaleString(CURRENCY.locale)}
+            </span>
+            <span className="text-sm text-muted-foreground">
+              of {CURRENCY.symbol}
+              {stats.goalInr.toLocaleString(CURRENCY.locale)} goal
+            </span>
+          </div>
+
+          <div className="h-3 w-full rounded-full bg-neutral-100 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-black transition-all"
+              style={{ width: `${stats.percent}%` }}
+            />
+          </div>
+
+          <div className="flex items-center justify-between mt-2 text-sm text-muted-foreground">
+            <span>{stats.percent.toFixed(1)}% funded</span>
+            <span>
+              {stats.packsSold.toLocaleString(CURRENCY.locale)} of{" "}
+              {stats.packsNeeded.toLocaleString(CURRENCY.locale)} packs sold
+            </span>
+          </div>
+
+          <p className="text-sm text-muted-foreground mt-4">
+            We need <span className="font-medium text-black">{stats.packsNeeded.toLocaleString(CURRENCY.locale)}</span> 250g
+            packs sold ({CURRENCY.symbol}350 each) to fully fund the roaster.{" "}
+            <span className="font-medium text-black">
+              {packsRemaining.toLocaleString(CURRENCY.locale)}
+            </span>{" "}
+            packs to go.
+          </p>
+        </div>
+
+        {/* Buy a pack */}
+        <div className="max-w-md">
+          <h2 className="text-xl md:text-2xl font-semibold text-black mb-1">
+            Contribute a Pack
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            {CURRENCY.symbol}350 per 250g pack. Add more to contribute more.
+          </p>
+          <GrindSizeProvider>
+            <ProductConfigurator product={product} />
+          </GrindSizeProvider>
+        </div>
+      </div>
+    </div>
+  );
+}

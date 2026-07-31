@@ -70,7 +70,7 @@ ${items}
 
 export async function GET() {
   const baseUrl = "https://graycup.in";
-  const xml = generateFeed(products, baseUrl);
+  const xml = generateFeed(products.filter((p) => !p.isFundraiser), baseUrl);
 
   return new NextResponse(xml, {
     headers: {

@@ -10,6 +10,14 @@ export { filterCoffeeProducts } from "./filter-coffee";
 export { samplePackProducts } from "./sample-packs";
 export { accessoryProducts } from "./accessories";
 export { wholesaleCoffeeProducts } from "./wholesale-coffee";
+export {
+  fundraiserProducts,
+  FUNDRAISER_GOAL_INR,
+  FUNDRAISER_PACK_PRICE_INR,
+  FUNDRAISER_PACK_WEIGHT_GRAMS,
+  FUNDRAISER_PRODUCT_SLUG,
+  FUNDRAISER_PACKS_NEEDED,
+} from "./fundraiser";
 
 import { dooarsAssamTeaProducts } from "./dooars-assam-tea";
 import { giddapaharDarjeelingProducts } from "./giddapahar-darjeeling";
@@ -20,6 +28,7 @@ import { filterCoffeeProducts } from "./filter-coffee";
 import { samplePackProducts } from "./sample-packs";
 import { accessoryProducts } from "./accessories";
 import { wholesaleCoffeeProducts } from "./wholesale-coffee";
+import { fundraiserProducts } from "./fundraiser";
 import type { Product } from "./types";
 
 // Combined array of all products
@@ -33,6 +42,7 @@ export const products: Product[] = [
   ...samplePackProducts,
   ...accessoryProducts,
   ...wholesaleCoffeeProducts,
+  ...fundraiserProducts,
 ];
 
 // Helper functions

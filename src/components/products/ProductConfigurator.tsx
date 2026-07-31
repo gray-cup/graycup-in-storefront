@@ -37,10 +37,12 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
   const { grindSize, setGrindSize } = useGrindSize();
+  const hasRoastOptions = !!product.roastOptions && product.roastOptions.length > 0;
+  const [selectedRoast, setSelectedRoast] = useState(() => product.roastOptions?.[0] ?? "");
   const [hydratedFromUrl, setHydratedFromUrl] = useState(false);
 
-  // Pick up ?variant= and ?grind= from the URL on load, so shared/pasted links
-  // land on the same selection.
+  // Pick up ?variant=, ?grind= and ?roast= from the URL on load, so shared/pasted
+  // links land on the same selection.
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
 
@@ -55,13 +57,18 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       setGrindSize(grindParam);
     }
 
+    const roastParam = searchParams.get("roast");
+    if (hasRoastOptions && roastParam && (product.roastOptions as string[]).includes(roastParam)) {
+      setSelectedRoast(roastParam);
+    }
+
     setHydratedFromUrl(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Keep the URL in sync whenever the selected variant or grind size changes.
-  // Uses the native History API (not router.replace) so this never triggers
-  // an App Router navigation/transition - just updates the address bar.
+  // Keep the URL in sync whenever the selection changes. Uses the native
+  // History API (not router.replace) so this never triggers an App Router
+  // navigation/transition - just updates the address bar.
   useEffect(() => {
     if (!hydratedFromUrl) return;
 
@@ -72,14 +79,33 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
     if (isCoffee) {
       searchParams.set("grind", grindSize);
     }
+    if (hasRoastOptions) {
+      searchParams.set("roast", selectedRoast);
+    }
 
     const query = searchParams.toString();
     const url = query ? `${window.location.pathname}?${query}` : window.location.pathname;
     window.history.replaceState(null, "", url);
-  }, [hydratedFromUrl, selectedVariant, grindSize, isCoffee, product.variants.length]);
+  }, [
+    hydratedFromUrl,
+    selectedVariant,
+    grindSize,
+    selectedRoast,
+    isCoffee,
+    hasRoastOptions,
+    product.variants.length,
+  ]);
 
   const handleAddToCart = () => {
-    addToCart(product, quantity, selectedVariant, undefined, isCoffee ? grindSize : undefined);
+    addToCart(
+      product,
+      quantity,
+      selectedVariant,
+      undefined,
+      isCoffee ? grindSize : undefined,
+      undefined,
+      hasRoastOptions ? selectedRoast : undefined
+    );
     toast.success("Added to cart!", {
       description: `${quantity} ${product.name} (${selectedVariant.name})`,
       action: {
@@ -90,7 +116,15 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   };
 
   const handleBuyNow = () => {
-    addToCart(product, quantity, selectedVariant, undefined, isCoffee ? grindSize : undefined);
+    addToCart(
+      product,
+      quantity,
+      selectedVariant,
+      undefined,
+      isCoffee ? grindSize : undefined,
+      undefined,
+      hasRoastOptions ? selectedRoast : undefined
+    );
     router.push("/checkout");
   };
 
@@ -179,6 +213,25 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {COFFEE_GRIND_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {/* Roast Level */}
+        {hasRoastOptions && (
+          <div className="space-y-2">
+            <Label htmlFor="roast-level">Roast Level</Label>
+            <select
+              id="roast-level"
+              value={selectedRoast}
+              onChange={(e) => setSelectedRoast(e.target.value)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              {product.roastOptions?.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>

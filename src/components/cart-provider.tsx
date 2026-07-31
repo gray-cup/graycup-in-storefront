@@ -26,7 +26,8 @@ type CartContextType = {
     variant?: ProductVariant,
     packaging?: string,
     grind?: string,
-    samples?: string[]
+    samples?: string[],
+    roast?: string
   ) => void;
   removeFromCart: (index: number) => void;
   updateQuantity: (index: number, quantity: number) => void;
@@ -63,10 +64,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     variant?: ProductVariant,
     packaging?: string,
     grind?: string,
-    samples?: string[]
+    samples?: string[],
+    roast?: string
   ) => {
     setItems((currentItems) =>
-      addToCartUtil(currentItems, product, quantity, variant, packaging, grind, samples)
+      addToCartUtil(currentItems, product, quantity, variant, packaging, grind, samples, roast)
     );
   };
 

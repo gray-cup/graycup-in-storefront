@@ -10,8 +10,9 @@ export default function ProductsPage() {
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("All");
 
   const filteredProducts = useMemo(() => {
-    if (categoryFilter === "All") return products;
-    return products.filter((product) => product.category === categoryFilter);
+    const catalog = products.filter((product) => !product.isFundraiser);
+    if (categoryFilter === "All") return catalog;
+    return catalog.filter((product) => product.category === categoryFilter);
   }, [categoryFilter]);
 
   const categories: { value: CategoryFilter; label: string }[] = [

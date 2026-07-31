@@ -93,7 +93,7 @@ function generateProductFeed(products: Product[], baseUrl: string): string {
 export async function GET() {
   const baseUrl = "https://graycup.in";
 
-  const xml = generateProductFeed(products, baseUrl);
+  const xml = generateProductFeed(products.filter((p) => !p.isFundraiser), baseUrl);
 
   return new NextResponse(xml, {
     headers: {
