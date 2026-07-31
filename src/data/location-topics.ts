@@ -1,4 +1,4 @@
-import { products, filterCoffeeProducts, type Product } from "@/data/products";
+import { retailProducts, filterCoffeeProducts, type Product } from "@/data/products";
 
 const groundCoffeeSlugs = new Set(filterCoffeeProducts.map((p) => p.slug));
 
@@ -40,5 +40,5 @@ export function getLocationTopic(slug: string): LocationTopic | undefined {
 }
 
 export function getProductsForTopic(slug: LocationTopicSlug): Product[] {
-  return products.filter(LOCATION_TOPICS[slug].filter);
+  return retailProducts.filter(LOCATION_TOPICS[slug].filter);
 }
