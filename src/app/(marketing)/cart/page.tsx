@@ -7,7 +7,7 @@ import { useCart } from "@/components/cart-provider";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
-import { products } from "@/data/products";
+import { retailProducts } from "@/data/products";
 import { ProductCard } from "@/components/products";
 
 // ── Cart page ──────────────────────────────────────────────────────────────
@@ -16,7 +16,7 @@ export default function CartPage() {
   const { items, total, removeFromCart, updateQuantity } = useCart();
 
   const cartSlugs = new Set(items.map((i) => i.product.slug));
-  const recommendations = products
+  const recommendations = retailProducts
     .filter((p) => !cartSlugs.has(p.slug))
     .slice(0, 4);
 

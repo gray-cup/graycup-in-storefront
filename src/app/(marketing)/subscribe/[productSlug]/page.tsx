@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProductBySlug, getAllProductSlugs, products } from "@/data/products";
+import { getProductBySlug, getAllProductSlugs, retailProducts } from "@/data/products";
 import { SubscriptionBuilder } from "@/components/products";
 
 type SubscribePageProps = {
@@ -36,7 +36,7 @@ export default async function SubscribePage({ params }: SubscribePageProps) {
     notFound();
   }
 
-  const addonProducts = products.filter(
+  const addonProducts = retailProducts.filter(
     (p) => p.slug !== product.slug && !p.comingSoon && p.availability === "in_stock",
   );
 

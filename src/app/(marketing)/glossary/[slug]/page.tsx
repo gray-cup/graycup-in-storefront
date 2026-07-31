@@ -6,7 +6,7 @@ import {
   getAllGlossarySlugs,
   type GlossaryRelatedFilter,
 } from "@/data/glossary";
-import { products } from "@/data/products";
+import { retailProducts } from "@/data/products";
 import { BreadcrumbSchema, DefinedTermSchema } from "@/components/seo";
 
 const baseUrl = "https://graycup.in";
@@ -55,7 +55,7 @@ export async function generateMetadata({
 }
 
 function matchesFilter(
-  product: (typeof products)[number],
+  product: (typeof retailProducts)[number],
   filter: GlossaryRelatedFilter,
 ): boolean {
   if (filter.process && product.process !== filter.process) return false;
@@ -77,7 +77,7 @@ export default async function GlossaryTermPage({ params }: GlossaryTermPageProps
     .filter((t): t is NonNullable<typeof t> => Boolean(t));
 
   const relatedProducts = term.relatedProductFilter
-    ? products.filter((product) => matchesFilter(product, term.relatedProductFilter!)).slice(0, 4)
+    ? retailProducts.filter((product) => matchesFilter(product, term.relatedProductFilter!)).slice(0, 4)
     : [];
 
   const breadcrumbs = [
