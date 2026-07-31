@@ -268,13 +268,13 @@ export default function CheckoutPage() {
               </div>
             ) : (
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 rounded-lg p-3">
-                  <span>Checking out as guest.</span>
+                <p className="text-sm text-gray-500 bg-gray-50 rounded-lg p-3">
+                  Checking out as guest.{" "}
                   <Link href="/auth/login?redirect=/checkout" className="text-black underline underline-offset-2 font-medium">
                     Sign in
-                  </Link>
-                  <span>for faster checkout next time.</span>
-                </div>
+                  </Link>{" "}
+                  for faster checkout next time.
+                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1.5">
                     <Label htmlFor="guestName">Full Name <span className="text-red-500">*</span></Label>
