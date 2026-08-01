@@ -70,10 +70,10 @@ export default function ContactPage() {
               Response within 12 hours.
             </p>
             <a
-              href="mailto:arjun@graycup.org"
+              href="mailto:office@graycup.org"
               className="text-sm text-black underline underline-offset-4 hover:text-neutral-600 block"
             >
-              arjun@graycup.org
+              office@graycup.org
             </a>
             <a
               href="mailto:arjun@graycup.in"
