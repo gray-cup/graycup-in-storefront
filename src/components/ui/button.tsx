@@ -30,7 +30,7 @@ const buttonVariants = cva(
         default: "h-9 px-4 py-2 has-[>svg]:px-3 cursor-pointer",
         minor: "py-1 px-3 text-sm has-[>svg]:px-3 cursor-pointer",
         sm: "max-sm:text-sm py-1.5 max-xs:px-3 max-w-lg:px-5 max-w-lg:py-2 px-5 text-md has-[>svg]:px-4 cursor-pointer",
-        lg: "max-sm:text-sm py-2.5 max-xs:px-3 max-xs:py-2 max-sm:px-6 px-6 text-lg has-[>svg]:px-4",
+        lg: "max-sm:text-sm py-2.5 max-xs:px-3 max-xs:py-2 max-sm:px-6 px-6 text-lg has-[>svg]:px-4 cursor-pointer",
         icon: "size-9",
       },
     },

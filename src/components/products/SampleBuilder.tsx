@@ -147,10 +147,10 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
           <Button
             onClick={handleBuyNow}
             disabled={!meetsMinimum}
-            className="w-full"
+            className="w-full h-14 text-lg"
             size="lg"
           >
-            <Zap className="mr-2 h-4 w-4" />
+            <Zap className="mr-2 h-5 w-5" />
             Buy Now
           </Button>
           <Button

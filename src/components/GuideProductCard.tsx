@@ -49,7 +49,7 @@ export function GuideProductCard({ slug }: GuideProductCardProps) {
       <button
         type="button"
         onClick={handleBuyNow}
-        className="shrink-0 rounded-lg bg-neutral-900 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-neutral-800 sm:text-sm"
+        className="shrink-0 cursor-pointer rounded-lg bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-neutral-800 sm:text-base"
       >
         Buy Now
       </button>
