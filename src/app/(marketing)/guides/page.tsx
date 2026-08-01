@@ -5,6 +5,22 @@ export const metadata: Metadata = {
   title: "Guides | Gray Cup",
   description:
     "Practical guides on brewing tea and coffee, understanding different types, and getting the most from every cup.",
+  alternates: {
+    canonical: "/guides",
+  },
+  openGraph: {
+    title: "Guides | Gray Cup",
+    description:
+      "Practical guides on brewing tea and coffee, understanding different types, and getting the most from every cup.",
+    type: "website",
+    url: "/guides",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Guides | Gray Cup",
+    description:
+      "Practical guides on brewing tea and coffee, understanding different types, and getting the most from every cup.",
+  },
 };
 
 const guides = [
