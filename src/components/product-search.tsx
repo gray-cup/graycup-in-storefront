@@ -14,7 +14,7 @@ export function ProductSearch() {
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "t") {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setOpen(true);
       }
@@ -48,7 +48,7 @@ export function ProductSearch() {
         <Search className="h-4 w-4 shrink-0" />
         <span className="whitespace-nowrap">Search products...</span>
         <kbd className="ml-2 inline-flex items-center gap-0.5 rounded border border-neutral-300 bg-white px-1.5 py-0.5 font-sans text-xs text-neutral-500">
-          ⌘T
+          ⌘K
         </kbd>
       </button>
 
