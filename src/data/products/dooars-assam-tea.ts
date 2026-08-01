@@ -35,7 +35,7 @@ export const dooarsAssamTeaProducts: Product[] = [
     variants: [
       { name: "500g (1 pack)", price: 395 },
       { name: "1kg (2 packs)", price: 750 },
-      { name: "1.5kg (3 packs) - Free Delivery", price: 1100 },
+      { name: "1.5kg (3 packs)", price: 1100 },
       { name: "2kg (4 packs)", price: 1450 },
     ],
     packaging: ["500g pack", "1kg (2 × 500g)", "1.5kg (3 × 500g)", "2kg (4 × 500g)"],

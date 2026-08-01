@@ -19,107 +19,123 @@ export default function TermsOfService() {
           1. Introduction
         </h2>
         <p className="mb-4">
-          Welcome to Gray Cup. By using our website and services, you agree to
-          comply with and be bound by the following terms and conditions. Please
-          review them carefully.
+          Gray Cup Enterprises Private Limited (&ldquo;Gray Cup&rdquo;,
+          &ldquo;we&rdquo;, &ldquo;us&rdquo;) operates graycup.in, an online
+          store for tea, coffee, and related products. By placing an order or
+          otherwise using this website, you agree to these Terms of Service.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
-          2. Acceptance of Terms
+          2. Company Information
         </h2>
         <p className="mb-4">
-          By accessing or using Gray Cup, you acknowledge that you have read,
-          understood, and agree to be bound by these Terms of Service. If you do
-          not agree to these terms, please do not use our service.
+          Gray Cup Enterprises Private Limited is a company incorporated in
+          India under the Companies Act, 2013 (CIN: U47211DL2025PTC457808,
+          GST: 07AAMCG4985H1Z2, IEC: AAMCG4985H, FSSAI License:
+          23326008000195). We are engaged in the sourcing, packaging, and
+          trading of tea, coffee, and spices.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
-          3. Description of Service
+          3. Orders &amp; Payment
         </h2>
         <p className="mb-4">
-          Gray Cup provides a platform for Zerodha users to track their stock
-          holdings without repeated logins. Users can upload their holdings CSV
-          file to view live price changes, portfolio value, and profit/loss
-          information.
+          Placing an order is an offer to buy the selected products at the
+          price shown at checkout. Payments are processed securely through
+          our payment partner, Cashfree; we do not store your card or bank
+          details. We reserve the right to cancel or refuse any order,
+          including for suspected fraud, pricing errors, or stock
+          unavailability, in which case any payment already made will be
+          refunded.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
-          4. User Accounts
+          4. Shipping
         </h2>
         <p className="mb-4">
-          Some features of our service may require you to create an account. You
-          are responsible for maintaining the confidentiality of your account
-          information and for all activities that occur under your account.
+          Shipping charges, estimated delivery timelines, and serviceable
+          locations are shown at checkout before you pay. Delivery times are
+          estimates and may vary due to courier delays or circumstances
+          outside our control.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
-          5. User Content
+          5. Returns &amp; Refunds
         </h2>
         <p className="mb-4">
-          You retain ownership of any content you upload to our service. By
-          uploading content, you grant us a non-exclusive license to use, store,
-          and process this content for the purpose of providing our service.
+          Our return and refund terms are set out in our{" "}
+          <a href="/return-policy" className="text-blue-700 underline">
+            Return &amp; Refund Policy
+          </a>
+          , which forms part of these Terms of Service.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
-          6. Prohibited Uses
+          6. Accounts
         </h2>
         <p className="mb-4">
-          You agree not to use Gray Cup for any unlawful purpose or in any way
-          that could damage, disable, or impair our service. Prohibited
-          activities include but are not limited to:
-        </p>
-        <ul className="list-disc pl-6 mb-6 space-y-2">
-          <li>Attempting to gain unauthorized access to our systems</li>
-          <li>Using our service for any fraudulent or illegal purpose</li>
-          <li>Interfering with other users&apos; access to the service</li>
-          <li>Uploading malicious code or content</li>
-        </ul>
-
-        <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
-          7. Limitation of Liability
-        </h2>
-        <p className="mb-4">
-          Gray Cup is provided &ldquo;as is&rdquo; without warranties of any
-          kind. We are not responsible for any losses or damages resulting from
-          your use of our service.
+          Some features, such as order tracking and subscriptions, require an
+          account. You are responsible for keeping your login credentials
+          confidential and for all activity under your account.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
-          8. Changes to Terms
+          7. Product Information
         </h2>
         <p className="mb-4">
-          We reserve the right to modify these terms at any time. We will notify
-          users of any significant changes by posting the new terms on our
-          website.
+          We try to keep product descriptions, images, pricing, and
+          availability accurate and up to date, but errors can occur.
+          Product images and descriptions are for illustrative purposes;
+          actual products may vary slightly (for example, due to seasonal
+          harvest or batch differences typical of agricultural products).
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
-          9. Governing Law
+          8. Prohibited Uses
         </h2>
         <p className="mb-4">
-          These terms shall be governed by and construed in accordance with
-          applicable laws, without regard to its conflict of law principles.
+          You agree not to misuse this website, including by attempting
+          unauthorized access to our systems, interfering with other users&apos;
+          access, or using the site for any unlawful purpose.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
-          10. Contact Us
+          9. Limitation of Liability
         </h2>
         <p className="mb-4">
-          If you have any questions about this Privacy Policy, please contact us
-          through our Discord server or via{" "}
+          To the extent permitted by law, Gray Cup is not liable for indirect
+          or consequential losses arising from your use of this website or
+          our products, beyond the value of the relevant order.
+        </p>
+
+        <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
+          10. Changes to These Terms
+        </h2>
+        <p className="mb-4">
+          We may update these Terms of Service from time to time. Changes
+          take effect once posted on this page.
+        </p>
+
+        <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
+          11. Governing Law
+        </h2>
+        <p className="mb-4">
+          These terms are governed by the laws of India, and disputes are
+          subject to the jurisdiction of the courts of Delhi, India.
+        </p>
+
+        <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
+          12. Contact Us
+        </h2>
+        <p className="mb-4">
+          Questions about these Terms of Service can be sent to{" "}
           <a
-            href="mailto:meow@nermalcat69.com"
+            href="mailto:support@graycup.org"
             className="text-blue-700 underline"
           >
-            meow@nermalcat69.com
-          </a>
-          .
-        </p>
-
-        <p className="text-sm text-muted-foreground mt-10">
-          Note: This is a simplified version of Terms of Service for
-          demonstration purposes only.
+            support@graycup.org
+          </a>{" "}
+          or by phone at +91 8527914317.
         </p>
       </div>
     </div>

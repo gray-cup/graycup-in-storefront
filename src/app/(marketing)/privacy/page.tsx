@@ -19,9 +19,10 @@ export default function PrivacyPolicy() {
           Our Commitment to Privacy
         </h2>
         <p className="mb-4">
-          At Gray Cup, we take your privacy seriously. This policy describes
-          what personal information we collect and how we use it. Our primary
-          goal is to provide a secure and trustworthy experience.
+          Gray Cup Enterprises Private Limited (&ldquo;Gray Cup&rdquo;,
+          &ldquo;we&rdquo;, &ldquo;us&rdquo;) operates graycup.in. This policy
+          describes what personal information we collect from customers and
+          website visitors, and how we use it.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
@@ -30,21 +31,28 @@ export default function PrivacyPolicy() {
         <p className="mb-4">We collect the following types of information:</p>
         <ul className="list-disc pl-6 mb-6 space-y-2">
           <li>
-            <strong>Account Information:</strong> When you create an account, we
-            collect your email and authentication details.
+            <strong>Account Information:</strong> Your name, email, and
+            authentication details when you create an account.
           </li>
           <li>
-            <strong>Holdings Data:</strong> CSV files containing your holdings
-            information that you choose to upload.
+            <strong>Order Information:</strong> Shipping address, phone
+            number, and order history when you place an order or subscribe
+            to a product.
           </li>
           <li>
-            <strong>Usage Data:</strong> Information about how you use our
-            website, such as the features you access and the time spent on the
-            site.
+            <strong>Payment Information:</strong> Payments are processed by
+            our payment partner, Cashfree. We do not store your card, UPI, or
+            bank account details on our servers.
           </li>
           <li>
-            <strong>Device Information:</strong> Information about the device
-            and browser you use to access our service.
+            <strong>Support Communications:</strong> Messages you send us via
+            email, phone, or our in-app chat (Intercom), including for
+            customer support and order-related enquiries.
+          </li>
+          <li>
+            <strong>Usage &amp; Device Data:</strong> Information about how
+            you use our website, such as pages visited and the device and
+            browser you use, collected via analytics tooling.
           </li>
         </ul>
 
@@ -53,43 +61,44 @@ export default function PrivacyPolicy() {
         </h2>
         <p className="mb-4">We use the information we collect to:</p>
         <ul className="list-disc pl-6 mb-6 space-y-2">
-          <li>Provide and maintain our service</li>
-          <li>Improve and personalize your experience</li>
-          <li>Communicate with you about your account or our service</li>
-          <li>Monitor and analyze usage patterns and trends</li>
-          <li>
-            Protect against unauthorized access and potential security threats
-          </li>
+          <li>Process and deliver your orders and subscriptions</li>
+          <li>Communicate with you about your order, account, or enquiries</li>
+          <li>Provide customer support</li>
+          <li>Improve our website and product offering</li>
+          <li>Detect and prevent fraud or abuse</li>
+          <li>Comply with legal and tax obligations</li>
         </ul>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
           Data Security
         </h2>
         <p className="mb-4">
-          We implement appropriate security measures to protect your personal
-          information against unauthorized access, alteration, disclosure, or
-          destruction. Your holdings data is processed locally in your browser
-          whenever possible, and we do not store your actual portfolio data on
-          our servers.
+          We implement reasonable technical and organizational measures to
+          protect your personal information against unauthorized access,
+          alteration, disclosure, or destruction. All traffic to our website
+          is encrypted with SSL/TLS.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
           Data Retention
         </h2>
         <p className="mb-4">
-          We retain your personal information only for as long as necessary to
-          fulfill the purposes outlined in this privacy policy, unless a longer
-          retention period is required by law.
+          We retain your personal information only for as long as necessary
+          to fulfill the purposes described in this policy, including any
+          retention required to meet our legal, accounting, or tax
+          obligations.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
           Third-Party Services
         </h2>
         <p className="mb-4">
-          Gray Cup uses third-party services for analytics and functionality.
-          These services may collect information sent by your browser as part of
-          their operations. We do not share your personal information with third
-          parties except as described in this policy.
+          We share information with trusted third parties only as needed to
+          run our business: our payment processor (Cashfree) to process
+          payments, courier partners to deliver your order, our support
+          chat provider (Intercom) to handle enquiries, and analytics
+          providers to help us understand site usage. We do not sell your
+          personal information.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
@@ -102,8 +111,8 @@ export default function PrivacyPolicy() {
           <li>Request deletion of your personal information</li>
           <li>Object to our processing of your information</li>
           <li>
-            Request a copy of your information in a structured, machine-readable
-            format
+            Request a copy of your information in a structured,
+            machine-readable format
           </li>
         </ul>
 
@@ -111,28 +120,24 @@ export default function PrivacyPolicy() {
           Changes to This Policy
         </h2>
         <p className="mb-4">
-          We may update our Privacy Policy from time to time. We will notify you
-          of any changes by posting the new policy on this page and updating the
-          &ldquo;Last updated&rdquo; date.
+          We may update this Privacy Policy from time to time. We will notify
+          you of any changes by posting the new policy on this page and
+          updating the &ldquo;Last updated&rdquo; date.
         </p>
 
         <h2 className="text-xl font-semibold text-neutral-800 mt-8 mb-4">
           Contact Us
         </h2>
         <p className="mb-4">
-          If you have any questions about this Privacy Policy, please contact us
-          through our Discord server or via{" "}
+          If you have any questions about this Privacy Policy or want to
+          exercise any of your rights, contact us at{" "}
           <a
-            href="mailto:meow@nermalcat69.com"
+            href="mailto:support@graycup.org"
             className="text-blue-700 underline"
           >
-            meow@nermalcat69.com
-          </a>
-          .
-        </p>
-
-        <p className="text-sm text-muted-foreground mt-10">
-          Note: Gray Cup is not affiliated with Zerodha or endorsed by them.
+            support@graycup.org
+          </a>{" "}
+          or by phone at +91 8527914317.
         </p>
       </div>
     </div>
