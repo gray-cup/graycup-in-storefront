@@ -7,6 +7,7 @@ export default function Footer() {
     { href: "/products", label: "Products" },
     { href: "/contact", label: "Contact" },
     { href: "/distributor-franchise", label: "Distributor & Franchise" },
+    { href: "/return-policy", label: "Return Policy" },
   ];
 
   const socialLinks = [
