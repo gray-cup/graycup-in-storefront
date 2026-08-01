@@ -7,7 +7,7 @@ import { CheckCircle, XCircle, Loader2, Package } from "lucide-react";
 import { useCart } from "@/components/cart-provider";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/currency";
-import { getBuyNowItem, clearBuyNowItem } from "@/lib/buy-now";
+import { getBuyNowEntry, clearBuyNowItem } from "@/lib/buy-now";
 
 type AddressSnapshot = {
   addressLine1?: string;
@@ -57,7 +57,7 @@ function SuccessContent() {
         if (data.status === "paid" && !cartCleared) {
           // A "Buy Now" purchase never touched the cart, so on success only
           // clear its own sessionStorage entry - leave the real cart intact.
-          if (getBuyNowItem()) {
+          if (getBuyNowEntry()) {
             clearBuyNowItem();
           } else {
             clearCart();

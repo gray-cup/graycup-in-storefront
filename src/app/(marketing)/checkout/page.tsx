@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Loader2, MapPin, Package, Tag, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, MapPin, Package, Tag, X } from "lucide-react";
 import { toast } from "sonner";
 import { authClient, type AuthUser } from "@/lib/auth-client";
 import { useCart } from "@/components/cart-provider";
@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
-import { getBuyNowItem } from "@/lib/buy-now";
+import { getBuyNowEntry, type BuyNowSource } from "@/lib/buy-now";
 import { calculateCartTotal, type CartItem } from "@/lib/cart";
 
 const FLAT_DELIVERY_CHARGE = 40;
@@ -66,10 +66,13 @@ export default function CheckoutPage() {
   // A "Buy Now" purchase is a direct, single-item order that never touches
   // the cart - if one is pending, it fully replaces cart items on this page.
   const [buyNowItem, setBuyNowItemState] = useState<CartItem | null>(null);
+  const [buyNowSource, setBuyNowSource] = useState<BuyNowSource | null>(null);
   const [buyNowLoaded, setBuyNowLoaded] = useState(false);
 
   useEffect(() => {
-    setBuyNowItemState(getBuyNowItem());
+    const entry = getBuyNowEntry();
+    setBuyNowItemState(entry?.item ?? null);
+    setBuyNowSource(entry?.source ?? null);
     setBuyNowLoaded(true);
   }, []);
 
@@ -243,14 +246,24 @@ export default function CheckoutPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
-      <div className="mb-6">
+      <div className="mb-6 flex items-center justify-between gap-4">
         <Link
-          href={isBuyNow ? "/products" : "/cart"}
+          href={buyNowSource ? buyNowSource.href : isBuyNow ? "/products" : "/cart"}
           className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
         >
           <ArrowLeft className="h-4 w-4" />
-          {isBuyNow ? "Continue Shopping" : "Back to Cart"}
+          {buyNowSource ? buyNowSource.label : isBuyNow ? "Continue Shopping" : "Back to Cart"}
         </Link>
+
+        {buyNowSource && (
+          <Link
+            href="/products"
+            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+          >
+            Explore other products
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        )}
       </div>
 
       <h1 className="text-3xl font-bold font-poppins mb-8">Checkout</h1>

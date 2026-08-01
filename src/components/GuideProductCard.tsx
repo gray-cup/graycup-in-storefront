@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { getProductBySlug } from "@/data/products";
 import { CURRENCY } from "@/lib/currency";
 import { setBuyNowItem } from "@/lib/buy-now";
@@ -14,6 +14,7 @@ type GuideProductCardProps = {
 export function GuideProductCard({ slug }: GuideProductCardProps) {
   const product = getProductBySlug(slug);
   const router = useRouter();
+  const pathname = usePathname();
 
   if (!product) return null;
 
@@ -22,7 +23,10 @@ export function GuideProductCard({ slug }: GuideProductCardProps) {
   );
 
   const handleBuyNow = () => {
-    setBuyNowItem({ product, quantity: 1, selectedVariant: cheapestVariant });
+    setBuyNowItem(
+      { product, quantity: 1, selectedVariant: cheapestVariant },
+      { label: "Back to Guide", href: pathname },
+    );
     router.push("/checkout");
   };
 
