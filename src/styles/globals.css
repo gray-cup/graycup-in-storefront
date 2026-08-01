@@ -93,6 +93,10 @@
   }
 }
 
+body {
+  background-color: #fff !important;
+}
+
 @media (hover: hover) {
   .component-outline {
     outline: 0.17em solid transparent;
