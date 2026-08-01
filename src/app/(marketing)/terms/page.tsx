@@ -130,10 +130,10 @@ export default function TermsOfService() {
         <p className="mb-4">
           Questions about these Terms of Service can be sent to{" "}
           <a
-            href="mailto:support@graycup.org"
+            href="mailto:office@graycup.org"
             className="text-blue-700 underline"
           >
-            support@graycup.org
+            office@graycup.org
           </a>{" "}
           or by phone at +91 8527914317.
         </p>

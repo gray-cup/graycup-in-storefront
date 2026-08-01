@@ -71,9 +71,15 @@ export default function ContactPage() {
             </p>
             <a
               href="mailto:arjun@graycup.org"
-              className="text-sm text-black underline underline-offset-4 hover:text-neutral-600"
+              className="text-sm text-black underline underline-offset-4 hover:text-neutral-600 block"
             >
               arjun@graycup.org
+            </a>
+            <a
+              href="mailto:arjun@graycup.in"
+              className="text-sm text-black underline underline-offset-4 hover:text-neutral-600 block mt-1"
+            >
+              arjun@graycup.in
             </a>
           </div>
         </div>

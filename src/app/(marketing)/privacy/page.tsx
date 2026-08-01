@@ -132,10 +132,10 @@ export default function PrivacyPolicy() {
           If you have any questions about this Privacy Policy or want to
           exercise any of your rights, contact us at{" "}
           <a
-            href="mailto:support@graycup.org"
+            href="mailto:office@graycup.org"
             className="text-blue-700 underline"
           >
-            support@graycup.org
+            office@graycup.org
           </a>{" "}
           or by phone at +91 8527914317.
         </p>

@@ -71,10 +71,16 @@ export default function AboutPage() {
             <p className="text-md text-nowrap lg:max-w-fit font-medium mt-3">
               Arjun Aditya (Director)
             </p>
-            <p className="text-xs text-nowrap text-muted-foreground mt-0.5 mb-4">
+            <p className="text-xs text-nowrap text-muted-foreground mt-0.5 mb-2">
               A Homo Sapien who loves nature,
               <br /> code and design.
             </p>
+            <a
+              href="mailto:arjun@graycup.in"
+              className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground mb-4"
+            >
+              arjun@graycup.in
+            </a>
             <div className="flex items-center gap-3">
               <Link
                 className="opacity-75 hover:opacity-100 transition-opacity"
