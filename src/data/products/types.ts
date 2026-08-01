@@ -17,6 +17,10 @@ export type ProductVariant = {
   weightGrams?: number;
   deliveryCharge?: number;
   batchId?: string;
+  /** Discounted price shown alongside `price` on Google Merchant Center. Must be lower than `price`. */
+  salePrice?: number;
+  /** Barcode (UPC/EAN/ISBN) for this specific packaged variant, if one has been assigned. */
+  gtin?: string;
 };
 
 export type CoffeeProcess = "Washed" | "Natural" | "Honey Sundried (HSD)" | "Pending";
@@ -78,4 +82,6 @@ export type Product = {
   availability: ProductAvailability;
   googleProductCategory: string;
   mpn?: string;
+  color?: string;
+  material?: string;
 };
