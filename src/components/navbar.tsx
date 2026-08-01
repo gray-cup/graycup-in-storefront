@@ -11,6 +11,7 @@ import { authClient } from "@/lib/auth-client";
 
 const dropdowns: Record<string, [string, string][]> = {
   Others: [
+    ["Locations", "/locations"],
     ["Feedback", "/feedback"],
     ["New Product Request", "/new-product-request"],
     ["About Us", "/about"],
@@ -186,6 +187,7 @@ export function Navbar() {
               ["Wholesale", "/wholesale"],
               ["Fundraisers", "/fundraisers"],
               ["Contact", "/contact"],
+              ["Locations", "/locations"],
               ["Feedback", "/feedback"],
               ["New Product Request", "/new-product-request"],
               ["About Us", "/about"],

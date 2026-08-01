@@ -2,7 +2,7 @@ import { retailProducts, filterCoffeeProducts, type Product } from "@/data/produ
 
 const groundCoffeeSlugs = new Set(filterCoffeeProducts.map((p) => p.slug));
 
-export type LocationTopicSlug = "coffee-products" | "black-coffee" | "ground-coffee";
+export type LocationTopicSlug = "coffee-products" | "black-coffee" | "ground-coffee" | "filter-coffee";
 
 export type LocationTopic = {
   slug: LocationTopicSlug;
@@ -30,6 +30,12 @@ export const LOCATION_TOPICS: Record<LocationTopicSlug, LocationTopic> = {
     label: "Ground Coffee",
     copyLabel: "ground coffee",
     filter: (p) => groundCoffeeSlugs.has(p.slug),
+  },
+  "filter-coffee": {
+    slug: "filter-coffee",
+    label: "Filter Coffee",
+    copyLabel: "South Indian filter coffee",
+    filter: (p) => p.slug.startsWith("filter-coffee-"),
   },
 };
 
