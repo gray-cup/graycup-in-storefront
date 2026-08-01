@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 import type { Metadata } from "next";
 import {
   getGlossaryTermBySlug,
@@ -101,7 +102,7 @@ export default async function GlossaryTermPage({ params }: GlossaryTermPageProps
           href="/glossary"
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-neutral-900 transition-colors mb-10"
         >
-          ← All Glossary Terms
+          <ChevronLeft className="size-4" /> All Glossary Terms
         </Link>
 
         <header className="mb-10 pb-8 border-b border-neutral-200">

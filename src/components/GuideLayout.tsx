@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { ChevronLeft } from "lucide-react";
 
 interface GuideLayoutProps {
   children: React.ReactNode;
@@ -30,7 +31,7 @@ export function GuideLayout({
         href="/guides"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-neutral-900 transition-colors mb-10"
       >
-        ← All Guides
+        <ChevronLeft className="size-4" /> All Guides
       </Link>
 
       <header className="mb-10 pb-8 border-b border-neutral-200">

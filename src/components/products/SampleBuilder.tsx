@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useCart } from "@/components/cart-provider";
+import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
 import { getProductsByCategory, type Product } from "@/data/products";
 
@@ -71,7 +72,12 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
       toast.error(`Pick at least ${MIN_SAMPLES} coffees`);
       return;
     }
-    addToCart(product, 1, buildCartVariant(), undefined, undefined, selected);
+    setBuyNowItem({
+      product,
+      quantity: 1,
+      selectedVariant: buildCartVariant(),
+      selectedSamples: selected,
+    });
     router.push("/checkout");
   };
 

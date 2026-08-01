@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getProductBySlug } from "@/data/products";
 import { CURRENCY } from "@/lib/currency";
-import { useCart } from "@/components/cart-provider";
+import { setBuyNowItem } from "@/lib/buy-now";
 
 type GuideProductCardProps = {
   slug: string;
@@ -14,7 +14,6 @@ type GuideProductCardProps = {
 export function GuideProductCard({ slug }: GuideProductCardProps) {
   const product = getProductBySlug(slug);
   const router = useRouter();
-  const { addToCart } = useCart();
 
   if (!product) return null;
 
@@ -23,7 +22,7 @@ export function GuideProductCard({ slug }: GuideProductCardProps) {
   );
 
   const handleBuyNow = () => {
-    addToCart(product, 1, cheapestVariant);
+    setBuyNowItem({ product, quantity: 1, selectedVariant: cheapestVariant });
     router.push("/checkout");
   };
 

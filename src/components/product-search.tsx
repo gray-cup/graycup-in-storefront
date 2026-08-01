@@ -14,7 +14,7 @@ export function ProductSearch() {
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "f") {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "t") {
         e.preventDefault();
         setOpen(true);
       }
@@ -43,7 +43,19 @@ export function ProductSearch() {
       <button
         onClick={() => setOpen(true)}
         aria-label="Search products"
-        className="inline-flex items-center rounded-md p-2 hover:bg-neutral-100"
+        className="hidden items-center gap-2 rounded-md border border-neutral-200 bg-neutral-50 px-3 py-2 text-sm text-neutral-500 transition-colors hover:bg-neutral-100 sm:flex"
+      >
+        <Search className="h-4 w-4 shrink-0" />
+        <span className="whitespace-nowrap">Search products...</span>
+        <kbd className="ml-2 inline-flex items-center gap-0.5 rounded border border-neutral-300 bg-white px-1.5 py-0.5 font-sans text-xs text-neutral-500">
+          ⌘T
+        </kbd>
+      </button>
+
+      <button
+        onClick={() => setOpen(true)}
+        aria-label="Search products"
+        className="inline-flex items-center rounded-md p-2 hover:bg-neutral-100 sm:hidden"
       >
         <Search className="h-5 w-5" />
       </button>

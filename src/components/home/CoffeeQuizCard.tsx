@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, RotateCcw, ShoppingCart, Sparkles } from "lucide-react";
+import { Check, ChevronLeft, RotateCcw, ShoppingCart, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/components/cart-provider";
@@ -153,9 +153,9 @@ export function CoffeeQuizCard() {
                 <button
                   type="button"
                   onClick={() => setQuestionIndex((i) => Math.max(0, i - 1))}
-                  className="mt-6 text-xs font-medium text-neutral-400 hover:text-neutral-600 cursor-pointer"
+                  className="mt-6 inline-flex items-center gap-1 text-xs font-medium text-neutral-400 hover:text-neutral-600 cursor-pointer"
                 >
-                  ← Back
+                  <ChevronLeft className="size-3.5" /> Back
                 </button>
               )}
             </motion.div>

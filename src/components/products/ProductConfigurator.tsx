@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { CardHeader, Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useCart } from "@/components/cart-provider";
+import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
 import { COFFEE_GRIND_OPTIONS, type Product, type ProductVariant } from "@/data/products";
 import { useGrindSize } from "./grind-size-context";
@@ -116,15 +117,13 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   };
 
   const handleBuyNow = () => {
-    addToCart(
+    setBuyNowItem({
       product,
       quantity,
       selectedVariant,
-      undefined,
-      isCoffee ? grindSize : undefined,
-      undefined,
-      hasRoastOptions ? selectedRoast : undefined
-    );
+      selectedGrind: isCoffee ? grindSize : undefined,
+      selectedRoast: hasRoastOptions ? selectedRoast : undefined,
+    });
     router.push("/checkout");
   };
 

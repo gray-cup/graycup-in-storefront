@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
+import { getBuyNowItem } from "@/lib/buy-now";
+import { calculateCartTotal, type CartItem } from "@/lib/cart";
 
 const FLAT_DELIVERY_CHARGE = 40;
 const COUPON_STORAGE_KEY = "graycup_coupon_code";
@@ -59,7 +61,21 @@ const INDIAN_STATES = [
 export default function CheckoutPage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
-  const { items, total, clearCart, isLoading: cartLoading } = useCart();
+  const { items: cartItems, isLoading: cartLoading } = useCart();
+
+  // A "Buy Now" purchase is a direct, single-item order that never touches
+  // the cart - if one is pending, it fully replaces cart items on this page.
+  const [buyNowItem, setBuyNowItemState] = useState<CartItem | null>(null);
+  const [buyNowLoaded, setBuyNowLoaded] = useState(false);
+
+  useEffect(() => {
+    setBuyNowItemState(getBuyNowItem());
+    setBuyNowLoaded(true);
+  }, []);
+
+  const isBuyNow = !!buyNowItem;
+  const items = isBuyNow ? [buyNowItem] : cartItems;
+  const total = calculateCartTotal(items);
 
   const user = session?.user as AuthUser | undefined;
 
@@ -80,12 +96,13 @@ export default function CheckoutPage() {
   const [couponApplying, setCouponApplying] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discountAmount: number } | null>(null);
 
-  // Redirect if cart is empty (only after session AND cart have both loaded)
+  // Redirect if there's nothing to check out (only after session, cart, and
+  // the buy-now lookup have all resolved)
   useEffect(() => {
-    if (!isPending && !cartLoading && items.length === 0) {
+    if (!isPending && !cartLoading && buyNowLoaded && items.length === 0) {
       router.replace("/products");
     }
-  }, [items, isPending, cartLoading, router]);
+  }, [items, isPending, cartLoading, buyNowLoaded, router]);
 
   function setField(field: keyof typeof address) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
@@ -212,7 +229,7 @@ export default function CheckoutPage() {
     }
   }
 
-  if (isPending) {
+  if (isPending || !buyNowLoaded || (!isBuyNow && cartLoading)) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
@@ -228,11 +245,11 @@ export default function CheckoutPage() {
     <div className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
       <div className="mb-6">
         <Link
-          href="/cart"
+          href={isBuyNow ? "/products" : "/cart"}
           className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Cart
+          {isBuyNow ? "Continue Shopping" : "Back to Cart"}
         </Link>
       </div>
 
