@@ -19,15 +19,21 @@ const dropdowns: Record<string, [string, string][]> = {
     ["Feedback", "/feedback"],
     ["New Product Request", "/new-product-request"],
     ["About Us", "/about"],
-  ],
-  Learn: [
     ["How to Use", "/how-to-use"],
     ["Guides", "/guides"],
     ["Glossary", "/glossary"],
   ],
 };
 
-function NavDropdown({ label, items }: { label: string; items: [string, string][] }) {
+function NavDropdown({
+  label,
+  items,
+  columns = 1,
+}: {
+  label: string;
+  items: [string, string][];
+  columns?: number;
+}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -45,7 +51,10 @@ function NavDropdown({ label, items }: { label: string; items: [string, string][
 
       {open && (
         <div className="absolute left-0 top-full pt-1 z-50">
-          <div className="bg-white rounded-md shadow-lg border border-neutral-200 py-1 min-w-[160px]">
+          <div
+            className="bg-white rounded-md shadow-lg border border-neutral-200 py-1 min-w-[160px] grid"
+            style={{ gridTemplateColumns: `repeat(${columns}, minmax(160px, 1fr))` }}
+          >
             {items.map(([itemLabel, href]) => (
               <Link
                 key={href}
@@ -105,7 +114,12 @@ export function Navbar() {
               ))}
 
               {Object.entries(dropdowns).map(([label, items]) => (
-                <NavDropdown key={label} label={label} items={items} />
+                <NavDropdown
+                  key={label}
+                  label={label}
+                  items={items}
+                  columns={label === "Others" ? 2 : 1}
+                />
               ))}
             </nav>
           </div>
