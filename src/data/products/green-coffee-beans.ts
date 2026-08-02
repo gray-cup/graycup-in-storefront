@@ -5,10 +5,12 @@ import type { Product } from "./types";
 // Each green (unroasted) coffee is priced against the per-kg rate of the closest
 // matching roasted coffee in wholesale-coffee.ts (same origin/process/grade),
 // discounted per kg by an amount that grows with order size:
-//   1kg order  -> Rs 100/kg off
-//   5kg order  -> Rs 150/kg off
-//   10kg order -> Rs 200/kg off
-//   25kg order -> Rs 250/kg off
+//   1kg order   -> Rs 100/kg off
+//   5kg order   -> Rs 150/kg off
+//   10kg order  -> Rs 200/kg off
+//   25kg order  -> Rs 250/kg off
+//   50kg order  -> Rs 300/kg off
+//   100kg order -> Rs 350/kg off
 // So bigger orders get a better per-kg rate, same as normal wholesale tiering.
 // Each variant's price is the fixed total for that tier (discount already
 // applied), so ordering multiple units via the quantity selector just
@@ -23,13 +25,13 @@ export const greenCoffeeProducts: Product[] = [
     description:
       "Unroasted washed-process Arabica from Karadykan Estate, Chikmagalur, sold in bulk with tiered per-kg pricing for roasters.",
     longDescription:
-      "Sourced directly from Karadykan Estate in Chikmagalur, Karnataka, this washed-process Arabica is sold green so roasters can dial in their own profile. Priced on a tiered scale so larger orders bring the per-kg cost down. Stored and shipped in breathable jute/GrainPro bags to preserve moisture content until roasting. A dependable single-origin lot for cafes and roasteries building out a house blend.",
+      "Sourced directly from Karadykan Estate in Chikmagalur, Karnataka, this washed-process Arabica is sold green so roasters can dial in their own profile. Priced on a tiered scale so larger orders bring the per-kg cost down. Stored and shipped in EcoTact bags to preserve moisture content until roasting. A dependable single-origin lot for cafes and roasteries building out a house blend.",
     details: [
       "Single-origin, washed process",
       "Sourced from Karadykan Estate, Chikmagalur, Karnataka",
       "Sold unroasted (green) - roast to your own profile",
-      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg",
-      "Shipped in breathable jute/GrainPro bags",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Shipped in EcoTact bags to lock in moisture",
       "Suited for roasters, cafes, and businesses",
     ],
     process: "Washed",
@@ -41,7 +43,7 @@ export const greenCoffeeProducts: Product[] = [
     quality: "Commercial",
     isWholesale: true,
     priceRange: {
-      min: 1000,
+      min: 900,
       max: 1150,
       unit: "per kg",
     },
@@ -51,11 +53,20 @@ export const greenCoffeeProducts: Product[] = [
     },
     variants: [
       { name: "1kg", price: 1150, weightGrams: 1000 },
-      { name: "5kg", price: 5500, weightGrams: 5000 },
-      { name: "10kg", price: 10500, weightGrams: 10000 },
-      { name: "25kg", price: 25000, weightGrams: 25000 },
+      { name: "5kg", price: 5500, weightGrams: 5000, deliveryCharge: 500 },
+      { name: "10kg", price: 10500, weightGrams: 10000, deliveryCharge: 900 },
+      { name: "25kg", price: 25000, weightGrams: 25000, deliveryCharge: 250 },
+      { name: "50kg", price: 47500, weightGrams: 50000, deliveryCharge: 500 },
+      { name: "100kg", price: 90000, weightGrams: 100000, deliveryCharge: 1000 },
     ],
-    packaging: ["1kg bag", "5kg bag", "10kg bag", "25kg bag"],
+    packaging: [
+      "1kg EcoTact bag",
+      "5kg EcoTact bag",
+      "10kg EcoTact bag",
+      "25kg EcoTact bag",
+      "50kg EcoTact bag",
+      "100kg EcoTact bag",
+    ],
     sku: "GC-COF-GRNKD-001",
     brand: "Gray Cup",
     availability: "in_stock",
@@ -69,13 +80,13 @@ export const greenCoffeeProducts: Product[] = [
     description:
       "Unroasted washed-process Arabica from Biccode Estate, Coorg, sold in bulk with tiered per-kg pricing for roasters.",
     longDescription:
-      "Sourced directly from Biccode Estate in Coorg, Karnataka, this washed-process Arabica is sold green so roasters can dial in their own profile. Priced on a tiered scale so larger orders bring the per-kg cost down. Stored and shipped in breathable jute/GrainPro bags to preserve moisture content until roasting. A dependable single-origin lot for cafes and roasteries building out a house blend.",
+      "Sourced directly from Biccode Estate in Coorg, Karnataka, this washed-process Arabica is sold green so roasters can dial in their own profile. Priced on a tiered scale so larger orders bring the per-kg cost down. Stored and shipped in EcoTact bags to preserve moisture content until roasting. A dependable single-origin lot for cafes and roasteries building out a house blend.",
     details: [
       "Single-origin, washed process",
       "Sourced from Biccode Estate, Coorg, Karnataka",
       "Sold unroasted (green) - roast to your own profile",
-      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg",
-      "Shipped in breathable jute/GrainPro bags",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Shipped in EcoTact bags to lock in moisture",
       "Suited for roasters, cafes, and businesses",
     ],
     process: "Washed",
@@ -87,7 +98,7 @@ export const greenCoffeeProducts: Product[] = [
     quality: "Commercial",
     isWholesale: true,
     priceRange: {
-      min: 1100,
+      min: 1000,
       max: 1250,
       unit: "per kg",
     },
@@ -97,11 +108,20 @@ export const greenCoffeeProducts: Product[] = [
     },
     variants: [
       { name: "1kg", price: 1250, weightGrams: 1000 },
-      { name: "5kg", price: 6000, weightGrams: 5000 },
-      { name: "10kg", price: 11500, weightGrams: 10000 },
-      { name: "25kg", price: 27500, weightGrams: 25000 },
+      { name: "5kg", price: 6000, weightGrams: 5000, deliveryCharge: 500 },
+      { name: "10kg", price: 11500, weightGrams: 10000, deliveryCharge: 900 },
+      { name: "25kg", price: 27500, weightGrams: 25000, deliveryCharge: 250 },
+      { name: "50kg", price: 52500, weightGrams: 50000, deliveryCharge: 500 },
+      { name: "100kg", price: 100000, weightGrams: 100000, deliveryCharge: 1000 },
     ],
-    packaging: ["1kg bag", "5kg bag", "10kg bag", "25kg bag"],
+    packaging: [
+      "1kg EcoTact bag",
+      "5kg EcoTact bag",
+      "10kg EcoTact bag",
+      "25kg EcoTact bag",
+      "50kg EcoTact bag",
+      "100kg EcoTact bag",
+    ],
     sku: "GC-COF-GRNBC-001",
     brand: "Gray Cup",
     availability: "in_stock",
@@ -115,13 +135,13 @@ export const greenCoffeeProducts: Product[] = [
     description:
       "Unroasted HSD-process coffee from Attikan Estate, sold in bulk with tiered per-kg pricing for roasters.",
     longDescription:
-      "Processed using the HSD (honey/semi-dry) method at Attikan Estate, this green coffee strikes a balance between the brightness of washed coffee and the fruitiness of natural process. Sold unroasted so roasters can develop their own profile, and priced on a tiered scale so larger orders bring the per-kg cost down. Stored and shipped in breathable jute/GrainPro bags to preserve moisture content until roasting.",
+      "Processed using the HSD (honey/semi-dry) method at Attikan Estate, this green coffee strikes a balance between the brightness of washed coffee and the fruitiness of natural process. Sold unroasted so roasters can develop their own profile, and priced on a tiered scale so larger orders bring the per-kg cost down. Stored and shipped in EcoTact bags to preserve moisture content until roasting.",
     details: [
       "Single-origin, HSD (honey/semi-dry) process",
       "Sourced from Attikan Estate",
       "Sold unroasted (green) - roast to your own profile",
-      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg",
-      "Shipped in breathable jute/GrainPro bags",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Shipped in EcoTact bags to lock in moisture",
       "Suited for roasters, cafes, and businesses",
     ],
     process: "Honey Sundried (HSD)",
@@ -133,7 +153,7 @@ export const greenCoffeeProducts: Product[] = [
     quality: "Speciality",
     isWholesale: true,
     priceRange: {
-      min: 1850,
+      min: 1750,
       max: 2000,
       unit: "per kg",
     },
@@ -143,11 +163,20 @@ export const greenCoffeeProducts: Product[] = [
     },
     variants: [
       { name: "1kg", price: 2000, weightGrams: 1000 },
-      { name: "5kg", price: 9750, weightGrams: 5000 },
-      { name: "10kg", price: 19000, weightGrams: 10000 },
-      { name: "25kg", price: 46250, weightGrams: 25000 },
+      { name: "5kg", price: 9750, weightGrams: 5000, deliveryCharge: 500 },
+      { name: "10kg", price: 19000, weightGrams: 10000, deliveryCharge: 900 },
+      { name: "25kg", price: 46250, weightGrams: 25000, deliveryCharge: 250 },
+      { name: "50kg", price: 90000, weightGrams: 50000, deliveryCharge: 500 },
+      { name: "100kg", price: 175000, weightGrams: 100000, deliveryCharge: 1000 },
     ],
-    packaging: ["1kg bag", "5kg bag", "10kg bag", "25kg bag"],
+    packaging: [
+      "1kg EcoTact bag",
+      "5kg EcoTact bag",
+      "10kg EcoTact bag",
+      "25kg EcoTact bag",
+      "50kg EcoTact bag",
+      "100kg EcoTact bag",
+    ],
     sku: "GC-COF-GRNAH-001",
     brand: "Gray Cup",
     availability: "in_stock",
@@ -161,13 +190,13 @@ export const greenCoffeeProducts: Product[] = [
     description:
       "Unroasted washed-process coffee from Attikan Estate, sold in bulk with tiered per-kg pricing for roasters.",
     longDescription:
-      "Fully washed at Attikan Estate - the cherry skin and mucilage removed before drying - this green coffee is sold unroasted so roasters can develop their own clean, bright profile. Priced on a tiered scale so larger orders bring the per-kg cost down. Stored and shipped in breathable jute/GrainPro bags to preserve moisture content until roasting.",
+      "Fully washed at Attikan Estate - the cherry skin and mucilage removed before drying - this green coffee is sold unroasted so roasters can develop their own clean, bright profile. Priced on a tiered scale so larger orders bring the per-kg cost down. Stored and shipped in EcoTact bags to preserve moisture content until roasting.",
     details: [
       "Single-origin, fully washed process",
       "Sourced from Attikan Estate",
       "Sold unroasted (green) - roast to your own profile",
-      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg",
-      "Shipped in breathable jute/GrainPro bags",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Shipped in EcoTact bags to lock in moisture",
       "Suited for roasters, cafes, and businesses",
     ],
     process: "Washed",
@@ -179,7 +208,7 @@ export const greenCoffeeProducts: Product[] = [
     quality: "Speciality",
     isWholesale: true,
     priceRange: {
-      min: 1650,
+      min: 1550,
       max: 1800,
       unit: "per kg",
     },
@@ -189,11 +218,20 @@ export const greenCoffeeProducts: Product[] = [
     },
     variants: [
       { name: "1kg", price: 1800, weightGrams: 1000 },
-      { name: "5kg", price: 8750, weightGrams: 5000 },
-      { name: "10kg", price: 17000, weightGrams: 10000 },
-      { name: "25kg", price: 41250, weightGrams: 25000 },
+      { name: "5kg", price: 8750, weightGrams: 5000, deliveryCharge: 500 },
+      { name: "10kg", price: 17000, weightGrams: 10000, deliveryCharge: 900 },
+      { name: "25kg", price: 41250, weightGrams: 25000, deliveryCharge: 250 },
+      { name: "50kg", price: 80000, weightGrams: 50000, deliveryCharge: 500 },
+      { name: "100kg", price: 155000, weightGrams: 100000, deliveryCharge: 1000 },
     ],
-    packaging: ["1kg bag", "5kg bag", "10kg bag", "25kg bag"],
+    packaging: [
+      "1kg EcoTact bag",
+      "5kg EcoTact bag",
+      "10kg EcoTact bag",
+      "25kg EcoTact bag",
+      "50kg EcoTact bag",
+      "100kg EcoTact bag",
+    ],
     sku: "GC-COF-GRNAW-001",
     brand: "Gray Cup",
     availability: "in_stock",
@@ -207,13 +245,13 @@ export const greenCoffeeProducts: Product[] = [
     description:
       "Unroasted 100% Robusta beans from the Bababudangiri hills, sold in bulk with tiered per-kg pricing - a strong, high-crema base once roasted.",
     longDescription:
-      "Grown in the Bababudangiri hills of Chikkamagaluru, Karnataka, this 100% Robusta is sold green for roasters who want full control over roast development. Known for a strong, sharp cup with heavy crema once roasted - a favourite base for cappuccinos, espresso blends, and cold coffee. Priced on a tiered scale so larger orders bring the per-kg cost down. Shipped in breathable jute/GrainPro bags to preserve moisture content until roasting.",
+      "Grown in the Bababudangiri hills of Chikkamagaluru, Karnataka, this 100% Robusta is sold green for roasters who want full control over roast development. Known for a strong, sharp cup with heavy crema once roasted - a favourite base for cappuccinos, espresso blends, and cold coffee. Priced on a tiered scale so larger orders bring the per-kg cost down. Shipped in EcoTact bags to preserve moisture content until roasting.",
     details: [
       "100% Robusta, sold unroasted (green)",
       "Grown in Bababudangiri hills, Chikkamagaluru, Karnataka",
       "Strong, sharp cup with heavy crema once roasted",
-      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg",
-      "Shipped in breathable jute/GrainPro bags",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Shipped in EcoTact bags to lock in moisture",
       "Suited for roasters, cafes, and businesses",
     ],
     process: "Pending",
@@ -225,7 +263,7 @@ export const greenCoffeeProducts: Product[] = [
     quality: "Commercial",
     isWholesale: true,
     priceRange: {
-      min: 700,
+      min: 600,
       max: 850,
       unit: "per kg",
     },
@@ -235,11 +273,20 @@ export const greenCoffeeProducts: Product[] = [
     },
     variants: [
       { name: "1kg", price: 850, weightGrams: 1000 },
-      { name: "5kg", price: 4000, weightGrams: 5000 },
-      { name: "10kg", price: 7500, weightGrams: 10000 },
-      { name: "25kg", price: 17500, weightGrams: 25000 },
+      { name: "5kg", price: 4000, weightGrams: 5000, deliveryCharge: 500 },
+      { name: "10kg", price: 7500, weightGrams: 10000, deliveryCharge: 900 },
+      { name: "25kg", price: 17500, weightGrams: 25000, deliveryCharge: 250 },
+      { name: "50kg", price: 32500, weightGrams: 50000, deliveryCharge: 500 },
+      { name: "100kg", price: 60000, weightGrams: 100000, deliveryCharge: 1000 },
     ],
-    packaging: ["1kg bag", "5kg bag", "10kg bag", "25kg bag"],
+    packaging: [
+      "1kg EcoTact bag",
+      "5kg EcoTact bag",
+      "10kg EcoTact bag",
+      "25kg EcoTact bag",
+      "50kg EcoTact bag",
+      "100kg EcoTact bag",
+    ],
     sku: "GC-COF-GRNRB-001",
     brand: "Gray Cup",
     availability: "in_stock",
@@ -253,13 +300,13 @@ export const greenCoffeeProducts: Product[] = [
     description:
       "Unroasted natural-process single-origin coffee from Koraput, Odisha, sold in bulk with tiered per-kg pricing for roasters.",
     longDescription:
-      "Naturally processed by sun-drying the whole cherry before hulling, this Koraput green coffee is sold unroasted so roasters can bring out its fruity, wine-like character on their own equipment. Priced on a tiered scale so larger orders bring the per-kg cost down. Shipped in breathable jute/GrainPro bags to preserve moisture content until roasting.",
+      "Naturally processed by sun-drying the whole cherry before hulling, this Koraput green coffee is sold unroasted so roasters can bring out its fruity, wine-like character on their own equipment. Priced on a tiered scale so larger orders bring the per-kg cost down. Shipped in EcoTact bags to preserve moisture content until roasting.",
     details: [
       "Single-origin, natural (sun-dried cherry) process",
       "Sourced from Koraput, Odisha",
       "Sold unroasted (green) - roast to your own profile",
-      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg",
-      "Shipped in breathable jute/GrainPro bags",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Shipped in EcoTact bags to lock in moisture",
       "Suited for roasters, cafes, and businesses",
     ],
     process: "Natural",
@@ -271,7 +318,7 @@ export const greenCoffeeProducts: Product[] = [
     quality: "Speciality",
     isWholesale: true,
     priceRange: {
-      min: 1750,
+      min: 1650,
       max: 1900,
       unit: "per kg",
     },
@@ -281,11 +328,20 @@ export const greenCoffeeProducts: Product[] = [
     },
     variants: [
       { name: "1kg", price: 1900, weightGrams: 1000 },
-      { name: "5kg", price: 9250, weightGrams: 5000 },
-      { name: "10kg", price: 18000, weightGrams: 10000 },
-      { name: "25kg", price: 43750, weightGrams: 25000 },
+      { name: "5kg", price: 9250, weightGrams: 5000, deliveryCharge: 500 },
+      { name: "10kg", price: 18000, weightGrams: 10000, deliveryCharge: 900 },
+      { name: "25kg", price: 43750, weightGrams: 25000, deliveryCharge: 250 },
+      { name: "50kg", price: 85000, weightGrams: 50000, deliveryCharge: 500 },
+      { name: "100kg", price: 165000, weightGrams: 100000, deliveryCharge: 1000 },
     ],
-    packaging: ["1kg bag", "5kg bag", "10kg bag", "25kg bag"],
+    packaging: [
+      "1kg EcoTact bag",
+      "5kg EcoTact bag",
+      "10kg EcoTact bag",
+      "25kg EcoTact bag",
+      "50kg EcoTact bag",
+      "100kg EcoTact bag",
+    ],
     sku: "GC-COF-GRNKN-001",
     brand: "Gray Cup",
     availability: "in_stock",
@@ -299,13 +355,13 @@ export const greenCoffeeProducts: Product[] = [
     description:
       "Unroasted HSD-process single-origin coffee from Koraput, Odisha, sold in bulk with tiered per-kg pricing for roasters.",
     longDescription:
-      "Processed using the HSD (honey/semi-dry) method in Koraput, Odisha, this green coffee balances the brightness of washed coffee with the fruitiness of natural process. Sold unroasted so roasters can develop their own profile, and priced on a tiered scale so larger orders bring the per-kg cost down. Shipped in breathable jute/GrainPro bags to preserve moisture content until roasting.",
+      "Processed using the HSD (honey/semi-dry) method in Koraput, Odisha, this green coffee balances the brightness of washed coffee with the fruitiness of natural process. Sold unroasted so roasters can develop their own profile, and priced on a tiered scale so larger orders bring the per-kg cost down. Shipped in EcoTact bags to preserve moisture content until roasting.",
     details: [
       "Single-origin, HSD (honey/semi-dry) process",
       "Sourced from Koraput, Odisha",
       "Sold unroasted (green) - roast to your own profile",
-      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg",
-      "Shipped in breathable jute/GrainPro bags",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Shipped in EcoTact bags to lock in moisture",
       "Suited for roasters, cafes, and businesses",
     ],
     process: "Honey Sundried (HSD)",
@@ -317,7 +373,7 @@ export const greenCoffeeProducts: Product[] = [
     quality: "Speciality",
     isWholesale: true,
     priceRange: {
-      min: 1850,
+      min: 1750,
       max: 2000,
       unit: "per kg",
     },
@@ -327,11 +383,20 @@ export const greenCoffeeProducts: Product[] = [
     },
     variants: [
       { name: "1kg", price: 2000, weightGrams: 1000 },
-      { name: "5kg", price: 9750, weightGrams: 5000 },
-      { name: "10kg", price: 19000, weightGrams: 10000 },
-      { name: "25kg", price: 46250, weightGrams: 25000 },
+      { name: "5kg", price: 9750, weightGrams: 5000, deliveryCharge: 500 },
+      { name: "10kg", price: 19000, weightGrams: 10000, deliveryCharge: 900 },
+      { name: "25kg", price: 46250, weightGrams: 25000, deliveryCharge: 250 },
+      { name: "50kg", price: 90000, weightGrams: 50000, deliveryCharge: 500 },
+      { name: "100kg", price: 175000, weightGrams: 100000, deliveryCharge: 1000 },
     ],
-    packaging: ["1kg bag", "5kg bag", "10kg bag", "25kg bag"],
+    packaging: [
+      "1kg EcoTact bag",
+      "5kg EcoTact bag",
+      "10kg EcoTact bag",
+      "25kg EcoTact bag",
+      "50kg EcoTact bag",
+      "100kg EcoTact bag",
+    ],
     sku: "GC-COF-GRNKH-001",
     brand: "Gray Cup",
     availability: "in_stock",
@@ -345,13 +410,13 @@ export const greenCoffeeProducts: Product[] = [
     description:
       "Unroasted natural-process single-origin coffee from Halflong, Assam, sold in bulk with tiered per-kg pricing for roasters.",
     longDescription:
-      "Grown in Halflong, Assam and naturally processed by sun-drying the whole cherry, this green coffee is a distinctive, less common origin for roasters looking to diversify their offer. Sold unroasted so you can develop your own profile, and priced on a tiered scale so larger orders bring the per-kg cost down. Shipped in breathable jute/GrainPro bags to preserve moisture content until roasting.",
+      "Grown in Halflong, Assam and naturally processed by sun-drying the whole cherry, this green coffee is a distinctive, less common origin for roasters looking to diversify their offer. Sold unroasted so you can develop your own profile, and priced on a tiered scale so larger orders bring the per-kg cost down. Shipped in EcoTact bags to preserve moisture content until roasting.",
     details: [
       "Single-origin, natural (sun-dried cherry) process",
       "Sourced from Halflong, Assam",
       "Sold unroasted (green) - roast to your own profile",
-      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg",
-      "Shipped in breathable jute/GrainPro bags",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Shipped in EcoTact bags to lock in moisture",
       "Suited for roasters, cafes, and businesses",
     ],
     process: "Natural",
@@ -363,7 +428,7 @@ export const greenCoffeeProducts: Product[] = [
     quality: "Speciality",
     isWholesale: true,
     priceRange: {
-      min: 1750,
+      min: 1650,
       max: 1900,
       unit: "per kg",
     },
@@ -373,11 +438,20 @@ export const greenCoffeeProducts: Product[] = [
     },
     variants: [
       { name: "1kg", price: 1900, weightGrams: 1000 },
-      { name: "5kg", price: 9250, weightGrams: 5000 },
-      { name: "10kg", price: 18000, weightGrams: 10000 },
-      { name: "25kg", price: 43750, weightGrams: 25000 },
+      { name: "5kg", price: 9250, weightGrams: 5000, deliveryCharge: 500 },
+      { name: "10kg", price: 18000, weightGrams: 10000, deliveryCharge: 900 },
+      { name: "25kg", price: 43750, weightGrams: 25000, deliveryCharge: 250 },
+      { name: "50kg", price: 85000, weightGrams: 50000, deliveryCharge: 500 },
+      { name: "100kg", price: 165000, weightGrams: 100000, deliveryCharge: 1000 },
     ],
-    packaging: ["1kg bag", "5kg bag", "10kg bag", "25kg bag"],
+    packaging: [
+      "1kg EcoTact bag",
+      "5kg EcoTact bag",
+      "10kg EcoTact bag",
+      "25kg EcoTact bag",
+      "50kg EcoTact bag",
+      "100kg EcoTact bag",
+    ],
     sku: "GC-COF-GRNHL-001",
     brand: "Gray Cup",
     availability: "in_stock",

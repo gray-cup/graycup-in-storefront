@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
 import { getBuyNowEntry, type BuyNowSource } from "@/lib/buy-now";
-import { calculateCartTotal, type CartItem } from "@/lib/cart";
+import { calculateCartTotal, calculateDeliveryCharge, type CartItem } from "@/lib/cart";
 
 const FLAT_DELIVERY_CHARGE = 40;
 const COUPON_STORAGE_KEY = "graycup_coupon_code";
@@ -79,6 +79,7 @@ export default function CheckoutPage() {
   const isBuyNow = !!buyNowItem;
   const items = isBuyNow ? [buyNowItem] : cartItems;
   const total = calculateCartTotal(items);
+  const deliveryCharge = calculateDeliveryCharge(items, FLAT_DELIVERY_CHARGE);
 
   const user = session?.user as AuthUser | undefined;
 
@@ -195,7 +196,7 @@ export default function CheckoutPage() {
             name: customerName,
             phone: customerPhone,
           },
-          deliveryCharge: FLAT_DELIVERY_CHARGE,
+          deliveryCharge,
           gstNumber: gstNumber.trim() || undefined,
           couponCode: appliedCoupon?.code,
           guest: !user
@@ -242,7 +243,7 @@ export default function CheckoutPage() {
   if (items.length === 0) return null;
 
   const discount = appliedCoupon?.discountAmount ?? 0;
-  const grandTotal = total + FLAT_DELIVERY_CHARGE - discount;
+  const grandTotal = total + deliveryCharge - discount;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
@@ -548,7 +549,7 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Delivery</span>
-                <span>{formatPrice(FLAT_DELIVERY_CHARGE)}</span>
+                <span>{formatPrice(deliveryCharge)}</span>
               </div>
               {appliedCoupon && (
                 <div className="flex justify-between text-green-700">

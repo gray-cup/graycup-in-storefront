@@ -24,6 +24,26 @@ export function calculateCartTotal(items: CartItem[]): number {
   }, 0);
 }
 
+// Wholesale variants (5kg+) carry their own courier/logistics deliveryCharge,
+// since a flat retail parcel rate doesn't cover shipping 5-100kg of coffee.
+// Falls back to `flatRate` only for the portion of the cart still made up of
+// items without a variant-level deliveryCharge (regular retail packs).
+export function calculateDeliveryCharge(items: CartItem[], flatRate: number): number {
+  let wholesaleDelivery = 0;
+  let hasFlatRateItem = false;
+
+  for (const item of items) {
+    const charge = item.selectedVariant?.deliveryCharge;
+    if (charge != null) {
+      wholesaleDelivery += charge * item.quantity;
+    } else {
+      hasFlatRateItem = true;
+    }
+  }
+
+  return wholesaleDelivery + (hasFlatRateItem ? flatRate : 0);
+}
+
 export function getCartFromStorage(): CartItem[] {
   if (typeof window === "undefined") return [];
 
