@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `/wholesale/${state}/${city}` },
-    openGraph: { title, description, url: `https://graycup.in/wholesale/${state}/${city}` },
+    alternates: { canonical: `/roasted-wholesale-coffee/${state}/${city}` },
+    openGraph: { title, description, url: `https://graycup.in/roasted-wholesale-coffee/${state}/${city}` },
   };
 }
 
@@ -52,18 +52,18 @@ export default async function WholesaleCityPage({ params }: Props) {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: "https://graycup.in" },
-        { "@type": "ListItem", position: 2, name: "Wholesale", item: "https://graycup.in/wholesale" },
+        { "@type": "ListItem", position: 2, name: "Wholesale", item: "https://graycup.in/roasted-wholesale-coffee" },
         {
           "@type": "ListItem",
           position: 3,
           name: stateData.state,
-          item: `https://graycup.in/wholesale/${state}`,
+          item: `https://graycup.in/roasted-wholesale-coffee/${state}`,
         },
         {
           "@type": "ListItem",
           position: 4,
           name: cityData.city,
-          item: `https://graycup.in/wholesale/${state}/${city}`,
+          item: `https://graycup.in/roasted-wholesale-coffee/${state}/${city}`,
         },
       ],
     },
@@ -85,8 +85,8 @@ export default async function WholesaleCityPage({ params }: Props) {
       intro={`Bulk roasted whole bean and ground coffee delivered to ${cityData.city} for cafés, hotels, offices, and retailers. Roasted to order in wholesale packs, with a GST invoice on every bulk order.`}
       breadcrumbs={[
         { label: "Home", href: "/" },
-        { label: "Wholesale", href: "/wholesale" },
-        { label: stateData.state, href: `/wholesale/${state}` },
+        { label: "Wholesale", href: "/roasted-wholesale-coffee" },
+        { label: stateData.state, href: `/roasted-wholesale-coffee/${state}` },
         { label: cityData.city },
       ]}
       products={wholesaleCoffeeProducts}
@@ -94,7 +94,7 @@ export default async function WholesaleCityPage({ params }: Props) {
       relatedTitle={`Other Cities in ${stateData.state}`}
       relatedLinks={otherCities.map((c) => ({
         label: c.city,
-        href: `/wholesale/${state}/${c.citySlug}`,
+        href: `/roasted-wholesale-coffee/${state}/${c.citySlug}`,
         sublabel: "Wholesale Coffee",
       }))}
       topicLinks={[]}

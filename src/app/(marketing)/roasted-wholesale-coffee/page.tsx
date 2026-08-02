@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { wholesaleCoffeeProducts } from "@/data/products";
 import { ProductCard } from "@/components/products/ProductCard";
 
@@ -11,6 +12,13 @@ export default function WholesalePage() {
           </h1>
           <p className="text-md md:text-lg text-muted-foreground">
             Buy Indian Roasted Coffee Whole Beans and Ground Coffee in Bulk Quantities
+          </p>
+          <p className="text-sm text-muted-foreground mt-2">
+            Looking for unroasted beans instead?{" "}
+            <Link href="/green-wholesale-coffee" className="underline hover:text-black">
+              Shop wholesale green coffee
+            </Link>
+            .
           </p>
         </div>
 

@@ -10,6 +10,7 @@ export { filterCoffeeProducts } from "./filter-coffee";
 export { samplePackProducts } from "./sample-packs";
 export { accessoryProducts } from "./accessories";
 export { wholesaleCoffeeProducts } from "./wholesale-coffee";
+export { greenCoffeeProducts } from "./green-coffee-beans";
 export {
   fundraiserProducts,
   FUNDRAISER_GOAL_INR,
@@ -28,6 +29,7 @@ import { filterCoffeeProducts } from "./filter-coffee";
 import { samplePackProducts } from "./sample-packs";
 import { accessoryProducts } from "./accessories";
 import { wholesaleCoffeeProducts } from "./wholesale-coffee";
+import { greenCoffeeProducts } from "./green-coffee-beans";
 import { fundraiserProducts } from "./fundraiser";
 import type { Product } from "./types";
 
@@ -42,11 +44,13 @@ export const products: Product[] = [
   ...samplePackProducts,
   ...accessoryProducts,
   ...wholesaleCoffeeProducts,
+  ...greenCoffeeProducts,
   ...fundraiserProducts,
 ];
 
 // Regular retail catalog - excludes wholesale bulk SKUs and fundraiser reward
-// packs, which only belong on /wholesale and /fundraisers respectively.
+// packs, which only belong on /roasted-wholesale-coffee, /green-wholesale-coffee,
+// and /fundraisers respectively.
 export const retailProducts: Product[] = products.filter(
   (product) => !product.isWholesale && !product.isFundraiser,
 );

@@ -12,6 +12,25 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/wholesale",
+        destination: "/roasted-wholesale-coffee",
+        permanent: true,
+      },
+      {
+        source: "/wholesale/:state",
+        destination: "/roasted-wholesale-coffee/:state",
+        permanent: true,
+      },
+      {
+        source: "/wholesale/:state/:city",
+        destination: "/roasted-wholesale-coffee/:state/:city",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

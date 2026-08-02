@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `/wholesale/${state}` },
-    openGraph: { title, description, url: `https://graycup.in/wholesale/${state}` },
+    alternates: { canonical: `/roasted-wholesale-coffee/${state}` },
+    openGraph: { title, description, url: `https://graycup.in/roasted-wholesale-coffee/${state}` },
   };
 }
 
@@ -49,12 +49,12 @@ export default async function WholesaleStatePage({ params }: Props) {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: "https://graycup.in" },
-        { "@type": "ListItem", position: 2, name: "Wholesale", item: "https://graycup.in/wholesale" },
+        { "@type": "ListItem", position: 2, name: "Wholesale", item: "https://graycup.in/roasted-wholesale-coffee" },
         {
           "@type": "ListItem",
           position: 3,
           name: stateData.state,
-          item: `https://graycup.in/wholesale/${state}`,
+          item: `https://graycup.in/roasted-wholesale-coffee/${state}`,
         },
       ],
     },
@@ -76,7 +76,7 @@ export default async function WholesaleStatePage({ params }: Props) {
       intro={`Bulk roasted whole bean and ground coffee for cafés, hotels, offices, and retailers in ${stateData.state}. Roasted to order in wholesale packs, with a GST invoice and delivery on every order.`}
       breadcrumbs={[
         { label: "Home", href: "/" },
-        { label: "Wholesale", href: "/wholesale" },
+        { label: "Wholesale", href: "/roasted-wholesale-coffee" },
         { label: stateData.state },
       ]}
       products={wholesaleCoffeeProducts}
@@ -84,7 +84,7 @@ export default async function WholesaleStatePage({ params }: Props) {
       relatedTitle={`Cities in ${stateData.state}`}
       relatedLinks={cities.map((c) => ({
         label: c.city,
-        href: `/wholesale/${state}/${c.citySlug}`,
+        href: `/roasted-wholesale-coffee/${state}/${c.citySlug}`,
         sublabel: "Wholesale Coffee",
       }))}
       topicLinks={[]}

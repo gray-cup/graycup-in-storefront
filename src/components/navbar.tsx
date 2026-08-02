@@ -10,6 +10,10 @@ import { ChevronDown, User } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
 const dropdowns: Record<string, [string, string][]> = {
+  Wholesale: [
+    ["Roasted Coffee", "/roasted-wholesale-coffee"],
+    ["Green Coffee", "/green-wholesale-coffee"],
+  ],
   Others: [
     ["Locations", "/locations"],
     ["Feedback", "/feedback"],
@@ -88,7 +92,6 @@ export function Navbar() {
               {[
                 ["Products", "/products"],
                 ["Accessories", "/accessories"],
-                ["Wholesale", "/wholesale"],
                 ["Fundraisers", "/fundraisers"],
                 ["Contact", "/contact"],
               ].map(([label, href]) => (
@@ -184,7 +187,8 @@ export function Navbar() {
             {[
               ["Products", "/products"],
               ["Accessories", "/accessories"],
-              ["Wholesale", "/wholesale"],
+              ["Wholesale - Roasted Coffee", "/roasted-wholesale-coffee"],
+              ["Wholesale - Green Coffee", "/green-wholesale-coffee"],
               ["Fundraisers", "/fundraisers"],
               ["Contact", "/contact"],
               ["Locations", "/locations"],
