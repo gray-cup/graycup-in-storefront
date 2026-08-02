@@ -9,6 +9,11 @@ import { ProductSearch } from "@/components/product-search";
 import { ChevronDown, User } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
+// Links that show as flat nav items once there's enough room (xl+), and
+// fold into the Others dropdown below that so the desktop nav doesn't
+// overflow before the hamburger breakpoint kicks in.
+const SPACE_PERMITTING_HREFS = new Set(["/fundraisers", "/contact"]);
+
 const dropdowns: Record<string, [string, string][]> = {
   Wholesale: [
     ["Roasted Coffee", "/roasted-wholesale-coffee"],
@@ -65,7 +70,9 @@ function NavDropdown({
               <Link
                 key={href}
                 href={href}
-                className="block px-4 py-2 text-sm hover:bg-neutral-100 break-inside-avoid-column"
+                className={`block px-4 py-2 text-sm hover:bg-neutral-100 break-inside-avoid-column ${
+                  SPACE_PERMITTING_HREFS.has(href) ? "xl:hidden" : ""
+                }`}
               >
                 {itemLabel}
               </Link>
@@ -107,11 +114,15 @@ export function Navbar() {
               {[
                 ["Products", "/products"],
                 ["Accessories", "/accessories"],
+                ["Fundraisers", "/fundraisers"],
+                ["Contact", "/contact"],
               ].map(([label, href]) => (
                 <Link
                   key={href}
                   href={href}
-                  className="rounded-md px-2 py-2 hover:bg-neutral-100"
+                  className={`rounded-md px-2 py-2 hover:bg-neutral-100 ${
+                    SPACE_PERMITTING_HREFS.has(href) ? "hidden xl:block" : ""
+                  }`}
                 >
                   {label}
                 </Link>
