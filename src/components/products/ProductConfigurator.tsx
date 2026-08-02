@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, Minus, Plus, Zap } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Zap, Flame } from "lucide-react";
 import { toast } from "sonner";
 import { ShareButton } from "./ShareButton";
 import { SubscribeButton } from "./SubscribeButton";
@@ -292,6 +292,13 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
             <ShareButton productName={product.name} />
           </div>
         </div>
+
+        {product.category === "Coffee" && (
+          <p className="flex items-center justify-center gap-2 text-xs text-muted-foreground text-center pt-2">
+            <Flame className="h-3.5 w-3.5 shrink-0" />
+            Roasted only after you order - we don&apos;t hold coffee bean stock, so it&apos;s always freshly roasted.
+          </p>
+        )}
       </CardContent>
     </Card>
   );

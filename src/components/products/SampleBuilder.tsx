@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, Zap } from "lucide-react";
+import { ShoppingCart, Zap, Flame } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
@@ -164,6 +164,11 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
             Add to Cart
           </Button>
         </div>
+
+        <p className="flex items-center justify-center gap-2 text-xs text-muted-foreground text-center pt-2">
+          <Flame className="h-3.5 w-3.5 shrink-0" />
+          Roasted only after you order - we don&apos;t hold coffee bean stock, so it&apos;s always freshly roasted.
+        </p>
       </CardContent>
     </Card>
   );
