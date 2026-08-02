@@ -87,8 +87,8 @@ export function Navbar() {
             </Link>
             <p className="opacity-20">|</p>
 
-            {/* Tablet-visible links */}
-            <nav className="hidden md:flex gap-1 text-sm font-medium items-center">
+            {/* Desktop-visible links */}
+            <nav className="hidden lg:flex gap-1 text-sm font-medium items-center">
               {[
                 ["Products", "/products"],
                 ["Accessories", "/accessories"],
@@ -131,7 +131,7 @@ export function Navbar() {
             <CartButton />
             {/* Mobile menu button */}
             <button
-              className="md:hidden rounded-md p-2 hover:bg-neutral-100 cursor-pointer"
+              className="lg:hidden rounded-md p-2 hover:bg-neutral-100 cursor-pointer"
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
             >
