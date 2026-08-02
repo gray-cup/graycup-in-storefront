@@ -70,7 +70,7 @@ export function Navbar() {
   return (
     <>
       <header className="w-full border-b border-neutral-200 bg-white">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-6">
+        <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between gap-4 px-4 lg:px-6">
           {/* LEFT */}
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-3">
@@ -111,13 +111,13 @@ export function Navbar() {
           </div>
 
           {/* RIGHT */}
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <ProductSearch />
             <a
               href="https://fast.graycup.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center rounded-md bg-black px-3 py-1.5 text-sm font-medium text-white hover:bg-neutral-800 transition-colors"
+              className="hidden sm:inline-flex shrink-0 items-center whitespace-nowrap rounded-md bg-black px-3 py-1.5 text-sm font-medium text-white hover:bg-neutral-800 transition-colors"
             >
               Buy via Fast
             </a>
