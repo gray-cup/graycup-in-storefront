@@ -15,6 +15,8 @@ const dropdowns: Record<string, [string, string][]> = {
     ["Green Coffee", "/green-wholesale-coffee"],
   ],
   Others: [
+    ["Fundraisers", "/fundraisers"],
+    ["Contact", "/contact"],
     ["Locations", "/locations"],
     ["Feedback", "/feedback"],
     ["New Product Request", "/new-product-request"],
@@ -52,14 +54,18 @@ function NavDropdown({
       {open && (
         <div className="absolute left-0 top-full pt-1 z-50">
           <div
-            className="bg-white rounded-md shadow-lg border border-neutral-200 py-1 min-w-[160px] grid"
-            style={{ gridTemplateColumns: `repeat(${columns}, minmax(160px, 1fr))` }}
+            className="bg-white rounded-md shadow-lg border border-neutral-200 py-1"
+            style={
+              columns > 1
+                ? { columnCount: columns, columnGap: 0, width: `${columns * 160}px` }
+                : { minWidth: "160px" }
+            }
           >
             {items.map(([itemLabel, href]) => (
               <Link
                 key={href}
                 href={href}
-                className="block px-4 py-2 text-sm hover:bg-neutral-100"
+                className="block px-4 py-2 text-sm hover:bg-neutral-100 break-inside-avoid-column"
               >
                 {itemLabel}
               </Link>
@@ -101,8 +107,6 @@ export function Navbar() {
               {[
                 ["Products", "/products"],
                 ["Accessories", "/accessories"],
-                ["Fundraisers", "/fundraisers"],
-                ["Contact", "/contact"],
               ].map(([label, href]) => (
                 <Link
                   key={href}
