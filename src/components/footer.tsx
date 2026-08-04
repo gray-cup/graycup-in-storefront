@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Footer() {
   const mainLinks = [
     { href: "/about", label: "About" },
-    { href: "/track-order", label: "Track Your Order" },
+    // { href: "/track-order", label: "Track Your Order" },
     { href: "/products", label: "Products" },
     { href: "/contact", label: "Contact" },
     { href: "/distributor-franchise", label: "Distributor & Franchise" },
