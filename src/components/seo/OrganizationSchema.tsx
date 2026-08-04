@@ -16,6 +16,7 @@ export function OrganizationSchema() {
       "https://x.com/TheGrayCup",
       "https://github.com/Gray-Cup",
       "https://instagram.com/thegraycup",
+      "https://www.linkedin.com/company/gray-cup",
       "https://www.indiamart.com/gray-cup-enterprises/",
     ],
     contactPoint: {
