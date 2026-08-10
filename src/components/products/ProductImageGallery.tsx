@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 
 type ProductImageGalleryProps = {
   images: string[];
@@ -17,13 +16,14 @@ export function ProductImageGallery({ images, productName, priority }: ProductIm
   return (
     <div className="lg:sticky lg:top-24">
       <div className="aspect-[5/4] relative rounded-2xl overflow-hidden">
-        <Image
+        <img
           src={images[current]}
           alt={productName}
-          fill
           draggable={false}
-          className="object-contain"
-          priority={priority}
+          className="absolute inset-0 h-full w-full object-contain"
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
+          decoding="async"
         />
       </div>
 
@@ -39,11 +39,12 @@ export function ProductImageGallery({ images, productName, priority }: ProductIm
               }`}
               aria-label={`View image ${i + 1}`}
             >
-              <Image
+              <img
                 src={src}
                 alt={`${productName} thumbnail ${i + 1}`}
-                fill
-                className="object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
             </button>
           ))}
