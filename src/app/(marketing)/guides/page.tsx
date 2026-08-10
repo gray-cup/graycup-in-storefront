@@ -60,6 +60,15 @@ const guides = [
     tags: ["Coffee", "Health", "Black Coffee"],
     date: "2026-07-30",
   },
+  {
+    slug: "best-black-coffee-for-fatty-liver",
+    title: "Best Black Coffee Brand for Fatty Liver",
+    description:
+      "Fatty liver disease is linked to lower coffee consumption in several studies. Here's what the research says and the best black coffees to build into a daily routine.",
+    readingTime: "6 min read",
+    tags: ["Coffee", "Health", "Fatty Liver"],
+    date: "2026-08-10",
+  },
 ];
 
 export default function GuidesPage() {
