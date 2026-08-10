@@ -23,7 +23,7 @@ export async function getFundraiserStats(): Promise<FundraiserStats> {
       and item->'product'->>'slug' = ${FUNDRAISER_PRODUCT_SLUG}
   `);
 
-  const packsSold = Number(result[0]?.packs_sold ?? 0);
+  const packsSold = Number(result.rows[0]?.packs_sold ?? 0);
   const raisedInr = packsSold * FUNDRAISER_PACK_PRICE_INR;
   const percent = Math.min(100, (raisedInr / FUNDRAISER_GOAL_INR) * 100);
 

@@ -85,3 +85,6 @@ const withMDX = createMDX({
 });
 
 export default withMDX(nextConfig);
+
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+initOpenNextCloudflareForDev();

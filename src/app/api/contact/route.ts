@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
-import { supabase } from "@/lib/supabase";
 
 // Rate limiting configuration
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
@@ -230,29 +228,15 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     };
 
-    // Insert into Supabase
-    const { error: dbError } = await supabase
-      .from("contact_submissions")
-      .insert({
-        name: contactData.name,
-        email: contactData.email,
-        company: contactData.company,
-        company_size: contactData.companySize,
-        message: contactData.message,
-      });
-
-    if (dbError) {
-      console.error("Supabase insert error:", dbError);
+    try {
+      await sendWebhook(contactData, metadata);
+    } catch (error) {
+      console.error("Webhook sending failed:", error);
       return NextResponse.json(
-        { error: "Failed to save submission. Please try again." },
+        { error: "Failed to send message. Please try again." },
         { status: 500 },
       );
     }
-
-    // Send to webhook (async, don't wait)
-    sendWebhook(contactData, metadata).catch((error) => {
-      console.error("Webhook sending failed:", error);
-    });
 
     // Return success response
     return NextResponse.json(
