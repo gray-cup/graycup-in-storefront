@@ -15,6 +15,7 @@ const ROOT = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(ROOT, "public");
 const OUTPUT_DIR = path.join(PUBLIC_DIR, "og", "products");
 const CATEGORY_OUTPUT_DIR = path.join(PUBLIC_DIR, "og", "categories");
+const GUIDES_OUTPUT_DIR = path.join(PUBLIC_DIR, "og", "guides");
 const FONTS_DIR = path.join(__dirname, "og", "fonts");
 
 const WIDTH = 1200;
@@ -265,6 +266,89 @@ async function generateOne(product: Product) {
   writeFileSync(path.join(OUTPUT_DIR, `${product.slug}.png`), png);
 }
 
+// Guide OG images used to be rendered per-request via next/og's ImageResponse
+// (satori + resvg wasm bundled at runtime). That runtime bundle alone pushed the
+// Cloudflare Workers output over the free-plan size limit, so they're pre-rendered
+// here instead, same as the product images above.
+const GUIDES: { slug: string; title: string }[] = [
+  { slug: "", title: "Guides" },
+  { slug: "black-coffee-liver-health", title: "Top 5 Black Coffees for Liver Health" },
+  { slug: "brewing-the-perfect-cup", title: "How to Brew the Perfect Cup of Tea" },
+  { slug: "ctc-vs-loose-leaf-tea", title: "CTC vs Loose Leaf Tea: What's the Difference?" },
+  {
+    slug: "instant-vs-brewed-coffee",
+    title: "Instant Coffee vs Brewed Coffee: Which Is Right for You?",
+  },
+  {
+    slug: "best-black-coffee-for-fatty-liver",
+    title: "Best Black Coffee Brand for Fatty Liver",
+  },
+];
+
+function guideLayout(title: string) {
+  return {
+    type: "div",
+    props: {
+      style: {
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        background: "#fafafa",
+        padding: "72px",
+        fontFamily: "Poppins",
+      },
+      children: [
+        {
+          type: "span",
+          props: {
+            style: {
+              fontSize: 36,
+              fontWeight: 600,
+              letterSpacing: "-0.02em",
+              color: "#141414",
+            },
+            children: "Gray Cup",
+          },
+        },
+        {
+          type: "h1",
+          props: {
+            style: {
+              fontSize: 72,
+              fontWeight: 700,
+              letterSpacing: "-0.02em",
+              color: "#141414",
+              lineHeight: 1.15,
+              margin: 0,
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            },
+            children: title,
+          },
+        },
+      ],
+    },
+  };
+}
+
+async function generateGuideImage(slug: string, title: string) {
+  const layout = guideLayout(title);
+  const svg = await satori(layout as unknown as Parameters<typeof satori>[0], {
+    width: WIDTH,
+    height: HEIGHT,
+    fonts,
+  });
+
+  const resvg = new Resvg(svg, { fitTo: { mode: "width", value: WIDTH } });
+  const png = resvg.render().asPng();
+
+  writeFileSync(path.join(GUIDES_OUTPUT_DIR, `${slug || "index"}.png`), png);
+}
+
 async function main() {
   mkdirSync(OUTPUT_DIR, { recursive: true });
 
@@ -278,6 +362,14 @@ async function main() {
   console.log("Generating accessories category OG image...");
   await generateAccessoriesCategoryImage();
   console.log(`  ✓ ${path.relative(ROOT, CATEGORY_OUTPUT_DIR)}/accessories.png`);
+
+  mkdirSync(GUIDES_OUTPUT_DIR, { recursive: true });
+  console.log(`Generating ${GUIDES.length} guide OG images...`);
+  for (const guide of GUIDES) {
+    await generateGuideImage(guide.slug, guide.title);
+    console.log(`  ✓ ${guide.slug || "index"}.png`);
+  }
+  console.log(`Done. Written to ${path.relative(ROOT, GUIDES_OUTPUT_DIR)}/`);
 }
 
 main().catch((error) => {

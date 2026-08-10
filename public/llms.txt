@@ -1,0 +1,19 @@
+<SYSTEM>This is the full textual snapshot of graycup-web</SYSTEM>
+
+# llms-full v1
+# site: https://graycup.in
+# generated: 2026-08-10T16:27:24.269Z
+# generator: next-llms-generator 0.1.0
+# pages: 1
+
+## Table of Contents
+- 1 https://graycup.in — (Skipped) Skipped
+
+---
+
+## Pages
+### BEGIN SKIPPED
+title: Skipped
+url: https://graycup.in
+reason: Non-HTML content type
+### END SKIPPED

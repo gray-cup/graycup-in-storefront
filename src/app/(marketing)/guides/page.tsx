@@ -14,12 +14,14 @@ export const metadata: Metadata = {
       "Practical guides on brewing tea and coffee, understanding different types, and getting the most from every cup.",
     type: "website",
     url: "/guides",
+    images: ["/og/guides/index.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Guides | Gray Cup",
     description:
       "Practical guides on brewing tea and coffee, understanding different types, and getting the most from every cup.",
+    images: ["/og/guides/index.png"],
   },
 };
 
