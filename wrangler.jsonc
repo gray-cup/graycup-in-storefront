@@ -22,4 +22,11 @@
       "service": "graycup-in-storefront",
     },
   ],
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+    },
+  },
 }
