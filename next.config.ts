@@ -4,6 +4,12 @@ import createMDX from "@next/mdx";
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   images: {
+    // On-the-fly resizing runs inside the Worker (no images binding/loader is
+    // configured), so it burns real CPU per unique width/quality combo and can
+    // trip the "Exceeded CPU Limit" bucket under image-heavy traffic. Serve
+    // originals as-is instead; Cloudflare's edge already caches them via the
+    // Cache-Control headers set below.
+    unoptimized: true,
     minimumCacheTTL: 604800,
     remotePatterns: [
       {
