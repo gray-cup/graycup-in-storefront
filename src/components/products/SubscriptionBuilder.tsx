@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, CreditCard, Loader2, Minus, Plus, Repeat } from "lucide-react";
 import { toast } from "sonner";
@@ -207,7 +206,11 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
     <div className="mx-auto max-w-2xl space-y-8 py-8">
       <div className="flex items-center gap-4">
         <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border">
-          <Image src={product.image} alt={product.name} fill className="object-cover" />
+          <img
+            src={product.image}
+            alt={product.name}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
         </div>
         <div>
           <h1 className="text-2xl font-bold">Subscribe to {product.name}</h1>
@@ -366,11 +369,10 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
                   }`}
                 >
                   <div className="relative flex-1">
-                    <Image
+                    <img
                       src={addonProduct.image}
                       alt={addonProduct.name}
-                      fill
-                      className="object-cover"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                     <AnimatePresence>
                       {isSelected && (

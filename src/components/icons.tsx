@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 export const Icons = {
   Logo: function Logo({
@@ -12,13 +11,12 @@ export const Icons = {
     className?: string;
   }) {
     return (
-      <Image
+      <img
         src="/logo.svg"
         alt="Logo"
         width={width}
         height={height}
         className={cn(className, "h-auto w-auto")}
-        priority
       />
     );
   },
@@ -190,7 +188,7 @@ export const Icons = {
     className?: string;
   }) {
     return (
-      <Image
+      <img
         src="/integrations/gmail.svg"
         alt="Logo"
         width={width}
@@ -209,7 +207,7 @@ export const Icons = {
     className?: string;
   }) {
     return (
-      <Image
+      <img
         src="/integrations/trello.svg"
         alt="Logo"
         width={width}
@@ -228,7 +226,7 @@ export const Icons = {
     className?: string;
   }) {
     return (
-      <Image
+      <img
         src="/integrations/linear.svg"
         alt="Logo"
         width={width}
@@ -247,7 +245,7 @@ export const Icons = {
     className?: string;
   }) {
     return (
-      <Image
+      <img
         src="/integrations/slack.svg"
         alt="Logo"
         width={width}
@@ -266,7 +264,7 @@ export const Icons = {
     className?: string;
   }) {
     return (
-      <Image
+      <img
         src="/integrations/notion.svg"
         alt="Logo"
         width={width}

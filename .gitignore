@@ -13,14 +13,12 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
+# react-router
+/.react-router/
 
-# opennextjs-cloudflare
-/.open-next/
+# cloudflare
 /.wrangler/
-cloudflare-env.d.ts
+worker-configuration.d.ts
 .dev.vars*
 
 # production
@@ -47,5 +45,4 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 .env*.local

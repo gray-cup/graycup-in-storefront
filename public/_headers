@@ -1,0 +1,32 @@
+/*.ttf
+  Cache-Control: public, max-age=63072000, immutable
+/*.otf
+  Cache-Control: public, max-age=63072000, immutable
+/*.woff
+  Cache-Control: public, max-age=63072000, immutable
+/*.woff2
+  Cache-Control: public, max-age=63072000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=604800
+/*.jpg
+  Cache-Control: public, max-age=604800
+/*.jpeg
+  Cache-Control: public, max-age=604800
+/*.png
+  Cache-Control: public, max-age=604800
+/*.gif
+  Cache-Control: public, max-age=604800
+/*.ico
+  Cache-Control: public, max-age=604800
+/*.webp
+  Cache-Control: public, max-age=604800
+/*.avif
+  Cache-Control: public, max-age=604800
+
+/*.mp4
+  Cache-Control: public, max-age=604800
+/*.webm
+  Cache-Control: public, max-age=604800
+/*.mov
+  Cache-Control: public, max-age=604800

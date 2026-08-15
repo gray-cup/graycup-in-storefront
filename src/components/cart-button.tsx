@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "react-router";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/components/cart-provider";
@@ -9,7 +9,7 @@ export function CartButton() {
   const { itemCount, isLoading } = useCart();
 
   return (
-    <Link href="/cart">
+    <Link to="/cart">
       <Button
         variant="ghost"
         size="sm"

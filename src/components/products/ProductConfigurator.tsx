@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ChangeEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router";
 import { ShoppingCart, Minus, Plus, Zap, Flame } from "lucide-react";
 import { toast } from "sonner";
 import { ShareButton } from "./ShareButton";
@@ -33,7 +33,7 @@ function getDefaultVariant(product: Product) {
 
 export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const { addToCart, openCart } = useCart();
-  const router = useRouter();
+  const navigate = useNavigate();
   const isCoffee = product.category === "Coffee" && !product.isSamplePack;
   const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
@@ -124,7 +124,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       selectedGrind: isCoffee ? grindSize : undefined,
       selectedRoast: hasRoastOptions ? selectedRoast : undefined,
     });
-    router.push("/checkout");
+    navigate("/checkout");
   };
 
   const incrementQuantity = () => setQuantity((q) => q + 1);

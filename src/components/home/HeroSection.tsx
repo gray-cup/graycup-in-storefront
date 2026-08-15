@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "react-router";
 import { motion } from "framer-motion";
 
 export function HeroSection() {
@@ -28,12 +28,12 @@ export function HeroSection() {
         transition={{ delay: 0.3, duration: 0.6 }}
         className="pt-5 flex flex-row gap-4"
       >
-        <Link href="#products">
+        <Link to="#products">
           <Button variant="default" size="sm">
             Shop Now
           </Button>
         </Link>
-        <Link href="/cart">
+        <Link to="/cart">
           <Button variant="outline" size="sm">
             View Cart
           </Button>

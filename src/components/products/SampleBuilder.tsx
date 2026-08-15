@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router";
 import { ShoppingCart, Zap, Flame } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ type SampleBuilderProps = {
 
 export function SampleBuilder({ product }: SampleBuilderProps) {
   const { addToCart, openCart } = useCart();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const eligibleCoffees = useMemo(
     () => getProductsByCategory("Coffee").filter((p) => !p.isSamplePack),
@@ -78,7 +78,7 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
       selectedVariant: buildCartVariant(),
       selectedSamples: selected,
     });
-    router.push("/checkout");
+    navigate("/checkout");
   };
 
   return (

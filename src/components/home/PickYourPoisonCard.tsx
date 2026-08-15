@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "react-router";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/data/products/types";
@@ -48,7 +48,7 @@ export function PickYourPoisonCard({ product }: PickYourPoisonCardProps) {
       </div>
 
       <Button asChild variant="lightgraybg" size="sm" className="relative w-full">
-        <Link href={`/products/${product.slug}`}>Pick Your Poison</Link>
+        <Link to={`/products/${product.slug}`}>Pick Your Poison</Link>
       </Button>
     </div>
   );
