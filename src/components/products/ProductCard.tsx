@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import { Link } from "react-router";
 import { Card } from "@/components/ui/card";
 import type { Product } from "@/data/products";
 import { CURRENCY } from "@/lib/currency";
@@ -19,13 +18,11 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
   const card = (
     <Card className="group overflow-hidden rounded-lg bg-neutral-50 p-0 cursor-pointer transition-all">
       <div className="aspect-square relative">
-        <Image
+        <img
           src={product.image}
           alt={product.name}
-          fill
-          priority
           draggable={false}
-          className={`object-cover${product.comingSoon ? " opacity-40" : ""}`}
+          className={`absolute inset-0 h-full w-full object-cover${product.comingSoon ? " opacity-40" : ""}`}
         />
 
         {product.comingSoon && (
@@ -80,5 +77,5 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
 
   if (product.comingSoon) return <div>{card}</div>;
 
-  return <Link href={`/products/${product.slug}`}>{card}</Link>;
+  return <Link to={`/products/${product.slug}`}>{card}</Link>;
 }

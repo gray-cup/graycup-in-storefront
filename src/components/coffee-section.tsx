@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export function CoffeeSection() {
   return (
     <div className="px-0 lg:px-8 pb-8 lg:pb-20">
@@ -22,7 +20,7 @@ export function CoffeeSection() {
             exclusive
           </h3>
         </div>
-        <Image
+        <img
           src="/beans.webp"
           alt="beans"
           className="-mb-20 z-10 rotate-20 grayscale opacity-50 hover:opacity-100 duration-300 hidden md:block  hover:grayscale-0"

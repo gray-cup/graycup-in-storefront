@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router";
 import React from "react";
 import { ChevronLeft } from "lucide-react";
 
@@ -28,7 +28,7 @@ export function GuideLayout({
   return (
     <div className="max-w-3xl mx-auto px-4 lg:px-6 py-16">
       <Link
-        href="/guides"
+        to="/guides"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-neutral-900 transition-colors mb-10"
       >
         <ChevronLeft className="size-4" /> All Guides

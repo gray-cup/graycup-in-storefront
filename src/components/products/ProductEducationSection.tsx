@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { CoffeeProcess } from "@/data/products";
 import {
   Accordion,
@@ -31,7 +30,7 @@ export function ProductEducationSection({
         <h2 className="text-4xl md:text-5xl font-semibold italic text-blue-600">
           Good to know
         </h2>
-        <Image
+        <img
           src="/coffee-tree.svg"
           alt=""
           width={56}

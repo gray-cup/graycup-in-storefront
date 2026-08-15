@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { Link, useNavigate, useLocation } from "react-router";
 import { getProductBySlug } from "@/data/products";
 import { CURRENCY } from "@/lib/currency";
 import { setBuyNowItem } from "@/lib/buy-now";
@@ -13,8 +11,8 @@ type GuideProductCardProps = {
 
 export function GuideProductCard({ slug }: GuideProductCardProps) {
   const product = getProductBySlug(slug);
-  const router = useRouter();
-  const pathname = usePathname();
+  const navigate = useNavigate();
+  const pathname = useLocation().pathname;
 
   if (!product) return null;
 
@@ -27,20 +25,24 @@ export function GuideProductCard({ slug }: GuideProductCardProps) {
       { product, quantity: 1, selectedVariant: cheapestVariant },
       { label: "Back to Guide", href: pathname },
     );
-    router.push("/checkout");
+    navigate("/checkout");
   };
 
   return (
     <div className="not-prose my-5 flex items-center gap-4 rounded-xl border border-neutral-200 bg-white p-3">
       <Link
-        href={`/products/${product.slug}`}
+        to={`/products/${product.slug}`}
         className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-neutral-100 sm:size-20"
       >
-        <Image src={product.image} alt={product.name} fill className="object-cover" />
+        <img
+          src={product.image}
+          alt={product.name}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
       </Link>
       <div className="flex-1 min-w-0">
         <Link
-          href={`/products/${product.slug}`}
+          to={`/products/${product.slug}`}
           className="block truncate text-sm font-semibold text-neutral-900 hover:text-neutral-700 sm:text-base"
         >
           {product.name}

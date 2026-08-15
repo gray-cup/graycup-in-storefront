@@ -5,12 +5,14 @@
  */
 import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 import sharp from "sharp";
 import { products, accessoryProducts } from "../src/data/products";
 import type { Product } from "../src/data/products/types";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(ROOT, "public");
 const OUTPUT_DIR = path.join(PUBLIC_DIR, "og", "products");

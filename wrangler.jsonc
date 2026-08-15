@@ -1,10 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "main": ".open-next/worker.js",
+  "main": "./workers/app.ts",
   "name": "graycup-in-storefront",
   "compatibility_date": "2026-08-08",
   "compatibility_flags": [
-    // Enable Node.js API
+    // Enable Node.js API (Drizzle/Neon serverless driver need this)
     // see https://developers.cloudflare.com/workers/configuration/compatibility-flags/#nodejs-compatibility-flag
     "nodejs_compat",
     // Allow to fetch URLs in your app
@@ -12,21 +12,17 @@
     "global_fetch_strictly_public",
   ],
   "assets": {
-    "directory": ".open-next/assets",
+    "directory": "./build/client",
     "binding": "ASSETS",
   },
-  "services": [
-    {
-      "binding": "WORKER_SELF_REFERENCE",
-      // The service should match the "name" of your worker
-      "service": "graycup-in-storefront",
-    },
-  ],
   "observability": {
     "enabled": true,
     "logs": {
       "enabled": true,
       "invocation_logs": true,
     },
+  },
+  "vars": {
+    "SITE_URL": "https://graycup.in",
   },
 }

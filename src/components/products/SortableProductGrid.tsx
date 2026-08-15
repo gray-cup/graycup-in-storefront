@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
+import { Link } from "react-router";
 import { ProductCard } from "./ProductCard";
 import type { Product } from "@/data/products";
 
@@ -60,7 +60,7 @@ export function SortableProductGrid({ products, defaultDirection }: SortableProd
       ) : (
         <p className="text-muted-foreground py-12">
           No products currently match this category — browse our{" "}
-          <Link href="/products" className="underline">
+          <Link to="/products" className="underline">
             full product range
           </Link>
           .

@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { useNavigate } from "react-router";
 import { Search } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { products } from "@/data/products";
@@ -10,7 +9,7 @@ import { products } from "@/data/products";
 export function ProductSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const router = useRouter();
+  const navigate = useNavigate();
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -35,7 +34,7 @@ export function ProductSearch() {
 
   function goToProduct(slug: string) {
     setOpen(false);
-    router.push(`/products/${slug}`);
+    navigate(`/products/${slug}`);
   }
 
   return (
@@ -87,7 +86,11 @@ export function ProductSearch() {
                     className="flex w-full items-center gap-3 py-2 text-left hover:bg-neutral-50 rounded-md px-2"
                   >
                     <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded bg-neutral-100">
-                      <Image src={product.image} alt={product.name} fill className="object-cover" />
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
                     </div>
                     <span className="text-sm text-black line-clamp-1">{product.name}</span>
                   </button>

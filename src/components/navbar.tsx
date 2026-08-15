@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
 import { CartButton } from "@/components/cart-button";
 import { ProductSearch } from "@/components/product-search";
@@ -67,7 +66,7 @@ function NavDropdown({
             {items.map(([itemLabel, href]) => (
               <Link
                 key={href}
-                href={href}
+                to={href}
                 className={`block px-4 py-2 text-sm hover:bg-neutral-100 break-inside-avoid-column ${
                   SPACE_PERMITTING_HREFS.has(href) ? "xl:hidden" : ""
                 }`}
@@ -93,8 +92,8 @@ export function Navbar() {
         <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between gap-4 px-4 lg:px-6">
           {/* LEFT */}
           <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-3">
-              <Image
+            <Link to="/" className="flex items-center gap-3">
+              <img
                 src="/logo.svg"
                 alt="Gray Cup"
                 width={45}
@@ -117,7 +116,7 @@ export function Navbar() {
               ].map(([label, href]) => (
                 <Link
                   key={href}
-                  href={href}
+                  to={href}
                   className={`rounded-md px-2 py-2 hover:bg-neutral-100 ${
                     SPACE_PERMITTING_HREFS.has(href) ? "hidden xl:block" : ""
                   }`}
@@ -149,7 +148,7 @@ export function Navbar() {
               Buy via Fast
             </a>
             <Link
-              href={accountHref}
+              to={accountHref}
               className="hidden sm:inline-flex items-center rounded-md p-2 hover:bg-neutral-100"
               aria-label="My Account"
             >
@@ -227,7 +226,7 @@ export function Navbar() {
             ].map(([label, href]) => (
               <Link
                 key={href}
-                href={href}
+                to={href}
                 onClick={() => setMenuOpen(false)}
                 className="rounded-md px-2 py-2 hover:bg-neutral-100"
               >

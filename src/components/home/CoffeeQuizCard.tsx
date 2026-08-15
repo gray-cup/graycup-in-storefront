@@ -1,8 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import { Link } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, ChevronLeft, RotateCcw, ShoppingCart, Sparkles } from "lucide-react";
 import { toast } from "sonner";
@@ -204,18 +203,17 @@ export function CoffeeQuizCard() {
                           Best match
                         </span>
                       )}
-                      <Link href={`/products/${product.slug}`} className="relative aspect-square w-full">
-                        <Image
+                      <Link to={`/products/${product.slug}`} className="relative aspect-square w-full">
+                        <img
                           src={product.image}
                           alt={product.name}
-                          fill
                           draggable={false}
-                          className="object-cover"
+                          className="absolute inset-0 h-full w-full object-cover"
                         />
                       </Link>
                       <div className="flex flex-1 flex-col gap-1 p-3">
                         <Link
-                          href={`/products/${product.slug}`}
+                          to={`/products/${product.slug}`}
                           className="line-clamp-2 min-h-[2.5em] text-sm font-semibold text-neutral-900 hover:underline"
                         >
                           {product.name}

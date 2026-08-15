@@ -1,4 +1,3 @@
-import "server-only";
 import { betterAuth } from "better-auth";
 import { captcha } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";

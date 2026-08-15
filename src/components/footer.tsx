@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router";
 
 export default function Footer() {
   const mainLinks = [
@@ -35,7 +35,7 @@ export default function Footer() {
             {mainLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 className="text-muted-foreground hover:underline hover:text-foreground transition-colors"
               >
                 {link.label}
@@ -47,7 +47,7 @@ export default function Footer() {
             {socialLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:underline hover:text-foreground transition-colors"
@@ -114,7 +114,7 @@ export default function Footer() {
             {resourceLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 target={link.href.startsWith("http") ? "_blank" : undefined}
                 rel={
                   link.href.startsWith("http")

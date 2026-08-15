@@ -1,4 +1,3 @@
-import "server-only";
 import { Resend } from "resend";
 
 const FROM = process.env.RESEND_FROM_EMAIL || "Gray Cup <onboarding@resend.dev>";

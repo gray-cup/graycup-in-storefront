@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
 import { SortableProductGrid } from "./SortableProductGrid";
 import type { Product } from "@/data/products";
@@ -47,7 +47,7 @@ export function LocationListing({
             <span key={i} className="flex items-center gap-2">
               {i > 0 && <span>/</span>}
               {crumb.href ? (
-                <Link href={crumb.href} className="hover:text-black transition-colors">
+                <Link to={crumb.href} className="hover:text-black transition-colors">
                   {crumb.label}
                 </Link>
               ) : (
@@ -65,7 +65,7 @@ export function LocationListing({
           <p className="text-md text-muted-foreground max-w-2xl mb-6">{intro}</p>
           <div className="flex flex-wrap gap-3">
             {topicLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
+              <Link key={link.href} to={link.href}>
                 <Button variant="lightgraybg" size="sm">
                   {link.label}
                 </Button>
@@ -87,7 +87,7 @@ export function LocationListing({
                 {relatedLinks.map((link) => (
                   <Link
                     key={link.href}
-                    href={link.href}
+                    to={link.href}
                     className="flex items-center justify-between p-4 border rounded-lg hover:border-neutral-400 transition-colors group"
                   >
                     <div>
@@ -111,7 +111,7 @@ export function LocationListing({
           <p className="text-sm text-muted-foreground mb-4">
             Fresh-roasted, GST-invoiced, shipped across India.
           </p>
-          <Link href="/products">
+          <Link to="/products">
             <Button variant="black" size="sm">
               Browse All Products
             </Button>

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "react-router";
 import { getHowToUseGuide } from "@/data/how-to-use";
 import { GuideContent } from "@/components/how-to-use/GuideContent";
 import { Marquee } from "@/components/Marquee";
@@ -14,8 +14,7 @@ export function ProductHowToUseSection() {
     <div className="mt-16 pt-16 border-t border-gray-200">
       <Marquee text="How to Use" />
       <div className="flex items-baseline justify-between mt-10 mb-8">
-        <Link
-          href="/how-to-use"
+        <Link to="/how-to-use"
           className="text-sm text-muted-foreground hover:text-black transition-colors"
         >
           View all brew methods
