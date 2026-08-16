@@ -91,5 +91,9 @@ export default [
     // otherwise shadow every static path above.
     route(":state/:slug", "routes/marketing/$state.$slug.tsx"),
     route(":state/:slug/:topic", "routes/marketing/$state.$slug.$topic.tsx"),
+
+    // Catch-all route for handling 404s gracefully without internal router errors
+    route("*", "routes/not-found.tsx"),
   ]),
 ] satisfies RouteConfig;
+
