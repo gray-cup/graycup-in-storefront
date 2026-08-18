@@ -12,12 +12,23 @@ import {
   CoffeeQuizCard,
 } from "@/components/home";
 
+const ARABICA_ROBUSTA_BLEND_SLUGS = [
+  "filter-coffee-95-arabica-5-robusta",
+  "filter-coffee-90-arabica-10-robusta",
+  "filter-coffee-80-arabica-20-robusta",
+  "filter-coffee-arabica-robusta",
+  "custom-arabica-robusta-blend",
+];
+
 const retailCoffeeProducts = retailProducts.filter((p) => p.category === "Coffee");
+const arabicaRobustaBlendProducts = retailCoffeeProducts.filter((p) =>
+  ARABICA_ROBUSTA_BLEND_SLUGS.includes(p.slug),
+);
 const specialtyCoffeeProducts = retailCoffeeProducts.filter(
   (p) => p.quality === "Speciality",
 );
 const basicCoffeeProducts = retailCoffeeProducts.filter(
-  (p) => p.quality === "Commercial",
+  (p) => p.quality === "Commercial" && !ARABICA_ROBUSTA_BLEND_SLUGS.includes(p.slug),
 );
 
 export default function Home() {
@@ -40,6 +51,11 @@ export default function Home() {
                   />
                   <SamplePacksSection products={samplePackProducts} delay={0.05} />
                   <AnimatedProductRow title="Basic Coffee" products={basicCoffeeProducts} delay={0.1} />
+                  <AnimatedProductRow
+                    title="Arabica & Robusta Blends"
+                    products={arabicaRobustaBlendProducts}
+                    delay={0.12}
+                  />
                   <AnimatedProductRow title="Specialty Coffee" products={specialtyCoffeeProducts} delay={0.15} />
                 </div>
               </div>
