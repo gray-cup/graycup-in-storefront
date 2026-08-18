@@ -249,8 +249,8 @@ export const koraputCoffeeProducts: Product[] = [
     quality: "Speciality",
     brewStyle: "Black",
     priceRange: {
-      min: 1400,
-      max: 1400,
+      min: 1200,
+      max: 4800,
       unit: "",
     },
     minimumOrder: {
@@ -258,9 +258,11 @@ export const koraputCoffeeProducts: Product[] = [
       unit: "pack",
     },
     variants: [
-      { name: "250g", price: 1400, weightGrams: 250 },
+      { name: "250g", price: 1200, weightGrams: 250 },
+      { name: "500g", price: 2400, weightGrams: 500 },
+      { name: "1kg", price: 4800, weightGrams: 1000 },
     ],
-    packaging: ["250g pack"],
+    packaging: ["250g pack", "500g pack", "1kg pack"],
     sku: "GC-COF-BVCIVET-001",
     brand: "Gray Cup",
     availability: "in_stock",
