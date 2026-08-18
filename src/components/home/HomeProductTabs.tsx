@@ -5,7 +5,7 @@ import { ProductCard } from "@/components/products";
 import { PickYourPoisonCard } from "./PickYourPoisonCard";
 import type { Product } from "@/data/products";
 
-type TabValue = "all" | "tea" | "ground-coffee" | "coffee-blends" | "specialty-coffee";
+type TabValue = "all" | "tea" | "coffee" | "specialty-coffee";
 
 type HomeProductTabsProps = {
   teaProducts: Product[];
@@ -71,8 +71,7 @@ export function HomeProductTabs({
   const tabs: { value: TabValue; label: string }[] = [
     { value: "all", label: "All" },
     { value: "tea", label: "Tea" },
-    { value: "ground-coffee", label: "Ground Coffee" },
-    { value: "coffee-blends", label: "Coffee Blends" },
+    { value: "coffee", label: "Coffee" },
     { value: "specialty-coffee", label: "Specialty Coffee" },
   ];
 
@@ -104,8 +103,12 @@ export function HomeProductTabs({
         </div>
       )}
       {activeTab === "tea" && <ProductGrid products={teaProducts} />}
-      {activeTab === "ground-coffee" && <ProductGrid products={groundCoffeeProducts} />}
-      {activeTab === "coffee-blends" && <ProductGrid products={coffeeBlendProducts} />}
+      {activeTab === "coffee" && (
+        <div>
+          <ProductSection title="Ground Coffee" products={groundCoffeeProducts} />
+          <ProductSection title="Coffee Blends" products={coffeeBlendProducts} />
+        </div>
+      )}
       {activeTab === "specialty-coffee" && <ProductGrid products={specialtyCoffeeProducts} />}
     </div>
   );
