@@ -6,29 +6,20 @@ import {
 } from "@/data/products";
 import {
   HeroSection,
-  AnimatedProductRow,
+  HomeProductTabs,
   SamplePacksSection,
   BrandNarrative,
   CoffeeQuizCard,
 } from "@/components/home";
 
-const ARABICA_ROBUSTA_BLEND_SLUGS = [
-  "filter-coffee-95-arabica-5-robusta",
-  "filter-coffee-90-arabica-10-robusta",
-  "filter-coffee-80-arabica-20-robusta",
-  "filter-coffee-arabica-robusta",
-  "custom-arabica-robusta-blend",
-];
-
+const teaProducts = [...dooarsAssamTeaProducts, ...giddapaharDarjeelingProducts];
 const retailCoffeeProducts = retailProducts.filter((p) => p.category === "Coffee");
-const arabicaRobustaBlendProducts = retailCoffeeProducts.filter((p) =>
-  ARABICA_ROBUSTA_BLEND_SLUGS.includes(p.slug),
-);
+const coffeeBlendProducts = retailCoffeeProducts.filter((p) => p.categoryTwo === "Blend");
 const specialtyCoffeeProducts = retailCoffeeProducts.filter(
   (p) => p.quality === "Speciality",
 );
-const basicCoffeeProducts = retailCoffeeProducts.filter(
-  (p) => p.quality === "Commercial" && !ARABICA_ROBUSTA_BLEND_SLUGS.includes(p.slug),
+const groundCoffeeProducts = retailCoffeeProducts.filter(
+  (p) => p.quality === "Commercial" && p.categoryTwo !== "Blend",
 );
 
 export default function Home() {
@@ -44,19 +35,13 @@ export default function Home() {
               {/* Featured Products Section */}
               <div id="products" className="py-20 bg-white">
                 <div className="max-w-6xl mx-auto px-4 lg:px-6">
-                  <AnimatedProductRow
-                    title="Tea"
-                    products={[...dooarsAssamTeaProducts, ...giddapaharDarjeelingProducts]}
-                    delay={0}
-                  />
                   <SamplePacksSection products={samplePackProducts} delay={0.05} />
-                  <AnimatedProductRow title="Basic Coffee" products={basicCoffeeProducts} delay={0.1} />
-                  <AnimatedProductRow
-                    title="Arabica & Robusta Blends"
-                    products={arabicaRobustaBlendProducts}
-                    delay={0.12}
+                  <HomeProductTabs
+                    teaProducts={teaProducts}
+                    groundCoffeeProducts={groundCoffeeProducts}
+                    coffeeBlendProducts={coffeeBlendProducts}
+                    specialtyCoffeeProducts={specialtyCoffeeProducts}
                   />
-                  <AnimatedProductRow title="Specialty Coffee" products={specialtyCoffeeProducts} delay={0.15} />
                 </div>
               </div>
             </div>
