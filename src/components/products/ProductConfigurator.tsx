@@ -40,6 +40,10 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const { grindSize, setGrindSize } = useGrindSize();
   const hasRoastOptions = !!product.roastOptions && product.roastOptions.length > 0;
   const [selectedRoast, setSelectedRoast] = useState(() => product.roastOptions?.[0] ?? "");
+  const hasBlendRatioOptions = !!product.blendRatioOptions && product.blendRatioOptions.length > 0;
+  const [selectedBlendRatio, setSelectedBlendRatio] = useState(
+    () => product.blendRatioOptions?.[0] ?? ""
+  );
   const [hydratedFromUrl, setHydratedFromUrl] = useState(false);
 
   // Pick up ?variant=, ?grind= and ?roast= from the URL on load, so shared/pasted
@@ -63,6 +67,15 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       setSelectedRoast(roastParam);
     }
 
+    const blendParam = searchParams.get("blend");
+    if (
+      hasBlendRatioOptions &&
+      blendParam &&
+      (product.blendRatioOptions as string[]).includes(blendParam)
+    ) {
+      setSelectedBlendRatio(blendParam);
+    }
+
     setHydratedFromUrl(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -83,6 +96,9 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
     if (hasRoastOptions) {
       searchParams.set("roast", selectedRoast);
     }
+    if (hasBlendRatioOptions) {
+      searchParams.set("blend", selectedBlendRatio);
+    }
 
     const query = searchParams.toString();
     const url = query ? `${window.location.pathname}?${query}` : window.location.pathname;
@@ -92,8 +108,10 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
     selectedVariant,
     grindSize,
     selectedRoast,
+    selectedBlendRatio,
     isCoffee,
     hasRoastOptions,
+    hasBlendRatioOptions,
     product.variants.length,
   ]);
 
@@ -105,7 +123,8 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       undefined,
       isCoffee ? grindSize : undefined,
       undefined,
-      hasRoastOptions ? selectedRoast : undefined
+      hasRoastOptions ? selectedRoast : undefined,
+      hasBlendRatioOptions ? selectedBlendRatio : undefined
     );
     toast.success("Added to cart!", {
       description: `${quantity} ${product.name} (${selectedVariant.name})`,
@@ -123,6 +142,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       selectedVariant,
       selectedGrind: isCoffee ? grindSize : undefined,
       selectedRoast: hasRoastOptions ? selectedRoast : undefined,
+      selectedBlendRatio: hasBlendRatioOptions ? selectedBlendRatio : undefined,
     });
     navigate("/checkout");
   };
@@ -241,6 +261,25 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {product.roastOptions?.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {/* Blend Ratio */}
+        {hasBlendRatioOptions && (
+          <div className="space-y-2">
+            <Label htmlFor="blend-ratio">Arabica / Robusta Ratio</Label>
+            <select
+              id="blend-ratio"
+              value={selectedBlendRatio}
+              onChange={(e) => setSelectedBlendRatio(e.target.value)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              {product.blendRatioOptions?.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>

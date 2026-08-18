@@ -7,6 +7,7 @@ export type CartItem = {
   selectedPackaging?: string;
   selectedGrind?: string;
   selectedRoast?: string;
+  selectedBlendRatio?: string;
   selectedSamples?: string[];
 };
 
@@ -74,7 +75,8 @@ export function addToCart(
   packaging?: string,
   grind?: string,
   samples?: string[],
-  roast?: string
+  roast?: string,
+  blendRatio?: string
 ): CartItem[] {
   const samplesKey = samples?.join(",");
 
@@ -85,6 +87,7 @@ export function addToCart(
       item.selectedPackaging === packaging &&
       item.selectedGrind === grind &&
       item.selectedRoast === roast &&
+      item.selectedBlendRatio === blendRatio &&
       item.selectedSamples?.join(",") === samplesKey
   );
 
@@ -106,6 +109,7 @@ export function addToCart(
       selectedPackaging: packaging,
       selectedGrind: grind,
       selectedRoast: roast,
+      selectedBlendRatio: blendRatio,
       selectedSamples: samples,
     },
   ];
