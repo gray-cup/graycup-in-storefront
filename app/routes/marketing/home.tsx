@@ -7,7 +7,6 @@ import {
 import {
   HeroSection,
   HomeProductTabs,
-  SamplePacksSection,
   BrandNarrative,
   CoffeeQuizCard,
 } from "@/components/home";
@@ -35,9 +34,9 @@ export default function Home() {
               {/* Featured Products Section */}
               <div id="products" className="py-20 bg-white">
                 <div className="max-w-6xl mx-auto px-4 lg:px-6">
-                  <SamplePacksSection products={samplePackProducts} delay={0.05} />
                   <HomeProductTabs
                     teaProducts={teaProducts}
+                    samplePackProducts={samplePackProducts}
                     groundCoffeeProducts={groundCoffeeProducts}
                     coffeeBlendProducts={coffeeBlendProducts}
                     specialtyCoffeeProducts={specialtyCoffeeProducts}
