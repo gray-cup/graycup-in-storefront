@@ -82,7 +82,7 @@ export function HomeProductTabs({
           <button
             key={tab.value}
             onClick={() => setActiveTab(tab.value)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
               activeTab === tab.value
                 ? "bg-black text-white"
                 : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
