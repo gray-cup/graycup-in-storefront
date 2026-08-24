@@ -1,6 +1,9 @@
 import { and, eq } from "drizzle-orm";
-import { db } from "@/lib/db";
-import { coupons, order, type Coupon } from "@/lib/schema";
+import type { DrizzleD1Database } from "drizzle-orm/d1";
+import { coupons, order, type Coupon } from "@/lib/schema.d1";
+import type { d1Schema } from "@/lib/db.d1";
+
+type D1Db = DrizzleD1Database<typeof d1Schema>;
 
 export interface CouponValidation {
   valid: boolean;
@@ -15,7 +18,7 @@ export interface CouponValidation {
  * returned here is what must be trusted - never accept a discount value
  * from the client.
  */
-export async function validateCoupon(rawCode: string | undefined | null, subtotal: number): Promise<CouponValidation> {
+export async function validateCoupon(db: D1Db, rawCode: string | undefined | null, subtotal: number): Promise<CouponValidation> {
   if (!rawCode || !rawCode.trim()) {
     return { valid: false, error: "No coupon code provided", discountAmount: 0 };
   }
@@ -30,7 +33,7 @@ export async function validateCoupon(rawCode: string | undefined | null, subtota
   if (!c.active) {
     return { valid: false, error: "This coupon is no longer active", discountAmount: 0 };
   }
-  if (c.expiresAt && c.expiresAt.getTime() < Date.now()) {
+  if (c.expiresAt && new Date(c.expiresAt).getTime() < Date.now()) {
     return { valid: false, error: "This coupon has expired", discountAmount: 0 };
   }
   if (c.usageLimit !== null && c.usedCount >= c.usageLimit) {
@@ -59,7 +62,7 @@ export async function validateCoupon(rawCode: string | undefined | null, subtota
  * guard with the order's own couponUsageCounted flag so retried webhooks /
  * verify-poll races never double-count a redemption.
  */
-export async function incrementCouponUsage(code: string): Promise<void> {
+export async function incrementCouponUsage(db: D1Db, code: string): Promise<void> {
   const normalized = code.trim().toUpperCase();
   const rows = await db.select().from(coupons).where(eq(coupons.code, normalized)).limit(1);
   if (!rows.length) return;
@@ -75,7 +78,7 @@ export async function incrementCouponUsage(code: string): Promise<void> {
  * The guarded UPDATE (coupon_usage_counted = false) ensures at most one of
  * those callers ever flips the flag and increments usage for a given order.
  */
-export async function finalizeCouponUsage(cashfreeOrderId: string): Promise<void> {
+export async function finalizeCouponUsage(db: D1Db, cashfreeOrderId: string): Promise<void> {
   const [claimed] = await db
     .update(order)
     .set({ couponUsageCounted: true })
@@ -83,6 +86,6 @@ export async function finalizeCouponUsage(cashfreeOrderId: string): Promise<void
     .returning();
 
   if (claimed?.couponCode) {
-    await incrementCouponUsage(claimed.couponCode);
+    await incrementCouponUsage(db, claimed.couponCode);
   }
 }

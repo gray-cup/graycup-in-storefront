@@ -1,14 +1,16 @@
 import { auth } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { subscription } from "@/lib/schema";
+import { subscription } from "@/lib/schema.d1";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq } from "drizzle-orm";
 import { CF_BASE, cfSubscriptionHeaders, mapSubscriptionStatus } from "@/lib/cashfree";
 import type { Route } from "./+types/subscription.manage";
 
 type ManageAction = "CANCEL" | "PAUSE" | "ACTIVATE";
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const d1 = getD1Db(context.get(cloudflareContext).env.DB);
     const session = await auth.api.getSession({ headers: request.headers });
     if (!session?.user) {
       return Response.json({ error: "Not authenticated" }, { status: 401 });
@@ -21,7 +23,7 @@ export async function action({ request }: Route.ActionArgs) {
       return Response.json({ error: "Invalid request" }, { status: 400 });
     }
 
-    const [existing] = await db
+    const [existing] = await d1
       .select()
       .from(subscription)
       .where(eq(subscription.subscriptionId, subscriptionId));
@@ -65,9 +67,9 @@ export async function action({ request }: Route.ActionArgs) {
 
     const status = mapSubscriptionStatus(data.subscription_status);
 
-    await db
+    await d1
       .update(subscription)
-      .set({ status, updatedAt: new Date() })
+      .set({ status, updatedAt: new Date().toISOString() })
       .where(eq(subscription.subscriptionId, subscriptionId));
 
     return Response.json({ success: true, status, subscriptionStatus: data.subscription_status });

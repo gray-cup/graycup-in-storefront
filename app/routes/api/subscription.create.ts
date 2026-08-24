@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { subscription } from "@/lib/schema";
+import { subscription } from "@/lib/schema.d1";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
 import { CF_BASE, cfSubscriptionHeaders } from "@/lib/cashfree";
 import type { Route } from "./+types/subscription.create";
 
@@ -28,8 +29,9 @@ interface SubscriptionRequest {
   planMaxCycles?: number;
 }
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const d1 = getD1Db(context.get(cloudflareContext).env.DB);
     if (!process.env.CASHFREE_CLIENT_ID || !process.env.CASHFREE_CLIENT_SECRET) {
       return Response.json(
         { error: "Payment gateway not configured" },
@@ -128,7 +130,7 @@ export async function action({ request }: Route.ActionArgs) {
       );
     }
 
-    await db.insert(subscription).values({
+    await d1.insert(subscription).values({
       userId: session?.user?.id ?? null,
       subscriptionId,
       cfSubscriptionId: data.cf_subscription_id?.toString() ?? null,

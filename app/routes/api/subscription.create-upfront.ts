@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { order } from "@/lib/schema";
+import { order } from "@/lib/schema.d1";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq } from "drizzle-orm";
 import { CF_BASE, cfHeaders } from "@/lib/cashfree";
 import type { Route } from "./+types/subscription.create-upfront";
@@ -29,8 +30,9 @@ interface UpfrontRequest {
 
 export const UPFRONT_DISCOUNT_RATE = 0.05;
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const d1 = getD1Db(context.get(cloudflareContext).env.DB);
     if (!process.env.CASHFREE_CLIENT_ID || !process.env.CASHFREE_CLIENT_SECRET) {
       return Response.json(
         { error: "Payment gateway not configured" },
@@ -71,15 +73,15 @@ export async function action({ request }: Route.ActionArgs) {
 
     const cfOrderId = `subup_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
 
-    const [newOrder] = await db
+    const [newOrder] = await d1
       .insert(order)
       .values({
         userId: session?.user?.id ?? null,
         addressSnapshot: address,
         items: items as unknown as Record<string, unknown>[],
-        subtotal: fullTotal.toFixed(2),
-        deliveryCharge: "0",
-        totalAmount: totalAmount.toFixed(2),
+        subtotal: fullTotal,
+        deliveryCharge: 0,
+        totalAmount,
         paymentStatus: "pending",
         cashfreeOrderId: cfOrderId,
         customerName,
@@ -116,7 +118,7 @@ export async function action({ request }: Route.ActionArgs) {
     const cfData = await cfRes.json();
 
     if (!cfRes.ok) {
-      await db.delete(order).where(eq(order.id, newOrder.id));
+      await d1.delete(order).where(eq(order.id, newOrder.id));
       console.error("Cashfree upfront order creation failed:", cfData);
       return Response.json(
         { error: cfData.message || "Payment gateway error" },

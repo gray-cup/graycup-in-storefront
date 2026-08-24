@@ -1,12 +1,14 @@
 import { auth } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { order } from "@/lib/schema";
+import { order } from "@/lib/schema.d1";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq } from "drizzle-orm";
 import { CF_BASE, cfHeaders } from "@/lib/cashfree";
 import type { Route } from "./+types/payment.refund";
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const d1 = getD1Db(context.get(cloudflareContext).env.DB);
     // Admin-only: only authenticated users can initiate refunds
     const session = await auth.api.getSession({ headers: request.headers });
     if (!session?.user) {
@@ -27,7 +29,7 @@ export async function action({ request }: Route.ActionArgs) {
     }
 
     // ── Look up the order ──────────────────────────────────────────────────
-    const [dbOrder] = await db
+    const [dbOrder] = await d1
       .select()
       .from(order)
       .where(eq(order.id, orderId))
@@ -83,9 +85,9 @@ export async function action({ request }: Route.ActionArgs) {
     }
 
     // ── Mark order refunded ────────────────────────────────────────────────
-    await db
+    await d1
       .update(order)
-      .set({ paymentStatus: "refunded", updatedAt: new Date() })
+      .set({ paymentStatus: "refunded", updatedAt: new Date().toISOString() })
       .where(eq(order.id, orderId));
 
     return Response.json({

@@ -1,5 +1,6 @@
-import { db } from "@/lib/db";
-import { order } from "@/lib/schema";
+import { order } from "@/lib/schema.d1";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq } from "drizzle-orm";
 import crypto from "crypto";
 import { finalizeCouponUsage } from "@/lib/coupons";
@@ -10,8 +11,9 @@ const PAID_EVENTS = new Set(["PAYMENT_SUCCESS_WEBHOOK"]);
 const FAILED_EVENTS = new Set(["PAYMENT_FAILED_WEBHOOK"]);
 const DROPPED_EVENTS = new Set(["PAYMENT_USER_DROPPED_WEBHOOK"]);
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const d1 = getD1Db(context.get(cloudflareContext).env.DB);
     const timestamp = request.headers.get("x-webhook-timestamp");
     const receivedSig = request.headers.get("x-webhook-signature");
 
@@ -40,25 +42,25 @@ export async function action({ request }: Route.ActionArgs) {
     }
 
     if (PAID_EVENTS.has(eventType)) {
-      await db
+      await d1
         .update(order)
         .set({
           paymentStatus: "paid",
           cashfreePaymentId: event.data?.payment?.cf_payment_id?.toString() ?? null,
-          updatedAt: new Date(),
+          updatedAt: new Date().toISOString(),
         })
         .where(eq(order.cashfreeOrderId, cfOrderId));
-      await finalizeCouponUsage(cfOrderId);
+      await finalizeCouponUsage(d1, cfOrderId);
     } else if (FAILED_EVENTS.has(eventType)) {
-      await db
+      await d1
         .update(order)
-        .set({ paymentStatus: "failed", updatedAt: new Date() })
+        .set({ paymentStatus: "failed", updatedAt: new Date().toISOString() })
         .where(eq(order.cashfreeOrderId, cfOrderId));
     } else if (DROPPED_EVENTS.has(eventType)) {
       // User abandoned - keep pending so they can retry without a new order
-      await db
+      await d1
         .update(order)
-        .set({ paymentStatus: "pending", updatedAt: new Date() })
+        .set({ paymentStatus: "pending", updatedAt: new Date().toISOString() })
         .where(eq(order.cashfreeOrderId, cfOrderId));
     }
 

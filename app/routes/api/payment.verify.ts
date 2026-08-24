@@ -1,11 +1,13 @@
-import { db } from "@/lib/db";
-import { order } from "@/lib/schema";
+import { order } from "@/lib/schema.d1";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq } from "drizzle-orm";
 import { CF_BASE, cfHeaders, mapOrderStatus } from "@/lib/cashfree";
 import { finalizeCouponUsage } from "@/lib/coupons";
 import type { Route } from "./+types/payment.verify";
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
+  const d1 = getD1Db(context.get(cloudflareContext).env.DB);
   const cashfreeOrderId = new URL(request.url).searchParams.get("order_id");
 
   if (!cashfreeOrderId) {
@@ -47,18 +49,18 @@ export async function loader({ request }: Route.LoaderArgs) {
     }
 
     // ── 3. Update our order record ────────────────────────────────────────
-    const [updated] = await db
+    const [updated] = await d1
       .update(order)
       .set({
         paymentStatus,
         ...(cfPaymentId && { cashfreePaymentId: cfPaymentId }),
-        updatedAt: new Date(),
+        updatedAt: new Date().toISOString(),
       })
       .where(eq(order.cashfreeOrderId, cashfreeOrderId))
       .returning();
 
     if (paymentStatus === "paid") {
-      await finalizeCouponUsage(cashfreeOrderId);
+      await finalizeCouponUsage(d1, cashfreeOrderId);
     }
 
     return Response.json({

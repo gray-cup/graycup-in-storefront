@@ -1,14 +1,18 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { order, address as addressTable } from "@/lib/schema";
+import { address as addressTable } from "@/lib/schema";
+import { order } from "@/lib/schema.d1";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq, count } from "drizzle-orm";
 import type { CartItem } from "@/lib/cart";
 import { CF_BASE, cfHeaders } from "@/lib/cashfree";
 import { validateCoupon } from "@/lib/coupons";
 import type { Route } from "./+types/checkout";
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const d1 = getD1Db(context.get(cloudflareContext).env.DB);
     const session = await auth.api.getSession({ headers: request.headers });
 
     const body = await request.json();
@@ -69,7 +73,7 @@ export async function action({ request }: Route.ActionArgs) {
     let appliedCouponCode: string | null = null;
     let discountAmount = 0;
     if (couponCode) {
-      const validation = await validateCoupon(couponCode, subtotal);
+      const validation = await validateCoupon(d1, couponCode, subtotal);
       if (!validation.valid) {
         return Response.json({ error: validation.error || "Invalid coupon code" }, { status: 400 });
       }
@@ -82,15 +86,15 @@ export async function action({ request }: Route.ActionArgs) {
     // ── Persist order (pending) ────────────────────────────────────────────
     const cfOrderId = `gc_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
 
-    const [newOrder] = await db
+    const [newOrder] = await d1
       .insert(order)
       .values({
         userId: u?.id ?? null,
         addressSnapshot: address,
         items: items as unknown as Record<string, unknown>[],
-        subtotal: subtotal.toFixed(2),
-        deliveryCharge: delivery.toFixed(2),
-        totalAmount: totalAmount.toFixed(2),
+        subtotal,
+        deliveryCharge: delivery,
+        totalAmount,
         paymentStatus: "pending",
         cashfreeOrderId: cfOrderId,
         customerName,
@@ -98,7 +102,7 @@ export async function action({ request }: Route.ActionArgs) {
         customerPhone,
         gstNumber: gstNumber || null,
         couponCode: appliedCouponCode,
-        discountAmount: discountAmount.toFixed(2),
+        discountAmount,
       })
       .returning();
 
@@ -153,7 +157,7 @@ export async function action({ request }: Route.ActionArgs) {
     const cfData = await cfRes.json();
 
     if (!cfRes.ok) {
-      await db.delete(order).where(eq(order.id, newOrder.id));
+      await d1.delete(order).where(eq(order.id, newOrder.id));
       console.error("Cashfree order creation failed:", cfData);
       return Response.json(
         { error: cfData.message || "Payment gateway error" },

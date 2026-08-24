@@ -4,11 +4,6 @@ import {
   boolean,
   timestamp,
   uuid,
-  numeric,
-  jsonb,
-  serial,
-  integer,
-  real,
 } from "drizzle-orm/pg-core";
 
 // ─── Better Auth Tables ────────────────────────────────────────────────────
@@ -83,94 +78,7 @@ export const address = pgTable("address", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-// ─── Orders ────────────────────────────────────────────────────────────────
-//
-// items        – full cart snapshot (product slug, name, variant, qty, price)
-// addressSnapshot – full address at time of order (not FK, so history is preserved)
-// paymentStatus   – pending | paid | failed | refunded
-// isFulfilled     – toggled by admin once shipped
-// delhiveryTrackingId – required by admin when marking isFulfilled = true
-
-export const order = pgTable("order", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: text("user_id")
-    .references(() => user.id, { onDelete: "restrict" }),
-  addressSnapshot: jsonb("address_snapshot").notNull(),
-  items: jsonb("items").notNull(),
-  subtotal: numeric("subtotal", { precision: 10, scale: 2 }).notNull(),
-  deliveryCharge: numeric("delivery_charge", { precision: 10, scale: 2 })
-    .notNull()
-    .default("0"),
-  totalAmount: numeric("total_amount", { precision: 10, scale: 2 }).notNull(),
-  paymentStatus: text("payment_status").notNull().default("pending"),
-  cashfreeOrderId: text("cashfree_order_id").unique(),
-  cashfreePaymentId: text("cashfree_payment_id"),
-  // Optional GST number for B2B buyers
-  gstNumber: text("gst_number"),
-  // Customer contact snapshot – denormalised so admin views need no JOIN
-  customerName: text("customer_name").notNull().default(""),
-  customerEmail: text("customer_email").notNull().default(""),
-  customerPhone: text("customer_phone").notNull().default(""),
-  // Set by admin after shipping
-  delhiveryTrackingId: text("delhivery_tracking_id"),
-  isFulfilled: boolean("is_fulfilled").notNull().default(false),
-  // Set by orders-graycup admin (carrier choice + tracking) - this app never reads these
-  carrier: text("carrier"),
-  shadowfaxRequestId: text("shadowfax_request_id"),
-  delhiveryPickupDate: text("delhivery_pickup_date"),
-  dispatchStatus: text("dispatch_status"),
-  notes: text("notes"),
-  // Applied coupon (if any) - couponUsageCounted guards against double-incrementing
-  // coupons.used_count when both the webhook and the /payment/verify poll fire.
-  couponCode: text("coupon_code"),
-  discountAmount: numeric("discount_amount", { precision: 10, scale: 2 })
-    .notNull()
-    .default("0"),
-  couponUsageCounted: boolean("coupon_usage_counted").notNull().default(false),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
-
-// ─── Coupons ───────────────────────────────────────────────────────────────
-// Managed by orders-graycup admin (Coupons page); redeemed here at checkout.
-// Table shape MUST mirror orders-graycup's lib/db/schema.ts copy exactly -
-// both point at the same physical "coupons" table in this retail DB.
-
-export const coupons = pgTable("coupons", {
-  id: serial("id").primaryKey(),
-  code: text("code").notNull().unique(),
-  discountType: text("discount_type").notNull().default("PERCENTAGE"),
-  discountAmount: integer("discount_amount"),
-  discountPercent: real("discount_percent"),
-  maxDiscountAmount: integer("max_discount_amount"),
-  minOrderAmount: integer("min_order_amount"),
-  usageLimit: integer("usage_limit"),
-  usedCount: integer("used_count").notNull().default(0),
-  active: boolean("active").notNull().default(true),
-  expiresAt: timestamp("expires_at"),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
-
-export type Coupon = typeof coupons.$inferSelect;
-
-// ─── Subscriptions ─────────────────────────────────────────────────────────
-//
-// status – pending (INITIALIZED) | active | paused (ON_HOLD) | ended (COMPLETED/CANCELLED/EXPIRED)
-// planDetails – full plan_details payload sent to Cashfree, kept for reference
-
-export const subscription = pgTable("subscription", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: text("user_id").references(() => user.id, { onDelete: "restrict" }),
-  subscriptionId: text("subscription_id").notNull().unique(),
-  cfSubscriptionId: text("cf_subscription_id"),
-  status: text("status").notNull().default("pending"),
-  planDetails: jsonb("plan_details").notNull(),
-  customerName: text("customer_name").notNull().default(""),
-  customerEmail: text("customer_email").notNull().default(""),
-  customerPhone: text("customer_phone").notNull().default(""),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
+// Orders, coupons and subscriptions moved to D1 - see ./schema.d1.ts
 
 // ─── Product Reviews ───────────────────────────────────────────────────────
 
@@ -185,4 +93,3 @@ export const review = pgTable("review", {
 export type Review = typeof review.$inferSelect;
 export type User = typeof user.$inferSelect;
 export type Address = typeof address.$inferSelect;
-export type Order = typeof order.$inferSelect;

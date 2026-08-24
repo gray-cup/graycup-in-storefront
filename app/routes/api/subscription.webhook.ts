@@ -1,12 +1,14 @@
-import { db } from "@/lib/db";
-import { subscription } from "@/lib/schema";
+import { subscription } from "@/lib/schema.d1";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq } from "drizzle-orm";
 import crypto from "crypto";
 import { mapSubscriptionStatus } from "@/lib/cashfree";
 import type { Route } from "./+types/subscription.webhook";
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const d1 = getD1Db(context.get(cloudflareContext).env.DB);
     const timestamp = request.headers.get("x-webhook-timestamp");
     const receivedSig = request.headers.get("x-webhook-signature");
 
@@ -37,14 +39,14 @@ export async function action({ request }: Route.ActionArgs) {
 
     if (eventType === "SUBSCRIPTION_STATUS_CHANGED") {
       const cfStatus = event.data.subscription_details.subscription_status as string;
-      await db
+      await d1
         .update(subscription)
-        .set({ status: mapSubscriptionStatus(cfStatus), updatedAt: new Date() })
+        .set({ status: mapSubscriptionStatus(cfStatus), updatedAt: new Date().toISOString() })
         .where(eq(subscription.subscriptionId, subscriptionId));
     } else if (eventType === "SUBSCRIPTION_PAYMENT_SUCCESS") {
-      await db
+      await d1
         .update(subscription)
-        .set({ status: "active", updatedAt: new Date() })
+        .set({ status: "active", updatedAt: new Date().toISOString() })
         .where(eq(subscription.subscriptionId, subscriptionId));
     } else if (eventType === "SUBSCRIPTION_PAYMENT_FAILED") {
       // Individual recurring charge failed - subscription itself may still be active,

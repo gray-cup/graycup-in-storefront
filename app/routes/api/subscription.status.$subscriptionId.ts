@@ -1,10 +1,12 @@
-import { db } from "@/lib/db";
-import { subscription } from "@/lib/schema";
+import { subscription } from "@/lib/schema.d1";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq } from "drizzle-orm";
 import { CF_BASE, cfSubscriptionHeaders, mapSubscriptionStatus } from "@/lib/cashfree";
 import type { Route } from "./+types/subscription.status.$subscriptionId";
 
-export async function loader({ params }: Route.LoaderArgs) {
+export async function loader({ params, context }: Route.LoaderArgs) {
+  const d1 = getD1Db(context.get(cloudflareContext).env.DB);
   const { subscriptionId } = params;
 
   const response = await fetch(`${CF_BASE}/subscriptions/${subscriptionId}`, {
@@ -22,9 +24,9 @@ export async function loader({ params }: Route.LoaderArgs) {
 
   const status = mapSubscriptionStatus(data.subscription_status);
 
-  await db
+  await d1
     .update(subscription)
-    .set({ status, updatedAt: new Date() })
+    .set({ status, updatedAt: new Date().toISOString() })
     .where(eq(subscription.subscriptionId, subscriptionId));
 
   return Response.json({
