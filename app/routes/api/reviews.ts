@@ -1,31 +1,42 @@
-import { db } from "@/lib/db";
-import { review } from "@/lib/schema";
-import { eq, desc } from "drizzle-orm";
+import { graycupReviews } from "@/lib/schema.d1";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
+import { desc, eq } from "drizzle-orm";
 import type { Route } from "./+types/reviews";
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
   const slug = new URL(request.url).searchParams.get("slug");
   if (!slug) {
     return Response.json({ error: "slug is required" }, { status: 400 });
   }
 
-  const reviews = await db
+  const d1 = getD1Db(context.get(cloudflareContext).env.DB);
+
+  const reviews = await d1
     .select()
-    .from(review)
-    .where(eq(review.productSlug, slug))
-    .orderBy(desc(review.createdAt));
+    .from(graycupReviews)
+    .where(eq(graycupReviews.productSlug, slug))
+    .orderBy(desc(graycupReviews.createdAt));
 
   return Response.json({ reviews });
 }
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   try {
     const body = await request.json();
-    const { slug, fullName, content } = body;
+    const { slug, fullName, content, rating } = body;
 
     if (!slug || !fullName?.trim() || !content?.trim()) {
       return Response.json(
         { error: "slug, fullName and content are required" },
+        { status: 400 },
+      );
+    }
+
+    const ratingNum = Number(rating);
+    if (!Number.isInteger(ratingNum) || ratingNum < 1 || ratingNum > 5) {
+      return Response.json(
+        { error: "rating must be an integer between 1 and 5" },
         { status: 400 },
       );
     }
@@ -37,12 +48,15 @@ export async function action({ request }: Route.ActionArgs) {
       );
     }
 
-    const [newReview] = await db
-      .insert(review)
+    const d1 = getD1Db(context.get(cloudflareContext).env.DB);
+
+    const [newReview] = await d1
+      .insert(graycupReviews)
       .values({
         productSlug: slug,
         fullName: fullName.trim(),
         content: content.trim(),
+        rating: ratingNum,
       })
       .returning();
 

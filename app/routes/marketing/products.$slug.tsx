@@ -1,4 +1,5 @@
 import { Link, useLoaderData } from "react-router";
+import { and, desc, eq, isNotNull, sql } from "drizzle-orm";
 import { getProductBySlug } from "@/data/products";
 import {
   ProductConfigurator,
@@ -19,18 +20,65 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { ProductSchema, BreadcrumbSchema } from "@/components/seo";
+import { getD1Db } from "@/lib/db.d1";
+import { cloudflareContext } from "@/lib/cloudflare-context";
+import { graycupReviews } from "@/lib/schema.d1";
 import type { Route } from "./+types/products.$slug";
 
 const REVALIDATE_SECONDS = 3600;
 
-export async function loader({ params }: Route.LoaderArgs) {
+export async function loader({ params, context }: Route.LoaderArgs) {
   const product = getProductBySlug(params.slug);
 
   if (!product) {
     throw new Response(null, { status: 404 });
   }
 
-  return { product, slug: params.slug };
+  let ratingSummary: { average: number; count: number } | undefined;
+  let reviews: {
+    fullName: string;
+    content: string;
+    rating: number | null;
+    createdAt: string;
+  }[] = [];
+
+  try {
+    const d1 = getD1Db(context.get(cloudflareContext).env.DB);
+
+    const [agg] = await d1
+      .select({
+        count: sql<number>`count(*)`,
+        average: sql<number | null>`avg(${graycupReviews.rating})`,
+      })
+      .from(graycupReviews)
+      .where(
+        and(
+          eq(graycupReviews.productSlug, params.slug),
+          isNotNull(graycupReviews.rating),
+        ),
+      );
+
+    if (agg && agg.count > 0) {
+      ratingSummary = { average: agg.average ?? 0, count: agg.count };
+    }
+
+    reviews = await d1
+      .select({
+        fullName: graycupReviews.fullName,
+        content: graycupReviews.content,
+        rating: graycupReviews.rating,
+        createdAt: graycupReviews.createdAt,
+      })
+      .from(graycupReviews)
+      .where(eq(graycupReviews.productSlug, params.slug))
+      .orderBy(desc(graycupReviews.createdAt))
+      .limit(10);
+  } catch {
+    ratingSummary = undefined;
+    reviews = [];
+  }
+
+  return { product, slug: params.slug, ratingSummary, reviews };
 }
 
 export function headers() {
@@ -74,7 +122,7 @@ export function meta({ loaderData }: { loaderData: Awaited<ReturnType<typeof loa
 }
 
 export default function ProductPage() {
-  const { product, slug } = useLoaderData<typeof loader>();
+  const { product, slug, ratingSummary, reviews } = useLoaderData<typeof loader>();
 
   const breadcrumbs = [
     { name: "Home", url: "https://graycup.in" },
@@ -84,7 +132,11 @@ export default function ProductPage() {
 
   return (
     <>
-      <ProductSchema product={product} />
+      <ProductSchema
+        product={product}
+        ratingSummary={ratingSummary}
+        reviews={reviews}
+      />
       <BreadcrumbSchema items={breadcrumbs} />
       <div className="px-4 lg:px-6">
       <div className="min-h-dvh py-12">

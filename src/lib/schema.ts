@@ -78,18 +78,8 @@ export const address = pgTable("address", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-// Orders, coupons and subscriptions moved to D1 - see ./schema.d1.ts
+// Orders, coupons, subscriptions and product reviews moved to Cloudflare D1 -
+// see ./schema.d1.ts
 
-// ─── Product Reviews ───────────────────────────────────────────────────────
-
-export const review = pgTable("review", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  productSlug: text("product_slug").notNull(),
-  fullName: text("full_name").notNull(),
-  content: text("content").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
-
-export type Review = typeof review.$inferSelect;
 export type User = typeof user.$inferSelect;
 export type Address = typeof address.$inferSelect;

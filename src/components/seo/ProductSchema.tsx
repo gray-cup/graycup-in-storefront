@@ -1,7 +1,21 @@
 import type { Product } from "@/data/products/types";
 
+type ProductRatingSummary = {
+  average: number;
+  count: number;
+};
+
+type ProductReviewInput = {
+  fullName: string;
+  content: string;
+  rating: number | null;
+  createdAt: Date | string;
+};
+
 type ProductSchemaProps = {
   product: Product;
+  ratingSummary?: ProductRatingSummary;
+  reviews?: ProductReviewInput[];
 };
 
 function mapAvailability(availability: string): string {
@@ -13,12 +27,44 @@ function mapAvailability(availability: string): string {
   return availabilityMap[availability] || "https://schema.org/InStock";
 }
 
-export function ProductSchema({ product }: ProductSchemaProps) {
+export function ProductSchema({ product, ratingSummary, reviews }: ProductSchemaProps) {
   const baseUrl = "https://graycup.in";
   const productUrl = `${baseUrl}/products/${product.slug}`;
   const imageUrl = product.image.startsWith("http")
     ? product.image
     : `${baseUrl}${product.image}`;
+
+  const ratedReviews = (reviews ?? []).filter((r) => r.rating != null);
+  const hasRating = !!ratingSummary && ratingSummary.count > 0;
+
+  const aggregateRatingSchema = hasRating
+    ? {
+        "@type": "AggregateRating",
+        ratingValue: Number(ratingSummary!.average.toFixed(1)),
+        reviewCount: ratingSummary!.count,
+        bestRating: 5,
+        worstRating: 1,
+      }
+    : undefined;
+
+  const reviewSchema =
+    ratedReviews.length > 0
+      ? ratedReviews.slice(0, 10).map((r) => ({
+          "@type": "Review",
+          author: {
+            "@type": "Person",
+            name: r.fullName,
+          },
+          datePublished: new Date(r.createdAt).toISOString().split("T")[0],
+          reviewBody: r.content,
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: r.rating!,
+            bestRating: 5,
+            worstRating: 1,
+          },
+        }))
+      : undefined;
 
   const schema = {
     "@context": "https://schema.org",
@@ -39,6 +85,7 @@ export function ProductSchema({ product }: ProductSchemaProps) {
       "@type": "AggregateOffer",
       url: productUrl,
       priceCurrency: "INR",
+      offerCount: product.variants.length,
       lowPrice: product.priceRange.min,
       highPrice: product.priceRange.max,
       priceSpecification: {
@@ -125,6 +172,8 @@ export function ProductSchema({ product }: ProductSchemaProps) {
         value: `${product.minimumOrder.quantity} ${product.minimumOrder.unit}`,
       },
     ],
+    ...(aggregateRatingSchema ? { aggregateRating: aggregateRatingSchema } : {}),
+    ...(reviewSchema ? { review: reviewSchema } : {}),
   };
 
   return (

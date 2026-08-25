@@ -1,10 +1,11 @@
+import { sql } from "drizzle-orm";
 import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 
 // ─── Orders, coupons and subscriptions ─────────────────────────────────────
 //
 // These live in Cloudflare D1 (the "graycup-orders" database, shared with
 // orders-graycup), not the Neon retail Postgres DB - unlike user/session/
-// account/address/review in ./schema.ts. userId is a soft reference to
+// account/address in ./schema.ts. userId is a soft reference to
 // user.id (Postgres); D1 can't enforce a cross-database FK.
 //
 // Table shapes MUST mirror orders-graycup's lib/db/schema.d1.ts copy exactly -
@@ -71,3 +72,23 @@ export const subscription = sqliteTable("storefront_subscription", {
 export type Coupon = typeof coupons.$inferSelect;
 export type Order = typeof order.$inferSelect;
 export type Subscription = typeof subscription.$inferSelect;
+
+// ─── Product reviews ───────────────────────────────────────────────────────
+//
+// graycup.in's reviews, in the shared "graycup-orders" D1 database. The
+// graycup_in_ prefix namespaces the table for this site (the database hosts
+// several sites' tables). rating is nullable: rows written before star
+// ratings existed have none and are excluded from schema.org markup.
+
+export const graycupReviews = sqliteTable("graycup_in_reviews", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  productSlug: text("product_slug").notNull(),
+  fullName: text("full_name").notNull(),
+  content: text("content").notNull(),
+  rating: integer("rating"),
+  createdAt: text("created_at")
+    .notNull()
+    .default(sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`),
+});
+
+export type GraycupReview = typeof graycupReviews.$inferSelect;

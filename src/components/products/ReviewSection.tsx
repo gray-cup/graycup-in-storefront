@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,15 +12,61 @@ type Review = {
   id: string;
   fullName: string;
   content: string;
+  rating: number | null;
   createdAt: string;
 };
+
+function StarPicker({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (rating: number) => void;
+}) {
+  return (
+    <div className="flex gap-1">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <button
+          key={star}
+          type="button"
+          aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
+          onClick={() => onChange(star)}
+          className="transition-transform hover:scale-110"
+        >
+          <Star
+            size={22}
+            className={
+              star <= value ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+            }
+          />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function StarDisplay({ rating }: { rating: number }) {
+  return (
+    <span className="flex gap-0.5">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          size={14}
+          className={
+            star <= rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+          }
+        />
+      ))}
+    </span>
+  );
+}
 
 export function ReviewSection({ productSlug }: { productSlug: string }) {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({ fullName: "", content: "" });
+  const [form, setForm] = useState({ fullName: "", content: "", rating: 0 });
   const [error, setError] = useState<string | null>(null);
 
   const fetchReviews = useCallback(async () => {
@@ -36,6 +83,12 @@ export function ReviewSection({ productSlug }: { productSlug: string }) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+
+    if (form.rating < 1) {
+      setError("Please select a star rating");
+      return;
+    }
+
     setSubmitting(true);
 
     const res = await fetch("/api/reviews", {
@@ -53,7 +106,7 @@ export function ReviewSection({ productSlug }: { productSlug: string }) {
     }
 
     setReviews((prev) => [data.review, ...prev]);
-    setForm({ fullName: "", content: "" });
+    setForm({ fullName: "", content: "", rating: 0 });
     setSubmitted(true);
     setSubmitting(false);
   }
@@ -72,6 +125,15 @@ export function ReviewSection({ productSlug }: { productSlug: string }) {
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-1.5">
+              <Label>Rating</Label>
+              <StarPicker
+                value={form.rating}
+                onChange={(rating) =>
+                  setForm((f) => ({ ...f, rating }))
+                }
+              />
+            </div>
             <div className="space-y-1.5">
               <Label htmlFor="review-name">Full Name</Label>
               <Input
@@ -121,6 +183,7 @@ export function ReviewSection({ productSlug }: { productSlug: string }) {
                   })}
                 </span>
               </div>
+              {r.rating != null && <StarDisplay rating={r.rating} />}
               <p className="text-gray-700 text-sm leading-relaxed">{r.content}</p>
               <Separator />
             </div>
