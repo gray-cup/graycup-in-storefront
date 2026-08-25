@@ -8,10 +8,10 @@ export default function WholesalePage() {
       <div className="max-w-5xl mx-auto px-4 lg:px-6">
         <div className="text-start mb-16">
           <h1 className="text-3xl md:text-4xl font-semibold text-black mb-3">
-            Wholesale Indian Roasted Coffee Beans and Ground Coffee
+            Wholesale Indian Roasted Coffee Beans for Cafes, Restaurants, and Hotels
           </h1>
           <p className="text-md md:text-lg text-muted-foreground">
-            Buy Indian Roasted Coffee Whole Beans and Ground Coffee in Bulk Quantities
+            Buy Indian Roasted Coffee Whole Beans and Ground Coffee in Bulk Quantities for Restaurants, Cafes  and Hotels.
           </p>
           <p className="text-sm text-muted-foreground mt-2">
             Looking for unroasted beans instead?{" "}

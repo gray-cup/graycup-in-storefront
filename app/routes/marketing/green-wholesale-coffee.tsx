@@ -57,7 +57,7 @@ export default function GreenWholesaleCoffeePage() {
       <div className="max-w-5xl mx-auto px-4 lg:px-6">
         <div className="text-start mb-16">
           <h1 className="text-3xl md:text-4xl font-semibold text-black mb-3">
-            Wholesale Green (Unroasted) Coffee Beans
+            Wholesale Green Coffee Beans for Roasters, Cafes, and Restaurants
           </h1>
           <p className="text-md md:text-lg text-muted-foreground">
             Buy Unroasted Single-Origin Green Coffee in Bulk for Your Own Roast
