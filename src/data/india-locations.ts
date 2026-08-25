@@ -158,3 +158,21 @@ export function getCity(stateSlug: string, citySlug: string): IndiaCity | undefi
   return INDIA_CITIES.find((c) => c.stateSlug === stateSlug && c.citySlug === citySlug);
 }
 
+export function getCityBySlug(
+  citySlug: string,
+): { cityData: IndiaCity; stateData: IndiaState } | undefined {
+  const cityData = INDIA_CITIES.find((c) => c.citySlug === citySlug);
+  if (!cityData) return undefined;
+  const stateData = INDIA_STATES.find((s) => s.stateSlug === cityData.stateSlug);
+  if (!stateData) return undefined;
+  return { cityData, stateData };
+}
+
+export function getTopCities(limit = 12, excludeCitySlug?: string): IndiaCity[] {
+  return INDIA_CITIES.filter(
+    (c) => c.cityGdpRank !== undefined && c.citySlug !== excludeCitySlug,
+  )
+    .sort((a, b) => (a.cityGdpRank ?? Infinity) - (b.cityGdpRank ?? Infinity))
+    .slice(0, limit);
+}
+

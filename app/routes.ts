@@ -62,6 +62,10 @@ export default [
     route("roasted-wholesale-coffee/:state", "routes/marketing/roasted-wholesale-coffee.$state.tsx"),
     route("roasted-wholesale-coffee/:state/:city", "routes/marketing/roasted-wholesale-coffee.$state.$city.tsx"),
 
+    route("roasted-coffee-beans-for-cafes", "routes/marketing/roasted-coffee-beans-for-cafes.tsx"),
+    route("roasted-coffee-beans-for-cafes/:city", "routes/marketing/roasted-coffee-beans-for-cafes.$city.tsx"),
+    route("ground-coffee-for-cafes/:city", "routes/marketing/ground-coffee-for-cafes.$city.tsx"),
+
     route("products", "routes/marketing/products-index.tsx"),
     route("products/:slug", "routes/marketing/products.$slug.tsx"),
 

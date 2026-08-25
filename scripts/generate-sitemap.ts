@@ -49,6 +49,7 @@ const STATIC_PATHS = [
   "/accessories",
   "/green-wholesale-coffee",
   "/roasted-wholesale-coffee",
+  "/roasted-coffee-beans-for-cafes",
   "/products",
   "/glossary",
   "/guides",
@@ -81,6 +82,8 @@ function collectUrls(): string[] {
 
   for (const city of INDIA_CITIES) {
     urls.add(`/roasted-wholesale-coffee/${city.stateSlug}/${city.citySlug}`);
+    urls.add(`/roasted-coffee-beans-for-cafes/${city.citySlug}`);
+    urls.add(`/ground-coffee-for-cafes/${city.citySlug}`);
     for (const topic of LOCATION_TOPIC_SLUGS) {
       urls.add(`/${city.stateSlug}/${city.citySlug}/${topic}`);
     }

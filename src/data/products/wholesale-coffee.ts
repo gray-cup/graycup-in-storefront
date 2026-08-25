@@ -550,3 +550,13 @@ export const wholesaleCoffeeProducts: Product[] = [
     googleProductCategory: "1868",
   },
 ];
+
+const GROUND_IMAGE = "/products/ground-coffee.png";
+
+export const wholesaleGroundCoffeeProducts: Product[] = wholesaleCoffeeProducts.filter(
+  (p) => p.image === GROUND_IMAGE,
+);
+
+export const wholesaleRoastedBeansProducts: Product[] = wholesaleCoffeeProducts.filter(
+  (p) => p.image !== GROUND_IMAGE,
+);

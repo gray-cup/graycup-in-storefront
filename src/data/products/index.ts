@@ -10,6 +10,10 @@ export { filterCoffeeProducts } from "./filter-coffee";
 export { samplePackProducts } from "./sample-packs";
 export { accessoryProducts } from "./accessories";
 export { wholesaleCoffeeProducts } from "./wholesale-coffee";
+export {
+  wholesaleGroundCoffeeProducts,
+  wholesaleRoastedBeansProducts,
+} from "./wholesale-coffee";
 export { greenCoffeeProducts } from "./green-coffee-beans";
 export {
   fundraiserProducts,
