@@ -7,11 +7,11 @@ export const filterCoffeeProducts: Product[] = [
     image: "/products/ground-coffee.png",
     images: ["/products/ground-coffee.png", "/products/roasted-coffee-beans.png", "/products/green-coffee-beans.png"],
     description:
-      "South Indian filter coffee blend of 70% washed Arabica from Karadykan, Karnataka and 30% natural Robusta from Tirap, Arunachal Pradesh - aromatic and smooth, with a strong finish and good crema.",
+      "Our classic filter coffee Arabica and Robusta blend: 70% washed Arabica from Karadykan, Karnataka and 30% natural Robusta from Tirap, Arunachal Pradesh - aromatic and smooth, with a strong finish and good crema.",
     longDescription:
-      "Our 70/30 filter coffee blend leads with washed-process Arabica from Karadykan, Karnataka for aroma and sweetness, balanced with 30% natural-process Robusta from Tirap, Arunachal Pradesh, for strength and a rich crema. Ground fine for traditional South Indian filter brewing, it delivers a smooth, well-rounded, decoction-style cup without being overpoweringly strong.",
+      "This filter coffee Arabica and Robusta blend leads with washed-process Arabica from Karadykan, Karnataka for aroma and sweetness, balanced with 30% natural-process Robusta from Tirap, Arunachal Pradesh, for strength and a rich crema. Ground fine for traditional South Indian filter brewing, it delivers a smooth, well-rounded, decoction-style cup without being overpoweringly strong.",
     details: [
-      "70% Arabica, 30% Robusta blend",
+      "Filter coffee Arabica and Robusta blend - 70% Arabica, 30% Robusta",
       "Arabica: washed process, sourced from Karadykan, Karnataka",
       "Robusta: natural process, sourced from Tirap, Arunachal Pradesh",
       "Aromatic, smooth, good crema",
@@ -21,7 +21,7 @@ export const filterCoffeeProducts: Product[] = [
     process: "Washed",
     varietal: "Pending",
     roast: "Pending",
-    flavourNotes: ["Pending"],
+    flavourNotes: ["Caramel", "Dark Chocolate", "Citrus"],
     specs: [
       { label: "Arabica Process", value: "Washed" },
       { label: "Arabica Origin", value: "Karadykan, Karnataka" },
@@ -73,7 +73,7 @@ export const filterCoffeeProducts: Product[] = [
     process: "Washed",
     varietal: "Pending",
     roast: "Pending",
-    flavourNotes: ["Pending"],
+    flavourNotes: ["Caramel", "Citrus", "Nutty"],
     specs: [
       { label: "Arabica Process", value: "Washed" },
       { label: "Arabica Origin", value: "Karadykan, Karnataka" },
@@ -125,7 +125,7 @@ export const filterCoffeeProducts: Product[] = [
     process: "Washed",
     varietal: "Pending",
     roast: "Pending",
-    flavourNotes: ["Pending"],
+    flavourNotes: ["Caramel", "Citrus", "Toffee"],
     specs: [
       { label: "Arabica Process", value: "Washed" },
       { label: "Arabica Origin", value: "Karadykan, Karnataka" },
@@ -177,7 +177,7 @@ export const filterCoffeeProducts: Product[] = [
     process: "Washed",
     varietal: "Pending",
     roast: "Pending",
-    flavourNotes: ["Pending"],
+    flavourNotes: ["Caramel", "Dark Chocolate", "Toffee"],
     specs: [
       { label: "Arabica Process", value: "Washed" },
       { label: "Arabica Origin", value: "Karadykan, Karnataka" },
@@ -229,7 +229,7 @@ export const filterCoffeeProducts: Product[] = [
     process: "Washed",
     varietal: "Pending",
     roast: "Pending",
-    flavourNotes: ["Pending"],
+    flavourNotes: ["Caramel", "Citrus", "Dark Chocolate"],
     specs: [
       { label: "Arabica Process", value: "Washed" },
       { label: "Arabica Origin", value: "Karadykan, Karnataka" },
@@ -273,11 +273,11 @@ export const filterCoffeeProducts: Product[] = [
     image: "/products/ground-coffee.png",
     images: ["/products/ground-coffee.png", "/products/roasted-coffee-beans.png", "/products/green-coffee-beans.png"],
     description:
-      "South Indian filter coffee blend of 70% Arabica and 30% chicory - smooth and mellow, with reduced bitterness and a classic finish.",
+      "Chicory Arabica filter coffee: 70% Arabica and 30% roasted chicory - smooth and mellow, with reduced bitterness and a classic finish.",
     longDescription:
-      "Our 70/30 filter coffee blend combines Arabica for aroma and sweetness with 30% roasted chicory for a smooth, mellow finish and reduced bitterness. Ground fine for traditional South Indian filter brewing, it delivers a classic, comforting decoction-style cup.",
+      "This filter coffee with chicory combines Arabica for aroma and sweetness with 30% roasted chicory for a smooth, mellow finish and reduced bitterness. Ground fine for traditional South Indian filter brewing, it delivers a classic, comforting decoction-style cup.",
     details: [
-      "70% Arabica, 30% chicory blend",
+      "Chicory Arabica filter coffee - 70% Arabica, 30% roasted chicory",
       "Smooth, mellow, reduced bitterness",
       "Traditional South Indian filter grind",
       "Classic decoction-style cup",
@@ -286,7 +286,11 @@ export const filterCoffeeProducts: Product[] = [
     process: "Washed",
     varietal: "Pending",
     roast: "Pending",
-    flavourNotes: ["Pending"],
+    flavourNotes: ["Caramel", "Earthy", "Nutty"],
+    specs: [
+      { label: "Arabica Process", value: "Washed" },
+      { label: "Arabica Origin", value: "Chikmagalur, Coorg" },
+    ],
     locations: ["Chikmagalur", "Coorg"],
     category: "Coffee",
     categoryTwo: "Blend",
@@ -331,7 +335,7 @@ export const filterCoffeeProducts: Product[] = [
     process: "Washed",
     varietal: "Pending",
     roast: "Pending",
-    flavourNotes: ["Pending"],
+    flavourNotes: ["Caramel", "Citrus", "Nutty"],
     locations: ["Chikmagalur", "Coorg"],
     category: "Coffee",
     categoryTwo: "Single Origin",
@@ -376,7 +380,7 @@ export const filterCoffeeProducts: Product[] = [
     process: "Washed",
     varietal: "Pending",
     roast: "Medium-Dark",
-    flavourNotes: ["Pending"],
+    flavourNotes: ["Chocolate", "Nutty", "Balanced"],
     locations: ["Chikmagalur", "Coorg"],
     category: "Coffee",
     categoryTwo: "Single Origin",

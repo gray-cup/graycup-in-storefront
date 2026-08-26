@@ -20,7 +20,7 @@ export const halflongAssamCoffeeProducts: Product[] = [
     process: "Natural",
     varietal: "SL-9",
     roast: "Medium-Dark",
-    flavourNotes: ["Pending"],
+    flavourNotes: ["Chocolate", "Spice", "Fruity"],
     specs: [{ label: "Elevation", value: "950-960 masl" }],
     locations: ["Halflong, Assam"],
     category: "Coffee",

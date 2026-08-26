@@ -24,9 +24,9 @@ function generateProductItems(product: Product, baseUrl: string): string {
       <g:item_group_id>${escapeXml(item.itemGroupId)}</g:item_group_id>
       <g:title>${escapeXml(item.title)}</g:title>
       <g:description>${escapeXml(item.description + variantsText)}</g:description>
-      <g:link>${item.link}</g:link>
-      <g:image_link>${item.imageLink}</g:image_link>
-      ${item.additionalImageLinks.map((img) => `<g:additional_image_link>${img}</g:additional_image_link>`).join("\n      ")}
+      <g:link>${escapeXml(item.link)}</g:link>
+      <g:image_link>${escapeXml(item.imageLink)}</g:image_link>
+      ${item.additionalImageLinks.map((img) => `<g:additional_image_link>${escapeXml(img)}</g:additional_image_link>`).join("\n      ")}
       <g:availability>${item.availability}</g:availability>
       <g:price>${item.price} INR</g:price>
       ${item.salePrice ? `<g:sale_price>${item.salePrice} INR</g:sale_price>` : ""}

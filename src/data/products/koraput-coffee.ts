@@ -63,7 +63,7 @@ export const koraputCoffeeProducts: Product[] = [
     process: "Natural",
     varietal: "Chandragiri",
     roast: "Pending",
-    flavourNotes: ["Pending"],
+    flavourNotes: ["Berry", "Wine-like", "Syrupy"],
     locations: ["Koraput, Odisha"],
     category: "Coffee",
     categoryTwo: "Single Origin",

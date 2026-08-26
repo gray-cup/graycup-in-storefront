@@ -99,7 +99,7 @@ export function meta({ loaderData }: { loaderData: Awaited<ReturnType<typeof loa
     ? `₹${product.priceRange.min}-₹${product.priceRange.max} ${product.priceRange.unit}`
     : `₹${product.priceRange.min}-₹${product.priceRange.max}`;
   const seoDescription = `Buy ${product.name} from Gray Cup. ${product.description} Price: ${priceLabel}.`;
-  const title = `${product.name} | Premium ${product.category} - Gray Cup`;
+  const title = `${product.name} by Gray Cup`;
 
   return [
     { title },
