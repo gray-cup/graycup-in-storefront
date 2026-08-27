@@ -96,9 +96,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* No theme-color meta on purpose: iOS Safari then blends the toolbar
-            with the page instead of painting a fixed washed-gray strip against
-            the white navbar. Matches odisha-coffee. */}
+        <meta name="theme-color" content="#ffffff" />
         <meta name="color-scheme" content="light" />
         <meta name="p:domain_verify" content="263c83126f8d79bccabc00711d8d80c6" />
         <Meta />
