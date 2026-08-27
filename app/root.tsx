@@ -97,7 +97,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)" />
         <meta name="color-scheme" content="light" />
         <meta name="p:domain_verify" content="263c83126f8d79bccabc00711d8d80c6" />
         <Meta />
