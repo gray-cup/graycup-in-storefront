@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import type { Product, ProductVariant } from "@/data/products/types";
+import { cartBridge } from "@/lib/webmcp-cart-bridge";
 import {
   type CartItem,
   addToCart as addToCartUtil,
@@ -101,25 +102,26 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
-  return (
-    <CartContext.Provider
-      value={{
-        items,
-        total,
-        itemCount,
-        isLoading,
-        isOpen,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        clearCart,
-        openCart,
-        closeCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+  const value: CartContextType = {
+    items,
+    total,
+    itemCount,
+    isLoading,
+    isOpen,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    openCart,
+    closeCart,
+  };
+
+  // Keep the WebMCP bridge pointed at the live context value.
+  useEffect(() => {
+    cartBridge.current = value;
+  });
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {
