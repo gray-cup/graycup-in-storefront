@@ -22,19 +22,14 @@ export default {
 
     const response = await requestHandler(request, routerContext);
 
-    // HTML documents embed content-hashed asset URLs that are deleted on the
-    // next deploy — a stale document 404s its own CSS/JS. Never let a document
-    // be stored by a browser or the CDN; only cache non-document SSR responses.
-    const isDocument = response.headers
-      .get("Content-Type")
-      ?.includes("text/html");
-    if (isDocument) {
+    // Everything this handler returns is dynamic SSR — HTML documents and
+    // loader/action data. None of it may be cached: a stale document embeds
+    // content-hashed asset URLs that 404 after the next deploy (unstyled page,
+    // gray flashes), and stale loader data is just wrong. Static assets are
+    // served by the ASSETS binding, not here, so this never touches them.
+    // A route that genuinely wants caching can still set its own header.
+    if (!response.headers.has("Cache-Control")) {
       response.headers.set("Cache-Control", "no-store");
-    } else if (!response.headers.has("Cache-Control")) {
-      response.headers.set(
-        "Cache-Control",
-        "public, max-age=3600, stale-while-revalidate=86400",
-      );
     }
 
     return response;
