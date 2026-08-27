@@ -95,11 +95,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, viewport-fit=cover"
-        />
-        <meta name="theme-color" content="#fff" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#ffffff" />
         <meta name="color-scheme" content="light" />
         <meta name="p:domain_verify" content="263c83126f8d79bccabc00711d8d80c6" />
         <Meta />
