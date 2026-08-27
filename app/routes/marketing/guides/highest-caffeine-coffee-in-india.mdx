@@ -1,0 +1,74 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { guideMeta } from "@/data/guides";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+
+export const meta = () => guideMeta("highest-caffeine-coffee-in-india");
+
+<GuideLayout
+  title="Highest Caffeine Coffee in India"
+  description="Robusta has roughly twice the caffeine of Arabica. These are the highest-caffeine coffees you can buy in India, and how to brew for maximum strength."
+  date="2026-08-16"
+  readingTime="6 min read"
+  tags={["Coffee", "Caffeine", "India", "Robusta"]}
+  slug="highest-caffeine-coffee-in-india"
+>
+
+India is a major Robusta producer, which is good news if you're chasing caffeine. Robusta carries about **2,400 mg of caffeine per 100 g** of grounds against Arabica's **~1,300 mg** - close to double. A higher-Robusta blend means more caffeine per cup, full stop.
+
+The figures below assume a strong 30 g dose of grounds per cup. Here's the ranking, highest first.
+
+## 1. Wholesale 100% Robusta Beans
+
+Straight Robusta - the maximum caffeine from a single bean type. Bold, heavy and bitter; usually cut with milk or used in blends, but unbeatable on caffeine.
+
+<GuideProductCard slug="wholesale-100-robusta-beans" />
+<CaffeinePerCup robusta={100} />
+
+## 2. Custom Arabica-Robusta Blend (max Robusta)
+
+Choose your own ratio up to 70/30. At 30% Robusta it's the strongest blend you can order without going full Robusta.
+
+<GuideProductCard slug="custom-arabica-robusta-blend" />
+<CaffeinePerCup robusta={30} />
+
+## 3. Filter Coffee (70% Arabica, 30% Robusta)
+
+The standard South Indian ratio. Brewed as a thick decoction, a small cup delivers a serious caffeine load.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+## 4. Filter Coffee (80% Arabica, 20% Robusta)
+
+A little smoother, still well above a pure-Arabica cup.
+
+<GuideProductCard slug="filter-coffee-80-arabica-20-robusta" />
+<CaffeinePerCup robusta={20} />
+
+## 5. French Roast Coffee
+
+Roast level barely changes caffeine, but French roast is brewed strong by habit, so the cup usually lands high.
+
+<GuideProductCard slug="french-roast-coffee" />
+
+## Brewing for Maximum Caffeine
+
+- Use a **1:10 to 1:12** coffee-to-water ratio (most people use 1:16).
+- Brew a **concentrate** and drink it neat or barely diluted.
+- For **filter coffee**, make a thick decoction and use less hot water and milk.
+- **Longer contact time** extracts more - a full 4-minute press or a slow drip beats a fast one.
+
+## Don't Overdo It
+
+The usual safe ceiling is about 400 mg of caffeine a day for healthy adults - roughly 3-4 strong Robusta-heavy cups. Beyond that you get anxiety, a racing heart and broken sleep, not extra alertness.
+
+## Related Reading
+
+[Best Coffee for Caffeine](/guides/best-coffee-for-caffeine), [Best Strong Coffee in India](/guides/best-strong-coffee-in-india), and the science in [Arabica vs Robusta: Caffeine Compared](/guides/arabica-vs-robusta-caffeine).
+
+---
+
+Want the strongest hit India can give you? A high-Robusta blend, brewed as a concentrate.
+
+</GuideLayout>

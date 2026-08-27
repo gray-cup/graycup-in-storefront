@@ -1,25 +1,8 @@
 import { GuideLayout } from "@/components/GuideLayout";
 import { GuideProductCard } from "@/components/GuideProductCard";
+import { guideMeta } from "@/data/guides";
 
-export function meta() {
-  const title = "Best Black Coffee Brand for Fatty Liver | Gray Cup Guides";
-  const description =
-    "Fatty liver disease is linked to lower coffee consumption in several studies. Here's what the research says and the best black coffees to build into a daily routine.";
-  const image = "https://graycup.in/og/guides/best-black-coffee-for-fatty-liver.png";
-  return [
-    { title },
-    { name: "description", content: description },
-    { property: "og:title", content: title },
-    { property: "og:description", content: description },
-    { property: "og:type", content: "article" },
-    { property: "og:url", content: "https://graycup.in/guides/best-black-coffee-for-fatty-liver" },
-    { property: "og:image", content: image },
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: title },
-    { name: "twitter:description", content: description },
-    { name: "twitter:image", content: image },
-  ];
-}
+export const meta = () => guideMeta("best-black-coffee-for-fatty-liver");
 
 <GuideLayout
   title="Best Black Coffee Brand for Fatty Liver"

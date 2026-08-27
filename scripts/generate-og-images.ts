@@ -11,6 +11,7 @@ import { Resvg } from "@resvg/resvg-js";
 import sharp from "sharp";
 import { products, accessoryProducts } from "../src/data/products";
 import type { Product } from "../src/data/products/types";
+import { GUIDES as GUIDE_ARTICLES } from "../src/data/guides";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -274,17 +275,7 @@ async function generateOne(product: Product) {
 // here instead, same as the product images above.
 const GUIDES: { slug: string; title: string }[] = [
   { slug: "", title: "Guides" },
-  { slug: "black-coffee-liver-health", title: "Top 5 Black Coffees for Liver Health" },
-  { slug: "brewing-the-perfect-cup", title: "How to Brew the Perfect Cup of Tea" },
-  { slug: "ctc-vs-loose-leaf-tea", title: "CTC vs Loose Leaf Tea: What's the Difference?" },
-  {
-    slug: "instant-vs-brewed-coffee",
-    title: "Instant Coffee vs Brewed Coffee: Which Is Right for You?",
-  },
-  {
-    slug: "best-black-coffee-for-fatty-liver",
-    title: "Best Black Coffee Brand for Fatty Liver",
-  },
+  ...GUIDE_ARTICLES.map((g) => ({ slug: g.slug, title: g.title })),
 ];
 
 function guideLayout(title: string) {

@@ -1,0 +1,53 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("coffee-grind-size-guide");
+
+<GuideLayout slug="coffee-grind-size-guide">
+
+After freshness, grind size is the biggest lever on how coffee tastes. Finer grounds have more surface area, so they extract faster - too fine for your method and the cup turns bitter and harsh; too coarse and it's weak and sour. Each brew method has a window.
+
+## Grind by Method
+
+| Method | Grind | Like | Brew time |
+|---|---|---|---|
+| Cold brew | Extra coarse | Peppercorns | 12-24 hrs |
+| French press | Coarse | Sea salt | 4 min |
+| Pour over (V60) | Medium | Table salt | 2.5-3.5 min |
+| Drip machine | Medium | Table salt | 4-6 min |
+| South Indian filter | Fine | Caster sugar | 15-25 min drip |
+| Moka pot | Fine-ish | Between filter and espresso | 3-5 min |
+| Espresso | Very fine | Powdered sugar / flour | 25-32 sec |
+
+## Reading the Cup
+
+- **Bitter, harsh, dry finish** = over-extracted → grind **coarser** (or cooler water, shorter brew).
+- **Sour, thin, weak, salty** = under-extracted → grind **finer** (or hotter water, longer brew).
+- Change one variable at a time.
+
+## Pre-Ground vs Grinding Fresh
+
+Pre-ground coffee is fixed at one grind - fine if it matches your method, a compromise otherwise, and it stales within days. A burr grinder (not a blade one, which produces uneven dust) is the upgrade that improves every method at once. Until then, buy coffee ground for your specific brewer.
+
+### Basic Black Coffee
+
+A versatile blend - buy it ground to match your method.
+
+<GuideProductCard slug="basic-black-coffee" />
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+Ground fine for a South Indian steel filter.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+
+## Related Reading
+
+[How to Make Black Coffee](/guides/how-to-make-black-coffee), [How to Choose Coffee](/guides/how-to-choose-coffee), and [Best Coffee for French Press](/guides/best-coffee-for-french-press).
+
+---
+
+Match grind to method: coarse for press and cold brew, medium for pour over and drip, fine for filter and espresso. Adjust coarser if bitter, finer if sour.
+
+</GuideLayout>

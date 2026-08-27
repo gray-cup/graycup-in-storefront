@@ -1,0 +1,69 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { guideMeta } from "@/data/guides";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+
+export const meta = () => guideMeta("best-coffee-for-energy");
+
+<GuideLayout
+  title="Best Coffee for Energy: Top 5 for a Real Boost"
+  description="For steady energy through a long day, brew method and roast matter as much as the bean. Here are five coffees for a clean energy lift."
+  date="2026-08-17"
+  readingTime="6 min read"
+  tags={["Coffee", "Energy", "Caffeine"]}
+  slug="best-coffee-for-energy"
+>
+
+Coffee gives you energy by blocking adenosine, the molecule that builds up through the day and makes you feel tired. How much lift you get depends on the dose (caffeine content), the brew (concentration) and your own tolerance. For all-day energy you want enough caffeine to matter, spread across 2-3 cups rather than one huge hit.
+
+The figures below assume a strong 30 g dose of grounds per cup.
+
+## 1. Filter Coffee (70% Arabica, 30% Robusta)
+
+The Robusta share and the concentrated decoction brew make this a strong, cheap energy cup. A small tumbler carries a real load.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+## 2. Vienna Roast Coffee
+
+A bold, full-bodied dark roast that tastes like it should wake you up - and does.
+
+<GuideProductCard slug="vienna-roast-coffee" />
+
+## 3. Karadykan Estate Coffee
+
+A balanced Arabica for people who want steady energy without a harsh cup. Smooth enough to have two or three across a workday.
+
+<GuideProductCard slug="karadykan-estate-coffee" />
+<CaffeinePerCup robusta={0} />
+
+## 4. Basic Black Coffee
+
+Your reliable all-day driver. Brew it strong for the morning, lighter after lunch.
+
+<GuideProductCard slug="basic-black-coffee" />
+<CaffeinePerCup robusta={0} />
+
+## 5. Koraput, Odisha Washed Coffee
+
+A clean, low-bitterness cup that's easy to keep drinking - useful when you want energy without palate fatigue by the third cup.
+
+<GuideProductCard slug="koraput-odisha-washed-coffee" />
+
+## Getting Steady Energy, Not a Spike
+
+- **Space it out.** One cup on waking, one mid-morning, one after lunch. Avoid a single mega-dose.
+- **Stop by early afternoon.** Caffeine has a ~5-hour half-life; an evening cup still costs you sleep, which drains tomorrow's energy.
+- **Eat something.** Coffee on a totally empty stomach can spike then crash you. Pair it with breakfast.
+- **Hydrate.** Mild dehydration feels like fatigue and coffee won't fix it.
+
+## Related Reading
+
+[Best Coffee for Caffeine](/guides/best-coffee-for-caffeine) and [Highest Caffeine Coffee in India](/guides/highest-caffeine-coffee-in-india) for maximum strength; [Best Coffee Before a Workout](/guides/best-coffee-before-workout) for pre-training timing.
+
+---
+
+For real energy: a strong brew, a sensible dose, spread across the first half of the day.
+
+</GuideLayout>

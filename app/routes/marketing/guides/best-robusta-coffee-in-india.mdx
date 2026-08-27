@@ -1,0 +1,62 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("best-robusta-coffee-in-india");
+
+<GuideLayout slug="best-robusta-coffee-in-india">
+
+India is one of the world's top Robusta producers, and Indian Robusta - especially washed "parchment" Robusta - has a better reputation than the commodity Robusta used in cheap instant coffee. It brings more caffeine, a heavier body, a thick crema in espresso, and a stronger, more bitter flavour. It shines in milk coffee, espresso blends and South Indian filter.
+
+Caffeine figures assume a strong 30 g dose of grounds per cup.
+
+## When Robusta Is the Right Choice
+
+- **Milk coffee** - it punches through milk where light Arabica disappears.
+- **Espresso blends** - 10-20% Robusta gives crema and body.
+- **South Indian filter** - the traditional 70:30 blend depends on it.
+- **Maximum caffeine** - roughly double Arabica, for less money.
+
+## The Picks
+
+### Wholesale 100% Robusta Beans
+
+Straight Indian Robusta - maximum body and caffeine. Best in blends or with milk rather than straight black.
+
+<GuideProductCard slug="wholesale-100-robusta-beans" />
+<CaffeinePerCup robusta={100} />
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+The classic filter ratio - Arabica aroma, Robusta strength and body.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+### Custom Arabica-Robusta Blend
+
+Set your Robusta share from 5% to 30% and find your balance of aroma and strength.
+
+<GuideProductCard slug="custom-arabica-robusta-blend" />
+<CaffeinePerCup robusta={5} robustaTo={30} />
+
+### French Roast Coffee
+
+A deep, heavy dark roast - the boldest, most Robusta-friendly flavour in the range.
+
+<GuideProductCard slug="french-roast-coffee" />
+
+## Brewing Robusta Well
+
+Robusta turns harsh if over-extracted. Use slightly cooler water (88-92 C), a slightly coarser grind, and don't over-brew. In espresso, keep it as a minority of the blend. With milk, it's very forgiving.
+
+## Related Reading
+
+[Arabica vs Robusta](/guides/arabica-vs-robusta), [Arabica vs Robusta: Caffeine Compared](/guides/arabica-vs-robusta-caffeine), and [Highest Caffeine Coffee in India](/guides/highest-caffeine-coffee-in-india).
+
+---
+
+The best Indian Robusta is washed parchment Robusta, used in a blend or with milk - for strength, body, crema and caffeine.
+
+</GuideLayout>

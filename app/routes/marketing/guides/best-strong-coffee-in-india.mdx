@@ -1,0 +1,79 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { guideMeta } from "@/data/guides";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+
+export const meta = () => guideMeta("best-strong-coffee-in-india");
+
+<GuideLayout
+  title="Best Strong Coffee in India"
+  description="Strength comes from the bean (Robusta), the roast (dark) and the brew (more grounds, less water). Here are the strongest coffees in India."
+  date="2026-08-23"
+  readingTime="6 min read"
+  tags={["Coffee", "Strong Coffee", "India", "Robusta"]}
+  slug="best-strong-coffee-in-india"
+>
+
+"Strong" can mean three different things: high caffeine, bold bitter flavour, or a concentrated brew. Usually people want all three. All three come from the same levers:
+
+- **Bean:** Robusta - about 2,400 mg caffeine per 100 g vs Arabica's ~1,300 mg, plus more bitterness and body.
+- **Roast:** dark (Vienna, French) - roasty, intense, low acidity.
+- **Brew:** more grounds, less water, longer contact, no dilution.
+
+Caffeine figures below assume a strong 30 g dose per cup.
+
+## The Strongest Picks
+
+### Custom Arabica-Robusta Blend (70:30)
+
+Dial it to maximum Robusta for the strongest blend you can order - bold and high-caffeine, with just enough Arabica to keep it drinkable.
+
+<GuideProductCard slug="custom-arabica-robusta-blend" />
+<CaffeinePerCup robusta={30} />
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+Brewed as a thick decoction, this is one of the strongest cups per rupee - big body, real caffeine.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+### French Roast Coffee
+
+Our deepest roast - smoky, heavy, intense, low acidity. The boldest flavour in the range.
+
+<GuideProductCard slug="french-roast-coffee" />
+
+### Vienna Roast Coffee
+
+A shade lighter than French but still a big, punchy, full-bodied cup.
+
+<GuideProductCard slug="vienna-roast-coffee" />
+
+### Basic Black Coffee
+
+The mildest here, but brew it at 30 g in a French press and it holds its own for a daily strong cup.
+
+<GuideProductCard slug="basic-black-coffee" />
+<CaffeinePerCup robusta={0} />
+
+## How to Brew It Stronger
+
+- Use a **1:10 to 1:12** ratio instead of 1:16.
+- Brew a **concentrate** and drink it neat or barely diluted.
+- **Longer contact:** a full 4-minute press or a slow drip beats a quick one.
+- For **filter coffee**, make a thick decoction and use less water and milk.
+
+## Know the Ceiling
+
+About 400 mg of caffeine a day is the common safe limit for healthy adults - roughly 3-4 strong cups. Past that it's jitters and bad sleep, not more strength.
+
+## Related Reading
+
+[Highest Caffeine Coffee in India](/guides/highest-caffeine-coffee-in-india), [Best Coffee for Caffeine](/guides/best-coffee-for-caffeine), and [Arabica vs Robusta](/guides/arabica-vs-robusta).
+
+---
+
+The strongest coffee in India is a high-Robusta blend or a dark roast, brewed as a concentrate. Keep the daily total sensible.
+
+</GuideLayout>

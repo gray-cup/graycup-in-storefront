@@ -7,6 +7,7 @@
     "dev": "react-router dev",
     "generate:og": "tsx scripts/generate-og-images.ts",
     "generate:sitemap": "tsx scripts/generate-sitemap.ts",
+    "fetch:guide-images": "tsx scripts/fetch-guide-images.ts",
     "prebuild": "npm run generate:og",
     "build": "react-router build && npm run generate:sitemap",
     "start": "wrangler dev",

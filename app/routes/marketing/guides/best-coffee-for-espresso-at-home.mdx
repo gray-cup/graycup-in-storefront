@@ -1,0 +1,59 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("best-coffee-for-espresso-at-home");
+
+<GuideLayout slug="best-coffee-for-espresso-at-home">
+
+Espresso concentrates everything - flavour, body, acidity and defects. For a forgiving home shot you want a fresh, bold, medium-dark roast, and often a little Robusta for crema and a fuller mouthfeel. Very light, acidic roasts can pull sharp and thin on a home machine without a lot of dialling in.
+
+## What Works for Home Espresso
+
+- **Medium-dark roast** - sweeter, rounder, more forgiving under pressure.
+- **A little Robusta (10-30%)** - thicker crema, more body, more caffeine. Optional but classic.
+- **Fresh - within 3 weeks of roast**, rested at least 4-5 days after roasting.
+- **Fine grind, ~1:2 ratio (18 g in, 36 g out) in 25-32 seconds.** Adjust grind to hit the time.
+
+## The Picks
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+Ground fine, this classic blend pulls a thick, punchy shot with real crema.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+### French Roast Coffee
+
+Deep and bittersweet - a bold single-roast espresso with low acidity.
+
+<GuideProductCard slug="french-roast-coffee" />
+
+### Vienna Roast Coffee
+
+A touch lighter than French, still rich and forgiving for milk drinks.
+
+<GuideProductCard slug="vienna-roast-coffee" />
+
+### Custom Arabica-Robusta Blend
+
+Dial in your own crema-vs-aroma balance - 80:20 is a good espresso starting point.
+
+<GuideProductCard slug="custom-arabica-robusta-blend" />
+<CaffeinePerCup robusta={20} />
+
+## Milk Drinks
+
+For flat whites and cappuccinos, lean darker and toward more Robusta - the coffee needs to cut through milk. For straight shots, a cleaner medium-dark Arabica-forward roast tastes better.
+
+## Related Reading
+
+[Best Coffee for Moka Pot](/guides/best-coffee-for-moka-pot), [Black Coffee vs Espresso](/guides/black-coffee-vs-espresso), and [Best Robusta Coffee in India](/guides/best-robusta-coffee-in-india).
+
+---
+
+For home espresso: a fresh, rested, medium-dark roast, a little Robusta for crema, and grind dialled to an 18-in / 36-out shot in ~28 seconds.
+
+</GuideLayout>

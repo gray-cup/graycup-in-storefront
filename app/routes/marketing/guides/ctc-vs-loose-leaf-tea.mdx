@@ -1,24 +1,7 @@
 import { GuideLayout } from "@/components/GuideLayout";
+import { guideMeta } from "@/data/guides";
 
-export function meta() {
-  const title = "CTC vs Loose Leaf Tea: What's the Difference? | Gray Cup Guides";
-  const description =
-    "Explore the key differences between CTC and loose leaf tea - processing methods, flavour profiles, and how to brew each one.";
-  const image = "https://graycup.in/og/guides/ctc-vs-loose-leaf-tea.png";
-  return [
-    { title },
-    { name: "description", content: description },
-    { property: "og:title", content: title },
-    { property: "og:description", content: description },
-    { property: "og:type", content: "article" },
-    { property: "og:url", content: "https://graycup.in/guides/ctc-vs-loose-leaf-tea" },
-    { property: "og:image", content: image },
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: title },
-    { name: "twitter:description", content: description },
-    { name: "twitter:image", content: image },
-  ];
-}
+export const meta = () => guideMeta("ctc-vs-loose-leaf-tea");
 
 <GuideLayout
   title="CTC vs Loose Leaf Tea: What's the Difference?"
@@ -26,6 +9,7 @@ export function meta() {
   date="2026-01-22"
   readingTime="5 min read"
   tags={["Tea", "Education", "CTC"]}
+  slug="ctc-vs-loose-leaf-tea"
 >
 
 Walk into any Indian kitchen and you'll find CTC tea. Walk into a specialty tea shop and you'll find rows of loose leaf. Both are tea - but they're made differently, taste differently, and suit different moments. Here's everything you need to know.

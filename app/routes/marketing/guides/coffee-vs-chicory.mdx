@@ -1,0 +1,70 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { guideMeta } from "@/data/guides";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+
+export const meta = () => guideMeta("coffee-vs-chicory");
+
+<GuideLayout
+  title="Coffee vs Chicory: What's the Difference?"
+  description="Chicory is a caffeine-free root added to filter coffee for body and a woody sweetness. Here's how it changes the cup and how much to use."
+  date="2026-08-26"
+  readingTime="5 min read"
+  tags={["Coffee", "Education", "Chicory", "Filter Coffee"]}
+  slug="coffee-vs-chicory"
+>
+
+Chicory is the root of a plant related to the dandelion. It's roasted, ground and blended into coffee - it isn't coffee, and it has no caffeine. It became common in South Indian filter coffee partly to stretch expensive coffee and partly because people came to like what it does to the cup.
+
+## Coffee vs Chicory, Side by Side
+
+| | Coffee | Chicory |
+|---|---|---|
+| Source | Coffee bean (seed) | Chicory root |
+| Caffeine | Yes | None |
+| Taste | Aromatic, acidic, bitter | Woody, caramel, earthy, faintly sweet-bitter |
+| In the cup | Aroma and lift | Body, colour, thickness, mellow finish |
+| Brews | Normally | Extracts faster, darker, thicker |
+
+## What Chicory Does to Filter Coffee
+
+- **Thicker decoction.** Chicory releases more soluble solids, so the brew looks and feels heavier.
+- **Less bitterness, more mellow sweetness.** It rounds off coffee's sharp edges.
+- **Deeper colour.** A little chicory darkens the cup a lot.
+- **Less caffeine.** Every gram of chicory is a gram that isn't caffeinated coffee.
+
+### Filter Coffee (70% Arabica, 30% Chicory)
+
+The classic degree-coffee blend - smooth, mellow, thick decoction, that unmistakable South Indian cafe taste.
+
+<GuideProductCard slug="filter-coffee-arabica-chicory" />
+<CaffeinePerCup chicory={30} />
+
+Compare that to the same ratio with Robusta instead of chicory:
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+Same 70:30 split, very different cups - one softer and lower-caffeine, one stronger and higher-caffeine.
+
+## How Much Chicory?
+
+- **10-20%** - subtle: a little body and smoothness, still clearly coffee-forward.
+- **25-30%** - the traditional South Indian ratio: distinct chicory character.
+- **Above 40%** - chicory starts to dominate and the coffee aroma fades.
+
+## Is Chicory Good or Bad for You?
+
+It's fine. Chicory root is high in inulin, a prebiotic fibre, which is why some people find it easier on the stomach than straight coffee. Very large amounts of inulin can cause bloating, but the quantity in a cup of filter coffee is small.
+
+## Related Reading
+
+[Best Filter Coffee in India](/guides/best-filter-coffee-in-india), [Best Filter Coffee Powder in India](/guides/best-filter-coffee-powder-in-india), and [Arabica vs Robusta](/guides/arabica-vs-robusta).
+
+---
+
+Chicory isn't coffee - it's a caffeine-free root that makes filter coffee thicker, smoother and milder. Add 20-30% for the classic taste, less if you want more coffee character.
+
+</GuideLayout>

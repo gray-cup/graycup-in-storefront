@@ -1,0 +1,58 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("best-arabica-robusta-blend-coffee");
+
+<GuideLayout slug="best-arabica-robusta-blend-coffee">
+
+An Arabica-Robusta blend combines Arabica's aroma, sweetness and acidity with Robusta's body, strength, crema and caffeine. It's the standard for South Indian filter coffee and most espresso blends, and it's usually cheaper than straight Arabica.
+
+Caffeine figures below assume a strong 30 g dose of grounds per cup.
+
+## Picking the Ratio
+
+- **95:5 / 90:10** - mostly Arabica character, a whisper more body. Good for lighter milk coffee.
+- **80:20** - noticeably fuller and stronger, still aromatic. A popular everyday ratio.
+- **70:30** - the traditional South Indian ratio. Bold, full-bodied, stands up to plenty of milk.
+- **Beyond 30% Robusta** - strong and heavy; better in espresso blends than drunk black.
+
+## The Picks
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+The classic ratio - the default Arabica-Robusta blend for filter coffee.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+### Filter Coffee (80% Arabica, 20% Robusta)
+
+A smoother, more aromatic everyday blend.
+
+<GuideProductCard slug="filter-coffee-80-arabica-20-robusta" />
+<CaffeinePerCup robusta={20} />
+
+### Custom Arabica-Robusta Blend
+
+Choose 95:5, 90:10, 80:20 or 70:30 - washed Karadykan Arabica and natural Tirap Robusta, roasted and ground to order.
+
+<GuideProductCard slug="custom-arabica-robusta-blend" />
+<CaffeinePerCup robusta={5} robustaTo={30} />
+
+## Blend for the Brew
+
+- **Filter coffee with milk:** 70:30 or 80:20.
+- **Espresso:** 80:20 for crema without harshness.
+- **Black coffee:** stay 90:10 or lighter, or just drink pure Arabica.
+
+## Related Reading
+
+[Arabica vs Robusta](/guides/arabica-vs-robusta), [Best Filter Coffee Powder in India](/guides/best-filter-coffee-powder-in-india), and [Best Robusta Coffee in India](/guides/best-robusta-coffee-in-india).
+
+---
+
+An Arabica-Robusta blend gives you aroma and strength together. Start at 70:30 for filter coffee, 80:20 for espresso, lighter for black.
+
+</GuideLayout>

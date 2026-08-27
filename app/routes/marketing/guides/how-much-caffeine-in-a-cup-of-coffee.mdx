@@ -1,0 +1,63 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("how-much-caffeine-in-a-cup-of-coffee");
+
+<GuideLayout slug="how-much-caffeine-in-a-cup-of-coffee">
+
+There's no single number - it depends on three things: the bean, the dose, and the brew. Roast level barely matters.
+
+## The Three Levers
+
+1. **Bean.** Robusta has about **2,400 mg of caffeine per 100 g** of grounds; Arabica about **1,300 mg** - close to double.
+2. **Dose.** How many grams of coffee you use. This is the biggest everyday variable. A weak 12 g cup and a strong 30 g cup differ hugely.
+3. **Brew.** Longer contact and less dilution extract more. A concentrated decoction or espresso pulls more per gram than a fast, watery drip.
+
+Roast: dark roast has marginally *less* caffeine by weight than light - a difference too small to notice.
+
+## Rough Numbers (per cup)
+
+Assuming a strong 30 g dose of grounds:
+
+### 100% Arabica
+
+<CaffeinePerCup robusta={0} />
+
+### 70% Arabica / 30% Robusta (classic filter blend)
+
+<CaffeinePerCup robusta={30} />
+
+### 100% Robusta
+
+<CaffeinePerCup robusta={100} />
+
+A typical home cup uses 12-18 g, not 30, so real-world cups often land around 90-160 mg. Espresso is ~60-100 mg per shot - less total than a big filter coffee, just more concentrated.
+
+## How Much Is Too Much?
+
+About **400 mg a day** is the commonly cited safe ceiling for healthy adults - roughly 3-4 strong cups. Pregnancy guidance is ~200 mg. Past your limit you get jitters, a racing heart and poor sleep, not more energy.
+
+## Want More (or Less)?
+
+- **More:** raise the Robusta share, use more grounds, brew a concentrate.
+- **Less:** more Arabica, smaller dose, or a chicory filter blend (chicory has no caffeine).
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+
+### Filter Coffee (70% Arabica, 30% Chicory)
+
+<GuideProductCard slug="filter-coffee-arabica-chicory" />
+
+## Related Reading
+
+[Arabica vs Robusta: Caffeine Compared](/guides/arabica-vs-robusta-caffeine), [Highest Caffeine Coffee in India](/guides/highest-caffeine-coffee-in-india), and [Best Coffee for Caffeine](/guides/best-coffee-for-caffeine).
+
+---
+
+Caffeine per cup is set by the bean and the dose, not the roast. A strong Robusta-heavy cup can be 3x a weak Arabica one.
+
+</GuideLayout>

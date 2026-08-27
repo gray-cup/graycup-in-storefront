@@ -1,6 +1,7 @@
 import { Link, useLoaderData } from "react-router";
 import { and, desc, eq, isNotNull, sql } from "drizzle-orm";
 import { getProductBySlug } from "@/data/products";
+import { caffeineLabel } from "@/lib/caffeine";
 import {
   ProductConfigurator,
   SampleBuilder,
@@ -195,6 +196,17 @@ export default function ProductPage() {
                   flavourNotes={product.flavourNotes}
                   bitterness={product.bitterness}
                 />
+
+                {caffeineLabel(product) && (
+                  <div className="rounded-lg bg-amber-50 px-3 py-2 text-sm">
+                    <span className="font-medium text-amber-900">
+                      Caffeine: {caffeineLabel(product)}
+                    </span>
+                    <span className="ml-2 text-amber-800/70">
+                      Estimate - Robusta has ~2x the caffeine of Arabica.
+                    </span>
+                  </div>
+                )}
 
                 {/* Add to Cart */}
                 {product.slug === "pick-your-poison-sampler" ? (

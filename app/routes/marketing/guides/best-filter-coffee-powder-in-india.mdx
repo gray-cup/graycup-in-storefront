@@ -1,0 +1,88 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { guideMeta } from "@/data/guides";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+
+export const meta = () => guideMeta("best-filter-coffee-powder-in-india");
+
+<GuideLayout
+  title="Best Filter Coffee Powder in India"
+  description="From pure Arabica to classic Arabica-chicory blends, here are the best filter coffee powders in India, with notes on strength, chicory ratio and price."
+  date="2026-08-21"
+  readingTime="6 min read"
+  tags={["Coffee", "Filter Coffee", "India", "Buying Guide"]}
+  slug="best-filter-coffee-powder-in-india"
+>
+
+Filter coffee powder is just coffee ground fine enough for a South Indian steel filter - but the blend behind it decides everything: strength, bitterness, aroma, body and caffeine. Here's how the common options compare, with caffeine figures for a strong 30 g dose.
+
+## The Blends, Compared
+
+### Filter Coffee (Pure Arabica)
+
+The cleanest, most aromatic powder. No Robusta, no chicory. Best with less milk so the aroma comes through.
+
+<GuideProductCard slug="filter-coffee-pure-arabica" />
+<CaffeinePerCup robusta={0} />
+
+### Filter Coffee (95% Arabica, 5% Robusta)
+
+Barely any Robusta - a whisper more body and strength than pure Arabica, still very smooth.
+
+<GuideProductCard slug="filter-coffee-95-arabica-5-robusta" />
+<CaffeinePerCup robusta={5} />
+
+### Filter Coffee (90% Arabica, 10% Robusta)
+
+A light lift in body and crema. A good middle ground for milk coffee that isn't too strong.
+
+<GuideProductCard slug="filter-coffee-90-arabica-10-robusta" />
+<CaffeinePerCup robusta={10} />
+
+### Filter Coffee (80% Arabica, 20% Robusta)
+
+Noticeably stronger and thicker, still aromatic. Popular for daily milk coffee.
+
+<GuideProductCard slug="filter-coffee-80-arabica-20-robusta" />
+<CaffeinePerCup robusta={20} />
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+The traditional ratio. Strong, full-bodied, stands up to plenty of milk and sugar.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+### Filter Coffee (70% Arabica, 30% Chicory)
+
+Chicory replaces some coffee, so caffeine drops, but you get a thicker decoction, less bitterness and the classic degree-coffee flavour.
+
+<GuideProductCard slug="filter-coffee-arabica-chicory" />
+<CaffeinePerCup chicory={30} />
+
+### Custom Arabica-Robusta Blend
+
+Choose 95:5, 90:10, 80:20 or 70:30 and it's roasted and ground to order.
+
+<GuideProductCard slug="custom-arabica-robusta-blend" />
+
+## Which Should You Buy?
+
+- **Want aroma over strength:** Pure Arabica or 95:5.
+- **Everyday milk coffee:** 80:20 or 90:10.
+- **Strong, traditional:** 70:30.
+- **Classic South Indian cafe taste:** the 70:30 Arabica-chicory blend.
+
+## Storing It
+
+Filter powder goes stale fast because it's ground fine. Keep it airtight, away from heat and light, and buy 250-500 g at a time rather than a kilo.
+
+## Related Reading
+
+[Best Filter Coffee in India](/guides/best-filter-coffee-in-india) covers brewing the decoction, and [Coffee vs Chicory](/guides/coffee-vs-chicory) explains the chicory question.
+
+---
+
+The best filter coffee powder is the blend that matches how much milk you use - more milk, more Robusta; less milk, more Arabica.
+
+</GuideLayout>

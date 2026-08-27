@@ -1,0 +1,78 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { guideMeta } from "@/data/guides";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+
+export const meta = () => guideMeta("arabica-vs-robusta-caffeine");
+
+<GuideLayout
+  title="Arabica vs Robusta: Caffeine Compared"
+  description="Robusta has roughly 2,400 mg caffeine per 100 g versus Arabica's ~1,300 mg - almost double. Here's what that means per cup and which coffees use more Robusta."
+  date="2026-08-25"
+  readingTime="5 min read"
+  tags={["Coffee", "Education", "Caffeine", "Robusta"]}
+  slug="arabica-vs-robusta-caffeine"
+>
+
+Robusta uses caffeine as a natural pesticide, so the plant makes far more of it. In dry ground coffee:
+
+- **Arabica:** about **1,300 mg per 100 g** (~13 mg per gram)
+- **Robusta:** about **2,400 mg per 100 g** (~24 mg per gram)
+
+That's close to double. The exact figure varies by variety, growing conditions and roast, but the gap is consistent.
+
+## What It Means Per Cup
+
+Using a strong 30 g dose of grounds per cup:
+
+### 100% Arabica
+
+<CaffeinePerCup robusta={0} />
+
+A pure-Arabica cup - single-origin estate coffee, pure-Arabica filter powder.
+
+### 70% Arabica / 30% Robusta
+
+<CaffeinePerCup robusta={30} />
+
+The classic South Indian filter ratio - roughly 25% more caffeine than pure Arabica.
+
+### 100% Robusta
+
+<CaffeinePerCup robusta={100} />
+
+Straight Robusta - almost double a pure-Arabica cup.
+
+Standard home brewing uses 12-18 g per cup, not 30, so a normal cup lands lower - but the *ratio* between Arabica and Robusta stays the same.
+
+## Coffees by Robusta Share
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+
+### Custom Arabica-Robusta Blend
+
+Pick 95:5 up to 70:30 - the higher the Robusta, the more caffeine.
+
+<GuideProductCard slug="custom-arabica-robusta-blend" />
+
+### Karadykan Estate Coffee (pure Arabica)
+
+<GuideProductCard slug="karadykan-estate-coffee" />
+
+## Other Things That Change Caffeine
+
+- **Dose:** more grounds = more caffeine. This matters more than the bean at home.
+- **Brew:** espresso is concentrated but small; filter and press cups are bigger. A large mug of filter coffee often out-doses a single espresso.
+- **Roast:** dark roast has marginally *less* caffeine by weight than light - a small effect.
+
+## Related Reading
+
+[Arabica vs Robusta](/guides/arabica-vs-robusta) for the full comparison, [Highest Caffeine Coffee in India](/guides/highest-caffeine-coffee-in-india) and [Best Coffee for Caffeine](/guides/best-coffee-for-caffeine) for the strongest picks.
+
+---
+
+Robusta has roughly twice the caffeine of Arabica. Want more in your cup? Raise the Robusta share, or just use more grounds.
+
+</GuideLayout>

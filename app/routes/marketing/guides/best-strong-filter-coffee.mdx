@@ -1,0 +1,56 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("best-strong-filter-coffee");
+
+<GuideLayout slug="best-strong-filter-coffee">
+
+A strong filter coffee comes from three things: more Robusta in the blend, a thicker decoction, and less dilution with water or milk. Roast level barely changes the caffeine - it's the bean and the brew.
+
+Caffeine figures below assume a strong 30 g dose of grounds per cup.
+
+## The Strongest Blends
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+The traditional ratio, and the strongest fixed blend - full-bodied, high caffeine, stands up to lots of milk.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+### Custom Arabica-Robusta Blend (70:30)
+
+Dial it to maximum Robusta for the strongest cup you can order.
+
+<GuideProductCard slug="custom-arabica-robusta-blend" />
+<CaffeinePerCup robusta={30} />
+
+### Filter Coffee (80% Arabica, 20% Robusta)
+
+A step down in strength but still well above pure Arabica, with a bit more aroma.
+
+<GuideProductCard slug="filter-coffee-80-arabica-20-robusta" />
+<CaffeinePerCup robusta={20} />
+
+## Brewing a Strong Decoction
+
+1. Use **3 tablespoons of powder per cup**, pressed firm with the tamper.
+2. Fill the top chamber with water just off the boil, cover.
+3. Let it drip fully - 15-25 minutes. A rushed decoction is thin and weak.
+4. Mix roughly **1 part decoction to 2 parts hot milk** (less milk than usual), and go easy on sugar so the strength comes through.
+
+## A Note on Caffeine
+
+Around 400 mg a day is the common safe ceiling for healthy adults - a couple of strong 30 g Robusta-heavy filter cups gets you there. Past that it's jitters, not more energy.
+
+## Related Reading
+
+[Best Strong Coffee in India](/guides/best-strong-coffee-in-india), [Best Filter Coffee in India](/guides/best-filter-coffee-in-india), and [Highest Caffeine Coffee in India](/guides/highest-caffeine-coffee-in-india).
+
+---
+
+Strong filter coffee = more Robusta, a thick decoction, and less dilution. Start with a 70:30 blend and cut the milk.
+
+</GuideLayout>

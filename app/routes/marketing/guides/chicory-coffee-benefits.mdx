@@ -1,0 +1,50 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("chicory-coffee-benefits");
+
+<GuideLayout slug="chicory-coffee-benefits">
+
+Chicory is a roasted root blended into filter coffee - most commonly in South India, at 20-30%. It changes the cup and, in small ways, the nutrition. This isn't medical advice, but here's the honest ledger.
+
+## Potential Benefits
+
+- **No caffeine.** Every gram of chicory replaces a gram of caffeinated coffee, so a chicory blend is a lower-caffeine cup - useful in the afternoon or evening.
+- **Inulin (prebiotic fibre).** Chicory root is one of the richest sources of inulin, a fibre that feeds gut bacteria. The amount in a cup of filter coffee is small but real.
+- **Gentler on the stomach.** Many people find chicory blends less acidic and less harsh than straight coffee.
+- **Smoother, thicker cup** with less bitterness - and it stretches your coffee, so it's cheaper per cup.
+
+## Downsides and Cautions
+
+- **Too much inulin causes bloating and gas.** A normal cup is fine; drinking very strong, very high-chicory coffee all day can upset some people.
+- **Less caffeine cuts both ways** - if you rely on the lift, a high-chicory blend won't deliver it.
+- **Not for everyone in pregnancy** - some sources advise limiting chicory; check with a doctor.
+- **Flavour is an acquired taste** if you're used to pure coffee.
+
+## Try It
+
+### Filter Coffee (70% Arabica, 30% Chicory)
+
+The classic ratio - smooth, mellow, thick, lower caffeine.
+
+<GuideProductCard slug="filter-coffee-arabica-chicory" />
+<CaffeinePerCup chicory={30} />
+
+### Filter Coffee (80% Arabica, 20% Robusta)
+
+A no-chicory comparison - stronger and more caffeinated at the same brew.
+
+<GuideProductCard slug="filter-coffee-80-arabica-20-robusta" />
+<CaffeinePerCup robusta={20} />
+
+## Related Reading
+
+[Coffee vs Chicory](/guides/coffee-vs-chicory), [Best Filter Coffee Powder in India](/guides/best-filter-coffee-powder-in-india), and [Is Filter Coffee Good for You?](/guides/is-filter-coffee-good-for-you)
+
+---
+
+Chicory coffee is lower-caffeine, smoother, and adds a little prebiotic fibre. The main downside - bloating from inulin - only shows up if you overdo it.
+
+</GuideLayout>

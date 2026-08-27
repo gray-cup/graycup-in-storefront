@@ -1,0 +1,62 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("best-coffee-for-night-shift");
+
+<GuideLayout slug="best-coffee-for-night-shift">
+
+Night shifts fight your body clock, and caffeine is the main tool to stay safe and alert - especially in the 3-5 am window when the circadian drive to sleep is strongest. The skill is dosing enough to function without so much that you can't sleep when your shift ends.
+
+Caffeine figures below assume a strong 30 g dose of grounds per cup.
+
+## A Night-Shift Caffeine Plan
+
+- **Start of shift:** one strong cup.
+- **Every 3-4 hours:** a smaller cup, tapering down.
+- **Hard stop 3-4 hours before your planned sleep.** Caffeine's half-life is 5-6 hours; drink at 6 am and you won't sleep at 9.
+- **Coffee nap:** if you get a break, drink a cup then nap 15-20 minutes - you wake as it kicks in. Most effective single trick for shift work.
+
+## The Picks
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+High caffeine, fast strong decoction - the efficient shift-start cup.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+### Custom Arabica-Robusta Blend (70:30)
+
+Dial to maximum Robusta for the strongest blend you can order.
+
+<GuideProductCard slug="custom-arabica-robusta-blend" />
+<CaffeinePerCup robusta={30} />
+
+### French Roast Coffee
+
+Deep and intense - wakes you up on flavour as well as caffeine.
+
+<GuideProductCard slug="french-roast-coffee" />
+
+### Basic Black Coffee
+
+Milder and easier on the stomach for the small hours; brew it stronger.
+
+<GuideProductCard slug="basic-black-coffee" />
+<CaffeinePerCup robusta={0} />
+
+## After the Shift
+
+Wear sunglasses on the way home so daylight doesn't reset your clock, keep the bedroom dark, and accept that shift-work sleep is never quite as good. Pay it back on days off.
+
+## Related Reading
+
+[Best Coffee for Staying Awake and Long Working Hours](/guides/best-coffee-for-staying-awake), [Coffee and Sleep: How Late Is Too Late?](/guides/coffee-and-sleep), and [Highest Caffeine Coffee in India](/guides/highest-caffeine-coffee-in-india).
+
+---
+
+Night shift: strong cup to start, tapering top-ups, a coffee nap if you can, and nothing in the last 3-4 hours before you sleep.
+
+</GuideLayout>

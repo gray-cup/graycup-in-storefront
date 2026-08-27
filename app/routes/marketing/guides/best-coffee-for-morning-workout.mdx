@@ -1,0 +1,61 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("best-coffee-for-morning-workout");
+
+<GuideLayout slug="best-coffee-for-morning-workout">
+
+An early workout is the hardest one to caffeinate for - you're barely awake and there's no time to sip a cup slowly. The move is a strong coffee the moment you get up, so it's peaking in your blood by the time you're warmed up (caffeine takes 30-45 minutes to peak).
+
+Caffeine figures below assume a strong 30 g dose of grounds per cup.
+
+## The Morning Routine
+
+- **Drink it immediately on waking**, black, while you get changed.
+- **Make it strong** - one solid cup, ~3 mg caffeine per kg bodyweight. No time for two.
+- **Keep it black.** Milk and sugar sit heavy when you train soon after.
+- **If you train fasted**, that's fine - black coffee doesn't break it and may help fat oxidation.
+
+## The Picks
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+Brews fast and strong as a decoction, high caffeine from the Robusta share. The most efficient morning pre-workout.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+### Vienna Roast Coffee
+
+A bold dark roast that wakes you up on taste alone - good for a 5:30 am start.
+
+<GuideProductCard slug="vienna-roast-coffee" />
+
+### Basic Black Coffee
+
+Gentle on an empty stomach if you train fasted - brew it double-strength.
+
+<GuideProductCard slug="basic-black-coffee" />
+<CaffeinePerCup robusta={0} />
+
+### Biccode Estate Coffee
+
+Medium-intensity and easy on the stomach for early sessions before breakfast.
+
+<GuideProductCard slug="biccode-estate-coffee" />
+
+## If You Have 20 Minutes
+
+Drink the coffee, then do your mobility/warm-up and commute. By the time you hit the first working set it's peaking. That's the ideal - the caffeine and the workout line up.
+
+## Related Reading
+
+[Best Coffee Before a Workout](/guides/best-coffee-before-workout), [Best Coffee for the Gym](/guides/best-coffee-for-gym), and [Best Coffee for Energy](/guides/best-coffee-for-energy).
+
+---
+
+For a morning workout: one strong black coffee the second you wake up, so it peaks as you start training.
+
+</GuideLayout>

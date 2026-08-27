@@ -14,18 +14,11 @@ import { getAllProductSlugs } from "../src/data/products";
 import { getAllGlossarySlugs } from "../src/data/glossary";
 import { INDIA_STATES, INDIA_CITIES } from "../src/data/india-locations";
 import { LOCATION_TOPIC_SLUGS } from "../src/data/location-topics";
+import { GUIDE_SLUGS } from "../src/data/guides";
 
 const ROOT = path.resolve(__dirname, "..");
 const OUTPUT_DIR = path.join(ROOT, "build", "client");
 const SITE_URL = process.env.SITE_URL || "https://graycup.in";
-
-const GUIDE_SLUGS = [
-  "black-coffee-liver-health",
-  "brewing-the-perfect-cup",
-  "ctc-vs-loose-leaf-tea",
-  "instant-vs-brewed-coffee",
-  "best-black-coffee-for-fatty-liver",
-];
 
 const STATIC_PATHS = [
   "/",

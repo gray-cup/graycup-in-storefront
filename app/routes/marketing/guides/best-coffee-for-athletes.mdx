@@ -1,0 +1,58 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("best-coffee-for-athletes");
+
+<GuideLayout slug="best-coffee-for-athletes">
+
+Caffeine is on every sports scientist's short list of things that actually work. It improves endurance, repeated-sprint ability, maximal power, and - maybe most usefully - it lowers rating of perceived exertion, so hard efforts feel easier. Coffee delivers it as effectively as a caffeine pill, and it's not banned (WADA removed caffeine from the prohibited list in 2004).
+
+Caffeine figures below assume a strong 30 g dose of grounds per cup.
+
+## How Athletes Should Use Coffee
+
+- **Dose:** 3-6 mg per kg bodyweight. Most benefit is at the low end; higher just adds side effects.
+- **Timing:** 45-60 minutes before the session or event.
+- **Endurance events:** a top-up (1-2 mg/kg) late in a long race can help.
+- **Tolerance:** keep habitual intake modest, or taper for 2-4 days before a key event, so race-day caffeine hits harder.
+- **Test it in training first.** Never try a new dose on race day - GI issues are the classic mistake.
+
+## The Picks
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+High caffeine, quick strong decoction - efficient race-morning fuel.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+### Basic Black Coffee
+
+Gentle on the stomach for pre-training - important if you're prone to GI trouble.
+
+<GuideProductCard slug="basic-black-coffee" />
+<CaffeinePerCup robusta={0} />
+
+### Vienna Roast Coffee
+
+A bold cup for early sessions when you need waking up as much as caffeinating.
+
+<GuideProductCard slug="vienna-roast-coffee" />
+
+### Biccode Estate Coffee
+
+Medium-intensity and easy on an empty stomach before a morning workout.
+
+<GuideProductCard slug="biccode-estate-coffee" />
+
+## Related Reading
+
+[Best Coffee Before a Workout](/guides/best-coffee-before-workout), [Best Coffee for Running](/guides/best-coffee-for-running), and [Best Coffee for the Gym](/guides/best-coffee-for-gym).
+
+---
+
+For athletes: 3-6 mg/kg of caffeine from coffee, 45-60 minutes out, tested in training and taken with beans that don't upset your stomach.
+
+</GuideLayout>

@@ -1,25 +1,8 @@
 import { GuideLayout } from "@/components/GuideLayout";
 import { GuideProductCard } from "@/components/GuideProductCard";
+import { guideMeta } from "@/data/guides";
 
-export function meta() {
-  const title = "Top 5 Black Coffees for Liver Health | Gray Cup Guides";
-  const description =
-    "Research links black coffee to better liver enzyme levels and lower risk of liver disease. Here are 5 black coffees worth keeping in your rotation, and how to brew them.";
-  const image = "https://graycup.in/og/guides/black-coffee-liver-health.png";
-  return [
-    { title },
-    { name: "description", content: description },
-    { property: "og:title", content: title },
-    { property: "og:description", content: description },
-    { property: "og:type", content: "article" },
-    { property: "og:url", content: "https://graycup.in/guides/black-coffee-liver-health" },
-    { property: "og:image", content: image },
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: title },
-    { name: "twitter:description", content: description },
-    { name: "twitter:image", content: image },
-  ];
-}
+export const meta = () => guideMeta("black-coffee-liver-health");
 
 <GuideLayout
   title="Top 5 Black Coffees for Liver Health"

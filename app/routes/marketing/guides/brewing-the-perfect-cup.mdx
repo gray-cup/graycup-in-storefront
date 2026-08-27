@@ -1,24 +1,7 @@
 import { GuideLayout } from "@/components/GuideLayout";
+import { guideMeta } from "@/data/guides";
 
-export function meta() {
-  const title = "How to Brew the Perfect Cup of Tea | Gray Cup Guides";
-  const description =
-    "Master the art of tea brewing - water temperature, steeping times, and techniques for every type of tea.";
-  const image = "https://graycup.in/og/guides/brewing-the-perfect-cup.png";
-  return [
-    { title },
-    { name: "description", content: description },
-    { property: "og:title", content: title },
-    { property: "og:description", content: description },
-    { property: "og:type", content: "article" },
-    { property: "og:url", content: "https://graycup.in/guides/brewing-the-perfect-cup" },
-    { property: "og:image", content: image },
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: title },
-    { name: "twitter:description", content: description },
-    { name: "twitter:image", content: image },
-  ];
-}
+export const meta = () => guideMeta("brewing-the-perfect-cup");
 
 <GuideLayout
   title="How to Brew the Perfect Cup of Tea"
@@ -26,6 +9,7 @@ export function meta() {
   date="2026-01-15"
   readingTime="6 min read"
   tags={["Tea", "Brewing", "Beginner"]}
+  slug="brewing-the-perfect-cup"
 >
 
 A great cup of tea starts long before the kettle boils. From choosing the right leaf to knowing exactly when to pull your bag, every step matters. This guide walks you through everything you need to know.

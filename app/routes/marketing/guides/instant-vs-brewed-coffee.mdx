@@ -1,24 +1,7 @@
 import { GuideLayout } from "@/components/GuideLayout";
+import { guideMeta } from "@/data/guides";
 
-export function meta() {
-  const title = "Instant Coffee vs Brewed Coffee: Which Is Right for You? | Gray Cup Guides";
-  const description =
-    "A practical comparison of instant and brewed coffee - flavour, convenience, quality, and when each one is the right choice.";
-  const image = "https://graycup.in/og/guides/instant-vs-brewed-coffee.png";
-  return [
-    { title },
-    { name: "description", content: description },
-    { property: "og:title", content: title },
-    { property: "og:description", content: description },
-    { property: "og:type", content: "article" },
-    { property: "og:url", content: "https://graycup.in/guides/instant-vs-brewed-coffee" },
-    { property: "og:image", content: image },
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: title },
-    { name: "twitter:description", content: description },
-    { name: "twitter:image", content: image },
-  ];
-}
+export const meta = () => guideMeta("instant-vs-brewed-coffee");
 
 <GuideLayout
   title="Instant Coffee vs Brewed Coffee: Which Is Right for You?"
@@ -26,6 +9,7 @@ export function meta() {
   date="2026-02-01"
   readingTime="4 min read"
   tags={["Coffee", "Instant Coffee", "Brewing"]}
+  slug="instant-vs-brewed-coffee"
 >
 
 Instant coffee gets a bad reputation. For years it was synonymous with weak, bitter, chemical-tasting drinks served at office meetings. That's changed significantly. At the same time, brewed coffee has never been more accessible. So which should you be drinking?

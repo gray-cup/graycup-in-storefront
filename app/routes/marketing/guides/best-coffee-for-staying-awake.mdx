@@ -1,0 +1,68 @@
+import { GuideLayout } from "@/components/GuideLayout";
+import { GuideProductCard } from "@/components/GuideProductCard";
+import { CaffeinePerCup } from "@/components/CaffeinePerCup";
+import { guideMeta } from "@/data/guides";
+
+export const meta = () => guideMeta("best-coffee-for-staying-awake");
+
+<GuideLayout slug="best-coffee-for-staying-awake">
+
+Night shifts, long drives, back-to-back deadlines - sometimes you just need to stay awake and functional. Caffeine is the most effective legal way to do it. The key is a high enough dose from a strong brew, timed so it's working when you need it, without so much that you're wired and useless.
+
+Caffeine figures below assume a strong 30 g dose of grounds per cup.
+
+## How to Stay Awake on Coffee
+
+- **Front-load, then top up.** A strong cup at the start, smaller cups every 3-4 hours. Don't wait until you're already fading.
+- **Strong brew.** More grounds, less water. A weak cup won't cut it at hour six.
+- **Nap + coffee.** If you can, drink a cup then take a 20-minute nap - you wake as the caffeine kicks in. It's the single most effective trick.
+- **Know the ceiling.** ~400 mg a day for healthy adults. Past that: racing heart, nausea, no extra alertness.
+
+## The Picks
+
+### Filter Coffee (70% Arabica, 30% Robusta)
+
+High caffeine, brews fast and strong as a decoction. The best value option for a long shift.
+
+<GuideProductCard slug="filter-coffee-arabica-robusta" />
+<CaffeinePerCup robusta={30} />
+
+### Custom Arabica-Robusta Blend (70:30)
+
+Dial it to maximum Robusta for the strongest blend you can order.
+
+<GuideProductCard slug="custom-arabica-robusta-blend" />
+<CaffeinePerCup robusta={30} />
+
+### French Roast Coffee
+
+Deep, heavy and intense - the kind of cup that wakes you up on taste alone.
+
+<GuideProductCard slug="french-roast-coffee" />
+
+### Vienna Roast Coffee
+
+A shade lighter than French, still bold and full-bodied for an all-nighter.
+
+<GuideProductCard slug="vienna-roast-coffee" />
+
+### Basic Black Coffee
+
+Milder, but brew it double-strength for a smoother cup that's easier on the stomach at 3 am.
+
+<GuideProductCard slug="basic-black-coffee" />
+<CaffeinePerCup robusta={0} />
+
+## After the Shift
+
+Expect a rebound crash once the caffeine clears and a rough night's sleep if you dosed late. Staying awake on coffee is a short-term tool - pay the sleep back as soon as you can.
+
+## Related Reading
+
+[Best Coffee for Energy](/guides/best-coffee-for-energy), [Best Coffee for Focus, Studying and Work](/guides/best-coffee-for-focus-and-studying), and [Highest Caffeine Coffee in India](/guides/highest-caffeine-coffee-in-india).
+
+---
+
+To stay awake: a strong Robusta-heavy brew, front-loaded and topped up, with a nap if you can manage one.
+
+</GuideLayout>
