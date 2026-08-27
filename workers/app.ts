@@ -22,18 +22,18 @@ export default {
 
     const response = await requestHandler(request, routerContext);
 
-    if (!response.headers.has("Cache-Control")) {
-      // HTML documents reference content-hashed asset URLs that are deleted on
-      // the next deploy — serving a stale document 404s its CSS/JS. Documents
-      // must always revalidate; only non-document SSR responses get cached.
-      const isDocument = response.headers
-        .get("Content-Type")
-        ?.includes("text/html");
+    // HTML documents embed content-hashed asset URLs that are deleted on the
+    // next deploy — a stale document 404s its own CSS/JS. Never let a document
+    // be stored by a browser or the CDN; only cache non-document SSR responses.
+    const isDocument = response.headers
+      .get("Content-Type")
+      ?.includes("text/html");
+    if (isDocument) {
+      response.headers.set("Cache-Control", "no-store");
+    } else if (!response.headers.has("Cache-Control")) {
       response.headers.set(
         "Cache-Control",
-        isDocument
-          ? "public, max-age=0, must-revalidate"
-          : "public, max-age=3600, stale-while-revalidate=86400",
+        "public, max-age=3600, stale-while-revalidate=86400",
       );
     }
 
