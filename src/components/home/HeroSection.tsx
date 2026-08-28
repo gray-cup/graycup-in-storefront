@@ -15,7 +15,7 @@ export function HeroSection() {
         Sustainability & Quality
       </span>
       <h1 className="text-4xl md:text-5xl font-semibold text-black pt-2 max-w-xl">
-        Premium Coffee & Tea, Delivered to Your Door
+        Specialty & Commercial Coffee & Tea, Delivered to Your Door
       </h1>
       <p className="text-lg text-neutral-700 mt-4 max-w-2xl">
         Discover sustainably sourced, ethically traded coffee and tea.

@@ -28,26 +28,26 @@ import { Terminal, RefreshCw, ChevronDown, ChevronUp } from "lucide-react";
 
 export function meta() {
   return [
-    { title: "Gray Cup | Premium Indian Tea, Coffee & Matcha" },
+    { title: "Gray Cup | Indian Tea, Specialty Coffee and Commercial Coffee" },
     {
       name: "description",
       content:
-        "Gray Cup sources premium Indian tea, specialty coffee, and matcha. Shop online at graycup.in or buy wholesale for cafes and businesses.",
+        "Gray Cup sources premium Indian tea, specialty coffee and commercial coffee. Shop online at graycup.in or buy wholesale for cafes and businesses.",
     },
-    { property: "og:title", content: "Gray Cup | Premium Indian Tea, Coffee & Matcha" },
+    { property: "og:title", content: "Gray Cup | Indian Tea, Specialty Coffee and Commercial Coffee" },
     {
       property: "og:description",
       content:
-        "Gray Cup sources premium Indian tea, specialty coffee, and matcha. Shop online at graycup.in or buy wholesale for cafes and businesses.",
+        "Gray Cup sources premium Indian tea, specialty coffee and commercial coffee. Shop online at graycup.in or buy wholesale for cafes and businesses.",
     },
     { property: "og:image", content: "https://graycup.in/og.png" },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: "Gray Cup | Premium Indian Tea, Coffee & Matcha" },
+    { name: "twitter:title", content: "Gray Cup | Indian Tea, Specialty Coffee and Commercial Coffee" },
     {
       name: "twitter:description",
       content:
-        "Gray Cup sources premium Indian tea, specialty coffee, and matcha. Shop online at graycup.in or buy wholesale for cafes and businesses.",
+        "Gray Cup sources premium Indian tea, specialty coffee and commercial coffee. Shop online at graycup.in or buy wholesale for cafes and businesses.",
     },
     { name: "twitter:image", content: "https://graycup.in/og.png" },
     { name: "facebook-domain-verification", content: "logm65vjqg9own5svlo4llym2l4cg3" },
