@@ -8,9 +8,6 @@ import { ProductSearch } from "@/components/product-search";
 import { ChevronDown, User } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
-// Links that show as flat nav items once there's enough room (xl+), and
-// fold into the Others dropdown below that so the desktop nav doesn't
-// overflow before the hamburger breakpoint kicks in.
 const SPACE_PERMITTING_HREFS = new Set(["/fundraisers", "/contact"]);
 
 const dropdowns: Record<string, [string, string][]> = {
@@ -88,7 +85,8 @@ export function Navbar() {
 
   return (
     <>
-      <header className="w-full border-b border-neutral-200 bg-white">
+      {/* Explicitly pin header to the top with pure white background */}
+      <header className="sticky top-0 z-40 w-full border-b border-neutral-200 bg-white">
         <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between gap-4 px-4 lg:px-6">
           {/* LEFT */}
           <div className="flex items-center gap-6">
@@ -171,19 +169,17 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* ================= SIDEBAR ================= */}
+      {/* SIDEBAR */}
       <div
         className={`fixed inset-0 z-50 transition-opacity ${
           menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        {/* Backdrop */}
         <div
           className="absolute inset-0 bg-black/40"
           onClick={() => setMenuOpen(false)}
         />
 
-        {/* Drawer */}
         <aside
           className={`absolute right-0 top-0 h-full w-72 bg-white p-6 shadow-xl
           transform transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
@@ -198,7 +194,6 @@ export function Navbar() {
             ✕
           </button>
 
-          {/* Buy via Fast - mobile */}
           <a
             href="https://fast.graycup.in"
             target="_blank"
@@ -208,7 +203,6 @@ export function Navbar() {
             Buy via Fast
           </a>
 
-          {/* All links */}
           <nav className="flex flex-col gap-2 text-sm font-medium">
             {[
               ["Products", "/products"],
