@@ -65,7 +65,13 @@ export function caffeineLabel(p: Product): string | null {
 }
 
 // --- self-check (run: npx tsx src/lib/caffeine.ts) ---
-if (import.meta.url === `file://${process.argv[1]}`) {
+// `typeof process` guard: this module ships to the browser (product pages
+// import caffeineLabel), where a bare `process.argv` is a ReferenceError that
+// breaks the whole route.
+if (
+  typeof process !== "undefined" &&
+  import.meta.url === `file://${process.argv[1]}`
+) {
   const eq = (a: number, b: number) => {
     if (a !== b) throw new Error(`expected ${b}, got ${a}`);
   };
