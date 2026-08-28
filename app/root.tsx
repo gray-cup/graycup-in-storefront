@@ -119,6 +119,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         />
       </head>
       <body className={cn("min-h-dvh bg-white font-sans antialiased")}>
+        {/* iOS Safari 26 tints the status bar from the background-color of a
+            fixed/sticky element within 4px of the top edge (theme-color is
+            ignored). Give it a guaranteed solid-white one on every page. */}
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-x-0 top-0 z-0 h-2 bg-white"
+        />
         <OrganizationSchema />
         <WebSiteSchema />
         <ChunkErrorReload />
