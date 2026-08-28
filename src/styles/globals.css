@@ -94,7 +94,7 @@
 /* Force white everywhere Safari can show it: overscroll/rubber-band area
    and the address-bar tint both read from the html element's background. */
 html,body {
-  background-color: #ffffff;
+  background-color: #ffffff !important;
   height : 100%;
   color-scheme: light;
 }

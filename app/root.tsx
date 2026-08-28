@@ -96,9 +96,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="theme-color" content="#ffffff" />
-        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)" />
+      <meta name="theme-color" content="#ffffff" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="color-scheme" content="light" />
         <meta name="p:domain_verify" content="263c83126f8d79bccabc00711d8d80c6" />
         <Meta />
@@ -118,7 +118,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
       </head>
-      <body className={cn("min-h-dvh bg-background font-sans antialiased")}>
+      <body className={cn("min-h-dvh bg-white font-sans antialiased")}>
         <OrganizationSchema />
         <WebSiteSchema />
         <ChunkErrorReload />
@@ -187,7 +187,7 @@ function ServerError({ error }: { error: unknown }) {
   }, [error]);
 
   return (
-    <div className="flex h-dvh w-full items-center justify-center bg-background">
+    <div className="flex h-dvh w-full items-center justify-center bg-white">
       <Card className="w-full max-w-md border-dashed border-2 rounded-none shadow-none">
         <CardHeader className="border-b border-dashed pb-4">
           <div className="flex items-center space-x-2">
