@@ -7,7 +7,7 @@
 // use-webmcp-tool does not re-register when `execute` changes. Everything is
 // read through the static product data and the module-level cartBridge /
 // navBridge (see @/lib/webmcp-cart-bridge).
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useWebMCP } from "use-webmcp-tool";
 import {
@@ -87,7 +87,35 @@ function cartSnapshot() {
   };
 }
 
+// Only mounted when a WebMCP host (Chrome's document.modelContext, injected by
+// an agent/extension) is actually present. On every normal browser this renders
+// nothing and runs no hooks/effects/listeners, so it can't affect the site.
 export function WebMCPTools() {
+  const [hasHost, setHasHost] = useState(false);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (document.modelContext) {
+      setHasHost(true);
+      return;
+    }
+    // The host may be injected late by a content script; re-check for 15s.
+    let attempts = 0;
+    const timer = setInterval(() => {
+      if (document.modelContext) {
+        setHasHost(true);
+        clearInterval(timer);
+      } else if (++attempts >= 15) {
+        clearInterval(timer);
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return hasHost ? <WebMCPToolsInner /> : null;
+}
+
+function WebMCPToolsInner() {
   const navigate = useNavigate();
   useEffect(() => {
     navBridge.current = navigate;
