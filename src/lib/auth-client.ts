@@ -2,9 +2,11 @@
 
 import { createAuthClient } from "better-auth/react";
 
-export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://graycup.in",
-});
+// No baseURL: better-auth defaults to the current origin, which is what we
+// want in the browser (https in prod, localhost in dev). The old
+// "http://graycup.in" fallback forced insecure http and broke sessions
+// whenever NEXT_PUBLIC_APP_URL was unset at build time.
+export const authClient = createAuthClient();
 
 // Convenience re-exports
 export const {

@@ -6,7 +6,10 @@ import { user, session, account, verification } from "./schema";
 import { sendVerificationEmail, sendPasswordResetEmail } from "./email";
 
 export const auth = betterAuth({
-  baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:6969",
+  baseURL:
+    process.env.NEXT_PUBLIC_APP_URL ||
+    process.env.SITE_URL ||
+    "https://graycup.in",
   secret: process.env.BETTER_AUTH_SECRET!,
   database: drizzleAdapter(db, {
     provider: "pg",
