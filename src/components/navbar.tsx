@@ -2,15 +2,11 @@
 
 import { useState } from "react";
 import { Link } from "react-router";
-import { Button } from "@/components/ui/button";
 import { CartButton } from "@/components/cart-button";
 import { ProductSearch } from "@/components/product-search";
 import { ChevronDown, User } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
-// Links that show as flat nav items once there's enough room (xl+), and
-// fold into the Others dropdown below that so the desktop nav doesn't
-// overflow before the hamburger breakpoint kicks in.
 const SPACE_PERMITTING_HREFS = new Set(["/fundraisers", "/contact"]);
 
 const dropdowns: Record<string, [string, string][]> = {
@@ -88,7 +84,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="w-full border-b border-neutral-200 bg-white">
+      <div className="w-full border-b border-neutral-200 bg-white">
         <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between gap-4 px-4 lg:px-6">
           {/* LEFT */}
           <div className="flex items-center gap-6">
@@ -169,12 +165,12 @@ export function Navbar() {
             </button>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* ================= SIDEBAR ================= */}
       <div
         className={`fixed inset-0 z-50 transition-opacity ${
-          menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
+          menuOpen ? "opacity-100" : "hidden opacity-0"
         }`}
       >
         {/* Backdrop */}

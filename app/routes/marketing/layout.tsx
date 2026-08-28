@@ -4,9 +4,11 @@ import Footer from "@/components/footer";
 
 export default function MarketingLayout() {
   return (
-    <div className="relative flex min-h-dvh flex-col">
+    <div className=" flex flex-col">
       {/* Sticky Header Group */}
-      <div className="sticky top-0 z-50">
+      {/* bg-white here (not just on the header) so iOS Safari 26 samples a
+          solid color off this sticky element to tint the status bar */}
+      <div className="sticky top-0 z-50 bg-white">
         <Navbar />
       </div>
 
