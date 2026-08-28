@@ -91,6 +91,13 @@
   }
 }
 
+/* Force white everywhere Safari can show it: overscroll/rubber-band area
+   and the address-bar tint both read from the html element's background. */
+html {
+  background-color: #fff;
+  color-scheme: light;
+}
+
 @media (hover: hover) {
   .component-outline {
     outline: 0.17em solid transparent;
