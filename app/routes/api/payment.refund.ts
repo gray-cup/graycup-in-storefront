@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { getAdminUser } from "@/lib/require-admin";
 import { order } from "@/lib/schema.d1";
 import { getD1Db } from "@/lib/db.d1";
 import { cloudflareContext } from "@/lib/cloudflare-context";
@@ -9,9 +9,8 @@ import type { Route } from "./+types/payment.refund";
 export async function action({ request, context }: Route.ActionArgs) {
   try {
     const d1 = getD1Db(context.get(cloudflareContext).env.DB);
-    // Admin-only: only authenticated users can initiate refunds
-    const session = await auth.api.getSession({ headers: request.headers });
-    if (!session?.user) {
+    // Admin-only (better-auth role === "admin").
+    if (!(await getAdminUser(request))) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 

@@ -2,6 +2,7 @@ import { graycupReviews } from "@/lib/schema.d1";
 import { getD1Db } from "@/lib/db.d1";
 import { cloudflareContext } from "@/lib/cloudflare-context";
 import { desc, eq } from "drizzle-orm";
+import { rateLimit } from "@/lib/rate-limit";
 import type { Route } from "./+types/reviews";
 
 export async function loader({ request, context }: Route.LoaderArgs) {
@@ -23,6 +24,9 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
 export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const limited = await rateLimit(context, request, "review");
+    if (limited) return limited;
+
     const body = await request.json();
     const { slug, fullName, content, rating } = body;
 

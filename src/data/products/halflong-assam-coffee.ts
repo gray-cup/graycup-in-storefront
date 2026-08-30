@@ -1,6 +1,7 @@
 import type { Product } from "./types";
+import { reviseRetailCoffeePricing } from "./pricing";
 
-export const halflongAssamCoffeeProducts: Product[] = [
+export const halflongAssamCoffeeProducts: Product[] = reviseRetailCoffeePricing([
   {
     slug: "halflong-assam-coffee",
     name: "Halflong Assam Coffee",
@@ -47,4 +48,4 @@ export const halflongAssamCoffeeProducts: Product[] = [
     availability: "in_stock",
     googleProductCategory: "1868",
   },
-];
+]);

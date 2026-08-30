@@ -1,6 +1,7 @@
 import type { Product } from "./types";
+import { reviseRetailCoffeePricing } from "./pricing";
 
-export const koraputCoffeeProducts: Product[] = [
+export const koraputCoffeeProducts: Product[] = reviseRetailCoffeePricing([
   {
     slug: "koraput-odisha-hsd-coffee",
     name: "Koraput, Odisha Honey Sundried Coffee",
@@ -268,4 +269,4 @@ export const koraputCoffeeProducts: Product[] = [
     availability: "in_stock",
     googleProductCategory: "1868",
   },
-];
+]);

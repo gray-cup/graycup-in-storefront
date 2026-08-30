@@ -5,13 +5,20 @@ import { order } from "@/lib/schema.d1";
 import { getD1Db } from "@/lib/db.d1";
 import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq, count } from "drizzle-orm";
-import type { CartItem } from "@/lib/cart";
+import { calculateDeliveryCharge, type CartItem } from "@/lib/cart";
+
+const FLAT_DELIVERY_CHARGE = 40;
 import { CF_BASE, cfHeaders } from "@/lib/cashfree";
 import { validateCoupon } from "@/lib/coupons";
+import { repriceCartItems, PricingError } from "@/lib/server-pricing";
+import { rateLimit } from "@/lib/rate-limit";
 import type { Route } from "./+types/checkout";
 
 export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const limited = await rateLimit(context, request, "checkout");
+    if (limited) return limited;
+
     const d1 = getD1Db(context.get(cloudflareContext).env.DB);
     const session = await auth.api.getSession({ headers: request.headers });
 
@@ -62,11 +69,19 @@ export async function action({ request, context }: Route.ActionArgs) {
       : guest!.phone.replace(/\D/g, "").slice(-10);
 
     // ── Calculate totals ───────────────────────────────────────────────────
-    const subtotal = items.reduce((sum, item) => {
-      const price = item.selectedVariant?.price ?? item.product.priceRange.min;
-      return sum + price * item.quantity;
-    }, 0);
-    const delivery = deliveryCharge ?? 0;
+    // Re-price every line from the catalog - the client's prices are not trusted.
+    void deliveryCharge;
+    let subtotal: number;
+    let pricedItems: CartItem[];
+    try {
+      ({ subtotal, items: pricedItems } = repriceCartItems(items));
+    } catch (e) {
+      return Response.json(
+        { error: e instanceof PricingError ? e.message : "Invalid cart" },
+        { status: 400 },
+      );
+    }
+    const delivery = calculateDeliveryCharge(pricedItems, FLAT_DELIVERY_CHARGE);
 
     // Re-validate the coupon server-side against the subtotal we just computed -
     // never trust a discount amount supplied by the client.
@@ -91,7 +106,7 @@ export async function action({ request, context }: Route.ActionArgs) {
       .values({
         userId: u?.id ?? null,
         addressSnapshot: address,
-        items: items as unknown as Record<string, unknown>[],
+        items: pricedItems as unknown as Record<string, unknown>[],
         subtotal,
         deliveryCharge: delivery,
         totalAmount,

@@ -4,12 +4,9 @@ import { getD1Db } from "@/lib/db.d1";
 import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq } from "drizzle-orm";
 import { CF_BASE, cfHeaders } from "@/lib/cashfree";
+import { repriceSubscription, PricingError, type SubLineInput } from "@/lib/server-pricing";
+import { rateLimit } from "@/lib/rate-limit";
 import type { Route } from "./+types/subscription.create-upfront";
-
-interface SubscriptionItem {
-  name: string;
-  price: number;
-}
 
 interface DeliveryAddress {
   addressLine1: string;
@@ -24,7 +21,8 @@ interface UpfrontRequest {
   customerEmail: string;
   customerPhone: string;
   address: DeliveryAddress;
-  items: SubscriptionItem[];
+  primary: SubLineInput;
+  addons?: SubLineInput[];
   months: number;
 }
 
@@ -32,6 +30,9 @@ export const UPFRONT_DISCOUNT_RATE = 0.05;
 
 export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const limited = await rateLimit(context, request, "subscription");
+    if (limited) return limited;
+
     const d1 = getD1Db(context.get(cloudflareContext).env.DB);
     if (!process.env.CASHFREE_CLIENT_ID || !process.env.CASHFREE_CLIENT_SECRET) {
       return Response.json(
@@ -43,17 +44,10 @@ export async function action({ request, context }: Route.ActionArgs) {
     const session = await auth.api.getSession({ headers: request.headers });
 
     const body: UpfrontRequest = await request.json();
-    const { customerName, customerEmail, customerPhone, address, items, months } = body;
+    const { customerName, customerEmail, customerPhone, address, primary, addons } = body;
+    const months = Math.min(36, Math.max(1, Math.floor(Number(body.months) || 0)));
 
-    if (
-      !customerName ||
-      !customerEmail ||
-      !customerPhone ||
-      !items?.length ||
-      items.some((item) => !item.name || !item.price) ||
-      !months ||
-      months < 1
-    ) {
+    if (!customerName || !customerEmail || !customerPhone || !primary?.slug || months < 1) {
       return Response.json(
         { error: "Missing required subscription fields" },
         { status: 400 },
@@ -67,7 +61,17 @@ export async function action({ request, context }: Route.ActionArgs) {
       );
     }
 
-    const monthlyTotal = items.reduce((sum, item) => sum + item.price, 0);
+    // Prices/labels rebuilt server-side from the catalog.
+    let items: { name: string; price: number }[];
+    let monthlyTotal: number;
+    try {
+      ({ items, monthlyTotal } = repriceSubscription(primary, addons ?? []));
+    } catch (e) {
+      return Response.json(
+        { error: e instanceof PricingError ? e.message : "Invalid subscription items" },
+        { status: 400 },
+      );
+    }
     const fullTotal = monthlyTotal * months;
     const totalAmount = Math.round(fullTotal * (1 - UPFRONT_DISCOUNT_RATE) * 100) / 100;
 

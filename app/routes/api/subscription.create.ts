@@ -3,12 +3,9 @@ import { subscription } from "@/lib/schema.d1";
 import { getD1Db } from "@/lib/db.d1";
 import { cloudflareContext } from "@/lib/cloudflare-context";
 import { CF_BASE, cfSubscriptionHeaders } from "@/lib/cashfree";
+import { repriceSubscription, PricingError, type SubLineInput } from "@/lib/server-pricing";
+import { rateLimit } from "@/lib/rate-limit";
 import type { Route } from "./+types/subscription.create";
-
-interface SubscriptionItem {
-  name: string;
-  price: number;
-}
 
 interface DeliveryAddress {
   addressLine1: string;
@@ -23,14 +20,16 @@ interface SubscriptionRequest {
   customerEmail: string;
   customerPhone: string;
   address: DeliveryAddress;
-  items: SubscriptionItem[];
-  planIntervalType: "DAY" | "WEEK" | "MONTH" | "YEAR";
-  planIntervals?: number;
-  planMaxCycles?: number;
+  primary: SubLineInput;
+  addons?: SubLineInput[];
+  months: number;
 }
 
 export async function action({ request, context }: Route.ActionArgs) {
   try {
+    const limited = await rateLimit(context, request, "subscription");
+    if (limited) return limited;
+
     const d1 = getD1Db(context.get(cloudflareContext).env.DB);
     if (!process.env.CASHFREE_CLIENT_ID || !process.env.CASHFREE_CLIENT_SECRET) {
       return Response.json(
@@ -42,24 +41,9 @@ export async function action({ request, context }: Route.ActionArgs) {
     const session = await auth.api.getSession({ headers: request.headers });
 
     const body: SubscriptionRequest = await request.json();
-    const {
-      customerName,
-      customerEmail,
-      customerPhone,
-      address,
-      items,
-      planIntervalType,
-      planIntervals = 1,
-      planMaxCycles = 12,
-    } = body;
+    const { customerName, customerEmail, customerPhone, address, primary, addons, months } = body;
 
-    if (
-      !customerName ||
-      !customerEmail ||
-      !customerPhone ||
-      !items?.length ||
-      items.some((item) => !item.name || !item.price)
-    ) {
+    if (!customerName || !customerEmail || !customerPhone || !primary?.slug) {
       return Response.json(
         { error: "Missing required subscription fields" },
         { status: 400 },
@@ -73,7 +57,25 @@ export async function action({ request, context }: Route.ActionArgs) {
       );
     }
 
-    const planAmount = items.reduce((sum, item) => sum + item.price, 0);
+    const planMaxCycles = Math.min(36, Math.max(1, Math.floor(Number(months) || 0)));
+    if (planMaxCycles < 1) {
+      return Response.json({ error: "Invalid subscription length" }, { status: 400 });
+    }
+    const planIntervalType = "MONTH" as const;
+    const planIntervals = 1;
+
+    // Prices and labels are rebuilt server-side from the catalog - the client
+    // only supplies slug + variant name per line.
+    let items: { name: string; price: number }[];
+    let planAmount: number;
+    try {
+      ({ items, monthlyTotal: planAmount } = repriceSubscription(primary, addons ?? []));
+    } catch (e) {
+      return Response.json(
+        { error: e instanceof PricingError ? e.message : "Invalid subscription items" },
+        { status: 400 },
+      );
+    }
     const planName = items.map((item) => item.name).join(" + ").slice(0, 40);
 
     const subscriptionId = `sub_${Date.now()}_${Math.random()

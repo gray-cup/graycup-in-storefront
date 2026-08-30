@@ -1,6 +1,7 @@
 import type { Product } from "./types";
+import { reviseRetailCoffeePricing } from "./pricing";
 
-export const filterCoffeeProducts: Product[] = [
+export const filterCoffeeProducts: Product[] = reviseRetailCoffeePricing([
   {
     slug: "filter-coffee-arabica-robusta",
     name: "Filter Coffee (70% Arabica, 30% Robusta)",
@@ -496,4 +497,4 @@ export const filterCoffeeProducts: Product[] = [
     availability: "in_stock",
     googleProductCategory: "1868",
   },
-];
+]);

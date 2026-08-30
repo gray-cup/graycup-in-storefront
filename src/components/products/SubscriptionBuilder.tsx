@@ -147,32 +147,31 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
     setLoading(true);
     try {
       const isUpfront = paymentType === "upfront";
+      // Send only structural references - the server rebuilds every price from
+      // the catalog, so a tampered client payload can't change what's charged.
+      const payload = {
+        customerName: name,
+        customerEmail: email,
+        customerPhone: phone,
+        address,
+        months,
+        primary: {
+          slug: product.slug,
+          variantName: primaryVariant.name,
+          quantity,
+          grind: isCoffee ? grindSize : undefined,
+        },
+        addons: Object.entries(selectedAddons).map(([slug, variant]) => ({
+          slug,
+          variantName: variant.name,
+        })),
+      };
       const res = await fetch(
         isUpfront ? "/api/subscription/create-upfront" : "/api/subscription/create",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(
-            isUpfront
-              ? {
-                  customerName: name,
-                  customerEmail: email,
-                  customerPhone: phone,
-                  address,
-                  items,
-                  months,
-                }
-              : {
-                  customerName: name,
-                  customerEmail: email,
-                  customerPhone: phone,
-                  address,
-                  items,
-                  planIntervalType: "MONTH",
-                  planIntervals: 1,
-                  planMaxCycles: months,
-                },
-          ),
+          body: JSON.stringify(payload),
         },
       );
 

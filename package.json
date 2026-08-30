@@ -8,6 +8,8 @@
     "generate:og": "tsx scripts/generate-og-images.ts",
     "generate:sitemap": "tsx scripts/generate-sitemap.ts",
     "fetch:guide-images": "tsx scripts/fetch-guide-images.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node --env-file=.env scripts/apply-migrations.mjs",
     "prebuild": "npm run generate:og",
     "build": "react-router build && npm run generate:sitemap",
     "start": "wrangler dev",

@@ -1,6 +1,7 @@
 import type { Product } from "./types";
+import { reviseRetailCoffeePricing } from "./pricing";
 
-export const estateCoffeeProducts: Product[] = [
+export const estateCoffeeProducts: Product[] = reviseRetailCoffeePricing([
   {
     slug: "karadykan-estate-coffee",
     name: "Karadykan Estate Coffee",
@@ -184,4 +185,4 @@ export const estateCoffeeProducts: Product[] = [
     availability: "in_stock",
     googleProductCategory: "1868",
   },
-];
+]);

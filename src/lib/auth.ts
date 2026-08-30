@@ -1,5 +1,5 @@
 import { betterAuth } from "better-auth";
-import { captcha } from "better-auth/plugins";
+import { captcha, admin } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "./db";
 import { user, session, account, verification } from "./schema";
@@ -40,6 +40,10 @@ export const auth = betterAuth({
       provider: "cloudflare-turnstile",
       secretKey: process.env.TURNSTILE_SECRET_KEY!,
     }),
+    // Adds server-controlled `role` (default "user") + ban fields to the user
+    // table. Promote an admin with:
+    //   UPDATE "user" SET role = 'admin' WHERE email = '...';
+    admin(),
   ],
   rateLimit: {
     enabled: true,

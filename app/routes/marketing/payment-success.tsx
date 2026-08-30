@@ -26,7 +26,7 @@ type VerifyResult =
       addressSnapshot: AddressSnapshot | null;
       itemCount: number | null;
     }
-  | { status: "pending" | "failed"; orderId: string | null; amount: number | null }
+  | { status: "pending" | "failed" | "review"; orderId: string | null; amount: number | null }
   | null;
 
 function SuccessContent() {
@@ -158,7 +158,9 @@ function SuccessContent() {
   }
 
   // ── Pending (still processing) ────────────────────────────────────────────
-  if (result?.status === "pending") {
+  // "review" = payment succeeded but the amount didn't match the order; it's
+  // held for a human to check. Show the same "being verified" message.
+  if (result?.status === "pending" || result?.status === "review") {
     return (
       <div className="mx-auto max-w-md px-4 py-16 text-center">
         <div className="flex justify-center mb-6">

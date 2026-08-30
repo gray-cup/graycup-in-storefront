@@ -48,23 +48,49 @@ export async function loader({ request, context }: Route.LoaderArgs) {
       }
     }
 
-    // ── 3. Update our order record ────────────────────────────────────────
+    // ── 3. Guard against an amount mismatch before trusting "paid" ────────
+    // Same check as the webhook: our totalAmount is server-derived, so if
+    // Cashfree settled a different amount, hold for review instead of paid.
+    let effectiveStatus: string = paymentStatus;
+    let mismatchNote: string | undefined;
+    if (paymentStatus === "paid") {
+      const [existing] = await d1
+        .select({ total: order.totalAmount })
+        .from(order)
+        .where(eq(order.cashfreeOrderId, cashfreeOrderId))
+        .limit(1);
+      const paidAmount = Number(cfOrder.order_amount);
+      const expected = existing ? Number(existing.total) : NaN;
+      if (
+        existing &&
+        !(Number.isFinite(paidAmount) && Math.abs(paidAmount - expected) <= 1)
+      ) {
+        console.error(
+          `Payment verify amount mismatch for ${cashfreeOrderId}: paid ${paidAmount}, expected ${expected}`,
+        );
+        effectiveStatus = "review";
+        mismatchNote = `AMOUNT MISMATCH: paid ${paidAmount}, expected ${expected}`;
+      }
+    }
+
+    // ── 4. Update our order record ────────────────────────────────────────
     const [updated] = await d1
       .update(order)
       .set({
-        paymentStatus,
+        paymentStatus: effectiveStatus,
         ...(cfPaymentId && { cashfreePaymentId: cfPaymentId }),
+        ...(mismatchNote && { notes: mismatchNote }),
         updatedAt: new Date().toISOString(),
       })
       .where(eq(order.cashfreeOrderId, cashfreeOrderId))
       .returning();
 
-    if (paymentStatus === "paid") {
+    if (effectiveStatus === "paid") {
       await finalizeCouponUsage(d1, cashfreeOrderId);
     }
 
     return Response.json({
-      status: paymentStatus,
+      status: effectiveStatus,
       orderId: updated?.id ?? null,
       cashfreeOrderId,
       amount: cfOrder.order_amount,

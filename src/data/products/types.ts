@@ -78,6 +78,8 @@ export type Product = {
   isFundraiser?: boolean;
   /** Bulk wholesale SKU - only shown on /wholesale, excluded from the retail catalog, homepage, and feeds. */
   isWholesale?: boolean;
+  /** Ships free regardless of cart value (set for Speciality coffee in the 2026 price revision). */
+  freeShipping?: boolean;
   // Google Merchant Center fields
   sku: string;
   brand: string;

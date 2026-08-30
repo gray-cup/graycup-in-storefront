@@ -25,10 +25,16 @@ export function calculateCartTotal(items: CartItem[]): number {
   }, 0);
 }
 
+// Free-delivery threshold: a cart (or Buy Now) subtotal at/above this ships the
+// flat-rate portion free. Speciality coffee (product.freeShipping) always ships
+// free on its own line regardless of subtotal.
+export const FREE_DELIVERY_THRESHOLD = 400;
+
 // Wholesale variants (5kg+) carry their own courier/logistics deliveryCharge,
 // since a flat retail parcel rate doesn't cover shipping 5-100kg of coffee.
 // Falls back to `flatRate` only for the portion of the cart still made up of
-// items without a variant-level deliveryCharge (regular retail packs).
+// items without a variant-level deliveryCharge (regular retail packs), and only
+// when the subtotal is below the free-delivery threshold.
 export function calculateDeliveryCharge(items: CartItem[], flatRate: number): number {
   let wholesaleDelivery = 0;
   let hasFlatRateItem = false;
@@ -37,12 +43,14 @@ export function calculateDeliveryCharge(items: CartItem[], flatRate: number): nu
     const charge = item.selectedVariant?.deliveryCharge;
     if (charge != null) {
       wholesaleDelivery += charge * item.quantity;
-    } else {
+    } else if (!item.product.freeShipping) {
       hasFlatRateItem = true;
     }
   }
 
-  return wholesaleDelivery + (hasFlatRateItem ? flatRate : 0);
+  const subtotal = calculateCartTotal(items);
+  const flat = hasFlatRateItem && subtotal < FREE_DELIVERY_THRESHOLD ? flatRate : 0;
+  return wholesaleDelivery + flat;
 }
 
 export function getCartFromStorage(): CartItem[] {

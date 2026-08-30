@@ -1,12 +1,5 @@
+import { rateLimit } from "@/lib/rate-limit";
 import type { Route } from "./+types/contact";
-
-// Rate limiting configuration
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 5; // 5 requests per minute per IP
-const RATE_LIMIT_STORAGE = new Map<
-  string,
-  { count: number; resetTime: number }
->();
 
 interface ContactFormData {
   name: string;
@@ -28,44 +21,6 @@ function getClientIP(request: Request): string {
 
   // Fallback for unknown IP
   return "unknown";
-}
-
-function checkRateLimit(ip: string): { allowed: boolean; resetTime?: number } {
-  const now = Date.now();
-
-  // Workers don't allow setInterval at module scope, so expired entries are
-  // swept opportunistically here (inside a request) instead of on a timer.
-  if (RATE_LIMIT_STORAGE.size > 1000) {
-    for (const [key, entry] of RATE_LIMIT_STORAGE.entries()) {
-      if (now > entry.resetTime) {
-        RATE_LIMIT_STORAGE.delete(key);
-      }
-    }
-  }
-
-  const clientData = RATE_LIMIT_STORAGE.get(ip);
-
-  if (!clientData || now > clientData.resetTime) {
-    // First request or window expired
-    RATE_LIMIT_STORAGE.set(ip, {
-      count: 1,
-      resetTime: now + RATE_LIMIT_WINDOW,
-    });
-    return { allowed: true };
-  }
-
-  if (clientData.count >= MAX_REQUESTS_PER_WINDOW) {
-    return {
-      allowed: false,
-      resetTime: clientData.resetTime,
-    };
-  }
-
-  // Increment count
-  clientData.count++;
-  RATE_LIMIT_STORAGE.set(ip, clientData);
-
-  return { allowed: true };
 }
 
 function validateContactData(data: any): {
@@ -165,37 +120,16 @@ export async function loader() {
   return Response.json({ error: "Method not allowed" }, { status: 405 });
 }
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   if (request.method === "PUT" || request.method === "DELETE") {
     return Response.json({ error: "Method not allowed" }, { status: 405 });
   }
 
   try {
-    // Get client IP for rate limiting
     const clientIP = getClientIP(request);
 
-    // Check rate limit
-    const rateLimitResult = checkRateLimit(clientIP);
-    if (!rateLimitResult.allowed) {
-      const resetTime = rateLimitResult.resetTime || Date.now();
-      const retryAfter = Math.ceil((resetTime - Date.now()) / 1000);
-
-      return Response.json(
-        {
-          error: "Too many requests. Please try again later.",
-          retryAfter,
-        },
-        {
-          status: 429,
-          headers: {
-            "Retry-After": retryAfter.toString(),
-            "X-RateLimit-Limit": MAX_REQUESTS_PER_WINDOW.toString(),
-            "X-RateLimit-Remaining": "0",
-            "X-RateLimit-Reset": Math.ceil(resetTime / 1000).toString(),
-          },
-        },
-      );
-    }
+    const limited = await rateLimit(context, request, "contact");
+    if (limited) return limited;
 
     // Parse request body
     let body;
@@ -248,22 +182,10 @@ export async function action({ request }: Route.ActionArgs) {
     }
 
     // Return success response
-    return Response.json(
-      {
-        success: true,
-        message: "Contact form submitted successfully",
-      },
-      {
-        status: 200,
-        headers: {
-          "X-RateLimit-Limit": MAX_REQUESTS_PER_WINDOW.toString(),
-          "X-RateLimit-Remaining": (
-            MAX_REQUESTS_PER_WINDOW -
-            (RATE_LIMIT_STORAGE.get(clientIP)?.count || 0)
-          ).toString(),
-        },
-      },
-    );
+    return Response.json({
+      success: true,
+      message: "Contact form submitted successfully",
+    });
   } catch (error) {
     console.error("Contact form API error:", error);
 
