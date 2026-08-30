@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { captcha, admin } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "./db";
-import { user, session, account, verification } from "./schema";
+import { user, session, account, verification } from "./schema.d1";
 import { sendVerificationEmail, sendPasswordResetEmail } from "./email";
 
 export const auth = betterAuth({
@@ -12,7 +12,7 @@ export const auth = betterAuth({
     "https://graycup.in",
   secret: process.env.BETTER_AUTH_SECRET!,
   database: drizzleAdapter(db, {
-    provider: "pg",
+    provider: "sqlite",
     schema: { user, session, account, verification },
   }),
   emailAndPassword: {
@@ -42,7 +42,7 @@ export const auth = betterAuth({
     }),
     // Adds server-controlled `role` (default "user") + ban fields to the user
     // table. Promote an admin with:
-    //   UPDATE "user" SET role = 'admin' WHERE email = '...';
+    //   UPDATE storefront_user SET role = 'admin' WHERE email = '...';
     admin(),
   ],
   rateLimit: {

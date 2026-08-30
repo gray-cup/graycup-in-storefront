@@ -1,7 +1,5 @@
 import { auth } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { address as addressTable } from "@/lib/schema";
-import { order } from "@/lib/schema.d1";
+import { order, address as addressTable } from "@/lib/schema.d1";
 import { getD1Db } from "@/lib/db.d1";
 import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq, count } from "drizzle-orm";
@@ -123,13 +121,13 @@ export async function action({ request, context }: Route.ActionArgs) {
 
     // ── Save address for logged-in users (first order only) ───────────────
     if (u?.id) {
-      const [{ value: addrCount }] = await db
+      const [{ value: addrCount }] = await d1
         .select({ value: count() })
         .from(addressTable)
         .where(eq(addressTable.userId, u.id));
 
       if (addrCount === 0) {
-        await db.insert(addressTable).values({
+        await d1.insert(addressTable).values({
           userId: u.id,
           addressLine1: address.addressLine1,
           addressLine2: address.addressLine2 || null,

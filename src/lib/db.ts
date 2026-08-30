@@ -1,20 +1,24 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle, type NeonHttpDatabase } from "drizzle-orm/neon-http";
-import * as schema from "./schema";
+import { drizzle, type DrizzleD1Database } from "drizzle-orm/d1";
+import * as schema from "./schema.d1";
 
-// Lazily initialised so the build doesn't crash when DATABASE_URL is absent.
-let _db: NeonHttpDatabase<typeof schema> | null = null;
+export { schema };
 
-function getDb(): NeonHttpDatabase<typeof schema> {
-  if (_db) return _db;
-  const url = process.env.DATABASE_URL;
-  if (!url) throw new Error("DATABASE_URL environment variable is not set");
-  _db = drizzle(neon(url), { schema });
+// Everything is on Cloudflare D1 now (the "graycup-orders" database, DB
+// binding). workers/app.ts stashes env.DB on globalThis per request so this
+// stays importable as a plain singleton - no per-request wiring at call sites.
+// ponytail: globalThis stash, switch to a context-passed binding if this app
+// ever runs multiple D1s or needs isolate-safe request scoping.
+let _db: DrizzleD1Database<typeof schema> | null = null;
+
+function getDb(): DrizzleD1Database<typeof schema> {
+  const d1 = (globalThis as unknown as { DB?: D1Database }).DB;
+  if (!d1) throw new Error("D1 binding `DB` is not available on globalThis");
+  if (!_db) _db = drizzle(d1, { schema });
   return _db;
 }
 
-export const db = new Proxy({} as NeonHttpDatabase<typeof schema>, {
+export const db = new Proxy({} as DrizzleD1Database<typeof schema>, {
   get(_target, prop) {
-    return getDb()[prop as keyof NeonHttpDatabase<typeof schema>];
+    return getDb()[prop as keyof DrizzleD1Database<typeof schema>];
   },
 });

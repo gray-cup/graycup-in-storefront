@@ -17,6 +17,10 @@ const requestHandler = createRequestHandler(
 // sees requests that fall through to SSR (documents + resource routes).
 export default {
   async fetch(request, env, ctx) {
+    // Expose the D1 binding to the plain `db` singleton (src/lib/db.ts) and to
+    // better-auth, which are imported outside the request/router context.
+    (globalThis as unknown as { DB?: D1Database }).DB = env.DB;
+
     const routerContext = new RouterContextProvider();
     routerContext.set(cloudflareContext, { env, ctx });
 

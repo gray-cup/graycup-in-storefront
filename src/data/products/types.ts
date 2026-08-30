@@ -80,6 +80,8 @@ export type Product = {
   isWholesale?: boolean;
   /** Ships free regardless of cart value (set for Speciality coffee in the 2026 price revision). */
   freeShipping?: boolean;
+  /** Opt this SKU out of the automatic 2026 Commercial +₹90 revision - its variant prices are already final. */
+  skipPriceRevision?: boolean;
   // Google Merchant Center fields
   sku: string;
   brand: string;

@@ -6,7 +6,8 @@ import type { Product } from "./types";
 // the same number. Wholesale and fundraiser SKUs are untouched.
 export function reviseRetailCoffeePricing(products: Product[]): Product[] {
   return products.map((p) => {
-    if (p.category !== "Coffee" || p.isWholesale || p.isFundraiser) return p;
+    if (p.category !== "Coffee" || p.isWholesale || p.isFundraiser || p.skipPriceRevision)
+      return p;
     const bump = p.quality === "Speciality" ? 70 : 90;
     return {
       ...p,

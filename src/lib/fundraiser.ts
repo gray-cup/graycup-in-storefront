@@ -1,5 +1,5 @@
-import { sql } from "drizzle-orm";
-import { db } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { db, schema } from "@/lib/db";
 import {
   FUNDRAISER_GOAL_INR,
   FUNDRAISER_PACK_PRICE_INR,
@@ -16,14 +16,22 @@ export type FundraiserStats = {
 };
 
 export async function getFundraiserStats(): Promise<FundraiserStats> {
-  const result = await db.execute<{ packs_sold: string | null }>(sql`
-    select coalesce(sum((item->>'quantity')::int), 0) as packs_sold
-    from "order", jsonb_array_elements(items) as item
-    where payment_status = 'paid'
-      and item->'product'->>'slug' = ${FUNDRAISER_PRODUCT_SLUG}
-  `);
+  // D1 has no jsonb_array_elements - pull paid orders and sum in JS. Volume is
+  // low enough that scanning paid orders per request is fine.
+  // ponytail: full scan of paid orders, add a materialised counter if this
+  // ever gets hot.
+  const rows = await db
+    .select({ items: schema.order.items })
+    .from(schema.order)
+    .where(eq(schema.order.paymentStatus, "paid"));
 
-  const packsSold = Number(result.rows[0]?.packs_sold ?? 0);
+  let packsSold = 0;
+  for (const { items } of rows) {
+    for (const it of (items as { product?: { slug?: string }; quantity?: number }[]) ?? []) {
+      if (it.product?.slug === FUNDRAISER_PRODUCT_SLUG) packsSold += Number(it.quantity ?? 0);
+    }
+  }
+
   const raisedInr = packsSold * FUNDRAISER_PACK_PRICE_INR;
   const percent = Math.min(100, (raisedInr / FUNDRAISER_GOAL_INR) * 100);
 
