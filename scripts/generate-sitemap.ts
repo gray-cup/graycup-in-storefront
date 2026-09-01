@@ -100,19 +100,11 @@ function buildSitemapXml(urls: string[]): string {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>\n`;
 }
 
-function buildSitemapIndexXml(fileNames: string[], lastmod: string): string {
-  const entries = fileNames
-    .map(
-      (name) =>
-        `  <sitemap>\n    <loc>${SITE_URL}/${name}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </sitemap>`,
-    )
+function buildRobotsTxt(sitemapFiles: string[]): string {
+  const lines = ["sitemap.xml", ...sitemapFiles]
+    .map((name) => `Sitemap: ${SITE_URL}/${name}`)
     .join("\n");
-
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</sitemapindex>\n`;
-}
-
-function buildRobotsTxt(): string {
-  return `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
+  return `User-agent: *\nAllow: /\n\n${lines}\n`;
 }
 
 function main() {
@@ -120,22 +112,19 @@ function main() {
 
   const urls = collectUrls();
   const batches = chunk(urls, URLS_PER_SITEMAP);
-  const lastmod = new Date().toISOString().slice(0, 10);
 
-  // sitemap.xml stays the entry point, but is now an index pointing at
-  // sitemap-1.xml .. sitemap-N.xml (<=250 URLs each). robots.txt is unchanged.
+  // sitemap.xml = every URL in one file. sitemap-1.xml .. sitemap-N.xml = the
+  // same URLs split into <=250-URL batches (easier to read crawl coverage
+  // per-batch in Search Console). All are listed in robots.txt.
   const fileNames = batches.map((_, i) => `sitemap-${i + 1}.xml`);
+  writeFileSync(path.join(OUTPUT_DIR, "sitemap.xml"), buildSitemapXml(urls));
   batches.forEach((batch, i) => {
     writeFileSync(path.join(OUTPUT_DIR, fileNames[i]), buildSitemapXml(batch));
   });
-  writeFileSync(
-    path.join(OUTPUT_DIR, "sitemap.xml"),
-    buildSitemapIndexXml(fileNames, lastmod),
-  );
-  writeFileSync(path.join(OUTPUT_DIR, "robots.txt"), buildRobotsTxt());
+  writeFileSync(path.join(OUTPUT_DIR, "robots.txt"), buildRobotsTxt(fileNames));
 
   console.log(
-    `Wrote sitemap.xml (index) + ${fileNames.length} sitemaps for ${urls.length} URLs to ${path.relative(ROOT, OUTPUT_DIR)}/`,
+    `Wrote sitemap.xml (${urls.length} URLs) + ${fileNames.length} batch sitemaps to ${path.relative(ROOT, OUTPUT_DIR)}/`,
   );
 }
 
