@@ -1,0 +1,8 @@
+/* TEAM */
+Maintainer: gray-cup
+Site: https://graycup.in
+
+/* SITE */
+Last update: 2026-09-01
+Repository: https://github.com/gray-cup/graycup-in-storefront
+Components: react, tailwindcss, typescript
