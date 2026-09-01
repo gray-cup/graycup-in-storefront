@@ -1,6 +1,7 @@
 import { getCityBySlug, getTopCities } from "@/data/india-locations";
 import { wholesaleGroundCoffeeProducts } from "@/data/products";
 import { LocationListing } from "@/components/products";
+import { getLocationContent } from "@/data/location-content";
 import type { Route } from "./+types/ground-coffee-for-cafes.$city";
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -16,7 +17,12 @@ export function meta({ loaderData }: { loaderData: Awaited<ReturnType<typeof loa
   if (!loaderData) return [{ title: "Not Found" }];
   const { city, cityData, stateData } = loaderData;
   const title = `Wholesale Ground Coffee Supplier in ${cityData.city}, ${stateData.state} | Bulk Orders`;
-  const description = `Source wholesale ground coffee in bulk for ${cityData.city} cafes, hotels, and retailers. MOQ from 5 kg, GST invoice, delivered to ${cityData.city} and across ${stateData.state} by Gray Cup.`;
+  const description = getLocationContent(
+    cityData,
+    stateData,
+    "wholesale",
+    "ground coffee",
+  ).intro;
 
   return [
     { title },
@@ -34,6 +40,7 @@ export default function GroundCoffeeForCafesCityPage({ loaderData }: Route.Compo
   const { city, cityData, stateData } = loaderData;
 
   const defaultDirection: "asc" | "desc" = cityData.tier === "high" ? "desc" : "asc";
+  const content = getLocationContent(cityData, stateData, "wholesale", "ground coffee");
 
   const jsonLd = [
     {
@@ -64,7 +71,9 @@ export default function GroundCoffeeForCafesCityPage({ loaderData }: Route.Compo
     <LocationListing
       eyebrow={`Gray Cup Ground Coffee for Cafes in ${cityData.city}, ${stateData.state}`}
       title={`Ground Coffee for Cafes in ${cityData.city}`}
-      intro={`Bulk ground coffee delivered to ${cityData.city} for cafes, hotels, offices, and retailers. Ground fresh in wholesale packs, with a GST invoice on every bulk order.`}
+      intro={content.intro}
+      bodyParagraphs={content.paragraphs}
+      faqs={content.faqs}
       breadcrumbs={[
         { label: "Home", href: "/" },
         { label: "Ground Coffee for Cafes" },

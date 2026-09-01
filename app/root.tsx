@@ -6,6 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
   isRouteErrorResponse,
   type ErrorResponse,
 } from "react-router";
@@ -91,9 +92,18 @@ export function links() {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  // Self-referencing canonical for every page, query string stripped. Missing
+  // canonicals let ?variant= / utm / trailing-slash variants read as separate
+  // URLs, which spreads crawl budget thin - a known cause of "Discovered /
+  // Crawled - currently not indexed" in Search Console.
+  const { pathname } = useLocation();
+  const canonicalPath = pathname !== "/" ? pathname.replace(/\/+$/, "") : "/";
+  const canonical = `https://graycup.in${canonicalPath}`;
+
   return (
     <html lang="en">
       <head>
+        <link rel="canonical" href={canonical} />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
       <meta name="theme-color" content="#ffffff" />

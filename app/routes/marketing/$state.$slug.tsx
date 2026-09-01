@@ -9,6 +9,7 @@ import {
   getProductsForTopic,
 } from "@/data/location-topics";
 import { LocationListing } from "@/components/products";
+import { getStateLocationContent } from "@/data/location-content";
 import type { Route } from "./+types/$state.$slug";
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -25,7 +26,7 @@ export function meta({ loaderData }: { loaderData: Awaited<ReturnType<typeof loa
   if (!loaderData) return [{ title: "Not Found" }];
   const { state, topic, stateData, topicData } = loaderData;
   const title = `${topicData.label} in ${stateData.state} | Gray Cup`;
-  const description = `Order ${topicData.copyLabel} online in ${stateData.state}. Fresh-roasted, GST-invoiced, delivered across ${stateData.state} by Gray Cup.`;
+  const description = getStateLocationContent(stateData, topicData.copyLabel).intro;
 
   return [
     { title },
@@ -43,6 +44,7 @@ export default function StateTopicPage({ loaderData }: Route.ComponentProps) {
   const products = getProductsForTopic(topicData.slug);
 
   const cities = getCitiesByState(state);
+  const content = getStateLocationContent(stateData, topicData.copyLabel);
 
   const jsonLd = [
     {
@@ -74,7 +76,9 @@ export default function StateTopicPage({ loaderData }: Route.ComponentProps) {
     <LocationListing
       eyebrow={`Gray Cup for ${stateData.state}`}
       title={`${topicData.label} in ${stateData.state}`}
-      intro={`Shop ${topicData.copyLabel} for delivery across ${stateData.state}. Freshly roasted to order, packed for freshness, and shipped with a GST invoice on every order.`}
+      intro={content.intro}
+      bodyParagraphs={content.paragraphs}
+      faqs={content.faqs}
       breadcrumbs={[
         { label: "Home", href: "/" },
         { label: "Products", href: "/products" },

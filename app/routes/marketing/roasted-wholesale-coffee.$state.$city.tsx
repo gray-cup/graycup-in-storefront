@@ -5,6 +5,7 @@ import {
 } from "@/data/india-locations";
 import { wholesaleCoffeeProducts } from "@/data/products";
 import { LocationListing } from "@/components/products";
+import { getLocationContent } from "@/data/location-content";
 import type { Route } from "./+types/roasted-wholesale-coffee.$state.$city";
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -21,7 +22,12 @@ export function meta({ loaderData }: { loaderData: Awaited<ReturnType<typeof loa
   if (!loaderData) return [{ title: "Not Found" }];
   const { state, city, stateData, cityData } = loaderData;
   const title = `Wholesale Coffee Supplier in ${cityData.city}, ${stateData.state} | Bulk Roasted Coffee`;
-  const description = `Source wholesale roasted whole bean and ground coffee in bulk for ${cityData.city} cafés, hotels, and retailers. MOQ from 5 kg, GST invoice, delivered to ${cityData.city} and across ${stateData.state} by Gray Cup.`;
+  const description = getLocationContent(
+    cityData,
+    stateData,
+    "wholesale",
+    "roasted and ground coffee",
+  ).intro;
 
   return [
     { title },
@@ -37,6 +43,7 @@ export default function WholesaleCityPage({ loaderData }: Route.ComponentProps) 
 
   const defaultDirection: "asc" | "desc" = cityData.tier === "high" ? "desc" : "asc";
   const otherCities = getCitiesByState(state).filter((c) => c.citySlug !== city);
+  const content = getLocationContent(cityData, stateData, "wholesale", "roasted and ground coffee");
 
   const jsonLd = [
     {
@@ -74,7 +81,9 @@ export default function WholesaleCityPage({ loaderData }: Route.ComponentProps) 
     <LocationListing
       eyebrow={`Gray Cup Wholesale for ${cityData.city}, ${stateData.state}`}
       title={`Wholesale Coffee Beans & Ground Coffee in ${cityData.city}`}
-      intro={`Bulk roasted whole bean and ground coffee delivered to ${cityData.city} for cafés, hotels, offices, and retailers. Roasted to order in wholesale packs, with a GST invoice on every bulk order.`}
+      intro={content.intro}
+      bodyParagraphs={content.paragraphs}
+      faqs={content.faqs}
       breadcrumbs={[
         { label: "Home", href: "/" },
         { label: "Wholesale", href: "/roasted-wholesale-coffee" },

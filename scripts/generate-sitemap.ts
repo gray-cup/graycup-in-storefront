@@ -20,19 +20,17 @@ const ROOT = path.resolve(__dirname, "..");
 const OUTPUT_DIR = path.join(ROOT, "build", "client");
 const SITE_URL = process.env.SITE_URL || "https://graycup.in";
 
+// Indexable pages only - cart/checkout/payment/auth are deliberately excluded
+// (utility pages Google should never index or list).
 const STATIC_PATHS = [
   "/",
   "/about",
   "/careers",
-  "/cart",
-  "/checkout",
   "/contact",
   "/distributor-franchise",
   "/fundraisers",
   "/how-to-use",
   "/locations",
-  "/payment/failure",
-  "/payment/success",
   "/privacy",
   "/return-policy",
   "/social-responsibility",
@@ -46,9 +44,12 @@ const STATIC_PATHS = [
   "/products",
   "/glossary",
   "/guides",
-  "/auth/login",
-  "/auth/register",
 ];
+
+// Google accepts 50k URLs per sitemap; the smaller cap is per the site owner's
+// request - many small sitemaps make it easier to see in Search Console which
+// batch is/isn't getting crawled.
+const URLS_PER_SITEMAP = 250;
 
 function collectUrls(): string[] {
   const urls = new Set<string>(STATIC_PATHS);
@@ -85,12 +86,29 @@ function collectUrls(): string[] {
   return Array.from(urls);
 }
 
+function chunk<T>(arr: T[], size: number): T[][] {
+  const out: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+  return out;
+}
+
 function buildSitemapXml(urls: string[]): string {
   const entries = urls
     .map((url) => `  <url>\n    <loc>${SITE_URL}${url}</loc>\n  </url>`)
     .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>\n`;
+}
+
+function buildSitemapIndexXml(fileNames: string[], lastmod: string): string {
+  const entries = fileNames
+    .map(
+      (name) =>
+        `  <sitemap>\n    <loc>${SITE_URL}/${name}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </sitemap>`,
+    )
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</sitemapindex>\n`;
 }
 
 function buildRobotsTxt(): string {
@@ -101,10 +119,24 @@ function main() {
   mkdirSync(OUTPUT_DIR, { recursive: true });
 
   const urls = collectUrls();
-  writeFileSync(path.join(OUTPUT_DIR, "sitemap.xml"), buildSitemapXml(urls));
+  const batches = chunk(urls, URLS_PER_SITEMAP);
+  const lastmod = new Date().toISOString().slice(0, 10);
+
+  // sitemap.xml stays the entry point, but is now an index pointing at
+  // sitemap-1.xml .. sitemap-N.xml (<=250 URLs each). robots.txt is unchanged.
+  const fileNames = batches.map((_, i) => `sitemap-${i + 1}.xml`);
+  batches.forEach((batch, i) => {
+    writeFileSync(path.join(OUTPUT_DIR, fileNames[i]), buildSitemapXml(batch));
+  });
+  writeFileSync(
+    path.join(OUTPUT_DIR, "sitemap.xml"),
+    buildSitemapIndexXml(fileNames, lastmod),
+  );
   writeFileSync(path.join(OUTPUT_DIR, "robots.txt"), buildRobotsTxt());
 
-  console.log(`Wrote sitemap.xml with ${urls.length} URLs and robots.txt to ${path.relative(ROOT, OUTPUT_DIR)}/`);
+  console.log(
+    `Wrote sitemap.xml (index) + ${fileNames.length} sitemaps for ${urls.length} URLs to ${path.relative(ROOT, OUTPUT_DIR)}/`,
+  );
 }
 
 main();

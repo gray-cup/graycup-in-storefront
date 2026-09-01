@@ -6,6 +6,8 @@ import type { Product } from "@/data/products";
 type Crumb = { label: string; href?: string };
 type RelatedLink = { label: string; href: string; sublabel?: string };
 
+type Faq = { question: string; answer: string };
+
 type LocationListingProps = {
   eyebrow: string;
   title: string;
@@ -17,6 +19,10 @@ type LocationListingProps = {
   relatedLinks: RelatedLink[];
   topicLinks: RelatedLink[];
   jsonLd?: Record<string, unknown>[];
+  /** Location-specific prose rendered under the intro. */
+  bodyParagraphs?: string[];
+  /** Location-specific FAQ - rendered and emitted as FAQPage schema. */
+  faqs?: Faq[];
 };
 
 export function LocationListing({
@@ -30,10 +36,29 @@ export function LocationListing({
   relatedLinks,
   topicLinks,
   jsonLd,
+  bodyParagraphs,
+  faqs,
 }: LocationListingProps) {
+  const allSchema = [
+    ...(jsonLd ?? []),
+    ...(faqs && faqs.length > 0
+      ? [
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.question,
+              acceptedAnswer: { "@type": "Answer", text: f.answer },
+            })),
+          },
+        ]
+      : []),
+  ];
+
   return (
     <div className="min-h-screen py-20 px-4 lg:px-6">
-      {jsonLd?.map((schema, i) => (
+      {allSchema.map((schema, i) => (
         <script
           key={i}
           type="application/ld+json"
@@ -62,7 +87,14 @@ export function LocationListing({
             {eyebrow}
           </p>
           <h1 className="text-3xl md:text-4xl font-semibold text-black mb-3">{title}</h1>
-          <p className="text-md text-muted-foreground max-w-2xl mb-6">{intro}</p>
+          <p className="text-md text-muted-foreground max-w-2xl mb-4">{intro}</p>
+          {bodyParagraphs && bodyParagraphs.length > 0 && (
+            <div className="max-w-2xl space-y-3 text-sm text-muted-foreground mb-6">
+              {bodyParagraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          )}
           <div className="flex flex-wrap gap-3">
             {topicLinks.map((link) => (
               <Link key={link.href} to={link.href}>
@@ -102,6 +134,25 @@ export function LocationListing({
                   </Link>
                 ))}
               </div>
+            </div>
+          </>
+        )}
+
+        {faqs && faqs.length > 0 && (
+          <>
+            <hr className="mb-8" />
+            <div className="mb-12">
+              <h2 className="text-lg font-semibold text-black mb-4">
+                Frequently asked questions
+              </h2>
+              <dl className="space-y-5">
+                {faqs.map((f, i) => (
+                  <div key={i}>
+                    <dt className="font-medium text-black">{f.question}</dt>
+                    <dd className="text-sm text-muted-foreground mt-1">{f.answer}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </>
         )}
