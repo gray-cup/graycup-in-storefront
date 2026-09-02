@@ -7,9 +7,10 @@ import { setBuyNowItem } from "@/lib/buy-now";
 
 type GuideProductCardProps = {
   slug: string;
+  vertical?: boolean;
 };
 
-export function GuideProductCard({ slug }: GuideProductCardProps) {
+export function GuideProductCard({ slug, vertical = false }: GuideProductCardProps) {
   const product = getProductBySlug(slug);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
@@ -27,6 +28,42 @@ export function GuideProductCard({ slug }: GuideProductCardProps) {
     );
     navigate("/checkout");
   };
+
+  if (vertical) {
+    return (
+      <div className="not-prose flex h-full flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white">
+        <Link
+          to={`/products/${product.slug}`}
+          className="relative aspect-square w-full overflow-hidden bg-neutral-100"
+        >
+          <img
+            src={product.image}
+            alt={product.name}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        </Link>
+        <div className="flex flex-1 flex-col p-3">
+          <Link
+            to={`/products/${product.slug}`}
+            className="block text-sm font-semibold text-neutral-900 hover:text-neutral-700"
+          >
+            {product.name}
+          </Link>
+          <p className="mt-0.5 text-xs text-neutral-500">
+            From {CURRENCY.symbol}
+            {cheapestVariant.price.toLocaleString(CURRENCY.locale)}
+          </p>
+          <button
+            type="button"
+            onClick={handleBuyNow}
+            className="mt-3 w-full cursor-pointer rounded-lg bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
+          >
+            Buy Now
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="not-prose my-5 flex items-center gap-4 rounded-xl border border-neutral-200 bg-white p-3">
