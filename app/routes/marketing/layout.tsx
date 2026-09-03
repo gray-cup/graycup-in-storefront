@@ -3,6 +3,12 @@ import { Navbar } from "@/components/navbar";
 import Footer from "@/components/footer";
 import { FREE_DELIVERY_THRESHOLD } from "@/lib/cart";
 
+// Bare POST / (no ?index) targets this pathless layout, not the index route.
+// Absorb it so React Router doesn't throw an internal 405 into Workers logs.
+export async function action() {
+  return new Response("Method Not Allowed", { status: 405 });
+}
+
 export default function MarketingLayout() {
   return (
     <div className=" flex flex-col">

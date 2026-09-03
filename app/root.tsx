@@ -147,6 +147,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Bots POST to routes that only render (/, etc). Without an action React Router
+// throws an internal 405 that lands in Workers logs as level:error. Absorb it.
+export async function action() {
+  return new Response("Method Not Allowed", { status: 405 });
+}
+
 export default function App() {
   return <Outlet />;
 }
