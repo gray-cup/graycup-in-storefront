@@ -2,6 +2,7 @@
 
 import { Link, useNavigate, useLocation } from "react-router";
 import { getProductBySlug } from "@/data/products";
+import { productPath } from "@/lib/product-url";
 import { CURRENCY } from "@/lib/currency";
 import { setBuyNowItem } from "@/lib/buy-now";
 
@@ -33,7 +34,7 @@ export function GuideProductCard({ slug, vertical = false }: GuideProductCardPro
     return (
       <div className="not-prose flex h-full flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white">
         <Link
-          to={`/products/${product.slug}`}
+          to={productPath(product)}
           className="relative aspect-square w-full overflow-hidden bg-neutral-100"
         >
           <img
@@ -44,7 +45,7 @@ export function GuideProductCard({ slug, vertical = false }: GuideProductCardPro
         </Link>
         <div className="flex flex-1 flex-col p-3">
           <Link
-            to={`/products/${product.slug}`}
+            to={productPath(product)}
             className="block text-sm font-semibold text-neutral-900 hover:text-neutral-700"
           >
             {product.name}
@@ -68,7 +69,7 @@ export function GuideProductCard({ slug, vertical = false }: GuideProductCardPro
   return (
     <div className="not-prose my-5 flex items-center gap-4 rounded-xl border border-neutral-200 bg-white p-3">
       <Link
-        to={`/products/${product.slug}`}
+        to={productPath(product)}
         className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-neutral-100 sm:size-20"
       >
         <img
@@ -79,7 +80,7 @@ export function GuideProductCard({ slug, vertical = false }: GuideProductCardPro
       </Link>
       <div className="flex-1 min-w-0">
         <Link
-          to={`/products/${product.slug}`}
+          to={productPath(product)}
           className="block truncate text-sm font-semibold text-neutral-900 hover:text-neutral-700 sm:text-base"
         >
           {product.name}

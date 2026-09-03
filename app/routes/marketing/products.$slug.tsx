@@ -1,6 +1,7 @@
-import { Link, useLoaderData } from "react-router";
+import { Link, redirect, useLoaderData } from "react-router";
 import { and, desc, eq, isNotNull, sql } from "drizzle-orm";
 import { getProductBySlug } from "@/data/products";
+import { productPath, resolveProductSlug } from "@/lib/product-url";
 import { caffeineLabel } from "@/lib/caffeine";
 import {
   ProductConfigurator,
@@ -28,11 +29,19 @@ import type { Route } from "./+types/products.$slug";
 
 const REVALIDATE_SECONDS = 3600;
 
-export async function loader({ params, context }: Route.LoaderArgs) {
-  const product = getProductBySlug(params.slug);
+export async function loader({ params, request, context }: Route.LoaderArgs) {
+  const slug = resolveProductSlug(params.slug);
+  const product = getProductBySlug(slug);
 
   if (!product) {
     throw new Response(null, { status: 404 });
+  }
+
+  // Canonicalise: green coffee lives under /green-coffee/, everything else
+  // under /products/, and renamed slugs 301 to their current path.
+  const desiredPath = productPath(product);
+  if (new URL(request.url).pathname !== desiredPath) {
+    throw redirect(desiredPath, 301);
   }
 
   let ratingSummary: { average: number; count: number } | undefined;
@@ -54,7 +63,7 @@ export async function loader({ params, context }: Route.LoaderArgs) {
       .from(graycupReviews)
       .where(
         and(
-          eq(graycupReviews.productSlug, params.slug),
+          eq(graycupReviews.productSlug, slug),
           isNotNull(graycupReviews.rating),
         ),
       );
@@ -71,7 +80,7 @@ export async function loader({ params, context }: Route.LoaderArgs) {
         createdAt: graycupReviews.createdAt,
       })
       .from(graycupReviews)
-      .where(eq(graycupReviews.productSlug, params.slug))
+      .where(eq(graycupReviews.productSlug, slug))
       .orderBy(desc(graycupReviews.createdAt))
       .limit(10);
   } catch {
@@ -79,7 +88,7 @@ export async function loader({ params, context }: Route.LoaderArgs) {
     reviews = [];
   }
 
-  return { product, slug: params.slug, ratingSummary, reviews };
+  return { product, slug, ratingSummary, reviews };
 }
 
 export function headers() {
@@ -93,7 +102,7 @@ export function meta({ loaderData }: { loaderData: Awaited<ReturnType<typeof loa
   const { product, slug } = loaderData;
 
   const baseUrl = "https://graycup.in";
-  const productUrl = `${baseUrl}/products/${slug}`;
+  const productUrl = `${baseUrl}${productPath(product)}`;
   const ogImageUrl = `${baseUrl}/og/products/${slug}.png`;
 
   const priceLabel = product.priceRange.unit
@@ -128,7 +137,7 @@ export default function ProductPage() {
   const breadcrumbs = [
     { name: "Home", url: "https://graycup.in" },
     { name: "Products", url: "https://graycup.in/products" },
-    { name: product.name, url: `https://graycup.in/products/${slug}` },
+    { name: product.name, url: `https://graycup.in${productPath(product)}` },
   ];
 
   return (

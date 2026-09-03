@@ -3,6 +3,7 @@
 import { Link } from "react-router";
 import { Card } from "@/components/ui/card";
 import type { Product } from "@/data/products";
+import { productPath } from "@/lib/product-url";
 import { CURRENCY } from "@/lib/currency";
 import { ProcessBadge } from "./ProcessBadge";
 import { FlavourNoteChip } from "./FlavourNoteChip";
@@ -77,5 +78,5 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
 
   if (product.comingSoon) return <div>{card}</div>;
 
-  return <Link to={`/products/${product.slug}`}>{card}</Link>;
+  return <Link to={productPath(product)}>{card}</Link>;
 }

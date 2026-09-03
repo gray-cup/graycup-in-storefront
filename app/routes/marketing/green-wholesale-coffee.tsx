@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { greenCoffeeProducts } from "@/data/products";
 import { ProductCard } from "@/components/products/ProductCard";
+import { productUrl } from "@/lib/product-url";
 
 export function meta() {
   return [
@@ -40,7 +41,7 @@ export default function GreenWholesaleCoffeePage() {
       itemListElement: greenCoffeeProducts.map((p, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        url: `https://graycup.in/products/${p.slug}`,
+        url: productUrl(p),
       })),
     },
   ];

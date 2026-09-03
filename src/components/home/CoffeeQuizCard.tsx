@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
+import { productPath } from "@/lib/product-url";
 import { Check, ChevronLeft, RotateCcw, ShoppingCart, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -203,7 +204,7 @@ export function CoffeeQuizCard() {
                           Best match
                         </span>
                       )}
-                      <Link to={`/products/${product.slug}`} className="relative aspect-square w-full">
+                      <Link to={productPath(product)} className="relative aspect-square w-full">
                         <img
                           src={product.image}
                           alt={product.name}
@@ -213,7 +214,7 @@ export function CoffeeQuizCard() {
                       </Link>
                       <div className="flex flex-1 flex-col gap-1 p-3">
                         <Link
-                          to={`/products/${product.slug}`}
+                          to={productPath(product)}
                           className="line-clamp-2 min-h-[2.5em] text-sm font-semibold text-neutral-900 hover:underline"
                         >
                           {product.name}

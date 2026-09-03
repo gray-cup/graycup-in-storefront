@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import { getAllProductSlugs } from "../src/data/products";
+import { productPath } from "../src/lib/product-url";
 import { getAllGlossarySlugs } from "../src/data/glossary";
 import { INDIA_STATES, INDIA_CITIES } from "../src/data/india-locations";
 import { LOCATION_TOPIC_SLUGS } from "../src/data/location-topics";
@@ -55,7 +56,7 @@ function collectUrls(): string[] {
   const urls = new Set<string>(STATIC_PATHS);
 
   for (const slug of getAllProductSlugs()) {
-    urls.add(`/products/${slug}`);
+    urls.add(productPath({ slug }));
     urls.add(`/subscribe/${slug}`);
   }
 

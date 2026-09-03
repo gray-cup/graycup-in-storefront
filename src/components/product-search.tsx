@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { Search } from "lucide-react";
+import { productPath } from "@/lib/product-url";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { products } from "@/data/products";
 
@@ -34,7 +35,7 @@ export function ProductSearch() {
 
   function goToProduct(slug: string) {
     setOpen(false);
-    navigate(`/products/${slug}`);
+    navigate(productPath({ slug }));
   }
 
   return (

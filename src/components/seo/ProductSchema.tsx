@@ -1,4 +1,5 @@
 import type { Product } from "@/data/products/types";
+import { productUrl as buildProductUrl } from "@/lib/product-url";
 
 type ProductRatingSummary = {
   average: number;
@@ -29,7 +30,7 @@ function mapAvailability(availability: string): string {
 
 export function ProductSchema({ product, ratingSummary, reviews }: ProductSchemaProps) {
   const baseUrl = "https://graycup.in";
-  const productUrl = `${baseUrl}/products/${product.slug}`;
+  const productUrl = buildProductUrl(product, baseUrl);
   const imageUrl = product.image.startsWith("http")
     ? product.image
     : `${baseUrl}${product.image}`;

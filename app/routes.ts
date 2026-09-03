@@ -68,6 +68,9 @@ export default [
 
     route("products", "routes/marketing/products-index.tsx"),
     route("products/:slug", "routes/marketing/products.$slug.tsx"),
+    route("green-coffee/:slug", "routes/marketing/products.$slug.tsx", {
+      id: "green-coffee-slug",
+    }),
 
     route("glossary", "routes/marketing/glossary-index.tsx"),
     route("glossary/:slug", "routes/marketing/glossary.$slug.tsx"),

@@ -181,8 +181,8 @@ export const greenCoffeeProducts: Product[] = [
     googleProductCategory: "1868",
   },
   {
-    slug: "green-coffee-attikan-washed",
-    name: "Green Coffee - Attikan Estate (Washed)",
+    slug: "aaa-attikan-estate-washed",
+    name: "AAA Attikan Estate Arabica Washed",
     image: "/products/green-coffee-beans.png",
     images: ["/products/green-coffee-beans.png", "/products/roasted-coffee-beans.png"],
     description:

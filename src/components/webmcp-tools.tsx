@@ -16,6 +16,7 @@ import {
   retailProducts,
 } from "@/data/products";
 import type { Product } from "@/data/products/types";
+import { productUrl } from "@/lib/product-url";
 import { getQuizResult, resolveQuizProducts } from "@/lib/coffee-quiz";
 import type { QuizAnswers } from "@/lib/coffee-quiz";
 import { cartBridge, navBridge } from "@/lib/webmcp-cart-bridge";
@@ -52,7 +53,7 @@ function summariseProduct(p: Product) {
     priceFrom: p.priceRange.min,
     variants: p.variants.map((v) => ({ name: v.name, price: v.price })),
     availability: p.availability,
-    url: `https://graycup.in/products/${p.slug}`,
+    url: productUrl(p),
     description: p.description,
   };
 }

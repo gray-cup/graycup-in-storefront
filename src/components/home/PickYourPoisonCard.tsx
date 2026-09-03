@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/data/products/types";
+import { productPath } from "@/lib/product-url";
 import { CURRENCY } from "@/lib/currency";
 
 type PickYourPoisonCardProps = {
@@ -48,7 +49,7 @@ export function PickYourPoisonCard({ product }: PickYourPoisonCardProps) {
       </div>
 
       <Button asChild variant="lightgraybg" size="sm" className="relative w-full">
-        <Link to={`/products/${product.slug}`}>Pick Your Poison</Link>
+        <Link to={productPath(product)}>Pick Your Poison</Link>
       </Button>
     </div>
   );

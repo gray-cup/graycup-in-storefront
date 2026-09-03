@@ -5,6 +5,7 @@ import {
   type GlossaryRelatedFilter,
 } from "@/data/glossary";
 import { retailProducts } from "@/data/products";
+import { productPath } from "@/lib/product-url";
 import { BreadcrumbSchema, DefinedTermSchema } from "@/components/seo";
 import type { Route } from "./+types/glossary.$slug";
 
@@ -109,7 +110,7 @@ export default function GlossaryTermPage() {
               {relatedProducts.map((product) => (
                 <Link
                   key={product.slug}
-                  to={`/products/${product.slug}`}
+                  to={productPath(product)}
                   className="px-3 py-1.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-full text-sm transition-colors"
                 >
                   {product.name}
