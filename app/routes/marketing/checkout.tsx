@@ -273,10 +273,6 @@ export default function CheckoutPage() {
 
           {/* Buyer details */}
           <section>
-            <div className="flex items-center gap-2 mb-4">
-              <Package className="h-4 w-4 text-gray-500" />
-              <h2 className="font-semibold text-lg">Your Details</h2>
-            </div>
 
             {user ? (
               <div className="grid grid-cols-2 gap-3 text-sm bg-gray-50 rounded-lg p-4">
