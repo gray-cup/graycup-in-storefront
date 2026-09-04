@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CURRENCY } from "@/lib/currency";
+import { isValidIndiaPincode } from "@/lib/pincode";
 import { COFFEE_GRIND_OPTIONS, type Product, type ProductVariant } from "@/data/products";
 
 type SubscriptionBuilderProps = {
@@ -141,6 +142,10 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
     }
     if (!address.addressLine1 || !address.city || !address.state || !address.pincode) {
       toast.error("Please fill in your complete delivery address");
+      return;
+    }
+    if (!isValidIndiaPincode(address.pincode)) {
+      toast.error("Enter a valid 6-digit PIN code");
       return;
     }
 

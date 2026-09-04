@@ -10,6 +10,7 @@ import { CF_BASE, cfHeaders } from "@/lib/cashfree";
 import { validateCoupon } from "@/lib/coupons";
 import { repriceCartItems, PricingError } from "@/lib/server-pricing";
 import { rateLimit } from "@/lib/rate-limit";
+import { isValidIndiaPincode } from "@/lib/pincode";
 import type { Route } from "./+types/checkout";
 
 export async function action({ request, context }: Route.ActionArgs) {
@@ -42,6 +43,9 @@ export async function action({ request, context }: Route.ActionArgs) {
     }
     if (!address?.addressLine1 || !address?.city || !address?.state || !address?.pincode) {
       return Response.json({ error: "Complete delivery address required" }, { status: 400 });
+    }
+    if (!isValidIndiaPincode(address.pincode)) {
+      return Response.json({ error: "Enter a valid 6-digit PIN code" }, { status: 400 });
     }
 
     // Guest must supply contact details

@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
 import { getBuyNowEntry, type BuyNowSource } from "@/lib/buy-now";
 import { calculateCartTotal, calculateDeliveryCharge, type CartItem } from "@/lib/cart";
+import { isValidIndiaPincode } from "@/lib/pincode";
 
 const FLAT_DELIVERY_CHARGE = 40;
 const COUPON_STORAGE_KEY = "graycup_coupon_code";
@@ -165,6 +166,10 @@ export default function CheckoutPage() {
   async function handlePay() {
     if (!address.addressLine1 || !address.city || !address.state || !address.pincode) {
       toast.error("Please fill in all required address fields");
+      return;
+    }
+    if (!isValidIndiaPincode(address.pincode)) {
+      toast.error("Enter a valid 6-digit PIN code");
       return;
     }
 

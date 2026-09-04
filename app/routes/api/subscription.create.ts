@@ -5,6 +5,7 @@ import { cloudflareContext } from "@/lib/cloudflare-context";
 import { CF_BASE, cfSubscriptionHeaders } from "@/lib/cashfree";
 import { repriceSubscription, PricingError, type SubLineInput } from "@/lib/server-pricing";
 import { rateLimit } from "@/lib/rate-limit";
+import { isValidIndiaPincode } from "@/lib/pincode";
 import type { Route } from "./+types/subscription.create";
 
 interface DeliveryAddress {
@@ -53,6 +54,12 @@ export async function action({ request, context }: Route.ActionArgs) {
     if (!address?.addressLine1 || !address?.city || !address?.state || !address?.pincode) {
       return Response.json(
         { error: "Complete delivery address required" },
+        { status: 400 },
+      );
+    }
+    if (!isValidIndiaPincode(address.pincode)) {
+      return Response.json(
+        { error: "Enter a valid 6-digit PIN code" },
         { status: 400 },
       );
     }
