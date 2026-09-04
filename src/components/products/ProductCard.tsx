@@ -17,7 +17,7 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
   const minPrice = Math.min(...product.variants.map((v) => v.price));
 
   const card = (
-    <Card className="group overflow-hidden rounded-lg bg-neutral-50 p-0 cursor-pointer transition-all">
+    <Card className="overflow-hidden rounded-lg bg-neutral-50 p-0 transition-all">
       <div className="aspect-square relative">
         <img
           src={product.image}
@@ -78,5 +78,9 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
 
   if (product.comingSoon) return <div>{card}</div>;
 
-  return <Link to={productPath(product)}>{card}</Link>;
+  return (
+    <Link to={productPath(product)} className="group block cursor-pointer">
+      {card}
+    </Link>
+  );
 }

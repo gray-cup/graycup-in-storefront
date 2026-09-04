@@ -149,10 +149,23 @@ export async function action({ request, context }: Route.ActionArgs) {
       process.env.NEXT_PUBLIC_APP_URL ??
       "https://graycup.in";
 
+    // Surface each line's grind/roast/blend pick to Cashfree so support/refund
+    // review doesn't need to cross-reference the D1 order row.
+    const orderNote = pricedItems
+      .map((it) => {
+        const extras = [it.selectedVariant?.name, it.selectedGrind, it.selectedRoast, it.selectedBlendRatio]
+          .filter(Boolean)
+          .join(", ");
+        return `${it.product.name} x${it.quantity}${extras ? ` (${extras})` : ""}`;
+      })
+      .join("; ")
+      .slice(0, 990);
+
     const cfPayload = {
       order_id: cfOrderId,
       order_amount: totalAmount,
       order_currency: "INR",
+      order_note: orderNote,
       customer_details: {
         customer_id: u?.id ?? `guest_${Date.now()}`,
         customer_name: customerName,
