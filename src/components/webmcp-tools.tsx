@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useWebMCP } from "use-webmcp-tool";
 import {
+  COFFEE_GRIND_OPTIONS,
   getProductBySlug,
   getProductsByCategory,
   retailProducts,
@@ -277,7 +278,9 @@ function WebMCPToolsInner() {
             .join(", ")}.`,
         );
       }
-      cart.addToCart(product, args.quantity ?? 1, variant, undefined, args.grind);
+      const isCoffee = product.category === "Coffee" && !product.isSamplePack;
+      const grind = args.grind ?? (isCoffee ? COFFEE_GRIND_OPTIONS[0] : undefined);
+      cart.addToCart(product, args.quantity ?? 1, variant, undefined, grind);
       await settle();
       return { added: product.name, variant: variant?.name ?? null, cart: cartSnapshot() };
     },

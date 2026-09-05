@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/components/cart-provider";
 import { CURRENCY } from "@/lib/currency";
+import { COFFEE_GRIND_OPTIONS } from "@/data/products";
 import {
   getQuizFlow,
   getQuizResult,
@@ -228,7 +229,14 @@ export function CoffeeQuizCard() {
                           variant={isAdded ? "lightgraybg" : "black"}
                           className="mt-2 w-full"
                           onClick={() => {
-                            addToCart(product, 1, product.variants[0]);
+                            const isCoffee = product.category === "Coffee" && !product.isSamplePack;
+                            addToCart(
+                              product,
+                              1,
+                              product.variants[0],
+                              undefined,
+                              isCoffee ? COFFEE_GRIND_OPTIONS[0] : undefined,
+                            );
                             setAddedSlugs((prev) => new Set(prev).add(product.slug));
                             toast.success("Added to cart!", {
                               description: `${product.name} (${product.variants[0].name})`,

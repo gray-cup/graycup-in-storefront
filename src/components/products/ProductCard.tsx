@@ -41,7 +41,7 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
         )}
 
         {product.process && product.flavourNotes && product.flavourNotes.length > 0 && (
-          <div className="absolute inset-x-0 top-0 -translate-y-full transform bg-white p-3 shadow-md transition-transform duration-500 ease-out group-hover:translate-y-0">
+          <div className="absolute inset-x-0 top-0 -translate-y-full transform bg-white p-3 shadow-md transition-transform duration-500 ease-out [@media(hover:hover)]:group-hover:translate-y-0">
             <div className="absolute inset-x-0 top-0 h-1.5 bg-blue-600" />
             <div className="flex items-center justify-between mb-2">
               <ProcessBadge process={product.process} pill tooltipSide="bottom" />

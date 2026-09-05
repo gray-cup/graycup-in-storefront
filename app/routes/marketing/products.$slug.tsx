@@ -39,8 +39,12 @@ export async function loader({ params, request, context }: Route.LoaderArgs) {
 
   // Canonicalise: green coffee lives under /green-coffee/, everything else
   // under /products/, and renamed slugs 301 to their current path.
+  // React Router's client-side single-fetch requests hit this loader at
+  // "<path>.data", so strip that suffix before comparing - otherwise every
+  // client-side navigation here 301s to itself forever.
   const desiredPath = productPath(product);
-  if (new URL(request.url).pathname !== desiredPath) {
+  const requestPath = new URL(request.url).pathname.replace(/\.data$/, "");
+  if (requestPath !== desiredPath) {
     throw redirect(desiredPath, 301);
   }
 
