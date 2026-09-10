@@ -29,19 +29,25 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
   );
 
   const [selectedSize, setSelectedSize] = useState(product.variants[0]);
-  const [selected, setSelected] = useState<string[]>([]);
+  // One entry per sample slot; "" = not yet chosen. Duplicates are allowed -
+  // a buyer may want two of the same coffee in their box.
+  const [slots, setSlots] = useState<string[]>(() => Array(MIN_SAMPLES).fill(""));
 
-  const toggle = (name: string) => {
-    setSelected((prev) => {
-      if (prev.includes(name)) return prev.filter((n) => n !== name);
-      if (prev.length >= MAX_SAMPLES) {
-        toast.error(`You can pick up to ${MAX_SAMPLES} samples`);
-        return prev;
-      }
-      return [...prev, name];
-    });
+  const setSlot = (i: number, name: string) =>
+    setSlots((prev) => prev.map((s, idx) => (idx === i ? name : s)));
+
+  const addSlot = () => {
+    if (slots.length >= MAX_SAMPLES) {
+      toast.error(`You can pick up to ${MAX_SAMPLES} samples`);
+      return;
+    }
+    setSlots((prev) => [...prev, ""]);
   };
 
+  const removeSlot = (i: number) =>
+    setSlots((prev) => prev.filter((_, idx) => idx !== i));
+
+  const selected = useMemo(() => slots.filter(Boolean), [slots]);
   const count = selected.length;
   const totalPrice = selectedSize.price * count;
   const meetsMinimum = count >= MIN_SAMPLES;
@@ -114,32 +120,52 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
           </select>
         </div>
 
-        {/* Coffee Selection */}
-        <div className="space-y-2">
+        {/* Coffee Selection - one dropdown per sample slot. Native <select> so
+            mobile gets the OS picker (full names, no truncation, no scroll trap). */}
+        <div className="space-y-4">
           <Label>Choose your coffees</Label>
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 max-h-80 overflow-y-auto pr-1">
-            {eligibleCoffees.map((coffee) => {
-              const isChecked = selected.includes(coffee.name);
-              return (
-                <label
-                  key={coffee.slug}
-                  className={`flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm transition-colors ${
-                    isChecked
-                      ? "border-black bg-neutral-50"
-                      : "border-input hover:border-neutral-400"
-                  }`}
+          {slots.map((value, i) => {
+            const coffee = eligibleCoffees.find((c) => c.name === value);
+            return (
+              <div key={i} className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">Sample {i + 1}</span>
+                  {slots.length > MIN_SAMPLES && (
+                    <button
+                      type="button"
+                      onClick={() => removeSlot(i)}
+                      className="text-xs text-muted-foreground underline hover:text-foreground"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+                <select
+                  value={value}
+                  onChange={(e) => setSlot(i, e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={() => toggle(coffee.name)}
-                    className="accent-black"
-                  />
-                  <span className="line-clamp-1">{coffee.name}</span>
-                </label>
-              );
-            })}
-          </div>
+                  <option value="">— Select a coffee —</option>
+                  {eligibleCoffees.map((c) => (
+                    <option key={c.slug} value={c.name}>
+                      {c.name}
+                      {c.flavourNotes?.length ? ` — ${c.flavourNotes.join(", ")}` : ""}
+                    </option>
+                  ))}
+                </select>
+                {coffee && (
+                  <p className="text-xs leading-relaxed text-muted-foreground">
+                    {coffee.description}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+          {slots.length < MAX_SAMPLES && (
+            <Button type="button" variant="outline" size="sm" onClick={addSlot}>
+              + Add another sample
+            </Button>
+          )}
         </div>
 
         {/* Action Buttons */}
