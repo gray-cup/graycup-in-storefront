@@ -45,6 +45,14 @@ export const auth = betterAuth({
     //   UPDATE storefront_user SET role = 'admin' WHERE email = '...';
     admin(),
   ],
+  // On Cloudflare Workers the real client IP is only in cf-connecting-ip;
+  // without this, better-auth can't resolve an IP and every client shares one
+  // rate-limit bucket per path (one person's 5 failed logins locks out everyone).
+  advanced: {
+    ipAddress: {
+      ipAddressHeaders: ["cf-connecting-ip"],
+    },
+  },
   rateLimit: {
     enabled: true,
     window: 60,
