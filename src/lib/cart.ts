@@ -30,6 +30,12 @@ export function calculateCartTotal(items: CartItem[]): number {
 // free on its own line regardless of subtotal.
 export const FREE_DELIVERY_THRESHOLD = 400;
 
+// Sample packs (Pick Your Poison etc.) ship at a flat ₹50, free once the
+// sampler line subtotal goes above ₹1,000. Priced as its own bucket so it
+// doesn't stack with the regular flat retail rate.
+export const SAMPLE_DELIVERY_CHARGE = 50;
+export const SAMPLE_FREE_DELIVERY_THRESHOLD = 1000;
+
 // Wholesale variants (5kg+) carry their own courier/logistics deliveryCharge,
 // since a flat retail parcel rate doesn't cover shipping 5-100kg of coffee.
 // Falls back to `flatRate` only for the portion of the cart still made up of
@@ -38,11 +44,15 @@ export const FREE_DELIVERY_THRESHOLD = 400;
 export function calculateDeliveryCharge(items: CartItem[], flatRate: number): number {
   let wholesaleDelivery = 0;
   let hasFlatRateItem = false;
+  let samplePackSubtotal = 0;
 
   for (const item of items) {
     const charge = item.selectedVariant?.deliveryCharge;
+    const price = item.selectedVariant?.price ?? item.product.priceRange.min;
     if (charge != null) {
       wholesaleDelivery += charge * item.quantity;
+    } else if (item.product.isSamplePack) {
+      samplePackSubtotal += price * item.quantity;
     } else if (!item.product.freeShipping) {
       hasFlatRateItem = true;
     }
@@ -50,7 +60,11 @@ export function calculateDeliveryCharge(items: CartItem[], flatRate: number): nu
 
   const subtotal = calculateCartTotal(items);
   const flat = hasFlatRateItem && subtotal < FREE_DELIVERY_THRESHOLD ? flatRate : 0;
-  return wholesaleDelivery + flat;
+  const sampleFlat =
+    samplePackSubtotal > 0 && samplePackSubtotal <= SAMPLE_FREE_DELIVERY_THRESHOLD
+      ? SAMPLE_DELIVERY_CHARGE
+      : 0;
+  return wholesaleDelivery + flat + sampleFlat;
 }
 
 export function getCartFromStorage(): CartItem[] {

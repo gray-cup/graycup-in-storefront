@@ -1,7 +1,11 @@
 import { Outlet } from "react-router";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/footer";
-import { FREE_DELIVERY_THRESHOLD } from "@/lib/cart";
+import {
+  FREE_DELIVERY_THRESHOLD,
+  SAMPLE_DELIVERY_CHARGE,
+  SAMPLE_FREE_DELIVERY_THRESHOLD,
+} from "@/lib/cart";
 
 // Bare POST / (no ?index) targets this pathless layout, not the index route.
 // Absorb it so React Router doesn't throw an internal 405 into Workers logs.
@@ -17,7 +21,9 @@ export default function MarketingLayout() {
           solid color off this sticky element to tint the status bar */}
       <div className="sticky top-0 z-50 bg-white">
         <p className="bg-black px-4 py-1.5 text-center text-xs font-medium tracking-wide text-white">
-          Free delivery on orders above ₹{FREE_DELIVERY_THRESHOLD}
+          Free delivery above ₹{FREE_DELIVERY_THRESHOLD} · Samplers ship ₹
+          {SAMPLE_DELIVERY_CHARGE} (free above ₹
+          {SAMPLE_FREE_DELIVERY_THRESHOLD.toLocaleString("en-IN")})
         </p>
         <Navbar />
       </div>
