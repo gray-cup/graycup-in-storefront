@@ -10,7 +10,8 @@ import { Label } from "@/components/ui/label";
 import { useCart } from "@/components/cart-provider";
 import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
-import { getProductsByCategory, type Product } from "@/data/products";
+import { getProductsByCategory, COFFEE_GRIND_OPTIONS, type Product } from "@/data/products";
+import { useGrindSize } from "./grind-size-context";
 
 const MIN_SAMPLES = 3;
 const MAX_SAMPLES = 12;
@@ -21,6 +22,7 @@ type SampleBuilderProps = {
 
 export function SampleBuilder({ product }: SampleBuilderProps) {
   const { addToCart, openCart } = useCart();
+  const { grindSize, setGrindSize } = useGrindSize();
   const navigate = useNavigate();
 
   const eligibleCoffees = useMemo(
@@ -63,7 +65,7 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
       toast.error(`Pick at least ${MIN_SAMPLES} coffees`);
       return;
     }
-    addToCart(product, 1, buildCartVariant(), undefined, undefined, selected);
+    addToCart(product, 1, buildCartVariant(), undefined, grindSize, selected);
     toast.success("Added to cart!", {
       description: `${count} samples (${selectedSize.name})`,
       action: {
@@ -82,6 +84,7 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
       product,
       quantity: 1,
       selectedVariant: buildCartVariant(),
+      selectedGrind: grindSize,
       selectedSamples: selected,
     });
     navigate("/checkout");
@@ -166,6 +169,23 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
               + Add another sample
             </Button>
           )}
+        </div>
+
+        {/* Grind Size - applied to every coffee in the box */}
+        <div className="space-y-2">
+          <Label htmlFor="sample-grind">Grind Size</Label>
+          <select
+            id="sample-grind"
+            value={grindSize}
+            onChange={(e) => setGrindSize(e.target.value)}
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            {COFFEE_GRIND_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Action Buttons */}
