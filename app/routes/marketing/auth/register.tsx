@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
-import { usePostHog } from "posthog-js/react";
+import { usePostHog } from "@posthog/react";
 
 function RegisterForm() {
   const navigate = useNavigate();

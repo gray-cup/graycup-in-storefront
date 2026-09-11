@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CURRENCY } from "@/lib/currency";
 import { isValidIndiaPincode } from "@/lib/pincode";
 import { COFFEE_GRIND_OPTIONS, type Product, type ProductVariant } from "@/data/products";
-import { usePostHog } from "posthog-js/react";
+import { usePostHog } from "@posthog/react";
 
 type SubscriptionBuilderProps = {
   product: Product;

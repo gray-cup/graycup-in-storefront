@@ -12,7 +12,7 @@ import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
 import { getProductsByCategory, COFFEE_GRIND_OPTIONS, type Product } from "@/data/products";
 import { useGrindSize } from "./grind-size-context";
-import { usePostHog } from "posthog-js/react";
+import { usePostHog } from "@posthog/react";
 
 const MIN_SAMPLES = 3;
 const MAX_SAMPLES = 12;

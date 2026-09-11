@@ -14,7 +14,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { CURRENCY } from "@/lib/currency";
-import { usePostHog } from "posthog-js/react";
+import { usePostHog } from "@posthog/react";
 
 type SubscriptionRow = {
   id: string;

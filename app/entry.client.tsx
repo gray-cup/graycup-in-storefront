@@ -1,8 +1,8 @@
-import { StrictMode } from "react";
+import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 import posthog from "posthog-js";
-import { PostHogErrorBoundary, PostHogProvider } from "posthog-js/react";
+import { PostHogErrorBoundary, PostHogProvider } from "@posthog/react";
 
 const projectToken = import.meta.env.VITE_POSTHOG_PROJECT_TOKEN;
 const host = import.meta.env.VITE_POSTHOG_HOST;
@@ -23,17 +23,19 @@ if (!projectToken || !host) {
   });
 }
 
-hydrateRoot(
-  document,
-  <StrictMode>
-    {projectToken && host ? (
-      <PostHogProvider client={posthog}>
-        <PostHogErrorBoundary>
-          <HydratedRouter />
-        </PostHogErrorBoundary>
-      </PostHogProvider>
-    ) : (
-      <HydratedRouter />
-    )}
-  </StrictMode>,
-);
+startTransition(() => {
+  hydrateRoot(
+    document,
+    <StrictMode>
+      {projectToken && host ? (
+        <PostHogProvider client={posthog}>
+          <PostHogErrorBoundary>
+            <HydratedRouter />
+          </PostHogErrorBoundary>
+        </PostHogProvider>
+      ) : (
+        <HydratedRouter />
+      )}
+    </StrictMode>,
+  );
+});

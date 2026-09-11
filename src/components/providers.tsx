@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { usePostHog } from "posthog-js/react";
+import { usePostHog } from "@posthog/react";
 import { CartProvider } from "@/components/cart-provider";
 import { WebMCPTools } from "@/components/webmcp-tools";
 import { Toaster } from "@/components/ui/sonner";

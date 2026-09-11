@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import { usePostHog } from "posthog-js/react";
+import { usePostHog } from "@posthog/react";
 
 type Review = {
   id: string;

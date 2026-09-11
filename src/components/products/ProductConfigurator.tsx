@@ -14,7 +14,7 @@ import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
 import { COFFEE_GRIND_OPTIONS, type Product, type ProductVariant } from "@/data/products";
 import { useGrindSize } from "./grind-size-context";
-import { usePostHog } from "posthog-js/react";
+import { usePostHog } from "@posthog/react";
 
 type ProductConfiguratorProps = {
   product: Product;

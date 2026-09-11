@@ -14,7 +14,7 @@ import { formatPrice } from "@/lib/currency";
 import { getBuyNowEntry, type BuyNowSource } from "@/lib/buy-now";
 import { calculateCartTotal, calculateDeliveryCharge, type CartItem } from "@/lib/cart";
 import { isValidIndiaPincode } from "@/lib/pincode";
-import { usePostHog } from "posthog-js/react";
+import { usePostHog } from "@posthog/react";
 
 const FLAT_DELIVERY_CHARGE = 40;
 const COUPON_STORAGE_KEY = "graycup_coupon_code";
