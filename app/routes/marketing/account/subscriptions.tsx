@@ -14,6 +14,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { CURRENCY } from "@/lib/currency";
+import { usePostHog } from "posthog-js/react";
 
 type SubscriptionRow = {
   id: string;
@@ -46,6 +47,7 @@ const STATUS_VARIANT: Record<SubscriptionRow["status"], "default" | "secondary" 
 export default function AccountSubscriptionsPage() {
   const navigate = useNavigate();
   const { data: session, isPending: sessionLoading } = authClient.useSession();
+  const posthog = usePostHog();
   const [subscriptions, setSubscriptions] = useState<SubscriptionRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [actingOn, setActingOn] = useState<string | null>(null);
@@ -83,6 +85,7 @@ export default function AccountSubscriptionsPage() {
         return;
       }
 
+      posthog?.capture("subscription_updated", { action });
       toast.success("Subscription updated");
       await loadSubscriptions();
     } finally {

@@ -6,12 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
+import { usePostHog } from "posthog-js/react";
 
 function RegisterForm() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirect") ?? "/";
   const turnstile = useTurnstile();
+  const posthog = usePostHog();
 
   const [form, setForm] = useState({
     firstName: "",
@@ -71,6 +73,7 @@ function RegisterForm() {
 
       // requireEmailVerification is on, so no session exists yet - the buyer
       // must click the verify link we just emailed them before they can sign in.
+      posthog?.capture("account_registered");
       setSubmitted(true);
     } catch {
       toast.error("Something went wrong. Please try again.");

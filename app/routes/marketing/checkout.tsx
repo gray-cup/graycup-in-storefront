@@ -14,6 +14,7 @@ import { formatPrice } from "@/lib/currency";
 import { getBuyNowEntry, type BuyNowSource } from "@/lib/buy-now";
 import { calculateCartTotal, calculateDeliveryCharge, type CartItem } from "@/lib/cart";
 import { isValidIndiaPincode } from "@/lib/pincode";
+import { usePostHog } from "posthog-js/react";
 
 const FLAT_DELIVERY_CHARGE = 40;
 const COUPON_STORAGE_KEY = "graycup_coupon_code";
@@ -59,6 +60,7 @@ const INDIAN_STATES = [
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
+  const posthog = usePostHog();
   const { data: session, isPending } = authClient.useSession();
   const { items: cartItems, isLoading: cartLoading } = useCart();
 
@@ -137,6 +139,13 @@ export default function CheckoutPage() {
       }
 
       setAppliedCoupon({ code: data.code, discountAmount: data.discountAmount });
+      if (!silent) {
+        posthog?.capture("checkout_coupon_applied", {
+          discount_amount: data.discountAmount,
+          item_count: items.length,
+          checkout_type: isBuyNow ? "buy_now" : "cart",
+        });
+      }
       localStorage.setItem(COUPON_STORAGE_KEY, data.code);
       if (!silent) toast.success(`Coupon ${data.code} applied`);
     } catch {
@@ -214,6 +223,13 @@ export default function CheckoutPage() {
         toast.error(data.error ?? "Failed to create order. Please try again.");
         return;
       }
+
+      posthog?.capture("checkout_payment_initiated", {
+        item_count: items.length,
+        total: total + deliveryCharge - (appliedCoupon?.discountAmount ?? 0),
+        checkout_type: isBuyNow ? "buy_now" : "cart",
+        coupon_applied: Boolean(appliedCoupon),
+      });
 
       const { load } = await import("@cashfreepayments/cashfree-js");
       const cashfree = await load({

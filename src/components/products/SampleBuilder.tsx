@@ -12,6 +12,7 @@ import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
 import { getProductsByCategory, COFFEE_GRIND_OPTIONS, type Product } from "@/data/products";
 import { useGrindSize } from "./grind-size-context";
+import { usePostHog } from "posthog-js/react";
 
 const MIN_SAMPLES = 3;
 const MAX_SAMPLES = 12;
@@ -24,6 +25,7 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
   const { addToCart, openCart } = useCart();
   const { grindSize, setGrindSize } = useGrindSize();
   const navigate = useNavigate();
+  const posthog = usePostHog();
 
   const eligibleCoffees = useMemo(
     () => getProductsByCategory("Coffee").filter((p) => !p.isSamplePack),
@@ -66,6 +68,12 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
       return;
     }
     addToCart(product, 1, buildCartVariant(), undefined, grindSize, selected);
+    posthog?.capture("product_added_to_cart", {
+      product_slug: product.slug,
+      product_category: product.category,
+      sample_count: count,
+      total_price: totalPrice,
+    });
     toast.success("Added to cart!", {
       description: `${count} samples (${selectedSize.name})`,
       action: {
@@ -86,6 +94,12 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
       selectedVariant: buildCartVariant(),
       selectedGrind: grindSize,
       selectedSamples: selected,
+    });
+    posthog?.capture("buy_now_selected", {
+      product_slug: product.slug,
+      product_category: product.category,
+      sample_count: count,
+      total_price: totalPrice,
     });
     navigate("/checkout");
   };

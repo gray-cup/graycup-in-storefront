@@ -17,6 +17,7 @@
     "prepare": "husky",
     "preview": "npm run build && wrangler dev",
     "deploy": "npm run build && wrangler deploy",
+    "postdeploy": "tsx scripts/submit-indexnow.ts",
     "typecheck": "react-router typegen && tsc -b",
     "cf-typegen": "wrangler types --env-interface Env worker-configuration.d.ts"
   },
@@ -46,6 +47,7 @@
     "isbot": "^5",
     "knip": "^5.88.1",
     "lucide-react": "^0.562.0",
+    "posthog-js": "^1.430.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-hook-form": "^7.83.0",

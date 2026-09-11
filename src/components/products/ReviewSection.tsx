@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
+import { usePostHog } from "posthog-js/react";
 
 type Review = {
   id: string;
@@ -62,6 +63,7 @@ function StarDisplay({ rating }: { rating: number }) {
 }
 
 export function ReviewSection({ productSlug }: { productSlug: string }) {
+  const posthog = usePostHog();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -105,6 +107,10 @@ export function ReviewSection({ productSlug }: { productSlug: string }) {
       return;
     }
 
+    posthog?.capture("review_submitted", {
+      product_slug: productSlug,
+      rating: form.rating,
+    });
     setReviews((prev) => [data.review, ...prev]);
     setForm({ fullName: "", content: "", rating: 0 });
     setSubmitted(true);

@@ -6,12 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
+import { usePostHog } from "posthog-js/react";
 
 function LoginForm() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirect") ?? "/";
   const turnstile = useTurnstile();
+  const posthog = usePostHog();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,6 +37,7 @@ function LoginForm() {
         turnstile.reset();
         return;
       }
+      posthog?.capture("user_logged_in");
       navigate(redirectTo);
     } catch {
       toast.error("Something went wrong. Please try again.");

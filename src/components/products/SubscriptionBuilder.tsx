@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CURRENCY } from "@/lib/currency";
 import { isValidIndiaPincode } from "@/lib/pincode";
 import { COFFEE_GRIND_OPTIONS, type Product, type ProductVariant } from "@/data/products";
+import { usePostHog } from "posthog-js/react";
 
 type SubscriptionBuilderProps = {
   product: Product;
@@ -71,6 +72,7 @@ function getDefaultVariant(product: Product) {
 
 export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuilderProps) {
   const { data: session } = authClient.useSession();
+  const posthog = usePostHog();
   const [loading, setLoading] = useState(false);
   const isCoffee = product.category === "Coffee";
 
@@ -186,6 +188,14 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
         toast.error(data.error || "Could not start subscription");
         return;
       }
+
+      posthog?.capture("subscription_checkout_initiated", {
+        product_slug: product.slug,
+        payment_type: paymentType,
+        months,
+        item_count: items.length,
+        monthly_total: monthlyTotal,
+      });
 
       const { load } = await import("@cashfreepayments/cashfree-js");
       const cashfree = await load({

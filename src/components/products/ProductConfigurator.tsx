@@ -14,6 +14,7 @@ import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
 import { COFFEE_GRIND_OPTIONS, type Product, type ProductVariant } from "@/data/products";
 import { useGrindSize } from "./grind-size-context";
+import { usePostHog } from "posthog-js/react";
 
 type ProductConfiguratorProps = {
   product: Product;
@@ -34,6 +35,7 @@ function getDefaultVariant(product: Product) {
 export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const { addToCart, openCart } = useCart();
   const navigate = useNavigate();
+  const posthog = usePostHog();
   const isCoffee = product.category === "Coffee" && !product.isSamplePack;
   const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
@@ -126,6 +128,13 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       hasRoastOptions ? selectedRoast : undefined,
       hasBlendRatioOptions ? selectedBlendRatio : undefined
     );
+    posthog?.capture("product_added_to_cart", {
+      product_slug: product.slug,
+      product_category: product.category,
+      variant_name: selectedVariant.name,
+      quantity,
+      total_price: selectedVariant.price * quantity,
+    });
     toast.success("Added to cart!", {
       description: `${quantity} ${product.name} (${selectedVariant.name})`,
       action: {
@@ -143,6 +152,13 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       selectedGrind: isCoffee ? grindSize : undefined,
       selectedRoast: hasRoastOptions ? selectedRoast : undefined,
       selectedBlendRatio: hasBlendRatioOptions ? selectedBlendRatio : undefined,
+    });
+    posthog?.capture("buy_now_selected", {
+      product_slug: product.slug,
+      product_category: product.category,
+      variant_name: selectedVariant.name,
+      quantity,
+      total_price: selectedVariant.price * quantity,
     });
     navigate("/checkout");
   };
