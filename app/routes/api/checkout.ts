@@ -10,6 +10,7 @@ import { CF_BASE, cfHeaders } from "@/lib/cashfree";
 import { validateCoupon } from "@/lib/coupons";
 import { repriceCartItems, PricingError } from "@/lib/server-pricing";
 import { rateLimit } from "@/lib/rate-limit";
+import { verifyTurnstile } from "@/lib/turnstile-verify";
 import { isValidIndiaPincode } from "@/lib/pincode";
 import type { Route } from "./+types/checkout";
 
@@ -29,6 +30,7 @@ export async function action({ request, context }: Route.ActionArgs) {
       gstNumber,
       guest,
       couponCode,
+      turnstileToken,
     }: {
       items: CartItem[];
       address: Record<string, string>;
@@ -36,7 +38,16 @@ export async function action({ request, context }: Route.ActionArgs) {
       gstNumber?: string;
       guest?: { name: string; email: string; phone: string };
       couponCode?: string;
+      turnstileToken?: string;
     } = body;
+
+    const clientIp = request.headers.get("cf-connecting-ip") ?? "unknown";
+    if (!(await verifyTurnstile(turnstileToken, clientIp))) {
+      return Response.json(
+        { error: "Verification failed. Please refresh and try again." },
+        { status: 400 },
+      );
+    }
 
     if (!items?.length) {
       return Response.json({ error: "Cart is empty" }, { status: 400 });

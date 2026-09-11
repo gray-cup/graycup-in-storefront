@@ -14,6 +14,7 @@ import { formatPrice } from "@/lib/currency";
 import { getBuyNowEntry, type BuyNowSource } from "@/lib/buy-now";
 import { calculateCartTotal, calculateDeliveryCharge, type CartItem } from "@/lib/cart";
 import { isValidIndiaPincode } from "@/lib/pincode";
+import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
 import { usePostHog } from "@posthog/react";
 
 const FLAT_DELIVERY_CHARGE = 40;
@@ -61,6 +62,7 @@ const INDIAN_STATES = [
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const posthog = usePostHog();
+  const turnstile = useTurnstile();
   const { data: session, isPending } = authClient.useSession();
   const { items: cartItems, isLoading: cartLoading } = useCart();
 
@@ -181,6 +183,10 @@ export default function CheckoutPage() {
       toast.error("Enter a valid 6-digit PIN code");
       return;
     }
+    if (!turnstile.isVerified) {
+      toast.error("Please complete the verification check");
+      return;
+    }
 
     if (!user) {
       if (!guestInfo.name.trim() || !guestInfo.email.trim() || !guestInfo.phone.trim()) {
@@ -214,12 +220,14 @@ export default function CheckoutPage() {
           guest: !user
             ? { name: customerName, email: customerEmail, phone: customerPhone }
             : undefined,
+          turnstileToken: turnstile.token,
         }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
+        turnstile.reset();
         toast.error(data.error ?? "Failed to create order. Please try again.");
         return;
       }
@@ -583,11 +591,18 @@ export default function CheckoutPage() {
               <span>{formatPrice(grandTotal)}</span>
             </div>
 
+            <Turnstile
+              onVerify={turnstile.handleVerify}
+              onError={turnstile.handleError}
+              onExpire={turnstile.handleExpire}
+              className="flex justify-center"
+            />
+
             <Button
               className="w-full"
               size="lg"
               onClick={handlePay}
-              disabled={payLoading}
+              disabled={payLoading || !turnstile.isVerified}
             >
               {payLoading ? (
                 <>

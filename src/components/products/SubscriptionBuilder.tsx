@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CURRENCY } from "@/lib/currency";
 import { isValidIndiaPincode } from "@/lib/pincode";
 import { COFFEE_GRIND_OPTIONS, type Product, type ProductVariant } from "@/data/products";
+import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
 import { usePostHog } from "@posthog/react";
 
 type SubscriptionBuilderProps = {
@@ -73,6 +74,7 @@ function getDefaultVariant(product: Product) {
 export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuilderProps) {
   const { data: session } = authClient.useSession();
   const posthog = usePostHog();
+  const turnstile = useTurnstile();
   const [loading, setLoading] = useState(false);
   const isCoffee = product.category === "Coffee";
 
@@ -150,6 +152,10 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
       toast.error("Enter a valid 6-digit PIN code");
       return;
     }
+    if (!turnstile.isVerified) {
+      toast.error("Please complete the verification check");
+      return;
+    }
 
     setLoading(true);
     try {
@@ -172,6 +178,7 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
           slug,
           variantName: variant.name,
         })),
+        turnstileToken: turnstile.token,
       };
       const res = await fetch(
         isUpfront ? "/api/subscription/create-upfront" : "/api/subscription/create",
@@ -185,6 +192,7 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
       const data = await res.json();
 
       if (!res.ok) {
+        turnstile.reset();
         toast.error(data.error || "Could not start subscription");
         return;
       }
@@ -600,8 +608,20 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
             )}
           </AnimatePresence>
 
+          <Turnstile
+            onVerify={turnstile.handleVerify}
+            onError={turnstile.handleError}
+            onExpire={turnstile.handleExpire}
+            className="flex justify-center"
+          />
+
           <motion.div whileTap={{ scale: 0.98 }}>
-            <Button onClick={handleSubscribe} disabled={loading} className="w-full" size="lg">
+            <Button
+              onClick={handleSubscribe}
+              disabled={loading || !turnstile.isVerified}
+              className="w-full"
+              size="lg"
+            >
               {loading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : paymentType === "upfront" ? (

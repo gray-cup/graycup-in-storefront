@@ -6,6 +6,7 @@ import { eq } from "drizzle-orm";
 import { CF_BASE, cfHeaders } from "@/lib/cashfree";
 import { repriceSubscription, PricingError, type SubLineInput } from "@/lib/server-pricing";
 import { rateLimit } from "@/lib/rate-limit";
+import { verifyTurnstile } from "@/lib/turnstile-verify";
 import { isValidIndiaPincode } from "@/lib/pincode";
 import type { Route } from "./+types/subscription.create-upfront";
 
@@ -25,6 +26,7 @@ interface UpfrontRequest {
   primary: SubLineInput;
   addons?: SubLineInput[];
   months: number;
+  turnstileToken?: string;
 }
 
 export const UPFRONT_DISCOUNT_RATE = 0.05;
@@ -45,8 +47,16 @@ export async function action({ request, context }: Route.ActionArgs) {
     const session = await auth.api.getSession({ headers: request.headers });
 
     const body: UpfrontRequest = await request.json();
-    const { customerName, customerEmail, customerPhone, address, primary, addons } = body;
+    const { customerName, customerEmail, customerPhone, address, primary, addons, turnstileToken } = body;
     const months = Math.min(36, Math.max(1, Math.floor(Number(body.months) || 0)));
+
+    const clientIp = request.headers.get("cf-connecting-ip") ?? "unknown";
+    if (!(await verifyTurnstile(turnstileToken, clientIp))) {
+      return Response.json(
+        { error: "Verification failed. Please refresh and try again." },
+        { status: 400 },
+      );
+    }
 
     if (!customerName || !customerEmail || !customerPhone || !primary?.slug || months < 1) {
       return Response.json(

@@ -5,6 +5,7 @@ import { cloudflareContext } from "@/lib/cloudflare-context";
 import { CF_BASE, cfSubscriptionHeaders } from "@/lib/cashfree";
 import { repriceSubscription, PricingError, type SubLineInput } from "@/lib/server-pricing";
 import { rateLimit } from "@/lib/rate-limit";
+import { verifyTurnstile } from "@/lib/turnstile-verify";
 import { isValidIndiaPincode } from "@/lib/pincode";
 import type { Route } from "./+types/subscription.create";
 
@@ -24,6 +25,7 @@ interface SubscriptionRequest {
   primary: SubLineInput;
   addons?: SubLineInput[];
   months: number;
+  turnstileToken?: string;
 }
 
 export async function action({ request, context }: Route.ActionArgs) {
@@ -42,7 +44,15 @@ export async function action({ request, context }: Route.ActionArgs) {
     const session = await auth.api.getSession({ headers: request.headers });
 
     const body: SubscriptionRequest = await request.json();
-    const { customerName, customerEmail, customerPhone, address, primary, addons, months } = body;
+    const { customerName, customerEmail, customerPhone, address, primary, addons, months, turnstileToken } = body;
+
+    const clientIp = request.headers.get("cf-connecting-ip") ?? "unknown";
+    if (!(await verifyTurnstile(turnstileToken, clientIp))) {
+      return Response.json(
+        { error: "Verification failed. Please refresh and try again." },
+        { status: 400 },
+      );
+    }
 
     if (!customerName || !customerEmail || !customerPhone || !primary?.slug) {
       return Response.json(

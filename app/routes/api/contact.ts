@@ -1,4 +1,5 @@
 import { rateLimit } from "@/lib/rate-limit";
+import { verifyTurnstile } from "@/lib/turnstile-verify";
 import type { Route } from "./+types/contact";
 
 interface ContactFormData {
@@ -138,6 +139,13 @@ export async function action({ request, context }: Route.ActionArgs) {
     } catch (error) {
       return Response.json(
         { error: "Invalid JSON in request body" },
+        { status: 400 },
+      );
+    }
+
+    if (!(await verifyTurnstile(body.turnstileToken, clientIP))) {
+      return Response.json(
+        { error: "Verification failed. Please refresh and try again." },
         { status: 400 },
       );
     }

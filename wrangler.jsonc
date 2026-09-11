@@ -35,7 +35,8 @@
   "vars": {
     "SITE_URL": "https://graycup.in",
     "VITE_POSTHOG_PROJECT_TOKEN": "phc_y2GTejXDhPqaUfa27dTQ3Vmu9p4MFTzeKXdCiwD6WBFC",
-    "VITE_POSTHOG_HOST": "https://us.i.posthog.com"
+    "VITE_POSTHOG_HOST": "https://us.i.posthog.com",
+    "VITE_TURNSTILE_SITE_KEY": "0x4AAAAAADT2Yq_f3-03Eyp4"
   },
   // Per-IP rate limits for the custom API routes (best-effort, per Cloudflare
   // location). period must be 10 or 60. See src/lib/rate-limit.ts.

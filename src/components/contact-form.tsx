@@ -104,7 +104,7 @@ export function ContactForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, turnstileToken: turnstile.token }),
       });
 
       if (!response.ok) {
@@ -114,6 +114,7 @@ export function ContactForm() {
         throw new Error(errorData.error || `HTTP ${response.status}`);
       }
 
+      turnstile.reset();
       setSubmissionState("success");
       setFormData({
         name: "",
