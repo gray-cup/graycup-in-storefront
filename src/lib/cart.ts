@@ -36,21 +36,77 @@ export const FREE_DELIVERY_THRESHOLD = 400;
 export const SAMPLE_DELIVERY_CHARGE = 50;
 export const SAMPLE_FREE_DELIVERY_THRESHOLD = 1000;
 
-// Wholesale variants (5kg+) carry their own courier/logistics deliveryCharge,
-// since a flat retail parcel rate doesn't cover shipping 5-100kg of coffee.
-// Falls back to `flatRate` only for the portion of the cart still made up of
-// items without a variant-level deliveryCharge (regular retail packs), and only
-// when the subtotal is below the free-delivery threshold.
-export function calculateDeliveryCharge(items: CartItem[], flatRate: number): number {
-  let wholesaleDelivery = 0;
+// Courier rate card for wholesale (isWholesale) coffee, keyed by the order's
+// TOTAL wholesale weight in kg (not per line) - each entry is "at or below
+// this many kg, charge this much". Anything past 100kg falls back to the
+// 100kg rate; buyers that heavy should be using VRL Logistics instead (see
+// VRL_MIN_WEIGHT_KG below).
+const WHOLESALE_SHIPPING_TABLE: [maxKg: number, charge: number][] = [
+  [1, 130],
+  [2, 205],
+  [3, 260],
+  [4, 300],
+  [5, 270],
+  [6, 310],
+  [7, 350],
+  [8, 400],
+  [9, 440],
+  [10, 450],
+  [20, 846],
+  [30, 1080],
+  [40, 1320],
+  [50, 1560],
+  [60, 1800],
+  [70, 2040],
+  [80, 2280],
+  [90, 2530],
+  [100, 2761],
+];
+
+export function getWholesaleShippingCharge(totalWeightKg: number): number {
+  if (totalWeightKg <= 0) return 0;
+  if (totalWeightKg < 1) return 100;
+  for (const [maxKg, charge] of WHOLESALE_SHIPPING_TABLE) {
+    if (totalWeightKg <= maxKg) return charge;
+  }
+  return WHOLESALE_SHIPPING_TABLE[WHOLESALE_SHIPPING_TABLE.length - 1][1];
+}
+
+export function getWholesaleWeightKg(items: CartItem[]): number {
+  return items.reduce((total, item) => {
+    if (!item.product.isWholesale) return total;
+    return total + ((item.selectedVariant?.weightGrams ?? 0) * item.quantity) / 1000;
+  }, 0);
+}
+
+// VRL Logistics is a freight-collect carrier the buyer can pick instead of the
+// metered courier rate above, but only once the order is heavy enough that
+// freight actually makes sense - below this it stays selectable-but-disabled
+// in the UI. Picking it charges nothing online; the buyer pays VRL directly
+// when their warehouse receives the shipment.
+export const VRL_MIN_WEIGHT_KG = 50;
+export type ShippingMethod = "standard" | "vrl";
+
+// Falls back to `flatRate` only for the portion of the cart made up of
+// non-wholesale items (regular retail packs), and only when the subtotal is
+// below the free-delivery threshold.
+export function calculateDeliveryCharge(
+  items: CartItem[],
+  flatRate: number,
+  shippingMethod: ShippingMethod = "standard",
+): number {
+  let fixedDelivery = 0;
   let hasFlatRateItem = false;
   let samplePackSubtotal = 0;
 
   for (const item of items) {
+    if (item.product.isWholesale) continue;
     const charge = item.selectedVariant?.deliveryCharge;
     const price = item.selectedVariant?.price ?? item.product.priceRange.min;
     if (charge != null) {
-      wholesaleDelivery += charge * item.quantity;
+      // A handful of non-wholesale SKUs (e.g. small Darjeeling batches) carry
+      // their own fixed per-unit shipping cost instead of the flat rate.
+      fixedDelivery += charge * item.quantity;
     } else if (item.product.isSamplePack) {
       samplePackSubtotal += price * item.quantity;
     } else if (!item.product.freeShipping) {
@@ -58,13 +114,17 @@ export function calculateDeliveryCharge(items: CartItem[], flatRate: number): nu
     }
   }
 
+  const wholesaleKg = getWholesaleWeightKg(items);
+  const useVrl = shippingMethod === "vrl" && wholesaleKg > VRL_MIN_WEIGHT_KG;
+  const wholesaleDelivery = wholesaleKg > 0 && !useVrl ? getWholesaleShippingCharge(wholesaleKg) : 0;
+
   const subtotal = calculateCartTotal(items);
   const flat = hasFlatRateItem && subtotal < FREE_DELIVERY_THRESHOLD ? flatRate : 0;
   const sampleFlat =
     samplePackSubtotal > 0 && samplePackSubtotal <= SAMPLE_FREE_DELIVERY_THRESHOLD
       ? SAMPLE_DELIVERY_CHARGE
       : 0;
-  return wholesaleDelivery + flat + sampleFlat;
+  return wholesaleDelivery + fixedDelivery + flat + sampleFlat;
 }
 
 export function getCartFromStorage(): CartItem[] {

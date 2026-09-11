@@ -3,7 +3,7 @@ import { order, address as addressTable } from "@/lib/schema.d1";
 import { getD1Db } from "@/lib/db.d1";
 import { cloudflareContext } from "@/lib/cloudflare-context";
 import { eq, count } from "drizzle-orm";
-import { calculateDeliveryCharge, type CartItem } from "@/lib/cart";
+import { calculateDeliveryCharge, type CartItem, type ShippingMethod } from "@/lib/cart";
 
 const FLAT_DELIVERY_CHARGE = 40;
 import { CF_BASE, cfHeaders } from "@/lib/cashfree";
@@ -31,6 +31,7 @@ export async function action({ request, context }: Route.ActionArgs) {
       guest,
       couponCode,
       turnstileToken,
+      shippingMethod,
     }: {
       items: CartItem[];
       address: Record<string, string>;
@@ -39,6 +40,7 @@ export async function action({ request, context }: Route.ActionArgs) {
       guest?: { name: string; email: string; phone: string };
       couponCode?: string;
       turnstileToken?: string;
+      shippingMethod?: ShippingMethod;
     } = body;
 
     const clientIp = request.headers.get("cf-connecting-ip") ?? "unknown";
@@ -94,7 +96,11 @@ export async function action({ request, context }: Route.ActionArgs) {
         { status: 400 },
       );
     }
-    const delivery = calculateDeliveryCharge(pricedItems, FLAT_DELIVERY_CHARGE);
+    const delivery = calculateDeliveryCharge(
+      pricedItems,
+      FLAT_DELIVERY_CHARGE,
+      shippingMethod === "vrl" ? "vrl" : "standard",
+    );
 
     // Re-validate the coupon server-side against the subtotal we just computed -
     // never trust a discount amount supplied by the client.
@@ -118,7 +124,8 @@ export async function action({ request, context }: Route.ActionArgs) {
       .insert(order)
       .values({
         userId: u?.id ?? null,
-        addressSnapshot: address,
+        addressSnapshot:
+          shippingMethod === "vrl" ? { ...address, shippingMethod: "vrl" } : address,
         items: pricedItems as unknown as Record<string, unknown>[],
         subtotal,
         deliveryCharge: delivery,

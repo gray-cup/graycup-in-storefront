@@ -12,7 +12,14 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
 import { getBuyNowEntry, type BuyNowSource } from "@/lib/buy-now";
-import { calculateCartTotal, calculateDeliveryCharge, type CartItem } from "@/lib/cart";
+import {
+  calculateCartTotal,
+  calculateDeliveryCharge,
+  getWholesaleWeightKg,
+  VRL_MIN_WEIGHT_KG,
+  type CartItem,
+  type ShippingMethod,
+} from "@/lib/cart";
 import { isValidIndiaPincode } from "@/lib/pincode";
 import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
 import { usePostHog } from "@posthog/react";
@@ -82,7 +89,9 @@ export default function CheckoutPage() {
   const isBuyNow = !!buyNowItem;
   const items = isBuyNow ? [buyNowItem] : cartItems;
   const total = calculateCartTotal(items);
-  const deliveryCharge = calculateDeliveryCharge(items, FLAT_DELIVERY_CHARGE);
+  const wholesaleWeightKg = getWholesaleWeightKg(items);
+  const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("standard");
+  const deliveryCharge = calculateDeliveryCharge(items, FLAT_DELIVERY_CHARGE, shippingMethod);
 
   const user = session?.user as AuthUser | undefined;
 
@@ -102,6 +111,15 @@ export default function CheckoutPage() {
   const [couponInput, setCouponInput] = useState("");
   const [couponApplying, setCouponApplying] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discountAmount: number } | null>(null);
+
+  // Drop back to standard shipping if the cart no longer qualifies for VRL
+  // (e.g. an item was removed) - keeps the summary in sync with what the
+  // server will actually charge.
+  useEffect(() => {
+    if (shippingMethod === "vrl" && wholesaleWeightKg <= VRL_MIN_WEIGHT_KG) {
+      setShippingMethod("standard");
+    }
+  }, [shippingMethod, wholesaleWeightKg]);
 
   // Redirect if there's nothing to check out (only after session, cart, and
   // the buy-now lookup have all resolved)
@@ -221,6 +239,7 @@ export default function CheckoutPage() {
             ? { name: customerName, email: customerEmail, phone: customerPhone }
             : undefined,
           turnstileToken: turnstile.token,
+          shippingMethod,
         }),
       });
 
@@ -574,7 +593,9 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Delivery</span>
-                <span>{formatPrice(deliveryCharge)}</span>
+                <span>
+                  {shippingMethod === "vrl" ? "Pay on delivery" : formatPrice(deliveryCharge)}
+                </span>
               </div>
               {appliedCoupon && (
                 <div className="flex justify-between text-green-700">
@@ -590,6 +611,44 @@ export default function CheckoutPage() {
               <span>Total</span>
               <span>{formatPrice(grandTotal)}</span>
             </div>
+
+            {wholesaleWeightKg > 0 && (
+              <div className="space-y-2 rounded-md border p-3">
+                <p className="text-sm font-medium">Shipping method</p>
+                <label className="flex items-start gap-2 text-sm">
+                  <input
+                    type="radio"
+                    name="shippingMethod"
+                    checked={shippingMethod === "standard"}
+                    onChange={() => setShippingMethod("standard")}
+                    className="mt-1"
+                  />
+                  <span>Standard courier - {formatPrice(deliveryCharge)}</span>
+                </label>
+                <label
+                  className={`flex items-start gap-2 text-sm ${
+                    wholesaleWeightKg > VRL_MIN_WEIGHT_KG ? "" : "opacity-50 cursor-not-allowed"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="shippingMethod"
+                    checked={shippingMethod === "vrl"}
+                    disabled={wholesaleWeightKg <= VRL_MIN_WEIGHT_KG}
+                    onChange={() => setShippingMethod("vrl")}
+                    className="mt-1"
+                  />
+                  <span>
+                    VRL Logistics (freight collect - pay at your warehouse)
+                    {wholesaleWeightKg <= VRL_MIN_WEIGHT_KG && (
+                      <span className="block text-xs text-gray-500">
+                        Available once your order crosses {VRL_MIN_WEIGHT_KG}kg
+                      </span>
+                    )}
+                  </span>
+                </label>
+              </div>
+            )}
 
             <Turnstile
               onVerify={turnstile.handleVerify}
