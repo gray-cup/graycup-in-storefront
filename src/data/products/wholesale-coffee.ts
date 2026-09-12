@@ -22,7 +22,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     details: [
       "Commercial grade, milk coffee",
       "Sourced from Chikmagalur and Coorg, Karnataka",
-      "Tiered wholesale pricing: 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
       "Choice of Medium or Dark roast",
       "Consistent, balanced cup for high-volume service",
       "12-month shelf life from roast date",
@@ -46,11 +46,12 @@ export const wholesaleCoffeeProducts: Product[] = [
       unit: "per kg",
     },
     minimumOrder: {
-      quantity: 5,
+      quantity: 1,
       unit: "kg",
     },
     variants: [
       { name: "250g", price: 325, weightGrams: 250 },
+      { name: "1kg", price: 1300, weightGrams: 1000 },
       { name: "5kg", price: 6500, weightGrams: 5000 },
       { name: "10kg", price: 12750, weightGrams: 10000 },
       { name: "25kg", price: 31250, weightGrams: 25000 },
@@ -59,6 +60,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     ],
     packaging: [
       "250g valved sample bag",
+      "1kg valved bag",
       "5kg valved bag",
       "10kg valved bag",
       "25kg valved bag",
@@ -82,7 +84,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     details: [
       "Specialty grade, milk coffee",
       "High-altitude, shade-grown, Chikmagalur and Coorg",
-      "Tiered wholesale pricing: 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
       "Choice of Medium or Dark roast",
       "Sourced for cup quality and consistency",
       "12-month shelf life from roast date",
@@ -106,11 +108,12 @@ export const wholesaleCoffeeProducts: Product[] = [
       unit: "per kg",
     },
     minimumOrder: {
-      quantity: 5,
+      quantity: 1,
       unit: "kg",
     },
     variants: [
       { name: "250g", price: 490, weightGrams: 250 },
+      { name: "1kg", price: 1950, weightGrams: 1000 },
       { name: "5kg", price: 9750, weightGrams: 5000 },
       { name: "10kg", price: 19100, weightGrams: 10000 },
       { name: "25kg", price: 46750, weightGrams: 25000 },
@@ -119,6 +122,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     ],
     packaging: [
       "250g valved sample bag",
+      "1kg valved bag",
       "5kg valved bag",
       "10kg valved bag",
       "25kg valved bag",
@@ -142,7 +146,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     details: [
       "Specialty grade, black coffee",
       "High-altitude, shade-grown, Chikmagalur and Coorg",
-      "Tiered wholesale pricing: 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
       "Choice of Medium or Dark roast",
       "Clean, expressive cup, no milk needed",
       "12-month shelf life from roast date",
@@ -166,11 +170,12 @@ export const wholesaleCoffeeProducts: Product[] = [
       unit: "per kg",
     },
     minimumOrder: {
-      quantity: 5,
+      quantity: 1,
       unit: "kg",
     },
     variants: [
       { name: "250g", price: 515, weightGrams: 250 },
+      { name: "1kg", price: 2050, weightGrams: 1000 },
       { name: "5kg", price: 10250, weightGrams: 5000 },
       { name: "10kg", price: 20100, weightGrams: 10000 },
       { name: "25kg", price: 49250, weightGrams: 25000 },
@@ -179,6 +184,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     ],
     packaging: [
       "250g valved sample bag",
+      "1kg valved bag",
       "5kg valved bag",
       "10kg valved bag",
       "25kg valved bag",
@@ -202,7 +208,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     details: [
       "Ground for South Indian filter brewing",
       "Sourced from Chikmagalur and Coorg, Karnataka",
-      "Tiered wholesale pricing: 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
       "Choice of Medium or Dark roast",
       "12-month shelf life from roast date",
       "Packed in valved bags to let CO2 escape and keep beans fresh",
@@ -225,11 +231,12 @@ export const wholesaleCoffeeProducts: Product[] = [
       unit: "per kg",
     },
     minimumOrder: {
-      quantity: 5,
+      quantity: 1,
       unit: "kg",
     },
     variants: [
       { name: "250g", price: 300, weightGrams: 250 },
+      { name: "1kg", price: 1200, weightGrams: 1000 },
       { name: "5kg", price: 6000, weightGrams: 5000 },
       { name: "10kg", price: 11750, weightGrams: 10000 },
       { name: "25kg", price: 28750, weightGrams: 25000 },
@@ -238,6 +245,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     ],
     packaging: [
       "250g valved sample bag",
+      "1kg valved bag",
       "5kg valved bag",
       "10kg valved bag",
       "25kg valved bag",
@@ -262,7 +270,7 @@ export const wholesaleCoffeeProducts: Product[] = [
       "100% Robusta, whole roasted beans",
       "Grown in Bababudangiri hills, Chikkamagaluru, Karnataka",
       "Strong, sharp cup with heavy crema",
-      "Tiered wholesale pricing: 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
       "Choice of Medium or Dark roast",
       "12-month shelf life from roast date",
       "Packed in valved bags to let CO2 escape and keep beans fresh",
@@ -285,11 +293,12 @@ export const wholesaleCoffeeProducts: Product[] = [
       unit: "per kg",
     },
     minimumOrder: {
-      quantity: 5,
+      quantity: 1,
       unit: "kg",
     },
     variants: [
       { name: "250g", price: 250, weightGrams: 250 },
+      { name: "1kg", price: 1000, weightGrams: 1000 },
       { name: "5kg", price: 5000, weightGrams: 5000 },
       { name: "10kg", price: 9800, weightGrams: 10000 },
       { name: "25kg", price: 24000, weightGrams: 25000 },
@@ -298,6 +307,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     ],
     packaging: [
       "250g valved sample bag",
+      "1kg valved bag",
       "5kg valved bag",
       "10kg valved bag",
       "25kg valved bag",
@@ -322,7 +332,7 @@ export const wholesaleCoffeeProducts: Product[] = [
       "70% Arabica, 30% Robusta, whole roasted beans",
       "Sourced from Chikmagalur, Coorg, and Arunachal Pradesh",
       "Aromatic, smooth, good crema",
-      "Tiered wholesale pricing: 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
       "Choice of Medium or Dark roast",
       "12-month shelf life from roast date",
       "Packed in valved bags to let CO2 escape and keep beans fresh",
@@ -345,11 +355,12 @@ export const wholesaleCoffeeProducts: Product[] = [
       unit: "per kg",
     },
     minimumOrder: {
-      quantity: 5,
+      quantity: 1,
       unit: "kg",
     },
     variants: [
       { name: "250g", price: 320, weightGrams: 250 },
+      { name: "1kg", price: 1280, weightGrams: 1000 },
       { name: "5kg", price: 6400, weightGrams: 5000 },
       { name: "10kg", price: 12550, weightGrams: 10000 },
       { name: "25kg", price: 30750, weightGrams: 25000 },
@@ -358,6 +369,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     ],
     packaging: [
       "250g valved sample bag",
+      "1kg valved bag",
       "5kg valved bag",
       "10kg valved bag",
       "25kg valved bag",
@@ -382,7 +394,7 @@ export const wholesaleCoffeeProducts: Product[] = [
       "Single-origin, natural (sun-dried cherry) process",
       "Whole roasted beans",
       "Full-bodied, fruity, wine-like notes",
-      "Tiered wholesale pricing: 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
       "Choice of Medium or Dark roast",
       "12-month shelf life from roast date",
       "Packed in valved bags to let CO2 escape and keep beans fresh",
@@ -405,11 +417,12 @@ export const wholesaleCoffeeProducts: Product[] = [
       unit: "per kg",
     },
     minimumOrder: {
-      quantity: 5,
+      quantity: 1,
       unit: "kg",
     },
     variants: [
       { name: "250g", price: 500, weightGrams: 250 },
+      { name: "1kg", price: 2000, weightGrams: 1000 },
       { name: "5kg", price: 10000, weightGrams: 5000 },
       { name: "10kg", price: 19600, weightGrams: 10000 },
       { name: "25kg", price: 48000, weightGrams: 25000 },
@@ -418,6 +431,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     ],
     packaging: [
       "250g valved sample bag",
+      "1kg valved bag",
       "5kg valved bag",
       "10kg valved bag",
       "25kg valved bag",
@@ -442,7 +456,7 @@ export const wholesaleCoffeeProducts: Product[] = [
       "Single-origin, HSD (honey/semi-dry) process",
       "Whole roasted beans",
       "Balanced sweetness, smooth body",
-      "Tiered wholesale pricing: 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
       "Choice of Medium or Dark roast",
       "12-month shelf life from roast date",
       "Packed in valved bags to let CO2 escape and keep beans fresh",
@@ -465,11 +479,12 @@ export const wholesaleCoffeeProducts: Product[] = [
       unit: "per kg",
     },
     minimumOrder: {
-      quantity: 5,
+      quantity: 1,
       unit: "kg",
     },
     variants: [
       { name: "250g", price: 525, weightGrams: 250 },
+      { name: "1kg", price: 2100, weightGrams: 1000 },
       { name: "5kg", price: 10500, weightGrams: 5000 },
       { name: "10kg", price: 20600, weightGrams: 10000 },
       { name: "25kg", price: 50375, weightGrams: 25000 },
@@ -478,6 +493,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     ],
     packaging: [
       "250g valved sample bag",
+      "1kg valved bag",
       "5kg valved bag",
       "10kg valved bag",
       "25kg valved bag",
@@ -502,7 +518,7 @@ export const wholesaleCoffeeProducts: Product[] = [
       "Single-origin, fully washed process",
       "Whole roasted beans",
       "Clean, bright, well-defined acidity",
-      "Tiered wholesale pricing: 5kg, 10kg, 25kg, 50kg, 100kg",
+      "Tiered wholesale pricing: 1kg, 5kg, 10kg, 25kg, 50kg, 100kg",
       "Choice of Medium or Dark roast",
       "12-month shelf life from roast date",
       "Packed in valved bags to let CO2 escape and keep beans fresh",
@@ -525,11 +541,12 @@ export const wholesaleCoffeeProducts: Product[] = [
       unit: "per kg",
     },
     minimumOrder: {
-      quantity: 5,
+      quantity: 1,
       unit: "kg",
     },
     variants: [
       { name: "250g", price: 475, weightGrams: 250 },
+      { name: "1kg", price: 1900, weightGrams: 1000 },
       { name: "5kg", price: 9500, weightGrams: 5000 },
       { name: "10kg", price: 18600, weightGrams: 10000 },
       { name: "25kg", price: 45625, weightGrams: 25000 },
@@ -538,6 +555,7 @@ export const wholesaleCoffeeProducts: Product[] = [
     ],
     packaging: [
       "250g valved sample bag",
+      "1kg valved bag",
       "5kg valved bag",
       "10kg valved bag",
       "25kg valved bag",
