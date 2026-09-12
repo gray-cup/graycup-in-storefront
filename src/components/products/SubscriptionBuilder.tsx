@@ -76,7 +76,7 @@ export function SubscriptionBuilder({ product, addonProducts }: SubscriptionBuil
   const posthog = usePostHog();
   const turnstile = useTurnstile();
   const [loading, setLoading] = useState(false);
-  const isCoffee = product.category === "Coffee";
+  const isCoffee = product.category === "Coffee" && !product.isGreenCoffee;
 
   const [primaryVariant, setPrimaryVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);

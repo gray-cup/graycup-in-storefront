@@ -42,6 +42,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Commercial",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: {
       min: 900,
       max: 1150,
@@ -97,6 +98,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Commercial",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: {
       min: 1000,
       max: 1250,
@@ -152,6 +154,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Speciality",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: {
       min: 1450,
       max: 1700,
@@ -205,6 +208,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Speciality",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: {
       min: 1150,
       max: 1400,
@@ -258,6 +262,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Commercial",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: {
       min: 600,
       max: 850,
@@ -313,6 +318,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Speciality",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: {
       min: 1650,
       max: 1900,
@@ -368,6 +374,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Speciality",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: {
       min: 1750,
       max: 2000,
@@ -423,6 +430,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Speciality",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: {
       min: 1500,
       max: 1750,
@@ -476,6 +484,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Speciality",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: { min: 1200, max: 1450, unit: "per kg" },
     minimumOrder: { quantity: 1, unit: "kg" },
     variants: [
@@ -522,6 +531,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Speciality",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: { min: 1100, max: 1350, unit: "per kg" },
     minimumOrder: { quantity: 1, unit: "kg" },
     variants: [
@@ -568,6 +578,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Speciality",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: { min: 1300, max: 1550, unit: "per kg" },
     minimumOrder: { quantity: 1, unit: "kg" },
     variants: [
@@ -614,6 +625,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Speciality",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: { min: 1450, max: 1700, unit: "per kg" },
     minimumOrder: { quantity: 1, unit: "kg" },
     variants: [
@@ -660,6 +672,7 @@ export const greenCoffeeProducts: Product[] = [
     categoryTwo: "Single Origin",
     quality: "Speciality",
     isWholesale: true,
+    isGreenCoffee: true,
     priceRange: { min: 1650, max: 1900, unit: "per kg" },
     minimumOrder: { quantity: 1, unit: "kg" },
     variants: [

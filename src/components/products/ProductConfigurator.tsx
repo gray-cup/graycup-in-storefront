@@ -36,7 +36,8 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const { addToCart, openCart } = useCart();
   const navigate = useNavigate();
   const posthog = usePostHog();
-  const isCoffee = product.category === "Coffee" && !product.isSamplePack;
+  const isCoffee =
+    product.category === "Coffee" && !product.isSamplePack && !product.isGreenCoffee;
   const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
   const { grindSize, setGrindSize } = useGrindSize();

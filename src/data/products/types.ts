@@ -60,6 +60,8 @@ export type Product = {
   packaging: string[];
   comingSoon?: boolean;
   isSamplePack?: boolean;
+  /** Sold unroasted (green) - no grind size applies */
+  isGreenCoffee?: boolean;
   process?: CoffeeProcess;
   varietal?: string;
   roast?: CoffeeRoast;
