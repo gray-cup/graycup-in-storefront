@@ -859,6 +859,456 @@ export const GUIDES: Guide[] = [
     date: "2026-10-25",
     unsplash: "photo-1453614512568-c4024d13c247",
   },
+  {
+    slug: "what-is-a-latte",
+    title: "What Is a Latte? Types & How It's Made",
+    description:
+      "A latte is espresso plus steamed milk - but the name covers a dozen variations. Here's what separates a latte from a cappuccino, mocha and flat white.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Latte", "Basics"],
+    date: "2026-10-26",
+    unsplash: "photo-1544787219-7f47ccb76574",
+  },
+  {
+    slug: "iced-latte-recipes",
+    title: "Iced Latte: Recipes, Flavours & How to Make One",
+    description:
+      "Vanilla, caramel, hazelnut or mocha - here's how to make an iced latte at home that doesn't water down the coffee.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Latte", "Recipes"],
+    date: "2026-10-26",
+    unsplash: "photo-1571934811356-5cc061b6821f",
+  },
+  {
+    slug: "vanilla-latte-at-home",
+    title: "Vanilla Latte at Home: Easy Recipe",
+    description:
+      "Vanilla latte vs vanilla bean latte vs French vanilla - what's actually different, and how to make any of them at home without a machine.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Latte", "Recipes"],
+    date: "2026-10-27",
+    unsplash: "photo-1509042239860-f550ce710b93",
+  },
+  {
+    slug: "starbucks-latte-menu-india",
+    title: "Starbucks Latte Menu in India: Price & Flavours",
+    description:
+      "A guide to every latte on the Starbucks India menu - flavours, sizes and roughly what they cost - plus how to make the closest version at home.",
+    readingTime: "6 min read",
+    tags: ["Coffee", "Latte", "Starbucks", "India"],
+    date: "2026-10-27",
+    unsplash: "photo-1447933601403-0c6688de566e",
+  },
+  {
+    slug: "starbucks-seasonal-drinks-india",
+    title: "Starbucks Pumpkin Spice Latte in India: Price & Recipe",
+    description:
+      "The Pumpkin Spice Latte's availability and price in India, what's actually in it, and a home recipe for when it's off the menu.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Latte", "Starbucks", "Seasonal"],
+    date: "2026-10-28",
+    unsplash: "photo-1461023058943-07fcbe16d735",
+  },
+  {
+    slug: "matcha-golden-latte-guide",
+    title: "Matcha & Golden Turmeric Latte: Recipe & Benefits",
+    description:
+      "Matcha latte and golden (turmeric) latte are both caffeine-light, milk-based drinks - here's how they're made, how they taste, and how to make them at home.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Latte", "Matcha", "Wellness"],
+    date: "2026-10-28",
+    unsplash: "photo-1495474472287-4d71bcdd2085",
+  },
+  {
+    slug: "nescafe-latte-range",
+    title: "Nescafe Latte Range: Cafe, Iced & Chilled Latte",
+    description:
+      "Nescafe sells cafe latte, iced latte and chilled latte cans under one name - here's what's in each, how they differ, and how they compare to a real espresso latte.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Latte", "Instant Coffee"],
+    date: "2026-10-29",
+    unsplash: "photo-1534438327276-14e5300c3a48",
+  },
+  {
+    slug: "latte-vs-cappuccino-vs-mocha",
+    title: "Latte vs Cappuccino vs Mocha vs Espresso",
+    description:
+      "Same three ingredients - espresso, milk, foam - in different ratios. Here's exactly what separates a latte, cappuccino, mocha and flat white.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Latte", "Espresso", "Basics"],
+    date: "2026-10-29",
+    unsplash: "photo-1476480862126-209bfaa8edc8",
+  },
+  {
+    slug: "flavored-latte-recipes",
+    title: "Flavoured Lattes: Caramel, Hazelnut & Mocha Recipes",
+    description:
+      "Salted caramel, hazelnut, mocha, cinnamon and more - simple flavoured latte recipes you can make at home with syrup or spice you already have.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Latte", "Recipes"],
+    date: "2026-10-30",
+    unsplash: "photo-1442512595331-e89e73853f31",
+  },
+  {
+    slug: "international-latte-styles",
+    title: "Spanish, Irish & Vietnamese Latte Styles Explained",
+    description:
+      "The Spanish latte (condensed milk), Irish latte (whiskey-adjacent flavour, no alcohol) and Vietnamese-style iced coffee - three regional takes on latte compared.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Latte", "World Coffee"],
+    date: "2026-10-30",
+    unsplash: "photo-1514432324607-a09d9b4aefdd",
+  },
+  {
+    slug: "coffee-without-milk-guide",
+    title: "Coffee Without Milk: Black Coffee & Iced Options",
+    description:
+      "Cutting milk from your coffee changes the calorie count, the caffeine hit and the taste - here are the best black and iced options and how to brew them.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Black Coffee", "Health"],
+    date: "2026-10-31",
+    unsplash: "photo-1524350876685-274059332603",
+  },
+  {
+    slug: "filter-coffee-maker-buying-guide",
+    title: "Filter Coffee Maker Buying Guide: Steel vs Brass vs Electric",
+    description:
+      "Steel, brass or electric filter - the maker matters less than people think. Here's how to pick one, and why the powder inside it matters more.",
+    readingTime: "6 min read",
+    tags: ["Coffee", "Filter Coffee", "Buying Guide"],
+    date: "2026-10-31",
+    unsplash: "photo-1497515114629-f71d768fd07c",
+  },
+  {
+    slug: "how-to-make-filter-coffee-decoction",
+    title: "How to Make Filter Coffee Decoction at Home",
+    description:
+      "A step-by-step guide to brewing filter coffee decoction at home, plus how it compares to bottled decoction and instant filter coffee liquid.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Filter Coffee", "Recipes"],
+    date: "2026-11-01",
+    unsplash: "photo-1459755486867-b55449bb39ff",
+  },
+  {
+    slug: "filter-coffee-dabara-tumbler-sets",
+    title: "Filter Coffee Dabara & Tumbler Sets: Buying Guide",
+    description:
+      "The tumbler-and-dabara set is half the filter coffee ritual - here's what to look for in steel, brass and gift-set versions.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Filter Coffee", "Buying Guide"],
+    date: "2026-11-01",
+    unsplash: "photo-1509785307050-d4066910ec1e",
+  },
+  {
+    slug: "types-of-coffee-filters",
+    title: "Types of Coffee Filters: Steel, Cloth, Metal & Paper",
+    description:
+      "Steel, cloth, paper, ceramic, cone - every common coffee filter material explained, with what each one does to taste and body.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Filter Coffee", "Brewing"],
+    date: "2026-11-02",
+    unsplash: "photo-1504630083234-14187a9df0f5",
+  },
+  {
+    slug: "drip-coffee-makers-explained",
+    title: "Drip Coffee Makers Explained: Electric, Pour-Over & Cold",
+    description:
+      "Electric drip, pour-over drip and cold drip all use gravity to brew - here's how they differ and which suits a filter coffee habit best.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Brewing", "Buying Guide"],
+    date: "2026-11-02",
+    unsplash: "photo-1461988320302-91bde64fc8e4",
+  },
+  {
+    slug: "pour-over-aeropress-french-press-filters",
+    title: "Pour-Over, Aeropress & French Press Filters Guide",
+    description:
+      "Paper, metal or mesh - the filter you use with a pour-over, Aeropress or French press changes body and clarity. Here's how to choose.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Brewing", "Aeropress", "French Press"],
+    date: "2026-11-03",
+    unsplash: "photo-1481833761820-0509d3217039",
+  },
+  {
+    slug: "vietnamese-style-coffee-at-home",
+    title: "Vietnamese Coffee (Ca Phe) at Home: Phin Filter Guide",
+    description:
+      "Vietnamese ca phe sua da is dark-roast Robusta dripped through a phin filter over condensed milk - here's the equipment and the recipe.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Robusta", "World Coffee", "Recipes"],
+    date: "2026-11-03",
+    unsplash: "photo-1470337458703-46ad1756a187",
+  },
+  {
+    slug: "buy-filter-coffee-powder-online-india",
+    title: "Buy Filter Coffee Powder Online in India",
+    description:
+      "What to check before buying filter coffee powder online - blend ratio, roast date, chicory content - and where Gray Cup's blends fit in.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Filter Coffee", "Buying Guide", "India"],
+    date: "2026-11-04",
+    unsplash: "photo-1453614512568-c4024d13c247",
+  },
+  {
+    slug: "narasus-vs-graycup-filter-coffee",
+    title: "Narasus vs Gray Cup Filter Coffee Compared",
+    description:
+      "Narasus is a long-running Coimbatore filter coffee brand. Here's how its blends compare to Gray Cup's on ratio, roast and price.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Filter Coffee", "Comparison"],
+    date: "2026-11-04",
+    unsplash: "photo-1521302080334-4bebac2763a6",
+  },
+  {
+    slug: "bru-vs-graycup-filter-coffee",
+    title: "Bru vs Gray Cup Filter Coffee (Incl. Green Label)",
+    description:
+      "Bru and Bru Green Label are the most widely stocked filter coffee blends in India - here's how they stack up against Gray Cup's blends.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Filter Coffee", "Comparison"],
+    date: "2026-11-05",
+    unsplash: "photo-1516315720917-231ef9acce48",
+  },
+  {
+    slug: "nescafe-filter-coffee-vs-graycup",
+    title: "Nescafe Filter Coffee vs Gray Cup Compared",
+    description:
+      "Nescafe's filter coffee line sits between instant and traditional decoction coffee - here's how it compares to a real Gray Cup filter blend.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Filter Coffee", "Comparison"],
+    date: "2026-11-05",
+    unsplash: "photo-1442550528053-c431ecb55509",
+  },
+  {
+    slug: "malgudi-continental-vs-graycup-filter-coffee",
+    title: "Malgudi & Continental Filter Coffee vs Gray Cup",
+    description:
+      "Malgudi and Continental are budget South Indian filter coffee brands built around chicory. Here's how they compare to Gray Cup's blends.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Filter Coffee", "Comparison"],
+    date: "2026-11-06",
+    unsplash: "photo-1541167760496-1628856ab772",
+  },
+  {
+    slug: "south-indian-filter-coffee-brands-compared",
+    title: "Top South Indian Filter Coffee Brands Compared",
+    description:
+      "Levista, Cothas, CCD, Sleepy Owl, Blue Tokai and more - a quick comparison of popular South Indian filter coffee brands and where Gray Cup fits.",
+    readingTime: "6 min read",
+    tags: ["Coffee", "Filter Coffee", "Comparison", "India"],
+    date: "2026-11-06",
+    unsplash: "photo-1500051638674-ff996a0ec29e",
+  },
+  {
+    slug: "kaapi-vs-filter-coffee",
+    title: "Kaapi vs Filter Coffee: What's the Difference?",
+    description:
+      "\"Kaapi\" and \"filter coffee\" are mostly the same drink by different names - here's the regional nuance, from Chennai to Kumbakonam to Karnataka.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Filter Coffee", "India"],
+    date: "2026-11-07",
+    unsplash: "photo-1544776193-352d25ca82cd",
+  },
+  {
+    slug: "best-ground-coffee-for-espresso-machine",
+    title: "Best Ground Coffee for Your Espresso Machine",
+    description:
+      "Espresso needs a fine, even grind and a fresh roast more than it needs a specific bag. Here's what to look for in ground coffee for an espresso machine.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Espresso", "Buying Guide"],
+    date: "2026-11-08",
+    unsplash: "photo-1544787219-7f47ccb76574",
+  },
+  {
+    slug: "best-ground-coffee-for-percolator",
+    title: "Best Ground Coffee for a Percolator",
+    description:
+      "Percolators re-boil coffee through the grounds, so a coarser grind matters more here than with almost any other brewer. Here's how to get it right.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Brewing", "Buying Guide"],
+    date: "2026-11-08",
+    unsplash: "photo-1571934811356-5cc061b6821f",
+  },
+  {
+    slug: "ground-coffee-for-french-press-cafetiere",
+    title: "Ground Coffee for French Press (Cafetière) & Plunger",
+    description:
+      "Cafetière, plunger, French press - three names for the same brewer, and all three need the same coarse, even grind. Here's why and how to buy for it.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "French Press", "Buying Guide"],
+    date: "2026-11-08",
+    unsplash: "photo-1509042239860-f550ce710b93",
+  },
+  {
+    slug: "ground-coffee-for-pod-machines",
+    title: "Using Ground Coffee in Nespresso & K-Cup Machines",
+    description:
+      "Reusable/refillable pods let you brew any ground coffee - including your own - in a Nespresso or K-Cup machine. Here's how they work and what to fill them with.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Brewing", "Buying Guide"],
+    date: "2026-11-09",
+    unsplash: "photo-1447933601403-0c6688de566e",
+  },
+  {
+    slug: "ground-coffee-for-pour-over-and-filter-machines",
+    title: "Ground Coffee for V60, Stovetop & Filter Machines",
+    description:
+      "Pour-over, stovetop moka and electric filter machines each want a slightly different grind. Here's how to pick the right one for each.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Pour Over", "Buying Guide"],
+    date: "2026-11-09",
+    unsplash: "photo-1461023058943-07fcbe16d735",
+  },
+  {
+    slug: "how-much-ground-coffee-per-cup",
+    title: "How Much Ground Coffee Per Cup? A Ratio Guide",
+    description:
+      "The right coffee-to-water ratio matters more than the brewer. Here's how much ground coffee to use per cup, and how to scale it up for a full pot.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Brewing", "Basics"],
+    date: "2026-11-09",
+    unsplash: "photo-1495474472287-4d71bcdd2085",
+  },
+  {
+    slug: "buy-ground-coffee-online-india",
+    title: "Buy Ground Coffee Online in India: What to Check",
+    description:
+      "Roast date, grind size, and Arabica/Robusta ratio matter far more than the brand name on the bag. Here's what to check before buying ground coffee online.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Buying Guide", "India"],
+    date: "2026-11-10",
+    unsplash: "photo-1534438327276-14e5300c3a48",
+  },
+  {
+    slug: "best-ground-coffee-for-iced-coffee",
+    title: "Best Ground Coffee for Iced Coffee (+ Recipe)",
+    description:
+      "Iced coffee needs a stronger brew than usual so the ice doesn't water it down. Here's the coffee, ratio and a simple no-milk recipe.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Recipes", "Iced Coffee"],
+    date: "2026-11-10",
+    unsplash: "photo-1476480862126-209bfaa8edc8",
+  },
+  {
+    slug: "best-ground-coffee-for-cappuccino-and-crema",
+    title: "Best Ground Coffee for Cappuccino & Crema at Home",
+    description:
+      "Crema comes from fresh, fine-ground, Robusta-leaning coffee under pressure - not any particular brand. Here's how to get a better cappuccino at home.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Espresso", "Buying Guide"],
+    date: "2026-11-10",
+    unsplash: "photo-1442512595331-e89e73853f31",
+  },
+  {
+    slug: "espresso-with-milk-ratios-explained",
+    title: "Espresso with Milk: Every Ratio Explained",
+    description:
+      "A dash of milk vs steamed milk vs half-and-half - the amount and type of milk you add to espresso is what actually names the drink. Here's the full spectrum.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Espresso", "Basics"],
+    date: "2026-11-11",
+    unsplash: "photo-1514432324607-a09d9b4aefdd",
+  },
+  {
+    slug: "condensed-milk-coffee-recipe",
+    title: "Condensed Milk Coffee: Spanish-Style Recipe",
+    description:
+      "Condensed milk coffee is sweeter, thicker and more forgiving than a regular milk coffee. Here's the ratio and a simple hot or iced recipe.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Recipes"],
+    date: "2026-11-11",
+    unsplash: "photo-1524350876685-274059332603",
+  },
+  {
+    slug: "best-water-for-coffee-and-espresso-machines",
+    title: "Best Water for Coffee & Espresso Machines",
+    description:
+      "Coffee is mostly water, so hard or heavily chlorinated water changes the taste - and can scale up an espresso machine. Here's what water to actually use.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Brewing", "Basics"],
+    date: "2026-11-11",
+    unsplash: "photo-1497515114629-f71d768fd07c",
+  },
+  {
+    slug: "coffee-without-milk-recipes",
+    title: "Coffee Without Milk: 6 Recipes to Try",
+    description:
+      "Frothy, sweet, iced or hot - six ways to make coffee without milk that still feel like a proper drink, not just black coffee by default.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Recipes", "Black Coffee"],
+    date: "2026-11-12",
+    unsplash: "photo-1459755486867-b55449bb39ff",
+  },
+  {
+    slug: "milk-coffee-without-sugar-for-weight-loss",
+    title: "Milk Coffee Without Sugar: Is It Good for Weight Loss?",
+    description:
+      "Dropping sugar from milk coffee cuts real calories even if you keep the milk. Here's how much it actually helps, and how to make the switch stick.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Weight Loss", "Health"],
+    date: "2026-11-12",
+    unsplash: "photo-1509785307050-d4066910ec1e",
+  },
+  {
+    slug: "dark-roast-coffee-for-weight-loss",
+    title: "Is Dark Roast Coffee Good for Weight Loss?",
+    description:
+      "Dark roast has slightly less caffeine than light roast by volume, not more - so it's not the stronger weight-loss tool people assume. Here's what actually matters.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Weight Loss", "Dark Roast", "Health"],
+    date: "2026-11-12",
+    unsplash: "photo-1504630083234-14187a9df0f5",
+  },
+  {
+    slug: "bulletproof-coffee-best-coffee-to-use",
+    title: "Best Coffee for Bulletproof Coffee",
+    description:
+      "Bulletproof coffee blends black coffee with butter and MCT oil - a strong, clean-tasting base matters more here than usual. Here's what to use.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Recipes", "Black Coffee"],
+    date: "2026-11-13",
+    unsplash: "photo-1461988320302-91bde64fc8e4",
+  },
+  {
+    slug: "frappuccino-at-home-best-milk",
+    title: "Frappuccino at Home: Best Milk & How to Make One",
+    description:
+      "A frappuccino is blended, not brewed - strong cold coffee, ice and milk whipped into a slushy drink. Here's the best milk to use and a base recipe.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Recipes", "Iced Coffee"],
+    date: "2026-11-13",
+    unsplash: "photo-1481833761820-0509d3217039",
+  },
+  {
+    slug: "coffee-grounds-for-plants-and-garden",
+    title: "Used Coffee Grounds for Plants: Does It Work?",
+    description:
+      "Used coffee grounds aren't a magic fertiliser, but they do help some plants and compost heaps. Here's what they actually do and how to use them safely.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Sustainability"],
+    date: "2026-11-13",
+    unsplash: "photo-1470337458703-46ad1756a187",
+  },
+  {
+    slug: "best-ground-coffee-for-beginners",
+    title: "Best Ground Coffee for Home Espresso Beginners",
+    description:
+      "New to a home espresso machine? Start with a forgiving medium roast and a coarser-than-you-think grind. Here's a beginner-friendly starting point.",
+    readingTime: "4 min read",
+    tags: ["Coffee", "Espresso", "Beginner"],
+    date: "2026-11-14",
+    unsplash: "photo-1453614512568-c4024d13c247",
+  },
+  {
+    slug: "best-ground-coffee-for-cafes-and-restaurants",
+    title: "Best Ground Coffee for Cafés & Restaurants",
+    description:
+      "Buying coffee for a cafe or restaurant is a different problem to buying for yourself - consistency and bulk pricing matter as much as taste. Here's how to choose.",
+    readingTime: "5 min read",
+    tags: ["Coffee", "Wholesale", "Buying Guide"],
+    date: "2026-11-14",
+    unsplash: "photo-1521302080334-4bebac2763a6",
+  },
 ];
 
 export const GUIDE_SLUGS = GUIDES.map((g) => g.slug);
