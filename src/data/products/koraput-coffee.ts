@@ -137,11 +137,11 @@ export const koraputCoffeeProducts: Product[] = reviseRetailCoffeePricing([
     image: "/products/koraput-coffee.webp",
     images: ["/products/koraput-coffee.webp", "/products/koraput-washed.webp", "/products/green-coffee-beans.png"],
     description:
-      "Single-origin Arabica from Dream Hill Coffee's Saptagiri Plantation, Pottangi, Koraput - grown above 1100m for bright acidity and aromatic complexity rare in Indian coffee.",
+      "Single-origin Arabica from Dream Hill Coffee's Saptagiri Plantation, Rajuguda, Koraput - grown above 1100m for bright acidity and aromatic complexity rare in Indian coffee.",
     longDescription:
-      "Sourced from Dream Hill Coffee's Saptagiri Plantation in Pottangi, Koraput, this Arabica is grown at over 1100 metres - among the highest elevations in Odisha's coffee belt. The altitude and the estate's science-led cultivation (soil health monitoring, canopy management) produce a cup with bright acidity and aromatic complexity, consistently scoring well in cupping. A refined, high-grown single origin for drinkers who want clarity in the cup.",
+      "Sourced from Dream Hill Coffee's Saptagiri Plantation in Rajuguda, Koraput, this Arabica is grown at over 1100 metres - among the highest elevations in Odisha's coffee belt. The altitude and the estate's science-led cultivation (soil health monitoring, canopy management) produce a cup with bright acidity and aromatic complexity, consistently scoring well in cupping. A refined, high-grown single origin for drinkers who want clarity in the cup.",
     details: [
-      "Single-origin, Dream Hill Coffee - Saptagiri Plantation, Pottangi, Koraput",
+      "Single-origin, Dream Hill Coffee - Saptagiri Plantation, Rajuguda, Koraput",
       "Grown above 1100m elevation",
       "Bright acidity, aromatic complexity",
       "Chandragiri varietal",
@@ -152,7 +152,7 @@ export const koraputCoffeeProducts: Product[] = reviseRetailCoffeePricing([
     roast: "Medium",
     roastOptions: ["Medium", "Medium-Dark"],
     flavourNotes: ["Jasmine", "Citrus", "Caramel"],
-    locations: ["Pottangi, Koraput"],
+    locations: ["Rajuguda, Koraput"],
     category: "Coffee",
     categoryTwo: "Single Origin",
     quality: "Speciality",
