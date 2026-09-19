@@ -2,6 +2,7 @@ import type { Product } from "./types";
 import { reviseRetailCoffeePricing, blendPackPrice } from "./pricing";
 
 // Custom Attikan blend: ₹/kg by Arabica %. Anchored at ₹1,300/kg for 100% Robusta
+// (fixed here - independent of the 100% Robusta product's own pricing)
 // and ₹1,350/kg for 80% Arabica / 20% Robusta, then ~₹6.25 per extra 1% Arabica
 // (rounded to ₹5). The 250g/500g packs add a markup on top (see blendPackPrice).
 // Edit here to change a ratio's price.
@@ -233,9 +234,10 @@ export const estateCoffeeProducts: Product[] = reviseRetailCoffeePricing([
     quality: "Commercial",
     brewStyle: "Both",
     skipPriceRevision: true,
+    // ₹1,050/kg for 1kg; buying 5kg drops it to ₹950/kg.
     priceRange: {
-      min: 325,
-      max: 1300,
+      min: 265,
+      max: 4750,
       unit: "",
     },
     minimumOrder: {
@@ -243,11 +245,12 @@ export const estateCoffeeProducts: Product[] = reviseRetailCoffeePricing([
       unit: "pack",
     },
     variants: [
-      { name: "250g", price: 325, weightGrams: 250 },
-      { name: "500g", price: 650, weightGrams: 500 },
-      { name: "1kg", price: 1300, weightGrams: 1000 },
+      { name: "250g", price: 265, weightGrams: 250 },
+      { name: "500g", price: 525, weightGrams: 500 },
+      { name: "1kg", price: 1050, weightGrams: 1000 },
+      { name: "5kg", price: 4750, weightGrams: 5000 },
     ],
-    packaging: ["250g pack", "500g pack", "1kg pack"],
+    packaging: ["250g pack", "500g pack", "1kg pack", "5kg pack"],
     sku: "GC-COF-ROB100-001",
     brand: "Gray Cup",
     availability: "in_stock",
