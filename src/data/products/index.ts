@@ -1,5 +1,5 @@
 export type { Product, ProductVariant, CoffeeProcess, ProductQuality, BrewStyle } from "./types";
-export { COFFEE_GRIND_OPTIONS } from "./types";
+export { COFFEE_GRIND_OPTIONS, COFFEE_ROAST_OPTIONS } from "./types";
 
 export { dooarsAssamTeaProducts } from "./dooars-assam-tea";
 export { giddapaharDarjeelingProducts } from "./giddapahar-darjeeling";

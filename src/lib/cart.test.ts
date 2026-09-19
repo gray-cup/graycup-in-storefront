@@ -62,16 +62,20 @@ console.assert(
   ) > 0,
 );
 
-// sample pack below its ₹1,000 threshold -> flat ₹50, not the ₹40 retail rate
+// sample pack below the threshold -> flat ₹50, not the ₹40 retail rate
 console.assert(
-  calculateDeliveryCharge([mk(600, { isSamplePack: true })], 40) === SAMPLE_DELIVERY_CHARGE,
+  calculateDeliveryCharge([mk(300, { isSamplePack: true })], 40) === SAMPLE_DELIVERY_CHARGE,
 );
-// sample pack above ₹1,000 -> free
+// sample pack at/above threshold -> free
 console.assert(
-  calculateDeliveryCharge(
-    [mk(SAMPLE_FREE_DELIVERY_THRESHOLD + 1, { isSamplePack: true })],
-    40,
-  ) === 0,
+  calculateDeliveryCharge([mk(SAMPLE_FREE_DELIVERY_THRESHOLD, { isSamplePack: true })], 40) === 0,
 );
+// per-variant fixed charge is also waived once the cart reaches the threshold
+const fixed = (price: number): CartItem => ({
+  ...mk(price),
+  selectedVariant: { name: "x", price, deliveryCharge: 30 } as never,
+});
+console.assert(calculateDeliveryCharge([fixed(200)], 40) === 30);
+console.assert(calculateDeliveryCharge([fixed(515)], 40) === 0);
 
 console.log("cart delivery checks passed");

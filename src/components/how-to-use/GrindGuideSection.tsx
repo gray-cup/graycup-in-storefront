@@ -1,19 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { COFFEE_GRIND_OPTIONS } from "@/data/products";
-import { getHowToUseGuide } from "@/data/how-to-use";
+import { HOW_TO_USE_GUIDES, getHowToUseGuide } from "@/data/how-to-use";
 import { GuideContent } from "./GuideContent";
 
 export function GrindGuideSection() {
-  const [selectedGrind, setSelectedGrind] = useState(COFFEE_GRIND_OPTIONS[0]);
+  const [selectedGrind, setSelectedGrind] = useState(HOW_TO_USE_GUIDES[0].grind);
   const guide = getHowToUseGuide(selectedGrind);
 
   return (
     <div className="space-y-8">
       {/* Grind Size Selector */}
       <div className="flex flex-wrap gap-2">
-        {COFFEE_GRIND_OPTIONS.map((option) => (
+        {HOW_TO_USE_GUIDES.map(({ grind: option }) => (
           <button
             key={option}
             type="button"

@@ -9,6 +9,18 @@ export const COFFEE_GRIND_OPTIONS: string[] = [
   "South Indian Filter",
   "Pour Over",
   "Aeropress",
+  "Extra Fine",
+  "Turkish Fine",
+  "Super Fine",
+  "Fine",
+  "Fine-Medium",
+  "Medium-Fine",
+  "Medium",
+  "Medium-Coarse",
+  "Coarse",
+  "Coarse-Extra Coarse",
+  "Extra Coarse",
+  "Very Extra Coarse",
 ];
 
 export type ProductVariant = {
@@ -32,6 +44,9 @@ export type CoffeeRoast =
   | "Vienna"
   | "French"
   | "Pending";
+
+/** Roast levels a buyer can choose on any retail coffee that doesn't set its own `roastOptions`. */
+export const COFFEE_ROAST_OPTIONS: CoffeeRoast[] = ["Light", "Medium", "Medium-Dark", "Dark"];
 
 export type ProductQuality = "Speciality" | "Commercial";
 export type BrewStyle = "Milk" | "Black" | "Both";

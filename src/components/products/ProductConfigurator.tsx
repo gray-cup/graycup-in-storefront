@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useCart } from "@/components/cart-provider";
 import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
-import { COFFEE_GRIND_OPTIONS, type Product, type ProductVariant } from "@/data/products";
+import { COFFEE_GRIND_OPTIONS, COFFEE_ROAST_OPTIONS, type Product, type ProductVariant } from "@/data/products";
 import { useGrindSize } from "./grind-size-context";
 import { usePostHog } from "@posthog/react";
 
@@ -41,8 +41,12 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
   const { grindSize, setGrindSize } = useGrindSize();
-  const hasRoastOptions = !!product.roastOptions && product.roastOptions.length > 0;
-  const [selectedRoast, setSelectedRoast] = useState(() => product.roastOptions?.[0] ?? "");
+  // Products can restrict their roasts; any other retail coffee offers all four.
+  const roastOptions: string[] = product.roastOptions ?? (isCoffee ? COFFEE_ROAST_OPTIONS : []);
+  const hasRoastOptions = roastOptions.length > 0;
+  const [selectedRoast, setSelectedRoast] = useState(() =>
+    roastOptions.includes(product.roast ?? "") ? product.roast! : (roastOptions[0] ?? ""),
+  );
   const hasBlendRatioOptions = !!product.blendRatioOptions && product.blendRatioOptions.length > 0;
   const [selectedBlendRatio, setSelectedBlendRatio] = useState(
     () => product.blendRatioOptions?.[0] ?? ""
@@ -66,7 +70,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
     }
 
     const roastParam = searchParams.get("roast");
-    if (hasRoastOptions && roastParam && (product.roastOptions as string[]).includes(roastParam)) {
+    if (hasRoastOptions && roastParam && roastOptions.includes(roastParam)) {
       setSelectedRoast(roastParam);
     }
 
@@ -277,7 +281,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
               onChange={(e) => setSelectedRoast(e.target.value)}
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              {product.roastOptions?.map((option) => (
+              {roastOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>

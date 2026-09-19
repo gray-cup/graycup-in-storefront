@@ -30,11 +30,10 @@ export function calculateCartTotal(items: CartItem[]): number {
 // free on its own line regardless of subtotal.
 export const FREE_DELIVERY_THRESHOLD = 400;
 
-// Sample packs (Pick Your Poison etc.) ship at a flat ₹50, free once the
-// sampler line subtotal goes above ₹1,000. Priced as its own bucket so it
-// doesn't stack with the regular flat retail rate.
+// Sample packs (Pick Your Poison etc.) ship at a flat ₹50 (own bucket, doesn't
+// stack with the regular flat retail rate), free at the same cart threshold.
 export const SAMPLE_DELIVERY_CHARGE = 50;
-export const SAMPLE_FREE_DELIVERY_THRESHOLD = 1000;
+export const SAMPLE_FREE_DELIVERY_THRESHOLD = FREE_DELIVERY_THRESHOLD;
 
 // Courier rate card for wholesale (isWholesale) coffee, keyed by the order's
 // TOTAL wholesale weight in kg (not per line) - each entry is "at or below
@@ -87,9 +86,9 @@ export function getWholesaleWeightKg(items: CartItem[]): number {
 export const VRL_MIN_WEIGHT_KG = 50;
 export type ShippingMethod = "standard" | "vrl";
 
-// Falls back to `flatRate` only for the portion of the cart made up of
-// non-wholesale items (regular retail packs), and only when the subtotal is
-// below the free-delivery threshold.
+// Retail delivery (flat rate, per-variant fixed charges, sample packs) is free
+// once the cart subtotal reaches the free-delivery threshold. Wholesale
+// courier rates always apply.
 export function calculateDeliveryCharge(
   items: CartItem[],
   flatRate: number,
@@ -119,11 +118,9 @@ export function calculateDeliveryCharge(
   const wholesaleDelivery = wholesaleKg > 0 && !useVrl ? getWholesaleShippingCharge(wholesaleKg) : 0;
 
   const subtotal = calculateCartTotal(items);
-  const flat = hasFlatRateItem && subtotal < FREE_DELIVERY_THRESHOLD ? flatRate : 0;
-  const sampleFlat =
-    samplePackSubtotal > 0 && samplePackSubtotal <= SAMPLE_FREE_DELIVERY_THRESHOLD
-      ? SAMPLE_DELIVERY_CHARGE
-      : 0;
+  if (subtotal >= FREE_DELIVERY_THRESHOLD) return wholesaleDelivery;
+  const flat = hasFlatRateItem ? flatRate : 0;
+  const sampleFlat = samplePackSubtotal > 0 ? SAMPLE_DELIVERY_CHARGE : 0;
   return wholesaleDelivery + fixedDelivery + flat + sampleFlat;
 }
 
