@@ -26,7 +26,16 @@ export function reviseRetailCoffeePricing(products: Product[]): Product[] {
   });
 }
 
-/** Pack price for a ratio-priced blend: the ratio's per-kg price scaled to the pack weight. */
+// Small packs cost more per kg. Only the 250g and 500g packs carry a markup.
+const BLEND_PACK_MARKUP: Record<number, number> = { 250: 1.15, 500: 1.1 };
+
+/**
+ * Pack price for a ratio-priced blend: the ratio's per-kg price scaled to the
+ * pack weight, with the small-pack markup applied and rounded to the nearest ₹10.
+ * The 1kg pack is exactly the per-kg price.
+ */
 export function blendPackPrice(perKg: number, weightGrams = 1000): number {
-  return Math.round((perKg * weightGrams) / 1000);
+  const base = (perKg * weightGrams) / 1000;
+  const markup = BLEND_PACK_MARKUP[weightGrams];
+  return markup ? Math.round((base * markup) / 10) * 10 : Math.round(base);
 }

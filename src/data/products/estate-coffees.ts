@@ -3,7 +3,8 @@ import { reviseRetailCoffeePricing, blendPackPrice } from "./pricing";
 
 // Custom Attikan blend: ₹/kg by Arabica %. Anchored at ₹1,300/kg for 100% Robusta
 // and ₹1,350/kg for 80% Arabica / 20% Robusta, then ~₹6.25 per extra 1% Arabica
-// (rounded to ₹5). Edit here to change a ratio's price.
+// (rounded to ₹5). The 250g/500g packs add a markup on top (see blendPackPrice).
+// Edit here to change a ratio's price.
 const ATTIKAN_BLEND_PER_KG: Record<number, number> = {
   90: 1355,
   80: 1350,

@@ -77,8 +77,8 @@ const blendLine = (ratio: string | undefined, variant = "250g") => ({
   selectedBlendRatio: ratio,
 });
 console.assert(repriceCartItems([blendLine("80% Arabica / 20% Robusta", "1kg")]).subtotal === 1350);
-console.assert(repriceCartItems([blendLine("80% Arabica / 20% Robusta")]).subtotal === 338);
-console.assert(repriceCartItems([blendLine("10% Arabica / 90% Robusta", "500g")]).subtotal === 653);
+console.assert(repriceCartItems([blendLine("80% Arabica / 20% Robusta")]).subtotal === 390);
+console.assert(repriceCartItems([blendLine("10% Arabica / 90% Robusta", "500g")]).subtotal === 720);
 for (const bad of [undefined, "99% Arabica / 1% Robusta"]) {
   try {
     repriceCartItems([blendLine(bad)]);
