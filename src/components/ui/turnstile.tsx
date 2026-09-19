@@ -31,7 +31,11 @@ type TurnstileProps = {
   className?: string;
 };
 
-const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || "";
+// Site keys are public. VITE_* is inlined at build time from .env, which the
+// production build doesn't have (wrangler.jsonc "vars" are runtime-only), so an
+// empty key silently hid the widget and left Pay disabled. Keep the fallback.
+const TURNSTILE_SITE_KEY =
+  import.meta.env.VITE_TURNSTILE_SITE_KEY || "0x4AAAAAADT2Yq_f3-03Eyp4";
 
 export function Turnstile({
   onVerify,
