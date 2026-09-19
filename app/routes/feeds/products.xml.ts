@@ -91,7 +91,7 @@ export async function loader() {
   const baseUrl = "https://graycup.in";
 
   const xml = generateProductFeed(
-    products.filter((p) => !p.isFundraiser && !p.isWholesale),
+    products.filter((p) => !p.isFundraiser && !p.isWholesale && !p.comingSoon),
     baseUrl,
   );
 

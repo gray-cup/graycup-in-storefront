@@ -78,6 +78,8 @@ export type Product = {
   /** Sold unroasted (green) - no grind size applies */
   isGreenCoffee?: boolean;
   process?: CoffeeProcess;
+  /** Bean grade / screen size, shown as a badge (e.g. "AAA"). */
+  grade?: string;
   varietal?: string;
   roast?: CoffeeRoast;
   flavourNotes?: string[];

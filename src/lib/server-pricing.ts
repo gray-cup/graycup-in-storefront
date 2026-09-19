@@ -14,6 +14,10 @@ function trustedUnitPrice(item: CartItem): number {
     throw new PricingError(`Unknown product: ${item.product?.slug ?? "(none)"}`);
   }
 
+  if (product.comingSoon) {
+    throw new PricingError(`${product.name} is coming soon and can't be ordered yet`);
+  }
+
   // Pick-your-poison sampler: price is (per-sample price) x (samples chosen).
   // The client builds a synthetic variant named "N x <grams>g samples: ...".
   // The fixed x3/x5/x7 packs send their real variant and fall through below.
@@ -67,7 +71,7 @@ export function repriceSubscription(
   addons: SubLineInput[] = [],
 ): { items: { name: string; price: number }[]; monthlyTotal: number } {
   const p = getProductBySlug(primary.slug);
-  if (!p) throw new PricingError(`Unknown product: ${primary.slug ?? "(none)"}`);
+  if (!p || p.comingSoon) throw new PricingError(`Unknown product: ${primary.slug ?? "(none)"}`);
 
   const qty = Math.min(99, Math.max(1, Math.floor(Number(primary.quantity) || 1)));
   const pv = resolveVariant(p, primary.variantName);

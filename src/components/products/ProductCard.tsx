@@ -6,6 +6,7 @@ import type { Product } from "@/data/products";
 import { productPath } from "@/lib/product-url";
 import { CURRENCY } from "@/lib/currency";
 import { ProcessBadge } from "./ProcessBadge";
+import { GradeBadge } from "./GradeBadge";
 import { FlavourNoteChip } from "./FlavourNoteChip";
 
 type ProductCardProps = {
@@ -23,12 +24,14 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
           src={product.image}
           alt={product.name}
           draggable={false}
-          className={`absolute inset-0 h-full w-full object-cover${product.comingSoon ? " opacity-40" : ""}`}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
         />
 
         {product.comingSoon && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="bg-neutral-900 text-white text-xs font-semibold px-3 py-1.5 rounded">
+          <div className="absolute inset-0 flex items-center justify-center bg-white/60">
+            <span className="text-sm font-semibold text-neutral-900">
               Coming Soon
             </span>
           </div>
@@ -44,7 +47,10 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
           <div className="absolute inset-x-0 top-0 -translate-y-full transform bg-white p-3 shadow-md transition-transform duration-500 ease-out [@media(hover:hover)]:group-hover:translate-y-0">
             <div className="absolute inset-x-0 top-0 h-1.5 bg-blue-600" />
             <div className="flex items-center justify-between mb-2">
-              <ProcessBadge process={product.process} pill tooltipSide="bottom" />
+              <div className="flex flex-wrap items-center gap-1.5">
+                <ProcessBadge process={product.process} pill tooltipSide="bottom" />
+                {product.grade && <GradeBadge grade={product.grade} />}
+              </div>
               {product.varietal && (
                 <span className="text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
                   {product.varietal}
@@ -63,20 +69,18 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
         <h3 className="text-md hover:underline font-semibold text-black line-clamp-2 min-h-[2.5em]">
           {product.name}
         </h3>
-        {showPrice && !product.comingSoon && (
+        {product.comingSoon && product.locations[0] && (
+          <p className="text-xs text-muted-foreground">{product.locations[0]}</p>
+        )}
+        {showPrice && (
           <p className="text-sm text-muted-foreground mt-1">
             From {CURRENCY.symbol}
             {minPrice.toLocaleString(CURRENCY.locale)}
           </p>
         )}
-        {product.comingSoon && (
-          <p className="text-sm text-muted-foreground mt-1">Available soon</p>
-        )}
       </div>
     </Card>
   );
-
-  if (product.comingSoon) return <div>{card}</div>;
 
   return (
     <Link to={productPath(product)} className="group block cursor-pointer">

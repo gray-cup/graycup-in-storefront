@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ProductCard } from "@/components/products";
 import { PickYourPoisonCard } from "./PickYourPoisonCard";
+import { LazySection } from "./LazySection";
 import type { Product } from "@/data/products";
 
 type TabValue = "all" | "tea" | "coffee" | "specialty-coffee";
@@ -13,6 +14,7 @@ type HomeProductTabsProps = {
   groundCoffeeProducts: Product[];
   coffeeBlendProducts: Product[];
   specialtyCoffeeProducts: Product[];
+  comingSoonProducts: Product[];
 };
 
 function ProductGrid({ products }: { products: Product[] }) {
@@ -65,6 +67,7 @@ export function HomeProductTabs({
   groundCoffeeProducts,
   coffeeBlendProducts,
   specialtyCoffeeProducts,
+  comingSoonProducts,
 }: HomeProductTabsProps) {
   const [activeTab, setActiveTab] = useState<TabValue>("all");
 
@@ -98,18 +101,36 @@ export function HomeProductTabs({
           <ProductSection title="Tea" products={teaProducts} />
           <SamplePacksProductSection products={samplePackProducts} />
           <ProductSection title="Ground Coffee" products={groundCoffeeProducts} />
-          <ProductSection title="Coffee Blends" products={coffeeBlendProducts} />
-          <ProductSection title="Specialty Coffee" products={specialtyCoffeeProducts} />
+          <LazySection id="coffee-blends">
+            <ProductSection title="Coffee Blends" products={coffeeBlendProducts} />
+          </LazySection>
+          <LazySection id="specialty-coffee">
+            <ProductSection title="Specialty Coffee" products={specialtyCoffeeProducts} />
+          </LazySection>
+          <LazySection id="coming-soon">
+            <ProductSection title="Coming Soon" products={comingSoonProducts} />
+          </LazySection>
         </div>
       )}
       {activeTab === "tea" && <ProductGrid products={teaProducts} />}
       {activeTab === "coffee" && (
         <div>
           <ProductSection title="Ground Coffee" products={groundCoffeeProducts} />
-          <ProductSection title="Coffee Blends" products={coffeeBlendProducts} />
+          <LazySection id="coffee-blends">
+            <ProductSection title="Coffee Blends" products={coffeeBlendProducts} />
+          </LazySection>
         </div>
       )}
-      {activeTab === "specialty-coffee" && <ProductGrid products={specialtyCoffeeProducts} />}
+      {activeTab === "specialty-coffee" && (
+        <div>
+          <ProductGrid products={specialtyCoffeeProducts} />
+          <div className="mt-12">
+            <LazySection id="coming-soon">
+              <ProductSection title="Coming Soon" products={comingSoonProducts} />
+            </LazySection>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

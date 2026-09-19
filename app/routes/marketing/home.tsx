@@ -3,6 +3,7 @@ import {
   giddapaharDarjeelingProducts,
   samplePackProducts,
   retailProducts,
+  comingSoonCoffeeProducts,
 } from "@/data/products";
 import {
   HeroSection,
@@ -40,6 +41,7 @@ export default function Home() {
                     groundCoffeeProducts={groundCoffeeProducts}
                     coffeeBlendProducts={coffeeBlendProducts}
                     specialtyCoffeeProducts={specialtyCoffeeProducts}
+                    comingSoonProducts={comingSoonCoffeeProducts}
                   />
                 </div>
               </div>

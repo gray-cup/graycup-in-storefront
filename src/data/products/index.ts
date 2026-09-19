@@ -35,6 +35,7 @@ import { accessoryProducts } from "./accessories";
 import { wholesaleCoffeeProducts } from "./wholesale-coffee";
 import { greenCoffeeProducts } from "./green-coffee-beans";
 import { fundraiserProducts } from "./fundraiser";
+import { comingSoonCoffeeProducts } from "./coming-soon-coffees";
 import type { Product } from "./types";
 
 // Combined array of all products
@@ -50,14 +51,18 @@ export const products: Product[] = [
   ...wholesaleCoffeeProducts,
   ...greenCoffeeProducts,
   ...fundraiserProducts,
+  ...comingSoonCoffeeProducts,
 ];
 
 // Regular retail catalog - excludes wholesale bulk SKUs and fundraiser reward
 // packs, which only belong on /roasted-wholesale-coffee, /green-wholesale-coffee,
-// and /fundraisers respectively.
+// and /fundraisers respectively. Coming-soon lots have pages but aren't orderable,
+// so they stay out of every catalog list (home has its own Coming Soon section).
 export const retailProducts: Product[] = products.filter(
-  (product) => !product.isWholesale && !product.isFundraiser,
+  (product) => !product.isWholesale && !product.isFundraiser && !product.comingSoon,
 );
+
+export { comingSoonCoffeeProducts };
 
 // Helper functions
 export function getProductBySlug(slug: string): Product | undefined {

@@ -268,6 +268,7 @@ function WebMCPToolsInner() {
       if (!cart) throw new Error("Cart is not ready yet.");
       const product = getProductBySlug(args.slug);
       if (!product) throw new Error(`No product with slug "${args.slug}".`);
+      if (product.comingSoon) throw new Error(`${product.name} is coming soon and can't be ordered yet.`);
       const variant = args.variant
         ? product.variants.find((v) => v.name === args.variant)
         : product.variants[0];

@@ -15,6 +15,7 @@ import {
   GrindSizeProvider,
 } from "@/components/products";
 import { Badge } from "@/components/ui/badge";
+import { ComingSoonNotice } from "@/components/products/ComingSoonNotice";
 import {
   Accordion,
   AccordionItem,
@@ -112,7 +113,7 @@ export function meta({ loaderData }: { loaderData: Awaited<ReturnType<typeof loa
   const priceLabel = product.priceRange.unit
     ? `₹${product.priceRange.min}-₹${product.priceRange.max} ${product.priceRange.unit}`
     : `₹${product.priceRange.min}-₹${product.priceRange.max}`;
-  const seoDescription = `Buy ${product.name} from Gray Cup. ${product.description} Price: ${priceLabel}.`;
+  const seoDescription = `${product.comingSoon ? "Coming soon:" : "Buy"} ${product.name} from Gray Cup. ${product.description} Price: ${priceLabel}.`;
   const title = `${product.name} by Gray Cup`;
 
   return [
@@ -205,6 +206,7 @@ export default function ProductPage() {
 
                 <FlavourProfile
                   process={product.process}
+                  grade={product.grade}
                   varietal={product.varietal}
                   flavourNotes={product.flavourNotes}
                   bitterness={product.bitterness}
@@ -222,7 +224,9 @@ export default function ProductPage() {
                 )}
 
                 {/* Add to Cart */}
-                {product.isSamplePack ? (
+                {product.comingSoon ? (
+                  <ComingSoonNotice product={product} />
+                ) : product.isSamplePack ? (
                   <SampleBuilder product={product} />
                 ) : (
                   <ProductConfigurator product={product} />
