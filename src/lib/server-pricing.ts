@@ -16,7 +16,12 @@ function trustedUnitPrice(item: CartItem): number {
 
   // Pick-your-poison sampler: price is (per-sample price) x (samples chosen).
   // The client builds a synthetic variant named "N x <grams>g samples: ...".
-  if (product.isSamplePack && (item.selectedSamples?.length ?? 0) > 0) {
+  // The fixed x3/x5/x7 packs send their real variant and fall through below.
+  if (
+    product.isSamplePack &&
+    (item.selectedSamples?.length ?? 0) > 0 &&
+    /g samples/.test(item.selectedVariant?.name ?? "")
+  ) {
     const grams = Number(/(\d+)g samples/.exec(item.selectedVariant?.name ?? "")?.[1]);
     const size =
       product.variants.find((v) => v.weightGrams === grams) ?? product.variants[0];

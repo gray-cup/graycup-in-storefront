@@ -222,7 +222,7 @@ export default function ProductPage() {
                 )}
 
                 {/* Add to Cart */}
-                {product.slug === "pick-your-poison-sampler" ? (
+                {product.isSamplePack ? (
                   <SampleBuilder product={product} />
                 ) : (
                   <ProductConfigurator product={product} />

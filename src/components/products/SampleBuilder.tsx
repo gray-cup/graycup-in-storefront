@@ -10,12 +10,23 @@ import { Label } from "@/components/ui/label";
 import { useCart } from "@/components/cart-provider";
 import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
-import { getProductsByCategory, COFFEE_GRIND_OPTIONS, type Product } from "@/data/products";
-import { useGrindSize } from "./grind-size-context";
+import {
+  getProductsByCategory,
+  COFFEE_GRIND_OPTIONS,
+  COFFEE_ROAST_OPTIONS,
+  type Product,
+} from "@/data/products";
 import { usePostHog } from "@posthog/react";
 
 const MIN_SAMPLES = 3;
 const MAX_SAMPLES = 12;
+
+const SELECT_CLASS =
+  "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+
+// One entry per sample slot: which coffee, at what roast, ground how.
+type Slot = { coffee: string; roast: string; grind: string };
+const emptySlot = (): Slot => ({ coffee: "", roast: "", grind: COFFEE_GRIND_OPTIONS[0] });
 
 type SampleBuilderProps = {
   product: Product;
@@ -23,7 +34,6 @@ type SampleBuilderProps = {
 
 export function SampleBuilder({ product }: SampleBuilderProps) {
   const { addToCart, openCart } = useCart();
-  const { grindSize, setGrindSize } = useGrindSize();
   const navigate = useNavigate();
   const posthog = usePostHog();
 
@@ -32,42 +42,66 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
     [],
   );
 
-  const [selectedSize, setSelectedSize] = useState(product.variants[0]);
-  // One entry per sample slot; "" = not yet chosen. Duplicates are allowed -
-  // a buyer may want two of the same coffee in their box.
-  const [slots, setSlots] = useState<string[]>(() => Array(MIN_SAMPLES).fill(""));
+  // Pick Your Poison lets the buyer choose how many samples (priced per sample);
+  // the x3/x5/x7 packs have a fixed count and a fixed pack price.
+  const isCustom = product.slug === "pick-your-poison-sampler";
+  const fixedCount = isCustom ? null : Number(/x (\d+)$/.exec(product.variants[0].name)?.[1]) || MIN_SAMPLES;
+  const minCount = fixedCount ?? MIN_SAMPLES;
+  const maxCount = fixedCount ?? MAX_SAMPLES;
 
-  const setSlot = (i: number, name: string) =>
-    setSlots((prev) => prev.map((s, idx) => (idx === i ? name : s)));
+  const [selectedSize, setSelectedSize] = useState(product.variants[0]);
+  // Duplicates are allowed - a buyer may want the same coffee at two roasts.
+  const [slots, setSlots] = useState<Slot[]>(() =>
+    Array.from({ length: minCount }, emptySlot),
+  );
+
+  const roastOptionsFor = (coffee?: Product) => coffee?.roastOptions ?? COFFEE_ROAST_OPTIONS;
+
+  const updateSlot = (i: number, patch: Partial<Slot>) =>
+    setSlots((prev) => prev.map((s, idx) => (idx === i ? { ...s, ...patch } : s)));
+
+  const setCoffee = (i: number, name: string) => {
+    const coffee = eligibleCoffees.find((c) => c.name === name);
+    const options = roastOptionsFor(coffee);
+    const roast = coffee ? (options.includes(coffee.roast!) ? coffee.roast! : options[0]) : "";
+    updateSlot(i, { coffee: name, roast });
+  };
 
   const addSlot = () => {
-    if (slots.length >= MAX_SAMPLES) {
-      toast.error(`You can pick up to ${MAX_SAMPLES} samples`);
+    if (slots.length >= maxCount) {
+      toast.error(`You can pick up to ${maxCount} samples`);
       return;
     }
-    setSlots((prev) => [...prev, ""]);
+    setSlots((prev) => [...prev, emptySlot()]);
   };
 
   const removeSlot = (i: number) =>
     setSlots((prev) => prev.filter((_, idx) => idx !== i));
 
-  const selected = useMemo(() => slots.filter(Boolean), [slots]);
+  // Cart/checkout/admin all render selectedSamples as plain strings.
+  const selected = useMemo(
+    () => slots.filter((s) => s.coffee).map((s) => `${s.coffee} (${s.roast}, ${s.grind})`),
+    [slots],
+  );
   const count = selected.length;
-  const totalPrice = selectedSize.price * count;
-  const meetsMinimum = count >= MIN_SAMPLES;
+  const totalPrice = isCustom ? selectedSize.price * count : selectedSize.price;
+  const meetsMinimum = count >= minCount;
 
-  const buildCartVariant = () => ({
-    name: `${count} x ${selectedSize.weightGrams}g samples: ${selected.join(", ")}`,
-    price: totalPrice,
-    weightGrams: (selectedSize.weightGrams ?? 0) * count,
-  });
+  const buildCartVariant = () =>
+    isCustom
+      ? {
+          name: `${count} x ${selectedSize.weightGrams}g samples: ${selected.join(", ")}`,
+          price: totalPrice,
+          weightGrams: (selectedSize.weightGrams ?? 0) * count,
+        }
+      : selectedSize;
 
   const handleAddToCart = () => {
     if (!meetsMinimum) {
-      toast.error(`Pick at least ${MIN_SAMPLES} coffees`);
+      toast.error(`Pick ${fixedCount ? "all" : "at least"} ${minCount} coffees`);
       return;
     }
-    addToCart(product, 1, buildCartVariant(), undefined, grindSize, selected);
+    addToCart(product, 1, buildCartVariant(), undefined, undefined, selected);
     posthog?.capture("product_added_to_cart", {
       product_slug: product.slug,
       product_category: product.category,
@@ -85,14 +119,13 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
 
   const handleBuyNow = () => {
     if (!meetsMinimum) {
-      toast.error(`Pick at least ${MIN_SAMPLES} coffees`);
+      toast.error(`Pick ${fixedCount ? "all" : "at least"} ${minCount} coffees`);
       return;
     }
     setBuyNowItem({
       product,
       quantity: 1,
       selectedVariant: buildCartVariant(),
-      selectedGrind: grindSize,
       selectedSamples: selected,
     });
     posthog?.capture("buy_now_selected", {
@@ -112,7 +145,9 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
           {totalPrice.toLocaleString(CURRENCY.locale)}
         </p>
         <p className="text-sm text-muted-foreground">
-          {count} / {MAX_SAMPLES} samples selected (min {MIN_SAMPLES})
+          {fixedCount
+            ? `${count} / ${fixedCount} coffees chosen`
+            : `${count} / ${maxCount} samples selected (min ${minCount})`}
         </p>
       </CardHeader>
       <CardContent className="space-y-6 py-4">
@@ -126,12 +161,13 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
               const variant = product.variants.find((v) => v.name === e.target.value);
               if (variant) setSelectedSize(variant);
             }}
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className={SELECT_CLASS}
           >
             {product.variants.map((variant) => (
               <option key={variant.name} value={variant.name}>
                 {variant.name} - {CURRENCY.symbol}
-                {variant.price.toLocaleString(CURRENCY.locale)} per sample
+                {variant.price.toLocaleString(CURRENCY.locale)}
+                {isCustom ? " per sample" : ""}
               </option>
             ))}
           </select>
@@ -140,14 +176,14 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
         {/* Coffee Selection - one dropdown per sample slot. Native <select> so
             mobile gets the OS picker (full names, no truncation, no scroll trap). */}
         <div className="space-y-4">
-          <Label>Choose your coffees</Label>
-          {slots.map((value, i) => {
-            const coffee = eligibleCoffees.find((c) => c.name === value);
+          <Label>Choose your coffees, roast and grind</Label>
+          {slots.map((slot, i) => {
+            const coffee = eligibleCoffees.find((c) => c.name === slot.coffee);
             return (
-              <div key={i} className="space-y-1">
+              <div key={i} className="space-y-2 rounded-md border p-3">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">Sample {i + 1}</span>
-                  {slots.length > MIN_SAMPLES && (
+                  {!fixedCount && slots.length > MIN_SAMPLES && (
                     <button
                       type="button"
                       onClick={() => removeSlot(i)}
@@ -158,9 +194,10 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
                   )}
                 </div>
                 <select
-                  value={value}
-                  onChange={(e) => setSlot(i, e.target.value)}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  aria-label={`Sample ${i + 1} coffee`}
+                  value={slot.coffee}
+                  onChange={(e) => setCoffee(i, e.target.value)}
+                  className={SELECT_CLASS}
                 >
                   <option value="">— Select a coffee —</option>
                   {eligibleCoffees.map((c) => (
@@ -171,35 +208,52 @@ export function SampleBuilder({ product }: SampleBuilderProps) {
                   ))}
                 </select>
                 {coffee && (
-                  <p className="text-xs leading-relaxed text-muted-foreground">
-                    {coffee.description}
-                  </p>
+                  <>
+                    <p className="text-xs leading-relaxed text-muted-foreground">
+                      {coffee.description}
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="space-y-1">
+                        <Label className="text-xs">Roast Level</Label>
+                        <select
+                          aria-label={`Sample ${i + 1} roast level`}
+                          value={slot.roast}
+                          onChange={(e) => updateSlot(i, { roast: e.target.value })}
+                          className={SELECT_CLASS}
+                        >
+                          {roastOptionsFor(coffee).map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-xs">Grind Size</Label>
+                        <select
+                          aria-label={`Sample ${i + 1} grind size`}
+                          value={slot.grind}
+                          onChange={(e) => updateSlot(i, { grind: e.target.value })}
+                          className={SELECT_CLASS}
+                        >
+                          {COFFEE_GRIND_OPTIONS.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </>
                 )}
               </div>
             );
           })}
-          {slots.length < MAX_SAMPLES && (
+          {!fixedCount && slots.length < maxCount && (
             <Button type="button" variant="outline" size="sm" onClick={addSlot}>
               + Add another sample
             </Button>
           )}
-        </div>
-
-        {/* Grind Size - applied to every coffee in the box */}
-        <div className="space-y-2">
-          <Label htmlFor="sample-grind">Grind Size</Label>
-          <select
-            id="sample-grind"
-            value={grindSize}
-            onChange={(e) => setGrindSize(e.target.value)}
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          >
-            {COFFEE_GRIND_OPTIONS.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
         </div>
 
         {/* Action Buttons */}

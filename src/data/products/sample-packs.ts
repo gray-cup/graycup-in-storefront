@@ -7,12 +7,12 @@ export const samplePackProducts: Product[] = [
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
-      "A curated trio of three of our coffees - a great way to explore different origins and roasts before committing to a full bag.",
+      "Pick any three of our coffees, each at your choice of roast and grind - a great way to explore different origins and roasts before committing to a full bag.",
     longDescription:
-      "Can't decide which coffee to try first? The 3-Coffee Sampler Pack brings together three of our coffees, hand-picked by us to showcase a range of origins, processes, and roast styles. Perfect for gifting or simply exploring what Gray Cup has to offer.",
+      "Can't decide which coffee to try first? The 3-Coffee Sampler Pack lets you choose three of our coffees, and the roast level and grind size for each, to explore a range of origins, processes, and roast styles. Perfect for gifting or simply exploring what Gray Cup has to offer.",
     details: [
-      "3 curated coffee samples",
-      "Hand-picked assortment, changes with availability",
+      "3 coffee samples of your choice",
+      "You choose each coffee, its roast level and grind size",
       "Available in 75g or 150g per sample",
       "Great way to explore before buying a full bag",
     ],
@@ -44,12 +44,12 @@ export const samplePackProducts: Product[] = [
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
-      "A curated selection of five of our coffees - more variety for a deeper tasting flight.",
+      "Pick any five of our coffees, each at your choice of roast and grind - more variety for a deeper tasting flight.",
     longDescription:
-      "The 5-Coffee Sampler Pack brings together five of our coffees, hand-picked to showcase a wider range of origins, processes, and roast styles than our 3-pack. A great way to explore before committing to a full bag, or to put together a tasting flight at home.",
+      "The 5-Coffee Sampler Pack lets you choose five of our coffees, with the roast level and grind size for each, to explore a wider range of origins, processes, and roast styles than our 3-pack. A great way to explore before committing to a full bag, or to put together a tasting flight at home.",
     details: [
-      "5 curated coffee samples",
-      "Hand-picked assortment, changes with availability",
+      "5 coffee samples of your choice",
+      "You choose each coffee, its roast level and grind size",
       "Available in 75g or 150g per sample",
       "Great way to explore before buying a full bag",
     ],
@@ -81,12 +81,12 @@ export const samplePackProducts: Product[] = [
     image: "/products/roasted-coffee-beans.png",
     images: ["/products/roasted-coffee-beans.png", "/products/ground-coffee.png", "/products/green-coffee-beans.png"],
     description:
-      "A curated selection of seven of our coffees - our biggest fixed sampler, built for serious tasting.",
+      "Pick any seven of our coffees, each at your choice of roast and grind - our biggest fixed sampler, built for serious tasting.",
     longDescription:
-      "The 7-Coffee Sampler Pack is our biggest curated sampler, bringing together seven of our coffees hand-picked to showcase the full range of what Gray Cup grows and sources - different origins, processes, and roast styles in one box.",
+      "The 7-Coffee Sampler Pack is our biggest fixed sampler: choose seven of our coffees, plus the roast level and grind size for each, to explore the full range of what Gray Cup grows and sources in one box.",
     details: [
-      "7 curated coffee samples",
-      "Hand-picked assortment, changes with availability",
+      "7 coffee samples of your choice",
+      "You choose each coffee, its roast level and grind size",
       "Available in 75g or 150g per sample",
       "Our biggest fixed sampler pack",
     ],
