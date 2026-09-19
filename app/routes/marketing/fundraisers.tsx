@@ -10,7 +10,7 @@ export function meta() {
     {
       name: "description",
       content:
-        "Gray Cup is raising funds for an Aillio Bullet R2 roaster. Buy any of our coffees in 250g, 500g or 1kg at regular prices - 5% off orders over 1kg.",
+        "Gray Cup is raising funds for an Aillio Bullet R2 roaster. Buy any of our coffees in 250g, 500g or 1kg at regular prices - 5% off orders over 1kg, 15% off over 5kg.",
     },
   ];
 }
@@ -54,7 +54,7 @@ export default function FundraisersPage({ loaderData }: Route.ComponentProps) {
             roaster, so we can roast in-house with tighter, more consistent quality
             control. Buy any of our coffees in a 250g, 500g or 1kg pack at its regular
             price and the money funds the roaster - you pick the bean and the roast
-            level, and orders over 1kg get 5% off.
+            level, and orders over 1kg get 5% off (15% over 5kg).
           </p>
         </div>
 
@@ -132,7 +132,7 @@ export default function FundraisersPage({ loaderData }: Route.ComponentProps) {
             Contribute a Pack
           </h2>
           <p className="text-sm text-muted-foreground mb-4">
-            Any available coffee, at any roast, in 250g, 500g or 1kg at regular prices. 5% off orders over 1kg.
+            Any available coffee, at any roast, in 250g, 500g or 1kg at regular prices. 5% off orders over 1kg, 15% off over 5kg.
           </p>
           <GrindSizeProvider>
             <ProductConfigurator product={product} />

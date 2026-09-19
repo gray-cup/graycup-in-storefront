@@ -16,7 +16,7 @@ import { blendPackPrice } from "@/data/products/pricing";
 import {
   COFFEE_GRIND_OPTIONS,
   COFFEE_ROAST_OPTIONS,
-  FUNDRAISER_BULK_MIN_GRAMS,
+  fundraiserDiscount,
   fundraiserUnitPrice,
   getFundraiserBeans,
   type Product,
@@ -219,9 +219,9 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
             </p>
             {product.isFundraiser && (
               <p className="text-sm text-muted-foreground">
-                5% off orders over 1kg
-                {priced.weightGrams && priced.weightGrams * quantity > FUNDRAISER_BULK_MIN_GRAMS
-                  ? " - applied"
+                5% off over 1kg, 15% off over 5kg
+                {fundraiserDiscount((priced.weightGrams ?? 0) * quantity) > 0
+                  ? ` - ${fundraiserDiscount((priced.weightGrams ?? 0) * quantity) * 100}% applied`
                   : ""}
               </p>
             )}

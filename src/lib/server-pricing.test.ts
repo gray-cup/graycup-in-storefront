@@ -103,6 +103,8 @@ try {
 } catch (e) {
   console.assert(e instanceof PricingError);
 }
+console.assert(repriceCartItems([{ ...fundLine, quantity: 21 }]).items[0].selectedVariant!.price === Math.round(beanPrice("250g") * 0.85), "15% off over 5kg");
+console.assert(repriceCartItems([{ ...fundLine, quantity: 20 }]).items[0].selectedVariant!.price === Math.round(beanPrice("250g") * 0.95), "exactly 5kg stays at 5%");
 console.assert(repriceCartItems([{ ...fundLine, quantity: 4 }]).subtotal === beanPrice("250g") * 4, "exactly 1kg gets no discount");
 console.assert(repriceCartItems([{ ...fundLine, quantity: 2, selectedVariant: sizeVariant("1kg") }]).subtotal === Math.round(beanPrice("1kg") * 0.95) * 2, "2 x 1kg discounted");
 for (const bad of [{ selectedCoffee: "Nope" }, { selectedRoast: "Charcoal" }, { selectedCoffee: undefined }, { selectedVariant: { name: "5kg", price: 1 } }]) {

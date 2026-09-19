@@ -20,8 +20,7 @@ export {
   FUNDRAISER_GOAL_INR,
   FUNDRAISER_PRODUCT_SLUG,
   FUNDRAISER_SIZES,
-  FUNDRAISER_BULK_MIN_GRAMS,
-  FUNDRAISER_BULK_DISCOUNT,
+  fundraiserDiscount,
 } from "./fundraiser";
 
 import { dooarsAssamTeaProducts } from "./dooars-assam-tea";
@@ -37,8 +36,7 @@ import { greenCoffeeProducts } from "./green-coffee-beans";
 import {
   fundraiserProducts,
   FUNDRAISER_SIZES,
-  FUNDRAISER_BULK_MIN_GRAMS,
-  FUNDRAISER_BULK_DISCOUNT,
+  fundraiserDiscount,
 } from "./fundraiser";
 import { comingSoonCoffeeProducts } from "./coming-soon-coffees";
 import type { Product } from "./types";
@@ -86,8 +84,8 @@ export function getFundraiserBeans(): Product[] {
   );
 }
 
-// A fundraiser line costs the picked coffee's regular price for that size, 5% off
-// once the line is over 1kg. null = that coffee doesn't come in that size.
+// A fundraiser line costs the picked coffee's regular price for that size, less the
+// weight discount (see fundraiserDiscount). null = that coffee doesn't come in that size.
 export function fundraiserUnitPrice(
   coffee: string | undefined,
   size: string | undefined,
@@ -99,9 +97,7 @@ export function fundraiserUnitPrice(
         ?.variants.find((x) => x.name === size)
     : undefined;
   if (!v) return null;
-  return (v.weightGrams ?? 0) * quantity > FUNDRAISER_BULK_MIN_GRAMS
-    ? Math.round(v.price * (1 - FUNDRAISER_BULK_DISCOUNT))
-    : v.price;
+  return Math.round(v.price * (1 - fundraiserDiscount((v.weightGrams ?? 0) * quantity)));
 }
 
 export function getAllProductSlugs(): string[] {
