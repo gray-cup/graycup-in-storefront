@@ -1,5 +1,24 @@
 import type { Product } from "./types";
-import { reviseRetailCoffeePricing } from "./pricing";
+import { reviseRetailCoffeePricing, blendPackPrice } from "./pricing";
+
+// Custom Attikan blend: ₹/kg by Arabica %. Anchored at ₹1,300/kg for 100% Robusta
+// and ₹1,350/kg for 80% Arabica / 20% Robusta, then ~₹6.25 per extra 1% Arabica
+// (rounded to ₹5). Edit here to change a ratio's price.
+const ATTIKAN_BLEND_PER_KG: Record<number, number> = {
+  90: 1355,
+  80: 1350,
+  70: 1345,
+  60: 1340,
+  50: 1330,
+  40: 1325,
+  30: 1320,
+  20: 1315,
+  10: 1305,
+};
+const blendLabel = (arabica: number) => `${arabica}% Arabica / ${100 - arabica}% Robusta`;
+const blendPerKgValues = Object.values(ATTIKAN_BLEND_PER_KG);
+const blendCheapestPerKg = Math.min(...blendPerKgValues);
+const blendDearestPerKg = Math.max(...blendPerKgValues);
 
 export const estateCoffeeProducts: Product[] = reviseRetailCoffeePricing([
   {
@@ -229,6 +248,65 @@ export const estateCoffeeProducts: Product[] = reviseRetailCoffeePricing([
     ],
     packaging: ["250g pack", "500g pack", "1kg pack"],
     sku: "GC-COF-ROB100-001",
+    brand: "Gray Cup",
+    availability: "in_stock",
+    googleProductCategory: "1868",
+  },
+  {
+    slug: "custom-attikan-arabica-robusta-blend",
+    name: "Custom Arabica Robusta Blend - Attikan Estate",
+    image: "/robusta-100-percent.png",
+    images: ["/robusta-100-percent.png", "/products/roasted-coffee-beans.png", "/products/ground-coffee.png"],
+    description:
+      "Choose your own Arabica / Robusta percentage, blended from AAA Arabica and AAA Robusta from Attikan Estate and roasted to order.",
+    longDescription:
+      "Pick exactly how much Arabica and Robusta you want, from 90% Arabica / 10% Robusta to 10% Arabica / 90% Robusta. Both coffees are AAA grade from Attikan Estate, and the blend is roasted to order at the roast level you choose. More Arabica gives a smoother, more aromatic cup; more Robusta gives a stronger, bolder cup with heavier crema and more caffeine. The price is per kg and changes slightly with the ratio you pick.",
+    details: [
+      "Choose your Arabica / Robusta percentage, from 90/10 to 10/90",
+      "AAA Arabica and AAA Robusta, both from Attikan Estate",
+      "Choose your roast: light, medium, medium-dark or dark",
+      "Blended and roasted fresh after you order",
+    ],
+    grade: "AAA",
+    varietal: "Arabica + Robusta",
+    roast: "Medium",
+    flavourNotes: ["Bold", "Balanced", "Crema"],
+    specs: [
+      { label: "Arabica", value: "AAA, Attikan Estate" },
+      { label: "Robusta", value: "AAA, Attikan Estate" },
+    ],
+    locations: ["Attikan Estate"],
+    category: "Coffee",
+    categoryTwo: "Blend",
+    quality: "Commercial",
+    brewStyle: "Both",
+    skipPriceRevision: true,
+    blendRatioOptions: Object.keys(ATTIKAN_BLEND_PER_KG)
+      .map(Number)
+      .sort((a, b) => b - a)
+      .map(blendLabel),
+    defaultBlendRatio: blendLabel(80),
+    blendPricing: Object.fromEntries(
+      Object.entries(ATTIKAN_BLEND_PER_KG).map(([a, perKg]) => [blendLabel(Number(a)), perKg]),
+    ),
+    // Variant prices are the cheapest ratio's - the "From" price. The real price
+    // follows the selected ratio via blendPricing.
+    priceRange: {
+      min: blendPackPrice(blendCheapestPerKg, 250),
+      max: blendDearestPerKg,
+      unit: "",
+    },
+    minimumOrder: {
+      quantity: 1,
+      unit: "pack",
+    },
+    variants: [
+      { name: "250g", price: blendPackPrice(blendCheapestPerKg, 250), weightGrams: 250 },
+      { name: "500g", price: blendPackPrice(blendCheapestPerKg, 500), weightGrams: 500 },
+      { name: "1kg", price: blendCheapestPerKg, weightGrams: 1000 },
+    ],
+    packaging: ["250g pack", "500g pack", "1kg pack"],
+    sku: "GC-COF-ATKBLEND-001",
     brand: "Gray Cup",
     availability: "in_stock",
     googleProductCategory: "1868",

@@ -5,7 +5,7 @@ import type { Route } from "./+types/subscribe.$productSlug";
 export async function loader({ params }: Route.LoaderArgs) {
   const product = getProductBySlug(params.productSlug);
 
-  if (!product || product.comingSoon) {
+  if (!product || product.comingSoon || product.blendPricing) {
     throw new Response(null, { status: 404 });
   }
 

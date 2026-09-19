@@ -1,5 +1,6 @@
 import { getProductBySlug } from "@/data/products";
 import type { Product, ProductVariant } from "@/data/products";
+import { blendPackPrice } from "@/data/products/pricing";
 import type { CartItem } from "@/lib/cart";
 
 // Server-side pricing authority. The client sends whole product/variant objects
@@ -38,8 +39,16 @@ function trustedUnitPrice(item: CartItem): number {
     if (!v) {
       throw new PricingError(`Unknown variant "${wantVariant}" for ${product.slug}`);
     }
+    if (product.blendPricing) {
+      const perKg = product.blendPricing[item.selectedBlendRatio ?? ""];
+      if (perKg == null) {
+        throw new PricingError(`Unknown blend ratio "${item.selectedBlendRatio}" for ${product.slug}`);
+      }
+      return blendPackPrice(perKg, v.weightGrams);
+    }
     return v.price;
   }
+  if (product.blendPricing) throw new PricingError(`${product.slug} needs a pack size and blend ratio`);
 
   return product.priceRange.min;
 }
@@ -71,7 +80,7 @@ export function repriceSubscription(
   addons: SubLineInput[] = [],
 ): { items: { name: string; price: number }[]; monthlyTotal: number } {
   const p = getProductBySlug(primary.slug);
-  if (!p || p.comingSoon) throw new PricingError(`Unknown product: ${primary.slug ?? "(none)"}`);
+  if (!p || p.comingSoon || p.blendPricing) throw new PricingError(`Unknown product: ${primary.slug ?? "(none)"}`);
 
   const qty = Math.min(99, Math.max(1, Math.floor(Number(primary.quantity) || 1)));
   const pv = resolveVariant(p, primary.variantName);

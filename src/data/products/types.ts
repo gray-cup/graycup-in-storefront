@@ -93,6 +93,14 @@ export type Product = {
   roastOptions?: CoffeeRoast[];
   /** When set, buyers can pick their Arabica/Robusta blend ratio from this list on the product page. */
   blendRatioOptions?: string[];
+  /** Ratio option pre-selected on the product page (defaults to the first option). */
+  defaultBlendRatio?: string;
+  /**
+   * Price per kg for each `blendRatioOptions` entry. When set, a pack's price is
+   * the ratio's per-kg price x pack weight (see blendPackPrice), not `variant.price`
+   * - variant prices then only serve as the "From" price. Not subscribable.
+   */
+  blendPricing?: Record<string, number>;
   /** Fundraiser reward pack - excluded from the regular product grid, feeds, and sitemap. */
   isFundraiser?: boolean;
   /** Bulk wholesale SKU - only shown on /wholesale, excluded from the retail catalog, homepage, and feeds. */

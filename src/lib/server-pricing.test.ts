@@ -67,3 +67,23 @@ try {
 console.assert(subThrew, "unknown subscription slug should throw");
 
 console.log("server-pricing checks passed");
+
+// Ratio-priced blend: price follows the ratio, client price ignored, bad ratio rejected.
+const blend = getProductBySlug("custom-attikan-arabica-robusta-blend")!;
+const blendLine = (ratio: string | undefined, variant = "250g") => ({
+  product: blend as never,
+  quantity: 1,
+  selectedVariant: { name: variant, price: 1 },
+  selectedBlendRatio: ratio,
+});
+console.assert(repriceCartItems([blendLine("80% Arabica / 20% Robusta", "1kg")]).subtotal === 1350);
+console.assert(repriceCartItems([blendLine("80% Arabica / 20% Robusta")]).subtotal === 338);
+console.assert(repriceCartItems([blendLine("10% Arabica / 90% Robusta", "500g")]).subtotal === 653);
+for (const bad of [undefined, "99% Arabica / 1% Robusta"]) {
+  try {
+    repriceCartItems([blendLine(bad)]);
+    console.assert(false, `blend ratio ${bad} should be rejected`);
+  } catch (e) {
+    console.assert(e instanceof PricingError);
+  }
+}

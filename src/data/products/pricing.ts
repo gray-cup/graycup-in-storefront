@@ -25,3 +25,8 @@ export function reviseRetailCoffeePricing(products: Product[]): Product[] {
     };
   });
 }
+
+/** Pack price for a ratio-priced blend: the ratio's per-kg price scaled to the pack weight. */
+export function blendPackPrice(perKg: number, weightGrams = 1000): number {
+  return Math.round((perKg * weightGrams) / 1000);
+}

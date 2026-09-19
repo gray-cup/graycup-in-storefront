@@ -7,6 +7,7 @@
 // use-webmcp-tool does not re-register when `execute` changes. Everything is
 // read through the static product data and the module-level cartBridge /
 // navBridge (see @/lib/webmcp-cart-bridge).
+import { blendPackPrice } from "@/data/products/pricing";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useWebMCP } from "use-webmcp-tool";
@@ -281,7 +282,11 @@ function WebMCPToolsInner() {
       }
       const isCoffee = product.category === "Coffee" && !product.isSamplePack;
       const grind = args.grind ?? (isCoffee ? COFFEE_GRIND_OPTIONS[0] : undefined);
-      cart.addToCart(product, args.quantity ?? 1, variant, undefined, grind);
+      // Ratio-priced blends: add at the default ratio so the line is priced like the product page.
+      const ratio = product.blendPricing ? product.defaultBlendRatio ?? product.blendRatioOptions?.[0] : undefined;
+      const perKg = ratio ? product.blendPricing?.[ratio] : undefined;
+      const line = variant && perKg != null ? { ...variant, price: blendPackPrice(perKg, variant.weightGrams) } : variant;
+      cart.addToCart(product, args.quantity ?? 1, line, undefined, grind, undefined, undefined, ratio);
       await settle();
       return { added: product.name, variant: variant?.name ?? null, cart: cartSnapshot() };
     },

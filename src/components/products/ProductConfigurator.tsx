@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useCart } from "@/components/cart-provider";
 import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
+import { blendPackPrice } from "@/data/products/pricing";
 import { COFFEE_GRIND_OPTIONS, COFFEE_ROAST_OPTIONS, type Product, type ProductVariant } from "@/data/products";
 import { useGrindSize } from "./grind-size-context";
 import { usePostHog } from "@posthog/react";
@@ -49,7 +50,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   );
   const hasBlendRatioOptions = !!product.blendRatioOptions && product.blendRatioOptions.length > 0;
   const [selectedBlendRatio, setSelectedBlendRatio] = useState(
-    () => product.blendRatioOptions?.[0] ?? ""
+    () => product.defaultBlendRatio ?? product.blendRatioOptions?.[0] ?? ""
   );
   const [hydratedFromUrl, setHydratedFromUrl] = useState(false);
 
@@ -122,11 +123,18 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
     product.variants.length,
   ]);
 
+  // Ratio-priced blends: the pack price follows the chosen ratio.
+  const priceFor = (v: ProductVariant): ProductVariant => {
+    const perKg = product.blendPricing?.[selectedBlendRatio];
+    return perKg == null ? v : { ...v, price: blendPackPrice(perKg, v.weightGrams) };
+  };
+  const priced = priceFor(selectedVariant);
+
   const handleAddToCart = () => {
     addToCart(
       product,
       quantity,
-      selectedVariant,
+      priced,
       undefined,
       isCoffee ? grindSize : undefined,
       undefined,
@@ -138,7 +146,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       product_category: product.category,
       variant_name: selectedVariant.name,
       quantity,
-      total_price: selectedVariant.price * quantity,
+      total_price: priced.price * quantity,
     });
     toast.success("Added to cart!", {
       description: `${quantity} ${product.name} (${selectedVariant.name})`,
@@ -153,7 +161,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
     setBuyNowItem({
       product,
       quantity,
-      selectedVariant,
+      selectedVariant: priced,
       selectedGrind: isCoffee ? grindSize : undefined,
       selectedRoast: hasRoastOptions ? selectedRoast : undefined,
       selectedBlendRatio: hasBlendRatioOptions ? selectedBlendRatio : undefined,
@@ -163,7 +171,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       product_category: product.category,
       variant_name: selectedVariant.name,
       quantity,
-      total_price: selectedVariant.price * quantity,
+      total_price: priced.price * quantity,
     });
     navigate("/checkout");
   };
@@ -175,15 +183,15 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
     setQuantity(Number.isNaN(parsed) ? 1 : Math.max(1, parsed));
   };
 
-  const totalPrice = selectedVariant.price * quantity;
-  const selectedPerKg = perKgPrice(selectedVariant);
+  const totalPrice = priced.price * quantity;
+  const selectedPerKg = perKgPrice(priced);
 
   return (
     <Card className="">
       <CardHeader>
                     <p className="text-2xl font-semibold">
               {CURRENCY.symbol}
-              {selectedVariant.price.toLocaleString(CURRENCY.locale)}
+              {priced.price.toLocaleString(CURRENCY.locale)}
             </p>
             {selectedPerKg !== null && (
               <p className="text-sm text-muted-foreground">
@@ -207,7 +215,8 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
                 }}
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                {product.variants.map((variant) => {
+                {product.variants.map((baseVariant) => {
+                  const variant = priceFor(baseVariant);
                   const perKg = perKgPrice(variant);
                   return (
                     <option key={variant.name} value={variant.name}>

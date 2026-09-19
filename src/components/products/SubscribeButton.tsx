@@ -8,6 +8,8 @@ type SubscribeButtonProps = {
 };
 
 export function SubscribeButton({ product }: SubscribeButtonProps) {
+  // Ratio-priced blends can't be repriced by the subscription flow.
+  if (product.blendPricing) return null;
   return (
     <Button variant="outline" className="w-full" size="lg" asChild>
       <Link to={`/subscribe/${product.slug}`}>
