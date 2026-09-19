@@ -1,3 +1,4 @@
+import { fundraiserUnitPrice } from "@/data/products";
 import type { Product, ProductVariant } from "@/data/products/types";
 
 export type CartItem = {
@@ -20,11 +21,18 @@ export type Cart = {
 
 const CART_STORAGE_KEY = "graycup_cart";
 
+// Unit price of a cart line. Fundraiser lines are re-derived from the picked
+// coffee so the bulk discount follows quantity changes made in the cart.
+export function itemUnitPrice(item: CartItem): number {
+  if (item.product.isFundraiser) {
+    const p = fundraiserUnitPrice(item.selectedCoffee, item.selectedVariant?.name, item.quantity);
+    if (p != null) return p;
+  }
+  return item.selectedVariant?.price ?? item.product.priceRange.min;
+}
+
 export function calculateCartTotal(items: CartItem[]): number {
-  return items.reduce((total, item) => {
-    const itemPrice = item.selectedVariant?.price ?? item.product.priceRange.min;
-    return total + itemPrice * item.quantity;
-  }, 0);
+  return items.reduce((total, item) => total + itemUnitPrice(item) * item.quantity, 0);
 }
 
 // Free-delivery threshold: a cart (or Buy Now) subtotal at/above this ships the

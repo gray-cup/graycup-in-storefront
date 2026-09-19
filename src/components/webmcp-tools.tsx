@@ -19,6 +19,7 @@ import {
 } from "@/data/products";
 import type { Product } from "@/data/products/types";
 import { productUrl } from "@/lib/product-url";
+import { itemUnitPrice } from "@/lib/cart";
 import { getQuizResult, resolveQuizProducts } from "@/lib/coffee-quiz";
 import type { QuizAnswers } from "@/lib/coffee-quiz";
 import { cartBridge, navBridge } from "@/lib/webmcp-cart-bridge";
@@ -83,7 +84,7 @@ function cartSnapshot() {
       variant: i.selectedVariant?.name ?? null,
       grind: i.selectedGrind ?? null,
       quantity: i.quantity,
-      unitPrice: i.selectedVariant?.price ?? i.product.priceRange.min,
+      unitPrice: itemUnitPrice(i),
     })),
     total: c.total,
     checkoutUrl: "https://graycup.in/checkout",

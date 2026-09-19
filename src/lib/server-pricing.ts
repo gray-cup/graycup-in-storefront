@@ -1,4 +1,4 @@
-import { COFFEE_ROAST_OPTIONS, getFundraiserBeans, getProductBySlug } from "@/data/products";
+import { COFFEE_ROAST_OPTIONS, fundraiserUnitPrice, getFundraiserBeans, getProductBySlug } from "@/data/products";
 import type { Product, ProductVariant } from "@/data/products";
 import { blendPackPrice } from "@/data/products/pricing";
 import type { CartItem } from "@/lib/cart";
@@ -19,8 +19,9 @@ function trustedUnitPrice(item: CartItem): number {
     throw new PricingError(`${product.name} is coming soon and can't be ordered yet`);
   }
 
-  // Fundraiser pack: flat price, but the buyer must name a bean we actually sell
-  // and a real roast level - both end up in the order the roaster works from.
+  // Fundraiser pack: priced from the named bean's regular size price. The bean must
+  // be one we actually sell and the roast a real level - both end up in the order
+  // the roaster works from.
   if (product.isFundraiser) {
     if (!getFundraiserBeans().some((b) => b.name === item.selectedCoffee)) {
       throw new PricingError(`Unknown coffee "${item.selectedCoffee}" for ${product.slug}`);
@@ -28,6 +29,14 @@ function trustedUnitPrice(item: CartItem): number {
     if (!COFFEE_ROAST_OPTIONS.includes(item.selectedRoast as never)) {
       throw new PricingError(`Unknown roast "${item.selectedRoast}" for ${product.slug}`);
     }
+    const qty = Math.max(1, Math.floor(Number(item.quantity) || 1));
+    const price = fundraiserUnitPrice(item.selectedCoffee, item.selectedVariant?.name, qty);
+    if (price == null) {
+      throw new PricingError(
+        `"${item.selectedCoffee}" isn't available in "${item.selectedVariant?.name}" for ${product.slug}`,
+      );
+    }
+    return price;
   }
 
   // Pick-your-poison sampler: price is (per-sample price) x (samples chosen).

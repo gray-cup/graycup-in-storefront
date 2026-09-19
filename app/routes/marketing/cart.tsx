@@ -6,6 +6,7 @@ import { useCart } from "@/components/cart-provider";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/currency";
+import { itemUnitPrice } from "@/lib/cart";
 import { retailProducts } from "@/data/products";
 import { ProductCard } from "@/components/products";
 
@@ -56,7 +57,7 @@ export default function CartPage() {
                       <h3 className="font-medium">{item.product.name}</h3>
                       {item.selectedVariant && (
                         <p className="text-sm text-gray-500">
-                          {item.selectedVariant.name} - {formatPrice(item.selectedVariant.price)}
+                          {item.selectedVariant.name} - {formatPrice(itemUnitPrice(item))}
                         </p>
                       )}
                       {item.selectedPackaging && (
@@ -123,7 +124,7 @@ export default function CartPage() {
                       </Button>
                     </div>
                     <p className="text-base font-semibold">
-                      {formatPrice((item.selectedVariant?.price ?? item.product.priceRange.min) * item.quantity)}
+                      {formatPrice(itemUnitPrice(item) * item.quantity)}
                     </p>
                   </div>
                 </div>

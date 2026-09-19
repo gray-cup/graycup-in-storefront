@@ -14,6 +14,7 @@ import { formatPrice } from "@/lib/currency";
 import { getBuyNowEntry, type BuyNowSource } from "@/lib/buy-now";
 import {
   calculateCartTotal,
+  itemUnitPrice,
   calculateDeliveryCharge,
   getWholesaleWeightKg,
   VRL_MIN_WEIGHT_KG,
@@ -562,9 +563,7 @@ export default function CheckoutPage() {
                     <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                   </div>
                   <p className="text-sm font-semibold whitespace-nowrap">
-                    {formatPrice(
-                      (item.selectedVariant?.price ?? item.product.priceRange.min) * item.quantity,
-                    )}
+                    {formatPrice(itemUnitPrice(item) * item.quantity)}
                   </p>
                 </div>
               ))}

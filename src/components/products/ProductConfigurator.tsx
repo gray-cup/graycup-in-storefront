@@ -16,6 +16,8 @@ import { blendPackPrice } from "@/data/products/pricing";
 import {
   COFFEE_GRIND_OPTIONS,
   COFFEE_ROAST_OPTIONS,
+  FUNDRAISER_BULK_MIN_GRAMS,
+  fundraiserUnitPrice,
   getFundraiserBeans,
   type Product,
   type ProductVariant,
@@ -45,12 +47,17 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const posthog = usePostHog();
   const isCoffee =
     product.category === "Coffee" && !product.isSamplePack && !product.isGreenCoffee;
-  const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
+  const [chosenVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
   const { grindSize, setGrindSize } = useGrindSize();
   // Fundraiser packs let the buyer pick any available bean, so they always get every roast.
   const fundraiserBeans = product.isFundraiser ? getFundraiserBeans() : [];
   const [selectedCoffee, setSelectedCoffee] = useState(fundraiserBeans[0]?.name ?? "");
+  // Fundraiser sizes are whatever the picked coffee actually comes in (250g/500g/1kg).
+  const sizes = product.isFundraiser
+    ? product.variants.filter((v) => fundraiserUnitPrice(selectedCoffee, v.name, 1) != null)
+    : product.variants;
+  const selectedVariant = sizes.find((v) => v.name === chosenVariant.name) ?? sizes[0] ?? chosenVariant;
   // Products can restrict their roasts; any other retail coffee offers all four.
   const roastOptions: string[] = product.isFundraiser
     ? COFFEE_ROAST_OPTIONS
@@ -136,6 +143,10 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
 
   // Ratio-priced blends: the pack price follows the chosen ratio.
   const priceFor = (v: ProductVariant): ProductVariant => {
+    if (product.isFundraiser) {
+      const price = fundraiserUnitPrice(selectedCoffee, v.name, quantity);
+      return price == null ? v : { ...v, price };
+    }
     const perKg = product.blendPricing?.[selectedBlendRatio];
     return perKg == null ? v : { ...v, price: blendPackPrice(perKg, v.weightGrams) };
   };
@@ -206,6 +217,14 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
               {CURRENCY.symbol}
               {priced.price.toLocaleString(CURRENCY.locale)}
             </p>
+            {product.isFundraiser && (
+              <p className="text-sm text-muted-foreground">
+                5% off orders over 1kg
+                {priced.weightGrams && priced.weightGrams * quantity > FUNDRAISER_BULK_MIN_GRAMS
+                  ? " - applied"
+                  : ""}
+              </p>
+            )}
             {selectedPerKg !== null && (
               <p className="text-sm text-muted-foreground">
                 {CURRENCY.symbol}
@@ -216,19 +235,19 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       <CardContent className="space-y-6 py-4">
         {/* Variant Selector + Quantity */}
         <div className="flex gap-4">
-          {product.variants.length > 1 && (
+          {sizes.length > 1 && (
             <div className="flex-1 space-y-2">
               <Label htmlFor="variant">Select Option</Label>
               <select
                 id="variant"
                 value={selectedVariant.name}
                 onChange={(e) => {
-                  const variant = product.variants.find((v) => v.name === e.target.value);
+                  const variant = sizes.find((v) => v.name === e.target.value);
                   if (variant) setSelectedVariant(variant);
                 }}
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                {product.variants.map((baseVariant) => {
+                {sizes.map((baseVariant) => {
                   const variant = priceFor(baseVariant);
                   const perKg = perKgPrice(variant);
                   return (

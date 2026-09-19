@@ -90,10 +90,22 @@ for (const bad of [undefined, "99% Arabica / 1% Robusta"]) {
 
 // Fundraiser: flat pack price, but the bean and roast must be real.
 const fund = getProductBySlug("aillio-bullet-r2-fundraiser-pack")!;
-const bean = getFundraiserBeans()[0];
-const fundLine = { product: fund as never, quantity: 2, selectedVariant: fund.variants[0], selectedCoffee: bean.name, selectedRoast: "Light" };
-console.assert(repriceCartItems([fundLine]).subtotal === fund.variants[0].price * 2, "fundraiser price is flat");
-for (const bad of [{ selectedCoffee: "Nope" }, { selectedRoast: "Charcoal" }, { selectedCoffee: undefined }]) {
+const bean = getFundraiserBeans().find((b) => ["250g", "500g", "1kg"].every((n) => b.variants.some((v) => v.name === n)))!;
+const beanPrice = (size: string) => bean.variants.find((v) => v.name === size)!.price;
+const sizeVariant = (size: string) => fund.variants.find((v) => v.name === size)!;
+const fundLine = { product: fund as never, quantity: 2, selectedVariant: sizeVariant("250g"), selectedCoffee: bean.name, selectedRoast: "Light" };
+console.assert(repriceCartItems([fundLine]).subtotal === beanPrice("250g") * 2, "fundraiser uses the coffee's regular price");
+console.assert(repriceCartItems([{ ...fundLine, quantity: 5 }]).items[0].selectedVariant!.price === Math.round(beanPrice("250g") * 0.95), "5% off over 1kg");
+const only250 = getFundraiserBeans().find((b) => b.variants.length === 1)!;
+try {
+  repriceCartItems([{ ...fundLine, selectedCoffee: only250.name, selectedVariant: sizeVariant("500g") }]);
+  console.assert(false, "a coffee without a 500g pack should reject 500g");
+} catch (e) {
+  console.assert(e instanceof PricingError);
+}
+console.assert(repriceCartItems([{ ...fundLine, quantity: 4 }]).subtotal === beanPrice("250g") * 4, "exactly 1kg gets no discount");
+console.assert(repriceCartItems([{ ...fundLine, quantity: 2, selectedVariant: sizeVariant("1kg") }]).subtotal === Math.round(beanPrice("1kg") * 0.95) * 2, "2 x 1kg discounted");
+for (const bad of [{ selectedCoffee: "Nope" }, { selectedRoast: "Charcoal" }, { selectedCoffee: undefined }, { selectedVariant: { name: "5kg", price: 1 } }]) {
   threw = false;
   try {
     repriceCartItems([{ ...fundLine, ...bad }]);

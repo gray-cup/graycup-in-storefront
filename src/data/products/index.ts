@@ -18,10 +18,10 @@ export { greenCoffeeProducts } from "./green-coffee-beans";
 export {
   fundraiserProducts,
   FUNDRAISER_GOAL_INR,
-  FUNDRAISER_PACK_PRICE_INR,
-  FUNDRAISER_PACK_WEIGHT_GRAMS,
   FUNDRAISER_PRODUCT_SLUG,
-  FUNDRAISER_PACKS_NEEDED,
+  FUNDRAISER_SIZES,
+  FUNDRAISER_BULK_MIN_GRAMS,
+  FUNDRAISER_BULK_DISCOUNT,
 } from "./fundraiser";
 
 import { dooarsAssamTeaProducts } from "./dooars-assam-tea";
@@ -34,7 +34,12 @@ import { samplePackProducts } from "./sample-packs";
 import { accessoryProducts } from "./accessories";
 import { wholesaleCoffeeProducts } from "./wholesale-coffee";
 import { greenCoffeeProducts } from "./green-coffee-beans";
-import { fundraiserProducts } from "./fundraiser";
+import {
+  fundraiserProducts,
+  FUNDRAISER_SIZES,
+  FUNDRAISER_BULK_MIN_GRAMS,
+  FUNDRAISER_BULK_DISCOUNT,
+} from "./fundraiser";
 import { comingSoonCoffeeProducts } from "./coming-soon-coffees";
 import type { Product } from "./types";
 
@@ -79,6 +84,24 @@ export function getFundraiserBeans(): Product[] {
       !p.blendPricing &&
       p.availability === "in_stock",
   );
+}
+
+// A fundraiser line costs the picked coffee's regular price for that size, 5% off
+// once the line is over 1kg. null = that coffee doesn't come in that size.
+export function fundraiserUnitPrice(
+  coffee: string | undefined,
+  size: string | undefined,
+  quantity: number,
+): number | null {
+  const v = FUNDRAISER_SIZES.includes(size ?? "")
+    ? getFundraiserBeans()
+        .find((b) => b.name === coffee)
+        ?.variants.find((x) => x.name === size)
+    : undefined;
+  if (!v) return null;
+  return (v.weightGrams ?? 0) * quantity > FUNDRAISER_BULK_MIN_GRAMS
+    ? Math.round(v.price * (1 - FUNDRAISER_BULK_DISCOUNT))
+    : v.price;
 }
 
 export function getAllProductSlugs(): string[] {

@@ -10,7 +10,7 @@ export function meta() {
     {
       name: "description",
       content:
-        "Gray Cup is raising funds for an Aillio Bullet R2 roaster. Every ₹350 you contribute gets you a 250g pack of coffee.",
+        "Gray Cup is raising funds for an Aillio Bullet R2 roaster. Buy any of our coffees in 250g, 500g or 1kg at regular prices - 5% off orders over 1kg.",
     },
   ];
 }
@@ -30,7 +30,7 @@ export async function loader() {
   try {
     return await getFundraiserStats();
   } catch {
-    return { packsSold: 0, raisedInr: 0, goalInr: 613000, packsNeeded: 1752, percent: 0 };
+    return { raisedInr: 0, goalInr: 613000, percent: 0 };
   }
 }
 
@@ -39,7 +39,7 @@ export default function FundraisersPage({ loaderData }: Route.ComponentProps) {
   if (!product) return null;
 
   const stats = loaderData;
-  const packsRemaining = Math.max(0, stats.packsNeeded - stats.packsSold);
+  const remainingInr = Math.max(0, stats.goalInr - stats.raisedInr);
 
   return (
     <div className="min-h-dvh py-20 px-4 lg:px-6">
@@ -52,9 +52,9 @@ export default function FundraisersPage({ loaderData }: Route.ComponentProps) {
             We&apos;re raising {CURRENCY.symbol}
             {stats.goalInr.toLocaleString(CURRENCY.locale)} for an Aillio Bullet R2
             roaster, so we can roast in-house with tighter, more consistent quality
-            control. Every {CURRENCY.symbol}
-            {350} you contribute funds the roaster and gets you a 250g pack of our
-            coffee - you pick the bean and the roast level.
+            control. Buy any of our coffees in a 250g, 500g or 1kg pack at its regular
+            price and the money funds the roaster - you pick the bean and the roast
+            level, and orders over 1kg get 5% off.
           </p>
         </div>
 
@@ -115,18 +115,14 @@ export default function FundraisersPage({ loaderData }: Route.ComponentProps) {
           <div className="flex items-center justify-between mt-2 text-sm text-muted-foreground">
             <span>{stats.percent.toFixed(1)}% funded</span>
             <span>
-              {stats.packsSold.toLocaleString(CURRENCY.locale)} of{" "}
-              {stats.packsNeeded.toLocaleString(CURRENCY.locale)} packs sold
+              {CURRENCY.symbol}
+              {remainingInr.toLocaleString(CURRENCY.locale)} to go
             </span>
           </div>
 
           <p className="text-sm text-muted-foreground mt-4">
-            We need <span className="font-medium text-black">{stats.packsNeeded.toLocaleString(CURRENCY.locale)}</span> 250g
-            packs sold ({CURRENCY.symbol}350 each) to fully fund the roaster.{" "}
-            <span className="font-medium text-black">
-              {packsRemaining.toLocaleString(CURRENCY.locale)}
-            </span>{" "}
-            packs to go.
+            Every coffee you buy here goes toward the roaster, at the same prices as
+            our home page.
           </p>
         </div>
 
@@ -136,7 +132,7 @@ export default function FundraisersPage({ loaderData }: Route.ComponentProps) {
             Contribute a Pack
           </h2>
           <p className="text-sm text-muted-foreground mb-4">
-            {CURRENCY.symbol}350 per 250g pack of any available coffee, at any roast. Add more to contribute more.
+            Any available coffee, at any roast, in 250g, 500g or 1kg at regular prices. 5% off orders over 1kg.
           </p>
           <GrindSizeProvider>
             <ProductConfigurator product={product} />
