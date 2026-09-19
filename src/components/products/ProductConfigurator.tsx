@@ -13,7 +13,13 @@ import { useCart } from "@/components/cart-provider";
 import { setBuyNowItem } from "@/lib/buy-now";
 import { CURRENCY } from "@/lib/currency";
 import { blendPackPrice } from "@/data/products/pricing";
-import { COFFEE_GRIND_OPTIONS, COFFEE_ROAST_OPTIONS, type Product, type ProductVariant } from "@/data/products";
+import {
+  COFFEE_GRIND_OPTIONS,
+  COFFEE_ROAST_OPTIONS,
+  getFundraiserBeans,
+  type Product,
+  type ProductVariant,
+} from "@/data/products";
 import { useGrindSize } from "./grind-size-context";
 import { usePostHog } from "@posthog/react";
 
@@ -42,8 +48,13 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const [selectedVariant, setSelectedVariant] = useState(() => getDefaultVariant(product));
   const [quantity, setQuantity] = useState(1);
   const { grindSize, setGrindSize } = useGrindSize();
+  // Fundraiser packs let the buyer pick any available bean, so they always get every roast.
+  const fundraiserBeans = product.isFundraiser ? getFundraiserBeans() : [];
+  const [selectedCoffee, setSelectedCoffee] = useState(fundraiserBeans[0]?.name ?? "");
   // Products can restrict their roasts; any other retail coffee offers all four.
-  const roastOptions: string[] = product.roastOptions ?? (isCoffee ? COFFEE_ROAST_OPTIONS : []);
+  const roastOptions: string[] = product.isFundraiser
+    ? COFFEE_ROAST_OPTIONS
+    : (product.roastOptions ?? (isCoffee ? COFFEE_ROAST_OPTIONS : []));
   const hasRoastOptions = roastOptions.length > 0;
   const [selectedRoast, setSelectedRoast] = useState(() =>
     roastOptions.includes(product.roast ?? "") ? product.roast! : (roastOptions[0] ?? ""),
@@ -139,7 +150,8 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       isCoffee ? grindSize : undefined,
       undefined,
       hasRoastOptions ? selectedRoast : undefined,
-      hasBlendRatioOptions ? selectedBlendRatio : undefined
+      hasBlendRatioOptions ? selectedBlendRatio : undefined,
+      product.isFundraiser ? selectedCoffee : undefined
     );
     posthog?.capture("product_added_to_cart", {
       product_slug: product.slug,
@@ -165,6 +177,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       selectedGrind: isCoffee ? grindSize : undefined,
       selectedRoast: hasRoastOptions ? selectedRoast : undefined,
       selectedBlendRatio: hasBlendRatioOptions ? selectedBlendRatio : undefined,
+      selectedCoffee: product.isFundraiser ? selectedCoffee : undefined,
     });
     posthog?.capture("buy_now_selected", {
       product_slug: product.slug,
@@ -260,6 +273,25 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
             </div>
           </div>
         </div>
+
+        {/* Coffee pick (fundraiser only) */}
+        {product.isFundraiser && (
+          <div className="space-y-2">
+            <Label htmlFor="fundraiser-coffee">Choose Your Coffee</Label>
+            <select
+              id="fundraiser-coffee"
+              value={selectedCoffee}
+              onChange={(e) => setSelectedCoffee(e.target.value)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              {fundraiserBeans.map((bean) => (
+                <option key={bean.slug} value={bean.name}>
+                  {bean.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         {/* Grind Size (coffee only) */}
         {isCoffee && (

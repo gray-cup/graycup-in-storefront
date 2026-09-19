@@ -8,6 +8,8 @@ export type CartItem = {
   selectedGrind?: string;
   selectedRoast?: string;
   selectedBlendRatio?: string;
+  /** Fundraiser packs only: name of the coffee the buyer picked. */
+  selectedCoffee?: string;
   selectedSamples?: string[];
 };
 
@@ -155,7 +157,8 @@ export function addToCart(
   grind?: string,
   samples?: string[],
   roast?: string,
-  blendRatio?: string
+  blendRatio?: string,
+  coffee?: string
 ): CartItem[] {
   const samplesKey = samples?.join(",");
 
@@ -167,6 +170,7 @@ export function addToCart(
       item.selectedGrind === grind &&
       item.selectedRoast === roast &&
       item.selectedBlendRatio === blendRatio &&
+      item.selectedCoffee === coffee &&
       item.selectedSamples?.join(",") === samplesKey
   );
 
@@ -189,6 +193,7 @@ export function addToCart(
       selectedGrind: grind,
       selectedRoast: roast,
       selectedBlendRatio: blendRatio,
+      selectedCoffee: coffee,
       selectedSamples: samples,
     },
   ];

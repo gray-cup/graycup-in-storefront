@@ -54,7 +54,7 @@ export default function FundraisersPage({ loaderData }: Route.ComponentProps) {
             roaster, so we can roast in-house with tighter, more consistent quality
             control. Every {CURRENCY.symbol}
             {350} you contribute funds the roaster and gets you a 250g pack of our
-            coffee - your choice of Medium or Dark roast.
+            coffee - you pick the bean and the roast level.
           </p>
         </div>
 
@@ -136,7 +136,7 @@ export default function FundraisersPage({ loaderData }: Route.ComponentProps) {
             Contribute a Pack
           </h2>
           <p className="text-sm text-muted-foreground mb-4">
-            {CURRENCY.symbol}350 per 250g pack. Add more to contribute more.
+            {CURRENCY.symbol}350 per 250g pack of any available coffee, at any roast. Add more to contribute more.
           </p>
           <GrindSizeProvider>
             <ProductConfigurator product={product} />

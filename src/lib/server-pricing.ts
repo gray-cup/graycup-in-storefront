@@ -1,4 +1,4 @@
-import { getProductBySlug } from "@/data/products";
+import { COFFEE_ROAST_OPTIONS, getFundraiserBeans, getProductBySlug } from "@/data/products";
 import type { Product, ProductVariant } from "@/data/products";
 import { blendPackPrice } from "@/data/products/pricing";
 import type { CartItem } from "@/lib/cart";
@@ -17,6 +17,17 @@ function trustedUnitPrice(item: CartItem): number {
 
   if (product.comingSoon) {
     throw new PricingError(`${product.name} is coming soon and can't be ordered yet`);
+  }
+
+  // Fundraiser pack: flat price, but the buyer must name a bean we actually sell
+  // and a real roast level - both end up in the order the roaster works from.
+  if (product.isFundraiser) {
+    if (!getFundraiserBeans().some((b) => b.name === item.selectedCoffee)) {
+      throw new PricingError(`Unknown coffee "${item.selectedCoffee}" for ${product.slug}`);
+    }
+    if (!COFFEE_ROAST_OPTIONS.includes(item.selectedRoast as never)) {
+      throw new PricingError(`Unknown roast "${item.selectedRoast}" for ${product.slug}`);
+    }
   }
 
   // Pick-your-poison sampler: price is (per-sample price) x (samples chosen).

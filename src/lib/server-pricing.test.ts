@@ -1,5 +1,5 @@
 import { repriceCartItems, repriceSubscription, PricingError } from "./server-pricing";
-import { products, getProductBySlug } from "@/data/products";
+import { products, getProductBySlug, getFundraiserBeans } from "@/data/products";
 import type { CartItem } from "./cart";
 
 const real = products.find((p) => !p.isSamplePack && p.variants.length > 0)!;
@@ -86,4 +86,19 @@ for (const bad of [undefined, "99% Arabica / 1% Robusta"]) {
   } catch (e) {
     console.assert(e instanceof PricingError);
   }
+}
+
+// Fundraiser: flat pack price, but the bean and roast must be real.
+const fund = getProductBySlug("aillio-bullet-r2-fundraiser-pack")!;
+const bean = getFundraiserBeans()[0];
+const fundLine = { product: fund as never, quantity: 2, selectedVariant: fund.variants[0], selectedCoffee: bean.name, selectedRoast: "Light" };
+console.assert(repriceCartItems([fundLine]).subtotal === fund.variants[0].price * 2, "fundraiser price is flat");
+for (const bad of [{ selectedCoffee: "Nope" }, { selectedRoast: "Charcoal" }, { selectedCoffee: undefined }]) {
+  threw = false;
+  try {
+    repriceCartItems([{ ...fundLine, ...bad }]);
+  } catch (e) {
+    threw = e instanceof PricingError;
+  }
+  console.assert(threw, `fundraiser should reject ${JSON.stringify(bad)}`);
 }

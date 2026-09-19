@@ -64,6 +64,11 @@ export default function CartPage() {
                           Packaging: {item.selectedPackaging}
                         </p>
                       )}
+                      {item.selectedCoffee && (
+                        <p className="text-sm text-gray-500">
+                          Coffee: {item.selectedCoffee}
+                        </p>
+                      )}
                       {item.selectedGrind && (
                         <p className="text-sm text-gray-500">
                           Grind: {item.selectedGrind}

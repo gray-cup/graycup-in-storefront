@@ -171,7 +171,7 @@ export async function action({ request, context }: Route.ActionArgs) {
     // review doesn't need to cross-reference the D1 order row.
     const orderNote = pricedItems
       .map((it) => {
-        const extras = [it.selectedVariant?.name, it.selectedGrind, it.selectedRoast, it.selectedBlendRatio]
+        const extras = [it.selectedVariant?.name, it.selectedCoffee, it.selectedGrind, it.selectedRoast, it.selectedBlendRatio]
           .filter(Boolean)
           .join(", ");
         return `${it.product.name} x${it.quantity}${extras ? ` (${extras})` : ""}`;

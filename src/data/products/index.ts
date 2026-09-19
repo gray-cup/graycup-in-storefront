@@ -69,6 +69,18 @@ export function getProductBySlug(slug: string): Product | undefined {
   return products.find((product) => product.slug === slug);
 }
 
+// Roasted retail coffees a fundraiser buyer can pick their pack from.
+export function getFundraiserBeans(): Product[] {
+  return retailProducts.filter(
+    (p) =>
+      p.category === "Coffee" &&
+      !p.isSamplePack &&
+      !p.isGreenCoffee &&
+      !p.blendPricing &&
+      p.availability === "in_stock",
+  );
+}
+
 export function getAllProductSlugs(): string[] {
   return products.map((product) => product.slug);
 }

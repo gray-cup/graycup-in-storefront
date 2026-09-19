@@ -29,7 +29,8 @@ type CartContextType = {
     grind?: string,
     samples?: string[],
     roast?: string,
-    blendRatio?: string
+    blendRatio?: string,
+    coffee?: string
   ) => void;
   removeFromCart: (index: number) => void;
   updateQuantity: (index: number, quantity: number) => void;
@@ -68,7 +69,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     grind?: string,
     samples?: string[],
     roast?: string,
-    blendRatio?: string
+    blendRatio?: string,
+    coffee?: string
   ) => {
     setItems((currentItems) =>
       addToCartUtil(
@@ -80,7 +82,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         grind,
         samples,
         roast,
-        blendRatio
+        blendRatio,
+        coffee
       )
     );
   };
