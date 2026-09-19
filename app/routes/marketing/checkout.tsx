@@ -26,6 +26,7 @@ import { usePostHog } from "@posthog/react";
 
 const FLAT_DELIVERY_CHARGE = 40;
 const COUPON_STORAGE_KEY = "graycup_coupon_code";
+const INFO_STORAGE_KEY = "graycup_checkout_info";
 
 const INDIAN_STATES = [
   "Andaman and Nicobar Islands",
@@ -106,6 +107,33 @@ export default function CheckoutPage() {
   });
 
   const [gstNumber, setGstNumber] = useState("");
+
+  // Remember what the buyer typed in this browser so a repeat order is pre-filled
+  // (still editable). Restored after mount to avoid an SSR hydration mismatch;
+  // `infoLoaded` stops the empty initial state from overwriting the saved copy.
+  const [infoLoaded, setInfoLoaded] = useState(false);
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(INFO_STORAGE_KEY) ?? "null");
+      if (saved) {
+        setGuestInfo((prev) => ({ ...prev, ...saved.guestInfo }));
+        setAddress((prev) => ({ ...prev, ...saved.address }));
+        if (typeof saved.gstNumber === "string") setGstNumber(saved.gstNumber);
+      }
+    } catch {
+      // corrupt or unavailable storage - start blank
+    }
+    setInfoLoaded(true);
+  }, []);
+  useEffect(() => {
+    if (!infoLoaded) return;
+    try {
+      localStorage.setItem(INFO_STORAGE_KEY, JSON.stringify({ guestInfo, address, gstNumber }));
+    } catch {
+      // storage full/blocked - not worth surfacing
+    }
+  }, [infoLoaded, guestInfo, address, gstNumber]);
+
   const [payLoading, setPayLoading] = useState(false);
 
   const [couponInput, setCouponInput] = useState("");
