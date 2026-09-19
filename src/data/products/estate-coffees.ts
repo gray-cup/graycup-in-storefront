@@ -271,6 +271,7 @@ export const estateCoffeeProducts: Product[] = reviseRetailCoffeePricing([
       "Choose your roast: light, medium, medium-dark or dark",
       "Blended and roasted fresh after you order",
     ],
+    process: "Washed",
     grade: "AAA",
     varietal: "Arabica + Robusta",
     roast: "Medium",
